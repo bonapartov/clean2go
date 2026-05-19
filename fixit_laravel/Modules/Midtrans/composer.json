@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/midtrans",
+    "description": "",
+    "authors": [
+        {
+            "name": "Bonapartov V.A.",
+            "email": ""
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Midtrans\\": "app/",
+            "Modules\\Midtrans\\Database\\Factories\\": "database/factories/",
+            "Modules\\Midtrans\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Midtrans\\Tests\\": "tests/"
+        }
+    }
+}

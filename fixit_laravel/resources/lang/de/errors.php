@@ -1,0 +1,38 @@
+<?php
+
+return  [
+
+    'minimum_booking_amount' => 'Bitte stelle sicher, dass dein Buchungsbetrag mindestens :minBookingAmount beträgt, um fortzufahren.',
+    'coupon_code_min_spend' => 'Um den Gutscheincode :couponCode anzuwenden, muss dein Buchungsbetrag :minSpend oder höher sein.',
+    'coupon_feature_disabled' => 'Der Gutscheincode kann nicht verwendet werden, da die Gutschein-Funktion derzeit deaktiviert ist.',
+    'coupon_max_usage_reached' => 'Der Gutscheincode :couponCode hat die maximale Nutzungsanzahl von :usagePerCustomer Mal pro Kunde erreicht.',
+    'coupon_usage_limit_per_coupon' => 'Der Gutscheincode :couponCode kann pro Gutschein nur bis zu :usagePerCoupon Mal verwendet werden.',
+    'coupon_validity_period' => 'Der Gutscheincode :couponCode war gültig von :startDate bis :endDate.',
+    'insufficient_wallet_balance' => 'Das Wallet-Guthaben reicht für diese Buchung nicht aus.',
+    'wallet_feature_disabled' => 'Die Verwendung des Wallet-Guthabens für Buchungen ist derzeit deaktiviert.',
+    'provider_wallet_disabled' => 'Anbieter können beim Erstellen einer Buchung kein Wallet-Guthaben verwenden.',
+    'provider_wallet_balance_insufficient' => 'Das Anbieter-Wallet-Guthaben reicht für diese Buchung nicht aus.',
+    'status_is_not_pending' => 'Der Buchungsstatus ist nicht „Ausstehend“.',
+    'must_be_consumer' => 'Der Benutzer muss ein :consumer sein.',
+    'turn_on_wallet_feature' => 'Die Wallet-Funktion ist derzeit deaktiviert. Aktiviere sie unter Einstellungen > Aktivierung.',
+    'turn_on_additional_services' => 'Die Zusatzservice-Funktion ist derzeit deaktiviert. Aktiviere sie unter Einstellungen > Aktivierung.',
+    'invalid_address_id' => 'Ungültige Adress-ID.',
+    'invalid_booking_status' => 'Ungültiger Buchungsstatus angegeben.',
+    'booking_cannot_be_accepted' => 'Die Buchung kann im aktuellen Status nicht akzeptiert werden.',
+    'assign_servicemen_first' => 'Bitte weise zuerst Servicemitarbeiter zu, bevor du den Buchungsstatus änderst.',
+    'invalid_status_transition_on_going' => 'Die Buchung muss den Status „Unterwegs“ haben, bevor sie als „Laufend“ markiert werden kann.',
+    'cancel_only_if_pending' => 'Eine Buchung kann nur storniert werden, wenn sie sich im Status „Ausstehend“ befindet.',
+    'hold_only_if_on_going' => 'Eine Buchung kann nur pausiert werden, wenn sie den Status „Laufend“ hat.',
+    'start_again_only_if_on_hold' => 'Eine Buchung kann nur neu gestartet werden, wenn sie pausiert ist.',
+    'invalid_completion_status' => 'Die Buchung kann auf diese Weise nicht als abgeschlossen markiert werden.',
+    'cancellation_restricted' => 'Die Stornierung der Buchung ist für diese Anfrage eingeschränkt.',
+    'invalid_custom_offer' => 'Ungültige individuelle Angebote.',
+    'zoom_only_for_accepted' => 'Ein Zoom-Meeting kann nur für akzeptierte Buchungen erstellt werden.',
+    'zoom_only_for_remotely' => 'Ein Zoom-Meeting ist nur für Buchungen vom Typ „Remote“ verfügbar.',
+    'zoom_only_for_completed_payment' => 'Ein Zoom-Meeting kann erst erstellt werden, nachdem die vollständige Zahlung abgeschlossen ist.',
+    'zoom_meeting_created' => 'Zoom-Meeting erfolgreich erstellt.',
+    'zoom_meeting_property_missing' => 'Die Zoom-Meeting-Eigenschaft ist nicht definiert. Bitte überprüfe die Integrationseinstellungen.',
+    'zoom_only_provider_can_create' => 'Nur Anbieter dürfen Zoom-Meetings erstellen.',
+    'user_not_found' => 'Benutzer nicht gefunden.',
+    'you_do_not_have_permission_to_access_this_resource' => 'Du hast keine Berechtigung, auf diese Ressource zuzugreifen.'
+];

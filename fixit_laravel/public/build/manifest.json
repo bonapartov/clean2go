@@ -1,0 +1,148 @@
+{
+  "public/admin/images/announcement-bar.svg": {
+    "file": "assets/announcement-bar-8ea84bab.svg",
+    "src": "public/frontend/images/announcement-bar.svg"
+  },
+  "public/admin/images/booking-bg.png": {
+    "file": "assets/booking-bg-67a69e5f.png",
+    "src": "public/admin/images/booking-bg.png"
+  },
+  "public/admin/images/pdf.svg": {
+    "file": "assets/pdf-3347cbc3.svg",
+    "src": "public/admin/images/pdf.svg"
+  },
+  "public/admin/images/select-white-arrow.svg": {
+    "file": "assets/select-white-arrow-68f81f6c.svg",
+    "src": "public/admin/images/select-white-arrow.svg"
+  },
+  "public/admin/images/svg/add.svg": {
+    "file": "assets/add-c0680b88.svg",
+    "src": "public/admin/images/svg/add.svg"
+  },
+  "public/admin/images/svg/danger.svg": {
+    "file": "assets/danger-207c331e.svg",
+    "src": "public/admin/images/svg/danger.svg"
+  },
+  "public/admin/images/svg/down-arrow.svg": {
+    "file": "assets/down-arrow-8f2b48b6.svg",
+    "src": "public/admin/images/svg/down-arrow.svg"
+  },
+  "public/admin/images/svg/file.svg": {
+    "file": "assets/file-f63630a7.svg",
+    "src": "public/admin/images/svg/file.svg"
+  },
+  "public/admin/images/svg/folder.svg": {
+    "file": "assets/folder-77c3094b.svg",
+    "src": "public/admin/images/svg/folder.svg"
+  },
+  "public/admin/images/svg/primary.svg": {
+    "file": "assets/primary-4dd87a7d.svg",
+    "src": "public/admin/images/svg/primary.svg"
+  },
+  "public/admin/images/svg/warning.svg": {
+    "file": "assets/warning-a069c3a4.svg",
+    "src": "public/admin/images/svg/warning.svg"
+  },
+  "public/admin/scss/admin.scss": {
+    "file": "assets/admin-812f5800.css",
+    "isEntry": true,
+    "src": "public/admin/scss/admin.scss"
+  },
+  "public/frontend/images/account-bg.png": {
+    "file": "assets/account-bg-62960337.png",
+    "src": "public/frontend/images/account-bg.png"
+  },
+  "public/frontend/images/announcement-bar.svg": {
+    "file": "assets/announcement-bar-8ea84bab.svg",
+    "src": "public/frontend/images/announcement-bar.svg"
+  },
+  "public/frontend/images/banner/3.png": {
+    "file": "assets/3-ca0d41ee.png",
+    "src": "public/frontend/images/banner/3.png"
+  },
+  "public/frontend/images/bg.jpg": {
+    "file": "assets/bg-3bee563f.jpg",
+    "src": "public/frontend/images/bg.jpg"
+  },
+  "public/frontend/images/bg.png": {
+    "file": "assets/bg-f98c8713.png",
+    "src": "public/frontend/images/bg.png"
+  },
+  "public/frontend/images/circle.png": {
+    "file": "assets/circle-1004cc73.png",
+    "src": "public/frontend/images/circle.png"
+  },
+  "public/frontend/images/newsletter.png": {
+    "file": "assets/newsletter-1d2bcb9c.png",
+    "src": "public/frontend/images/newsletter.png"
+  },
+  "public/frontend/images/profile-bg.png": {
+    "file": "assets/profile-bg-2ff9cf8b.png",
+    "src": "public/frontend/images/profile-bg.png"
+  },
+  "public/frontend/images/setting.png": {
+    "file": "assets/setting-101983af.png",
+    "src": "public/frontend/images/setting.png"
+  },
+  "public/frontend/images/svg/arrow.svg": {
+    "file": "assets/arrow-90473a1a.svg",
+    "src": "public/frontend/images/svg/arrow.svg"
+  },
+  "public/frontend/images/svg/error.svg": {
+    "file": "assets/error-b09d3fef.svg",
+    "src": "public/frontend/images/svg/error.svg"
+  },
+  "public/frontend/images/svg/info.svg": {
+    "file": "assets/info-f49bebe9.svg",
+    "src": "public/frontend/images/svg/info.svg"
+  },
+  "public/frontend/images/svg/left.svg": {
+    "file": "assets/left-b3fbce24.svg",
+    "src": "public/frontend/images/svg/left.svg"
+  },
+  "public/frontend/images/svg/next-disable.svg": {
+    "file": "assets/next-disable-0441b0d8.svg",
+    "src": "public/frontend/images/svg/next-disable.svg"
+  },
+  "public/frontend/images/svg/next.svg": {
+    "file": "assets/next-1fa1601a.svg",
+    "src": "public/frontend/images/svg/next.svg"
+  },
+  "public/frontend/images/svg/preview-disable.svg": {
+    "file": "assets/preview-disable-c987f3be.svg",
+    "src": "public/frontend/images/svg/preview-disable.svg"
+  },
+  "public/frontend/images/svg/preview.svg": {
+    "file": "assets/preview-db216f8c.svg",
+    "src": "public/frontend/images/svg/preview.svg"
+  },
+  "public/frontend/images/svg/right.svg": {
+    "file": "assets/right-d5ee7953.svg",
+    "src": "public/frontend/images/svg/right.svg"
+  },
+  "public/frontend/images/svg/tick.svg": {
+    "file": "assets/tick-6b1eb084.svg",
+    "src": "public/frontend/images/svg/tick.svg"
+  },
+  "public/frontend/images/svg/warning.svg": {
+    "file": "assets/warning-736d8bf3.svg",
+    "src": "public/frontend/images/svg/warning.svg"
+  },
+  "public/frontend/scss/style.scss": {
+    "file": "assets/style-bce9ca5d.css",
+    "isEntry": true,
+    "src": "public/frontend/scss/style.scss"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-627c9488.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "css": [
+      "assets/app-627c9488.css"
+    ],
+    "file": "assets/app-9f789b2c.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}

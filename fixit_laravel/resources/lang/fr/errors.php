@@ -1,0 +1,38 @@
+<?php
+
+return  [
+
+    'minimum_booking_amount' => 'Veuillez vous assurer que le total de votre réservation est d\'au moins :minBookingAmount pour continuer.',
+    'coupon_code_min_spend' => 'Pour appliquer le code promo :couponCode, le total de votre réservation doit être de :minSpend ou plus.',
+    'coupon_feature_disabled' => 'Le code promo ne peut pas être utilisé car la fonctionnalité de coupon est actuellement désactivée.',
+    'coupon_max_usage_reached' => 'Le code promo :couponCode a atteint son utilisation maximale de :usagePerCustomer fois par client.',
+    'coupon_usage_limit_per_coupon' => 'Le code promo :couponCode ne peut être utilisé que jusqu\'à :usagePerCoupon fois par coupon.',
+    'coupon_validity_period' => 'Le code promo :couponCode était applicable du :startDate au :endDate.',
+    'insufficient_wallet_balance' => 'Le solde du portefeuille n\'est pas suffisant pour cette réservation.',
+    'wallet_feature_disabled' => 'L\'option d\'utilisation du solde du portefeuille pour la réservation est actuellement désactivée.',
+    'provider_wallet_disabled' => 'Les prestataires ne peuvent pas utiliser le solde du portefeuille lors de la création d\'une réservation.',
+    'provider_wallet_balance_insufficient' => 'Le solde du portefeuille du prestataire n\'est pas suffisant pour cette réservation.',
+    'status_is_not_pending' => 'le statut de la réservation n\'est pas en attente',
+    'must_be_consumer' => 'l\'utilisateur doit être un :consumer',
+    'turn_on_wallet_feature' => 'La fonctionnalité de portefeuille est actuellement désactivée. Activez-la dans Paramètres > Activation.',
+    'turn_on_additional_services' => 'La fonctionnalité de services supplémentaires est actuellement désactivée. Activez-la dans Paramètres > Activation.',
+    'invalid_address_id' => 'Identifiant d\'adresse invalide',
+    'invalid_booking_status' => 'Statut de réservation invalide fourni.',
+    'booking_cannot_be_accepted' => 'La réservation ne peut pas être acceptée dans son statut actuel.',
+    'assign_servicemen_first' => 'Veuillez assigner des techniciens avant de changer le statut de la réservation.',
+    'invalid_status_transition_on_going' => 'La réservation doit être "En chemin" avant de pouvoir être marquée comme "En cours".',
+    'cancel_only_if_pending' => 'Vous ne pouvez annuler une réservation que si elle est à l\'état "En attente".',
+    'hold_only_if_on_going' => 'Une réservation ne peut être mise en attente que si elle est "En cours".',
+    'start_again_only_if_on_hold' => 'Une réservation ne peut être relancée que si elle est "En attente".',
+    'invalid_completion_status' => 'La réservation ne peut pas être marquée comme terminée de cette manière.',
+    'cancellation_restricted' => 'L\'annulation de la réservation est restreinte pour cette demande.',
+    'invalid_custom_offer' => 'Offres personnalisées invalides.',
+    'zoom_only_for_accepted' => 'La réunion Zoom ne peut être générée que pour les réservations acceptées.',
+    'zoom_only_for_remotely' => 'La réunion Zoom n\'est disponible que pour les réservations de type à distance.',
+    'zoom_only_for_completed_payment' => 'La réunion Zoom ne peut être générée qu\'après le paiement complet.',
+    'zoom_meeting_created' => 'Réunion Zoom créée avec succès.',
+    'zoom_meeting_property_missing' => 'La propriété de réunion Zoom n\'est pas définie. Veuillez vérifier les paramètres d\'intégration.',
+    'zoom_only_provider_can_create' => 'Seuls les prestataires sont autorisés à créer des réunions Zoom.',
+    'user_not_found' => 'Utilisateur non trouvé',
+    'you_do_not_have_permission_to_access_this_resource' => 'Vous n\'avez pas la permission d\'accéder à cette ressource.'
+];

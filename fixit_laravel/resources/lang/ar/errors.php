@@ -1,0 +1,38 @@
+<?php
+
+return  [
+
+    'minimum_booking_amount' => 'الرجاء التأكد من أن إجمالي حجزك لا يقل عن :minBookingAmount للمتابعة.',
+    'coupon_code_min_spend' => 'لتطبيق رمز الكوبون :couponCode، يجب أن يكون إجمالي حجزك :minSpend أو أكثر.',
+    'coupon_feature_disabled' => 'لا يمكن استخدام رمز الكوبون لأن ميزة الكوبونات معطلة حالياً.',
+    'coupon_max_usage_reached' => 'وصل رمز الكوبون :couponCode إلى الحد الأقصى لاستخدامه وهو :usagePerCustomer مرة لكل عميل.',
+    'coupon_usage_limit_per_coupon' => 'يمكن استخدام رمز الكوبون :couponCode حتى :usagePerCoupon مرة لكل كوبون.',
+    'coupon_validity_period' => 'كان رمز الكوبون :couponCode ساري المفعول من :startDate إلى :endDate.',
+    'insufficient_wallet_balance' => 'رصيد المحفظة غير كافٍ لهذا الحجز.',
+    'wallet_feature_disabled' => 'خيار استخدام رصيد المحفظة للحجز معطل حالياً.',
+    'provider_wallet_disabled' => 'لا يمكن للمزودين استخدام رصيد المحفظة أثناء إنشاء الحجز.',
+    'provider_wallet_balance_insufficient' => 'رصيد محفظة المزود غير كافٍ لهذا الحجز.',
+    'status_is_not_pending' => 'حالة الحجز ليست قيد الانتظار',
+    'must_be_consumer' => 'يجب أن يكون المستخدم :consumer',
+    'turn_on_wallet_feature' => 'ميزة المحفظة معطلة حالياً. قم بتشغيلها في الإعدادات > التفعيل.',
+    'turn_on_additional_services' => 'ميزة الخدمة الإضافية معطلة حالياً. قم بتشغيلها في الإعدادات > التفعيل.',
+    'invalid_address_id' => 'معرف العنوان غير صالح',
+    'invalid_booking_status' => 'تم تقديم حالة حجز غير صالحة.',
+    'booking_cannot_be_accepted' => 'لا يمكن قبول الحجز في حالته الحالية.',
+    'assign_servicemen_first' => 'الرجاء تعيين رجال الخدمة قبل تغيير حالة الحجز.',
+    'invalid_status_transition_on_going' => 'يجب أن يكون الحجز "في الطريق" قبل أن يمكن وسمه بأنه "قيد التنفيذ".',
+    'cancel_only_if_pending' => 'يمكنك إلغاء الحجز فقط إذا كان في حالة قيد الانتظار.',
+    'hold_only_if_on_going' => 'يمكن وضع الحجز في حالة تعليق فقط إذا كان قيد التنفيذ.',
+    'start_again_only_if_on_hold' => 'يمكن إعادة بدء الحجز فقط إذا كان معلقاً.',
+    'invalid_completion_status' => 'لا يمكن وسم الحجز بأنه مكتمل بهذه الطريقة.',
+    'cancellation_restricted' => 'إلغاء الحجز مقيد لهذا الطلب.',
+    'invalid_custom_offer' => 'عروض مخصصة غير صالحة.',
+    'zoom_only_for_accepted' => 'يمكن إنشاء اجتماع زووم فقط للحجوزات المقبولة.',
+    'zoom_only_for_remotely' => 'اجتماع زووم متاح فقط للحجوزات من النوع عن بُعد.',
+    'zoom_only_for_completed_payment' => 'يمكن إنشاء اجتماع زووم فقط بعد اكتمال الدفع الكامل.',
+    'zoom_meeting_created' => 'تم إنشاء اجتماع زووم بنجاح.',
+    'zoom_meeting_property_missing' => 'خاصية اجتماع زووم غير محددة. يرجى التحقق من إعدادات التكامل.',
+    'zoom_only_provider_can_create' => 'يُسمح فقط للمزودين بإنشاء اجتماعات زووم.',
+    'user_not_found' => 'المستخدم غير موجود',
+    'you_do_not_have_permission_to_access_this_resource' => 'ليس لديك إذن للوصول إلى هذا المورد.'
+];

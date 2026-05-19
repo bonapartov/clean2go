@@ -1,0 +1,53 @@
+# Zip archives
+*.zip
+*.tar.gz
+*.tar
+
+# Laravel
+fixit_laravel/vendor/
+fixit_laravel/node_modules/
+fixit_laravel/.env
+fixit_laravel/storage/logs/*.log
+fixit_laravel/storage/framework/cache/
+fixit_laravel/storage/framework/sessions/
+fixit_laravel/storage/framework/views/
+fixit_laravel/bootstrap/cache/
+fixit_laravel/public/hot
+fixit_laravel/public/storage
+
+# Flutter - Provider
+fixit_provider/.dart_tool/
+fixit_provider/.flutter-plugins
+fixit_provider/.flutter-plugins-dependencies
+fixit_provider/build/
+fixit_provider/android/.gradle/
+fixit_provider/android/local.properties
+fixit_provider/ios/Pods/
+fixit_provider/ios/.symlinks/
+fixit_provider/pubspec.lock
+
+# Flutter - User
+fixit_user/.dart_tool/
+fixit_user/.flutter-plugins
+fixit_user/.flutter-plugins-dependencies
+fixit_user/build/
+fixit_user/android/.gradle/
+fixit_user/android/local.properties
+fixit_user/ios/Pods/
+fixit_user/ios/.symlinks/
+fixit_user/pubspec.lock
+
+# Updated files (work folder)
+updated-files/
+
+# DB dump (may contain secrets)
+fixit_laravel/public/db.sql
+
+# DS_Store
+.DS_Store
+**/.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.iml

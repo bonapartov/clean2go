@@ -1,0 +1,61 @@
+/**=====================
+    Announcement Bar (frontend - copied from admin)
+==========================**/
+.announcement-bar {
+  padding: calc(10px + (14 - 10) * ((100vw - 320px) / (1920 - 320)));
+  background-color: var(--primary-color);
+  margin: 0;
+  text-align: center;
+  border-radius: 0;
+  width: 100%;
+  display: block;
+  z-index: 5;
+  background-image: url(../images/announcement-bar.svg);
+  background-repeat: repeat;
+  background-size: cover;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  @media (max-width: 575.98px) {
+    flex-direction: column;
+    height: auto;
+    gap: calc(4px + (8 - 4) * ((100vw - 320px) / (576 - 320)));
+  }
+
+  .offer-text {
+    color: rgba($white, 1);
+    letter-spacing: 0.4px;
+    line-height: 1.3;
+    font-size: calc(14px + (15 - 14) * ((100vw - 320px) / (1920 - 320)));
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // gap: 10px;
+    // margin: 0;
+  }
+
+  .btn {
+    color: var(--primary-color);
+    display: inline-block;
+    // margin-left: 8px;
+    padding: 8px 13px;
+    border-radius: 4px;
+    transition: all 0.4s ease-in-out;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1;
+    background-color: #fff;
+    border: none;
+    width: auto;
+    letter-spacing: 0;
+
+    &:hover {
+      background-color: rgba($white, 0.2);
+      outline: 1px solid rgba($white, 1);
+      // transition: all 0.4s ease-in-out;
+      color: rgba($white, 1);
+    }
+  }
+}
