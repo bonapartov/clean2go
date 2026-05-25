@@ -897,6 +897,18 @@
                         </ul>
                     </li>
                 @endcan
+                <li>
+                    <i class="ri-pushpin-2-line"></i>
+                    <a href="{{ route('backend.onboarding.settings') }}" class="sidebar-header {{ Request::is('backend/onboarding*') || Request::is('backend/verifications*') ? 'active' : '' }}">
+                        <img class="inactive-icon" src="{{ asset('admin/images/svg/sidebar-icon/setting-line.svg') }}">
+                        <img class="active-icon" src="{{ asset('admin/images/svg/sidebar-icon/setting-fill.svg') }}">
+                        <span>Верификация РФ</span>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="{{ route('backend.onboarding.settings') }}" class="{{ Request::is('backend/onboarding*') ? 'active' : '' }}">Интеграции РФ</a></li>
+                        <li><a href="{{ route('backend.verifications.index') }}" class="{{ Request::is('backend/verifications*') ? 'active' : '' }}">Заявки исполнителей</a></li>
+                    </ul>
+                </li>
                 @can('backend.payment_method.index')
                     <li>
                         <i class="ri-pushpin-2-line"></i>
