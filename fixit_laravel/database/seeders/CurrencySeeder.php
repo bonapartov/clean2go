@@ -13,7 +13,7 @@ class CurrencySeeder extends Seeder
             'symbol' => '₽',
             'no_of_decimal' => 2,
             'exchange_rate' => 1,
-            'symbol_position' => 'after_price',
+            'symbol_position' => 'right',
             'system_reserve' => 0,
             'status' => 1,
         ],
@@ -54,7 +54,7 @@ class CurrencySeeder extends Seeder
             'symbol'  => 'Tk',
             'no_of_decimal' => 2,
             'exchange_rate' => 110.01,
-            'symbol_position' => 'before_price',
+            'symbol_position' => 'left',
             'system_reserve' => 0,
             'status'    => 1
         ]
