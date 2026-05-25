@@ -1,0 +1,9 @@
+{
+    "name": "ProviderOnboarding",
+    "alias": "provider-onboarding",
+    "description": "Многошаговая верификация исполнителей: ИНН, НПД, паспорт, ФССП, договор.",
+    "keywords": [],
+    "priority": 0,
+    "providers": ["Modules\\ProviderOnboarding\\Providers\\ProviderOnboardingServiceProvider"],
+    "files": []
+}

@@ -23,5 +23,6 @@
     "CloudPayments": true,
     "YooKassa": true,
     "Smsru": true,
-    "Smsc": true
+    "Smsc": true,
+    "ProviderOnboarding": true
 }
