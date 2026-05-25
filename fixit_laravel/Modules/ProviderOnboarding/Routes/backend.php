@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('backend')
-    ->middleware(['web', 'auth', 'role:admin'])
+    ->middleware(['web', 'auth'])
     ->group(function () {
         Route::get('onboarding/settings', 'Backend\OnboardingSettingsController@index')
             ->name('backend.onboarding.settings');

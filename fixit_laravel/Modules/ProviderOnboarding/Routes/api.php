@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('onboarding')
-    ->middleware(['auth:sanctum', 'role:provider,serviceman'])
+    ->middleware(['auth:sanctum'])
     ->group(function () {
         Route::get('status', 'Api\OnboardingController@status')->name('api.onboarding.status');
         Route::post('inn', 'Api\OnboardingController@checkInn')->name('api.onboarding.inn');
