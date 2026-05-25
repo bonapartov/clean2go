@@ -9,6 +9,15 @@ class CurrencySeeder extends Seeder
 {
     private $currencies = [
         [
+            'code' => 'RUB',
+            'symbol' => '₽',
+            'no_of_decimal' => 2,
+            'exchange_rate' => 1,
+            'symbol_position' => 'after_price',
+            'system_reserve' => 0,
+            'status' => 1,
+        ],
+        [
             'code' => 'USD',
             'symbol' => '$',
             'no_of_decimal' => 2,
@@ -51,23 +60,22 @@ class CurrencySeeder extends Seeder
         ]
     ];
 
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         foreach ($this->currencies as $currency) {
             if (!Currency::where('code', $currency['code'])->first()) {
-                Currency::create([
+                $data = [
                     'code' => $currency['code'],
                     'symbol' => $currency['symbol'],
                     'no_of_decimal' => $currency['no_of_decimal'],
                     'exchange_rate' => $currency['exchange_rate'],
                     'system_reserve' => $currency['system_reserve'],
                     'status' => $currency['status'],
-                ]);
+                ];
+                if (isset($currency['symbol_position'])) {
+                    $data['symbol_position'] = $currency['symbol_position'];
+                }
+                Currency::create($data);
             }
         }
     }

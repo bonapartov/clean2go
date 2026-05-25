@@ -12,7 +12,8 @@ class SettingSeeder extends Seeder
     public function run()
     {
         $current_year = date('Y');
-        $currency_id = Currency::where('status', true)->first()->id;
+        $currency_id = (Currency::where('code', 'RUB')->where('status', true)->first()
+            ?? Currency::where('status', true)->first())->id;
         $language_id = SystemLang::where('name', 'English')->first()?->id;
         $baseURL = env('APP_URL');
         $baseName = config('app.name');
