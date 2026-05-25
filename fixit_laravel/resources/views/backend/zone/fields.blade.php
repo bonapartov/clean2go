@@ -95,19 +95,13 @@
     </div>
 </div>
 
-<div class="form-group row">
-    <label class="col-md-2" for="">{{ __('static.zone.place_points') }}<span> *</span></label>
-    <div class="col-md-10">
-        <input class="form-control" type="text" id="place_points" name="place_points"
-            placeholder="{{ __('static.zone.select_place_points') }}"
-            value="{{ isset($zone->locations) ? json_encode($zone->locations, true) : old('place_points') }}" readonly>
-        @error('place_points')
-            <span class="invalid-feedback d-block" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+<input type="hidden" id="place_points" name="place_points"
+    value="{{ isset($zone->locations) ? json_encode($zone->locations, true) : old('place_points') }}">
+@error('place_points')
+    <div class="alert alert-danger py-2 px-3 mb-3 small">
+        <strong>{{ __('static.zone.place_points') }}:</strong> {{ $message }}
     </div>
-</div>
+@enderror
 
 <div class="form-group row">
     <label class="col-md-2" for="search-box">{{ __('static.zone.search_location') }}</label>
@@ -124,6 +118,19 @@
             <div class="map-container" id="map-container"></div>
         </div>
         <div id="coords"></div>
+        <div class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+            <button type="button" id="startZoneBtn" class="btn btn-outline-primary btn-sm">
+                <i data-feather="edit-2" class="me-1" style="width:14px;height:14px;"></i>Нарисовать зону
+            </button>
+            <button type="button" id="finishDrawingBtn" class="btn btn-success btn-sm d-none">
+                <i data-feather="check" class="me-1" style="width:14px;height:14px;"></i>Завершить рисование
+            </button>
+            <button type="button" id="resetZoneBtn" class="btn btn-outline-danger btn-sm">
+                <i data-feather="trash-2" class="me-1" style="width:14px;height:14px;"></i>Сбросить
+            </button>
+            <span id="zone-status" class="small"></span>
+        </div>
+        <div id="map-hint" class="text-muted small mt-1">Нажмите «Нарисовать зону» и кликайте по карте. Нажмите на первую точку для замыкания.</div>
     </div>
 </div>
 
@@ -154,62 +161,29 @@
             "use strict";
             $(document).ready(function() {
                 $("#zoneForm").validate({
-                    ignore: [],
                     rules: {
                         "name": "required",
-                        "place_points": "required",
                     }
                 });
 
                 $('#submitBtn').click(function(e) {
                     e.preventDefault();
-
+                    if (!$('#place_points').val()) {
+                        $('#zone-status').html('<span class="text-danger"><i data-feather="alert-circle" style="width:14px;height:14px;vertical-align:middle;"></i> Зона не нарисована — нарисуйте зону на карте</span>');
+                        if (typeof feather !== 'undefined') feather.replace();
+                        document.getElementById('map-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        return;
+                    }
                     if ($("#zoneForm").valid()) {
                         $("#zoneForm").submit();
                     }
                 });
 
                 let mapInstance, polygonInstance = null;
-                let previewPolyline = null, rubberBandPolyline = null;
+                let drawingDone = false;
                 let existingPolygon = @json(isset($zone->locations) ? $zone->locations : null);
-                let isDrawing = false;
-                let drawingPoints = [];
 
                 ymaps.ready(function() { initMap(); });
-
-                function clearPreviewLines() {
-                    if (previewPolyline)    { mapInstance.geoObjects.remove(previewPolyline);    previewPolyline = null; }
-                    if (rubberBandPolyline) { mapInstance.geoObjects.remove(rubberBandPolyline); rubberBandPolyline = null; }
-                }
-
-                function removePointMarkers() {
-                    var toRemove = [];
-                    mapInstance.geoObjects.each(function(obj) {
-                        if (obj !== polygonInstance && obj !== previewPolyline && obj !== rubberBandPolyline) {
-                            toRemove.push(obj);
-                        }
-                    });
-                    toRemove.forEach(function(obj) { mapInstance.geoObjects.remove(obj); });
-                }
-
-                function updatePreview(mouseCoords) {
-                    clearPreviewLines();
-                    if (drawingPoints.length >= 2) {
-                        previewPolyline = new ymaps.Polyline(drawingPoints, {}, {
-                            strokeColor: '#0055FF', strokeWidth: 2,
-                            interactivityModel: 'default#transparent'
-                        });
-                        mapInstance.geoObjects.add(previewPolyline);
-                    }
-                    if (mouseCoords && drawingPoints.length >= 1) {
-                        rubberBandPolyline = new ymaps.Polyline(
-                            [drawingPoints[drawingPoints.length - 1], mouseCoords], {}, {
-                            strokeColor: '#0055FF', strokeWidth: 2, strokeStyle: 'dash',
-                            interactivityModel: 'default#transparent'
-                        });
-                        mapInstance.geoObjects.add(rubberBandPolyline);
-                    }
-                }
 
                 function initMap() {
                     const startLocation = [55.751244, 37.618423];
@@ -218,83 +192,112 @@
                         controls: ['zoomControl', 'searchControl', 'geolocationControl']
                     });
                     mapInstance.controls.get('searchControl').options.set({ provider: 'yandex#search' });
-                    loadExistingPolygon();
 
-                    mapInstance.events.add('click', function(e) {
-                        if (!isDrawing) startDrawing();
-                        var coords = e.get('coords');
-                        drawingPoints.push(coords);
-                        addPointMarker(coords);
-                        updatePreview(null);
-                        $('#map-hint').text('Точек: ' + drawingPoints.length + '. Нажмите «Завершить зону» для сохранения.');
+                    $('#startZoneBtn').on('click', startNewZone);
+
+                    $('#finishDrawingBtn').on('click', function() {
+                        if (!polygonInstance) return;
+                        var coords = polygonInstance.geometry.getCoordinates()[0];
+                        if (!coords || coords.length < 3) {
+                            alert('Минимум 3 точки для создания зоны');
+                            return;
+                        }
+                        polygonInstance.editor.stopDrawing();
+                        switchToEditing();
                     });
-
-                    mapInstance.events.add('mousemove', function(e) {
-                        if (!isDrawing || drawingPoints.length === 0) return;
-                        updatePreview(e.get('coords'));
-                    });
-
-                    $('#finishZoneBtn').on('click', function() { finishDrawing(); });
 
                     $('#resetZoneBtn').on('click', function() {
-                        isDrawing = false; drawingPoints = [];
                         if (polygonInstance) { mapInstance.geoObjects.remove(polygonInstance); polygonInstance = null; }
-                        clearPreviewLines(); removePointMarkers();
-                        $('#place_points').val(''); $('#finishZoneBtn').addClass('d-none');
-                        $('#map-hint').text('Кликайте на карту для добавления точек зоны');
+                        drawingDone = false;
+                        $('#place_points').val('');
+                        updateZoneStatus();
+                        $('#finishDrawingBtn').addClass('d-none');
+                        $('#startZoneBtn').removeClass('d-none');
+                        $('#map-hint').text('Нажмите «Нарисовать зону» и кликайте по карте.');
                     });
+
+                    loadExistingPolygon();
                 }
 
-                function startDrawing() {
-                    isDrawing = true; drawingPoints = [];
+                function startNewZone() {
                     if (polygonInstance) { mapInstance.geoObjects.remove(polygonInstance); polygonInstance = null; }
-                    clearPreviewLines(); removePointMarkers();
-                    $('#place_points').val(''); $('#finishZoneBtn').removeClass('d-none');
-                    $('#map-hint').text('Кликайте на карту для добавления точек зоны');
-                }
-
-                function addPointMarker(coords) {
-                    mapInstance.geoObjects.add(new ymaps.Placemark(coords, {}, {
-                        preset: 'islands#redDotIcon', interactivityModel: 'default#transparent'
-                    }));
-                }
-
-                function finishDrawing() {
-                    if (drawingPoints.length < 3) { alert('Минимум 3 точки для создания зоны'); return; }
-                    isDrawing = false; clearPreviewLines(); removePointMarkers();
-                    $('#finishZoneBtn').addClass('d-none');
-                    var first = drawingPoints[0], last = drawingPoints[drawingPoints.length - 1];
-                    if (first[0] !== last[0] || first[1] !== last[1]) drawingPoints.push([first[0], first[1]]);
-                    polygonInstance = new ymaps.Polygon([drawingPoints], {}, {
-                        fillColor: '#0055FF', fillOpacity: 0.2, strokeColor: '#0055FF', strokeWidth: 2,
+                    drawingDone = false;
+                    polygonInstance = new ymaps.Polygon([], {}, {
+                        fillColor: '#0055FF', fillOpacity: 0.2,
+                        strokeColor: '#0055FF', strokeWidth: 2,
                     });
                     mapInstance.geoObjects.add(polygonInstance);
+                    polygonInstance.editor.events.add('statechange', function() {
+                        if (!polygonInstance.editor.state.get('drawing')) {
+                            switchToEditing();
+                        }
+                    });
+                    polygonInstance.editor.startDrawing();
+                    $('#place_points').val('');
+                    updateZoneStatus();
+                    $('#startZoneBtn').addClass('d-none');
+                    $('#finishDrawingBtn').removeClass('d-none');
+                    $('#map-hint').text('Кликайте по карте. Нажмите на первую точку чтобы замкнуть зону, или нажмите «Завершить рисование».');
+                }
+
+                function switchToEditing() {
+                    if (drawingDone) return;
+                    var coords = polygonInstance && polygonInstance.geometry.getCoordinates()[0];
+                    if (!coords || coords.length < 3) return;
+                    drawingDone = true;
                     polygonInstance.editor.startEditing();
-                    polygonInstance.events.add('geometrychange', function() { updateCoordinatesFromPolygon(); });
+                    polygonInstance.geometry.events.add('change', updateCoordinatesFromPolygon);
                     updateCoordinatesFromPolygon();
-                    $('#map-hint').text('Зона создана. Перетащите вершины для редактирования или нажмите «Сбросить».');
+                    $('#finishDrawingBtn').addClass('d-none');
+                    $('#startZoneBtn').removeClass('d-none');
+                    $('#map-hint').text('Зона создана. Перетаскивайте вершины или средние точки для редактирования.');
                 }
 
                 function updateCoordinatesFromPolygon() {
                     if (!polygonInstance) return;
                     var coords = polygonInstance.geometry.getCoordinates()[0];
+                    if (!coords || coords.length < 3) return;
                     $('#place_points').val(JSON.stringify(
                         coords.map(function(c) { return { lat: c[0], lng: c[1] }; })
                     ));
+                    updateZoneStatus();
+                }
+
+                function updateZoneStatus() {
+                    var val = $('#place_points').val();
+                    var $status = $('#zone-status');
+                    if (val) {
+                        try {
+                            var pts = JSON.parse(val);
+                            var count = pts.length > 0 && pts[pts.length - 1].lat === pts[0].lat ? pts.length - 1 : pts.length;
+                            $status.html('<span class="text-success"><i data-feather="check-circle" style="width:14px;height:14px;vertical-align:middle;"></i> Зона задана (' + count + ' точек)</span>');
+                        } catch(e) {
+                            $status.html('<span class="text-success"><i data-feather="check-circle" style="width:14px;height:14px;vertical-align:middle;"></i> Зона задана</span>');
+                        }
+                    } else {
+                        $status.html('<span class="text-danger"><i data-feather="alert-circle" style="width:14px;height:14px;vertical-align:middle;"></i> Зона не нарисована</span>');
+                    }
+                    if (typeof feather !== 'undefined') feather.replace();
                 }
 
                 function loadExistingPolygon() {
-                    if (!existingPolygon || existingPolygon.length < 3) return;
+                    if (!existingPolygon || existingPolygon.length < 3) {
+                        updateZoneStatus();
+                        return;
+                    }
+                    drawingDone = true;
                     var coords = existingPolygon.map(function(p) { return [p.lat, p.lng]; });
                     polygonInstance = new ymaps.Polygon([coords], {}, {
-                        fillColor: '#0055FF', fillOpacity: 0.2, strokeColor: '#0055FF', strokeWidth: 2,
+                        fillColor: '#0055FF', fillOpacity: 0.2,
+                        strokeColor: '#0055FF', strokeWidth: 2,
                     });
                     mapInstance.geoObjects.add(polygonInstance);
                     polygonInstance.editor.startEditing();
-                    polygonInstance.events.add('geometrychange', function() { updateCoordinatesFromPolygon(); });
+                    polygonInstance.geometry.events.add('change', updateCoordinatesFromPolygon);
                     mapInstance.setBounds(polygonInstance.geometry.getBounds());
                     $('#place_points').val(JSON.stringify(existingPolygon));
-                    $('#map-hint').text('Зона загружена. Перетащите точки для редактирования или нажмите «Сбросить».');
+                    updateZoneStatus();
+                    $('#map-hint').text('Зона загружена. Перетаскивайте вершины или средние точки. Нажмите «Сбросить» чтобы нарисовать заново.');
                 }
             });
         })(jQuery);
