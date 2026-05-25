@@ -44,7 +44,7 @@ class ThemeOptionSeeder extends Seeder
                 'blogs' => true,
             ],
             'footer' => [
-                'footer_copyright' => '©2024 ' . $this->baseName . ' All rights reserved',
+                'footer_copyright' => '©' . date('Y') . ' ' . $this->baseName . ' — Bonapartov V.A.',
                 'useful_link' =>
                 [
                     [
