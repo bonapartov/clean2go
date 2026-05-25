@@ -1,0 +1,1 @@
+{"name":"Smsc","alias":"smsc","description":"Интеграция со SMSC.ru — резервный SMS-провайдер для России.","keywords":[],"priority":0,"providers":["Modules\\Smsc\\Providers\\SmscServiceProvider"],"files":[]}

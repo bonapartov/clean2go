@@ -1,0 +1,9 @@
+{
+    "name": "YooKassa",
+    "alias": "yookassa",
+    "description": "Интеграция с ЮКасса (YooKassa) — главный российский платёжный шлюз.",
+    "keywords": [],
+    "priority": 0,
+    "providers": ["Modules\\YooKassa\\Providers\\YooKassaServiceProvider"],
+    "files": []
+}

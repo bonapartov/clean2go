@@ -1,0 +1,11 @@
+{
+    "name": "CloudPayments",
+    "alias": "cloudpayments",
+    "description": "Интеграция с CloudPayments — российский платёжный шлюз.",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CloudPayments\\Providers\\CloudPaymentsServiceProvider"
+    ],
+    "files": []
+}

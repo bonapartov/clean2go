@@ -152,28 +152,39 @@ class Helpers
     {
         try {
             $defaultSMSGateway = self::getDefaultSMSGateway();
-            if($defaultSMSGateway && $defaultSMSGateway !== 'firebase'){
-                if($defaultSMSGateway == 'custom'){
+            if ($defaultSMSGateway && $defaultSMSGateway !== 'firebase') {
+                if ($defaultSMSGateway == 'custom') {
                     $sms = new SMS();
                     $data['to'] = $sendTo;
                     $data['message'] = $message;
-
                     $sms->sendSMS($data);
+                    return;
                 }
 
                 $module = NwidartModule::find($defaultSMSGateway);
-                if ($module) {
-                    if (!is_null($module) && $module?->isEnabled()) {
+                if ($module && $module->isEnabled()) {
+                    $moduleName = $module->getName();
+                    $sms = 'Modules\\' . $moduleName . '\\SMS\\' . $moduleName;
+                    if (class_exists($sms) && method_exists($sms, 'getIntent')) {
+                        return $sms::getIntent($sendTo, $message);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            try {
+                $fallbackGateway = self::getFallbackSMSGateway();
+                if ($fallbackGateway && $fallbackGateway !== $defaultSMSGateway) {
+                    $module = NwidartModule::find($fallbackGateway);
+                    if ($module && $module->isEnabled()) {
                         $moduleName = $module->getName();
-
                         $sms = 'Modules\\' . $moduleName . '\\SMS\\' . $moduleName;
                         if (class_exists($sms) && method_exists($sms, 'getIntent')) {
                             return $sms::getIntent($sendTo, $message);
                         }
                     }
                 }
+            } catch (Exception $fallbackException) {
             }
-        } catch (Exception $e) {
         }
     }
 
@@ -1506,6 +1517,12 @@ class Helpers
     {
         $settings = self::getSettings();
         return $settings['general']['default_sms_gateway'] ?? null;
+    }
+
+    public static function getFallbackSMSGateway()
+    {
+        $settings = self::getSettings();
+        return $settings['general']['fallback_sms_gateway'] ?? null;
     }
 
     public static function getDefaultLanguageLocale()

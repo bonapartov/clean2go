@@ -9,11 +9,6 @@ use Illuminate\Database\Seeder;
 
 class SettingSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $current_year = date('Y');
@@ -27,18 +22,19 @@ class SettingSeeder extends Seeder
                 'dark_logo' => '/admin/images/logo.png',
                 'favicon' => '/admin/images/faviconIcon.png',
                 'site_name' => $baseName,
-                'default_timezone' => 'Asia/Kolkata',
+                'default_timezone' => 'Europe/Moscow',
                 'default_currency_id' => $currency_id,
                 'platform_fees' => 10,
                 'platform_fees_type' => 'fixed',
                 'default_language_id' => $language_id,
-                'default_sms_gateway' => null,
+                'default_sms_gateway' => 'Smsru',
+                'fallback_sms_gateway' => 'Smsc',
                 'min_booking_amount' => 100,
                 'mode' => 'light',
                 'firebase_server_key' => '',
                 'copyright' => "Copyright {$current_year} © {$baseName} — Bonapartov V.A.",
                 'cancellation_restriction_hours' => 1,
-                'country_code' => 1,
+                'country_code' => 7,
             ],
             'activation' => [
                 'coupon_enable' => '1',
