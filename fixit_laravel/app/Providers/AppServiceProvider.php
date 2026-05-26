@@ -41,6 +41,21 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
+        // Онбординг: проверка ИНН — 5 попыток в час с одного IP
+        RateLimiter::for('onboarding-inn', function (Request $request) {
+            return Limit::perHour(5)->by($request->ip());
+        });
+
+        // Онбординг: отправка SMS — 3 в час на пользователя
+        RateLimiter::for('onboarding-sms', function (Request $request) {
+            return Limit::perHour(3)->by($request->user()?->id ?: $request->ip());
+        });
+
+        // Онбординг: подписание договора — 3 попытки в 15 минут на пользователя
+        RateLimiter::for('onboarding-sign', function (Request $request) {
+            return Limit::perMinutes(15, 3)->by($request->user()?->id ?: $request->ip());
+        });
+
         Collection::macro('paginate', function ($perPage = 15) {
             $page = LengthAwarePaginator::resolveCurrentPage('page');
             return new LengthAwarePaginator($this->forPage($page, $perPage), $this->count(), $perPage, $page, [

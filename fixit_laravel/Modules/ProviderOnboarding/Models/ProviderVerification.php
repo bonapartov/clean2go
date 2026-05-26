@@ -2,13 +2,22 @@
 
 namespace Modules\ProviderOnboarding\Models;
 
+use Database\Factories\ProviderVerificationFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 
 class ProviderVerification extends Model
 {
+    use HasFactory;
+
     protected $table = 'provider_verifications';
+
+    protected static function newFactory(): ProviderVerificationFactory
+    {
+        return ProviderVerificationFactory::new();
+    }
 
     protected $fillable = [
         'user_id', 'inn', 'taxpayer_type', 'legal_name', 'director_name',

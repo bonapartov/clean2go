@@ -5,6 +5,7 @@ namespace Modules\ProviderOnboarding\Providers;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Modules\ProviderOnboarding\Console\Commands\PurgePassportFiles;
 use Modules\ProviderOnboarding\Listeners\CheckPendingNpdOnLogin;
 
 class ProviderOnboardingServiceProvider extends ServiceProvider
@@ -17,6 +18,7 @@ class ProviderOnboardingServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         Event::listen(Login::class, CheckPendingNpdOnLogin::class);
+        $this->commands([PurgePassportFiles::class]);
     }
 
     public function register(): void

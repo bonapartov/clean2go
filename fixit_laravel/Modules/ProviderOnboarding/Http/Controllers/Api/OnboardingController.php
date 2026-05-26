@@ -13,6 +13,7 @@ use Modules\ProviderOnboarding\Models\IntegrationSetting;
 use Modules\ProviderOnboarding\Models\OnboardingLog;
 use Modules\ProviderOnboarding\Models\ProviderVerification;
 use Modules\ProviderOnboarding\Jobs\VerifyPassportJob;
+use Modules\ProviderOnboarding\Services\BikLookupService;
 use Modules\ProviderOnboarding\Services\ContractService;
 use Modules\ProviderOnboarding\Services\InnVerificationService;
 use Modules\ProviderOnboarding\Services\NpdVerificationService;
@@ -23,6 +24,7 @@ class OnboardingController extends Controller
         private InnVerificationService $innService,
         private NpdVerificationService $npdService,
         private ContractService $contractService,
+        private BikLookupService $bikService,
     ) {}
 
     // Шаг 1: проверка ИНН
@@ -89,6 +91,60 @@ class OnboardingController extends Controller
             'okved_warning' => $okvedWarning,
             // Шаг 2Б: Flutter показывает экран предупреждения если okved_warning = true и taxpayer_type = ip/ip_on_npd
         ]));
+    }
+
+    // Шаг 2В: документы ООО (директор + доверенность + БИК)
+    public function uploadOooDocuments(Request $request): JsonResponse
+    {
+        $request->validate([
+            'director_name'         => ['required', 'string', 'max:255'],
+            'signatory_name'        => ['nullable', 'string', 'max:255'],
+            'power_of_attorney'     => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+            'bik'                   => ['required', 'string', 'regex:/^\d{9}$/'],
+            'bank_account'          => ['required', 'string', 'regex:/^\d{20}$/'],
+        ]);
+
+        $user = $request->user();
+        $verification = ProviderVerification::where('user_id', $user->id)->firstOrFail();
+
+        if ($verification->taxpayer_type !== 'legal_entity') {
+            return response()->json(['error' => 'wrong_taxpayer_type', 'message' => 'Этот шаг только для ООО.'], 422);
+        }
+
+        $bik = $request->input('bik');
+        $bikResult = $this->bikService->lookup($bik);
+
+        if (!$bikResult['found']) {
+            return response()->json(['error' => 'bik_not_found', 'message' => 'БИК не найден. Проверьте правильность.'], 422);
+        }
+
+        $poaPath = null;
+        if ($request->hasFile('power_of_attorney')) {
+            $poaPath = $request->file('power_of_attorney')->store("ooo_docs/{$user->id}", 'local');
+        }
+
+        $verification->update([
+            'director_name'       => $request->input('director_name'),
+            'signatory_name'      => $request->input('signatory_name') ?? $request->input('director_name'),
+            'power_of_attorney_path' => $poaPath,
+            'onboarding_status'   => 'pending_manual',
+            'manual_review_reason' => 'ooo_documents',
+        ]);
+
+        OnboardingLog::record($user->id, 'ooo_documents', 'submitted', [
+            'bik'       => $bik,
+            'bank_name' => $bikResult['bank_name'],
+        ], $request->ip());
+
+        $user->onboarding_step = 2;
+        $user->save();
+
+        return response()->json([
+            'message'      => 'Документы отправлены на проверку менеджеру.',
+            'bank_name'    => $bikResult['bank_name'],
+            'corr_account' => $bikResult['corr_account'],
+            'next_step'    => 'pending_manual',
+        ]);
     }
 
     // Шаг 3: загрузка паспорта
@@ -248,7 +304,8 @@ class OnboardingController extends Controller
             return response()->json(['error' => 'wrong_code', 'message' => 'Неверный код подтверждения.'], 422);
         }
 
-        $contractType = $verification->contract_type
+        $previousContractType = $verification->contract_type;
+        $contractType = $previousContractType
             ?? match ($verification->taxpayer_type) {
                 'self_employed' => 'self_employed',
                 'individual_entrepreneur', 'ip_on_npd' => 'ip',
@@ -260,14 +317,18 @@ class OnboardingController extends Controller
             'contract_type' => $contractType,
             'contract_signed_at' => now(),
             'contract_sign_method' => 'sms_otp',
-            'contract_sms_code' => null, // invalidate after use
+            'contract_sms_code' => null,
             'onboarding_status' => 'approved',
         ]);
 
         $user->onboarding_step = 5;
         $user->save();
 
-        OnboardingLog::record($user->id, 'contract', 'signed', ['type' => $contractType], $request->ip());
+        OnboardingLog::record($user->id, 'contract', 'signed', [
+            'type'                  => $contractType,
+            'previous_contract_type' => $previousContractType,
+            'reason'                => 'initial_signing',
+        ], $request->ip());
 
         return response()->json(['message' => 'Договор подписан.', 'next_step' => 6]);
     }
@@ -375,7 +436,8 @@ class OnboardingController extends Controller
 
         OnboardingLog::record($user->id, 'contract', 'gph_signed', [
             'previous_contract_type' => $previousContractType,
-            'new_contract_type' => 'gph',
+            'new_contract_type'      => 'gph',
+            'reason'                 => 'npd_lost',
         ], $request->ip());
 
         return response()->json([

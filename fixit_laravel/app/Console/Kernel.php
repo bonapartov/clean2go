@@ -24,6 +24,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('advertisement:update-status')->dailyAt('01:00');
+        // ФЗ-152: удалять файлы паспортов через 90 дней после одобрения
+        $schedule->command('onboarding:purge-passport-files --days=90')->dailyAt('03:00');
         // $schedule->call('App\Http\Controllers\API\CommissionHistoryController@store');
         $schedule->call('App\Http\Controllers\BookingController@reminder')->daily();
         $schedule->command('booking:cancel-expired')->dailyAt('01:00');
