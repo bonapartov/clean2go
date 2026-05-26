@@ -5,10 +5,14 @@ namespace Modules\ProviderOnboarding\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Modules\ProviderOnboarding\Models\IntegrationSetting;
 use Modules\ProviderOnboarding\Models\OnboardingLog;
 use Modules\ProviderOnboarding\Models\ProviderVerification;
+use Modules\ProviderOnboarding\Jobs\VerifyPassportJob;
 use Modules\ProviderOnboarding\Services\ContractService;
 use Modules\ProviderOnboarding\Services\InnVerificationService;
 use Modules\ProviderOnboarding\Services\NpdVerificationService;
@@ -85,6 +89,86 @@ class OnboardingController extends Controller
             'okved_warning' => $okvedWarning,
             // Шаг 2Б: Flutter показывает экран предупреждения если okved_warning = true и taxpayer_type = ip/ip_on_npd
         ]));
+    }
+
+    // Шаг 3: загрузка паспорта
+    public function uploadPassport(Request $request): JsonResponse
+    {
+        $request->validate([
+            'series'       => ['required', 'string', 'size:4'],
+            'number'       => ['required', 'string', 'size:6'],
+            'issued_by'    => ['required', 'string', 'max:255'],
+            'issued_date'  => ['required', 'date', 'before:today'],
+            'dept_code'    => ['required', 'string', 'regex:/^\d{3}-\d{3}$/'],
+            'photo'        => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:10240'],
+            'selfie'       => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:10240'],
+        ]);
+
+        $user = $request->user();
+        $verification = ProviderVerification::where('user_id', $user->id)->firstOrFail();
+
+        $photoPath  = $request->file('photo')->store("passports/{$user->id}", 'local');
+        $selfiePath = $request->file('selfie')->store("passports/{$user->id}", 'local');
+
+        $verification->update([
+            'passport_series'      => $request->input('series'),
+            'passport_number'      => $request->input('number'),
+            'passport_issued_by'   => $request->input('issued_by'),
+            'passport_issued_date' => $request->input('issued_date'),
+            'passport_dept_code'   => $request->input('dept_code'),
+            'passport_photo_path'  => $photoPath,
+            'passport_selfie_path' => $selfiePath,
+            'passport_status'      => 'pending',
+        ]);
+
+        $user->onboarding_step = 3;
+        $user->save();
+
+        OnboardingLog::record($user->id, 'passport', 'uploaded', [], $request->ip());
+
+        VerifyPassportJob::dispatch($user->id, $verification->id);
+
+        return response()->json([
+            'message'   => 'Документы загружены и переданы на верификацию.',
+            'next_step' => 'passport_status',
+        ]);
+    }
+
+    // GET /api/onboarding/passport/status — Flutter polling каждые 30с
+    public function passportStatus(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $verification = ProviderVerification::where('user_id', $user->id)->firstOrFail();
+
+        return response()->json([
+            'passport_status'      => $verification->passport_status,
+            'passport_verified_at' => $verification->passport_verified_at,
+        ]);
+    }
+
+    // Генерирует signed URL для файлов паспорта (для admin-панели, TTL 15 мин)
+    public function passportFileUrl(int $userId, string $type): string
+    {
+        return URL::temporarySignedRoute(
+            'api.onboarding.passport.file',
+            now()->addMinutes(15),
+            ['userId' => $userId, 'type' => $type],
+        );
+    }
+
+    // Отдаёт файл паспорта по signed URL
+    public function servePassportFile(Request $request, int $userId, string $type): Response
+    {
+        abort_unless(in_array($type, ['photo', 'selfie'], true), 404);
+
+        $verification = ProviderVerification::where('user_id', $userId)->firstOrFail();
+        $path = $type === 'photo' ? $verification->passport_photo_path : $verification->passport_selfie_path;
+
+        abort_unless($path && Storage::disk('local')->exists($path), 404);
+
+        return response(Storage::disk('local')->get($path), 200, [
+            'Content-Type' => Storage::disk('local')->mimeType($path),
+        ]);
     }
 
     // Шаг 5a: генерация договора

@@ -12,13 +12,14 @@ class IntegrationSetting extends Model
 
     protected $hidden = ['value']; // никогда не сериализуем значение напрямую в JSON
 
-    public static function get(string $key): ?string
+    public static function get(string $key, ?string $default = null): ?string
     {
         $setting = self::where('key', $key)->first();
-        if (!$setting) return null;
-        return $setting->type === 'password'
+        if (!$setting) return $default;
+        $value = $setting->type === 'password'
             ? decrypt($setting->value)
             : $setting->value;
+        return $value ?? $default;
     }
 
     public static function set(string $key, string $value, ?int $updatedBy = null): void

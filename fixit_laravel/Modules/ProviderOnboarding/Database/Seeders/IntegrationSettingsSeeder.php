@@ -23,6 +23,10 @@ class IntegrationSettingsSeeder extends Seeder
             ['key' => 'passport_api_key', 'type' => 'password', 'group' => 'passport', 'label' => 'API Key (Суфтех / Контур)', 'value' => null],
             ['key' => 'passport_endpoint', 'type' => 'text', 'group' => 'passport', 'label' => 'Endpoint URL', 'value' => null],
 
+            // Telegram уведомления администратору
+            ['key' => 'telegram_bot_token', 'type' => 'password', 'group' => 'passport', 'label' => 'Telegram Bot Token', 'value' => null],
+            ['key' => 'telegram_admin_chat_id', 'type' => 'text', 'group' => 'passport', 'label' => 'Telegram Admin Chat ID', 'value' => null],
+
             // ФССП
             ['key' => 'fssp_provider', 'type' => 'select', 'group' => 'fssp', 'label' => 'Провайдер ФССП', 'value' => 'manual'],
             ['key' => 'fssp_api_key', 'type' => 'password', 'group' => 'fssp', 'label' => 'API Key (Контур / SmartDeal)', 'value' => null],

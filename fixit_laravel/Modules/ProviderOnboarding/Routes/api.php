@@ -21,6 +21,11 @@ Route::prefix('onboarding')
         Route::post('gph-contract/sign', 'Api\OnboardingController@signGphContract')->name('api.onboarding.gph-contract.sign');
 
         // Sprint 3
-        // Route::post('passport', 'Api\OnboardingController@submitPassport');
-        // Route::get('passport/status', 'Api\OnboardingController@passportStatus');
+        Route::post('passport', 'Api\OnboardingController@uploadPassport')->name('api.onboarding.passport.upload');
+        Route::get('passport/status', 'Api\OnboardingController@passportStatus')->name('api.onboarding.passport.status');
     });
+
+// Signed URL для безопасного просмотра файлов паспорта (TTL 15 мин) — без auth:sanctum, верифицируется подписью
+Route::get('onboarding/passport/file/{userId}/{type}', 'Api\OnboardingController@servePassportFile')
+    ->middleware('signed')
+    ->name('api.onboarding.passport.file');

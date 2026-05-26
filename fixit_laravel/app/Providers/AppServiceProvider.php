@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Services\Guardian;
 
 use App\Helpers\Helpers;
 use Database\Seeders\ThemeOptionSeeder;
@@ -38,7 +37,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Guardian::bootApplication();
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });

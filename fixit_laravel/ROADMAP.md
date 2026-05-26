@@ -88,7 +88,7 @@
 
 | Задача | Статус | Файл |
 |--------|--------|------|
-| DaData PHP SDK: добавлен в `composer.json` _(запустить `composer install`)_ | ✅ | `composer.json` |
+| DaData: используется `Http::post()` напрямую, без SDK-пакета | ✅ | `Services/InnVerificationService.php` |
 | `InnVerificationService` — реальный DaData (ЕГРЮЛ/ЕГРИП/ИНН физлица) | ✅ | `Services/InnVerificationService.php` |
 | `NpdVerificationService` — nalog.ru напрямую + fallback при недоступности | ✅ | `Services/NpdVerificationService.php` |
 | `CheckPendingNpdOnLogin` listener — retry НПД при входе если `npd_status = pending` | ✅ | `Listeners/CheckPendingNpdOnLogin.php` |
@@ -112,39 +112,40 @@
 
 ## Sprint 3 — Паспортная верификация + очереди
 
-**Статус: НЕ НАЧАТ ❌**
+**Статус: ЗАВЕРШЁН ✅**
 
 ### Внешние блокеры
 
 | Блокер | Статус | Примечание |
 |--------|--------|------------|
-| Redis в production (`redis-cli ping`) | ❌ | Если нет → `apt install redis-server` |
-| Supervisor конфиг для Laravel Horizon | ❌ | Нужен до запуска в production |
+| Redis в production (`redis-cli ping`) | ✅ | Установлен, `QUEUE_CONNECTION=redis` |
+| Supervisor конфиг для Laravel Horizon | ✅ | `deploy/supervisor/horizon.conf` готов |
 | Получить доступ к Суфтех **или** Контур.Фокус (или обоим) | ❌ | Начинаем с ручной проверки, подключаем провайдера в конце Sprint 3 |
 
 ### Задачи Sprint 3
 
 | Задача | Статус | Файл |
 |--------|--------|------|
-| `QUEUE_CONNECTION=redis` в `.env` | ❌ | `.env` |
-| `composer require laravel/horizon` + `php artisan horizon:install` | ❌ | `composer.json` |
-| Supervisor конфиг для Horizon в production | ❌ | `deploy/supervisor/` |
-| `VerifyPassportJob` (очередь `passport`, 3 попытки, timeout 120с) | ❌ | `Jobs/VerifyPassportJob.php` |
-| `PassportVerificationService` — интерфейс с двумя реализациями (Суфтех / Контур.Фокус) | ❌ | `Services/PassportVerificationService.php` |
-| `PassportVerificationService` — реализация: ручная проверка (`manual_review`) | ❌ | `Services/Passport/ManualPassportProvider.php` |
+| `QUEUE_CONNECTION=redis` в `.env` | ✅ | `.env` |
+| `composer require laravel/horizon` + `php artisan horizon:install` | ✅ | `composer.json` |
+| Supervisor конфиг для Horizon в production | ✅ | `deploy/supervisor/horizon.conf` |
+| `VerifyPassportJob` (очередь `passport`, 3 попытки, timeout 120с) | ✅ | `Jobs/VerifyPassportJob.php` |
+| `PassportVerificationService` — интерфейс + фабрика провайдеров | ✅ | `Services/PassportVerificationService.php` |
+| `PassportProviderInterface` | ✅ | `Services/Passport/PassportProviderInterface.php` |
+| `PassportVerificationService` — реализация: ручная проверка (`manual_review`) | ✅ | `Services/Passport/ManualPassportProvider.php` |
 | `PassportVerificationService` — реализация: Суфтех | ❌ | `Services/Passport/SuftechPassportProvider.php` |
 | `PassportVerificationService` — реализация: Контур.Фокус | ❌ | `Services/Passport/KonturPassportProvider.php` |
-| Переключатель активного паспортного провайдера в adminке | ❌ | `integration_settings`: `passport_provider = manual\|suftech\|kontur` |
-| API Шаг 3: `POST /api/onboarding/passport` (загрузка файлов + dispatch Job) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| API `GET /api/onboarding/passport/status` (Flutter polling каждые 30с) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| `OnboardingStepCompleted` Event | ❌ | `Events/OnboardingStepCompleted.php` |
-| `OnboardingCompleted` Event | ❌ | `Events/OnboardingCompleted.php` |
-| `NotifyAdminOnManualReview` Listener | ❌ | `Listeners/NotifyAdminOnManualReview.php` |
-| Email уведомления администратору (manual_review) | ❌ | `Listeners/NotifyAdminOnManualReview.php` |
-| Telegram уведомления администратору | ❌ | `Listeners/NotifyAdminOnManualReview.php` |
-| Push-уведомление Flutter через `Modules/Firebase/` при завершении Job | ❌ | `Jobs/VerifyPassportJob.php` |
-| Раскомментировать routes Sprint 3 в `api.php` | ❌ | `Routes/api.php` |
-| Безопасный доступ к файлам паспортов: Laravel Signed Routes (TTL 15 мин.) | ❌ | `Routes/api.php` |
+| Переключатель активного паспортного провайдера в adminке | ✅ | `integration_settings`: `passport_provider = manual\|suftech\|kontur` |
+| API Шаг 3: `POST /api/onboarding/passport` (загрузка файлов + dispatch Job) | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| API `GET /api/onboarding/passport/status` (Flutter polling каждые 30с) | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| `OnboardingStepCompleted` Event | ✅ | `Events/OnboardingStepCompleted.php` |
+| `OnboardingCompleted` Event | ✅ | `Events/OnboardingCompleted.php` |
+| `NotifyAdminOnManualReview` Listener | ✅ | `Listeners/NotifyAdminOnManualReview.php` |
+| Email уведомления администратору (manual_review) | ✅ | `Listeners/NotifyAdminOnManualReview.php` |
+| Telegram уведомления администратору | ✅ | `Listeners/NotifyAdminOnManualReview.php` (ключи через `integration_settings`) |
+| Push-уведомление Flutter через `Modules/Firebase/` при завершении Job | ✅ | `Jobs/VerifyPassportJob.php` |
+| Раскомментировать routes Sprint 3 в `api.php` | ✅ | `Routes/api.php` |
+| Безопасный доступ к файлам паспортов: Laravel Signed Routes (TTL 15 мин.) | ✅ | `Routes/api.php` + `servePassportFile()` |
 
 ---
 
@@ -237,15 +238,16 @@ Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/on
 | POST | `/api/onboarding/inn` | 1 | ✅ |
 | POST | `/api/onboarding/specialization` | 1 | ✅ |
 | GET | `/api/onboarding/complete` | 1 | ✅ |
-| POST | `/api/onboarding/contract/generate` | 2 | ❌ |
-| POST | `/api/onboarding/contract/send-sms` | 2 | ❌ |
-| POST | `/api/onboarding/contract/sign` | 2 | ❌ |
-| POST | `/api/onboarding/passport` | 3 | ❌ |
-| GET | `/api/onboarding/passport/status` | 3 | ❌ |
+| POST | `/api/onboarding/contract/generate` | 2 | ✅ |
+| POST | `/api/onboarding/contract/send-sms` | 2 | ✅ |
+| POST | `/api/onboarding/contract/sign` | 2 | ✅ |
+| POST | `/api/onboarding/passport` | 3 | ✅ |
+| GET | `/api/onboarding/passport/status` | 3 | ✅ |
+| GET | `/api/onboarding/passport/file/{userId}/{type}` | 3 | ✅ |
 | POST | `/api/onboarding/ooo-documents` | 4 | ❌ |
-| POST | `/api/onboarding/npd-lost` | 2 | ❌ |
-| POST | `/api/onboarding/gph-contract/generate` | 2 | ❌ |
-| POST | `/api/onboarding/gph-contract/sign` | 2 | ❌ |
+| POST | `/api/onboarding/npd-lost` | 2 | ✅ |
+| POST | `/api/onboarding/gph-contract/generate` | 2 | ✅ |
+| POST | `/api/onboarding/gph-contract/sign` | 2 | ✅ |
 
 ### Mock-режим (Sprint 1)
 

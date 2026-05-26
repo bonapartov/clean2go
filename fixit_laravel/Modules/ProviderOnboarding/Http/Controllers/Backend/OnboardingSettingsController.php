@@ -12,12 +12,27 @@ class OnboardingSettingsController extends Controller
 {
     private array $groups = ['general', 'fns', 'npd', 'passport', 'fssp', 'contract'];
 
+    private array $selectOptions = [
+        'passport_provider' => [
+            'manual'  => 'Ручная проверка администратором',
+            'suftech' => 'Суфтех (автоматически)',
+            'kontur'  => 'Контур.Фокус (автоматически)',
+        ],
+        'fssp_provider' => [
+            'manual' => 'Ручная проверка',
+            'kontur' => 'Контур.Фокус (автоматически)',
+        ],
+    ];
+
     public function index(): View
     {
         $settings = IntegrationSetting::orderBy('group')->orderBy('key')->get()
             ->groupBy('group');
 
-        return view('backend.onboarding.settings.index', compact('settings'));
+        return view('backend.onboarding.settings.index', [
+            'settings'      => $settings,
+            'selectOptions' => $this->selectOptions,
+        ]);
     }
 
     public function update(Request $request): RedirectResponse
