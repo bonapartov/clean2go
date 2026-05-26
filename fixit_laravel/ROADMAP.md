@@ -27,7 +27,7 @@
 | Адреса / зона работы | DaData (подсказки + автодополнение) |
 | ФССП | ~~Убрано из плана~~ — нет юридического требования для данного типа бизнеса |
 | ГПХ договор | Резервный вариант при потере НПД-статуса. `contract_type = 'gph'`. Платформа — налоговый агент: удерживает НДФЛ 13%, сверху платит страховые ~30% |
-| Формат договоров | Таблица `contract_templates` в БД + TinyMCE-редактор в adminке (TinyMCE уже используется в проекте). Переменные в шаблоне: `{{provider_name}}`, `{{inn}}`, `{{contract_date}}` и т.д. ContractService читает активный шаблон из БД, подставляет переменные, рендерит через MPDF. При публикации новой версии — инкремент `version` на записи шаблона, `payments_frozen = true` всем затронутым пользователям, переподпись через тот же OTP-флоу |
+| Формат договоров | Blade-шаблоны + MPDF. Шаблоны в `resources/views/contracts/` (в git). Источники: `Modules/ProviderOnboarding/resources/contracts/source/*.docx`. Версия каждого типа в `integration_settings` (`contract_version_self_employed`, `_ip`, `_ooo`, `_gph`). Разработчик обновляет blade-файл и деплоит → admin инкрементирует версию в настройках → `payments_frozen = true` для затронутых пользователей → переподпись по OTP |
 | PDF договоры | MPDF (`mpdf/mpdf`) |
 | Очереди | Laravel Queue + Redis + Horizon |
 | Push-уведомления Flutter | Существующий `Modules/Firebase/` |
@@ -89,13 +89,10 @@
 | `NpdVerificationService` — nalog.ru напрямую + fallback при недоступности | ❌ | `Services/NpdVerificationService.php` |
 | `CheckPendingNpdOnLogin` listener — retry НПД при входе если `npd_status = pending` | ❌ | `Listeners/CheckPendingNpdOnLogin.php` |
 | MPDF: `composer require mpdf/mpdf` | ❌ | `composer.json` |
-| Миграция: `create_contract_templates_table` (`contract_type` enum, `version` int, `content` longtext, `is_active` bool, `created_by`) | ❌ | `Database/Migrations/` |
+| Blade-шаблоны: перенести текст из `.docx` в `self_employed.blade.php`, `ip.blade.php`, `ooo.blade.php` | ❌ | `resources/views/contracts/` |
+| `ContractService` — рендерит Blade → HTML → MPDF, подставляет переменные провайдера | ❌ | `Services/ContractService.php` |
 | Миграция: добавить `contract_version` в `provider_verifications` (какую версию подписал пользователь) | ❌ | `Database/Migrations/` |
-| Admin: список шаблонов договоров с версией и датой изменения | ❌ | `Http/Controllers/Backend/ContractTemplateController.php` |
-| Admin: редактор шаблона — TinyMCE + панель доступных переменных (`{{provider_name}}`, `{{inn}}` и т.д.) | ❌ | `resources/views/backend/onboarding/contract-templates/` |
-| Admin: кнопка «Опубликовать» — инкремент `version`, авто-заморозка затронутых пользователей | ❌ | `Http/Controllers/Backend/ContractTemplateController.php` |
-| Seeder: начальные шаблоны для 4 типов договоров (контент из готовых шаблонов, `version = 1`) | ❌ | `Database/Seeders/ContractTemplatesSeeder.php` |
-| `ContractService` — читает активный шаблон из БД, подставляет переменные, рендерит через MPDF | ❌ | `Services/ContractService.php` |
+| `IntegrationSettingsSeeder` — версии шаблонов: `contract_version_self_employed`, `_ip`, `_ooo`, `_gph` (default `1`) | ❌ | `Database/Seeders/IntegrationSettingsSeeder.php` |
 | API Шаг 5a: `POST /api/onboarding/contract/generate` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 | API Шаг 5b: `POST /api/onboarding/contract/send-sms` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 | API Шаг 5c: `POST /api/onboarding/contract/sign` (SMS OTP) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
@@ -269,8 +266,8 @@ Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/on
 |------|---------|-----------|
 | nalog.ru недоступен при онбординге | НПД не проверяется сразу | Fallback: `npd_status = pending`, перепроверка при входе |
 | DaData API-ключ не получен до Sprint 2 | `InnVerificationService` остаётся на mock | Зарегистрироваться заранее на dadata.ru |
-| Версия договора изменилась, пользователь не переподписал | Работа без актуального договора | Кнопка «Опубликовать» автоматически выставляет `payments_frozen = true` всем затронутым пользователям |
-| Администратор сломал шаблон через TinyMCE (неверные переменные / сломанный HTML) | MPDF упадёт при генерации PDF | Валидация обязательных переменных при сохранении + preview PDF до публикации |
+| Версия договора изменилась, пользователь не переподписал | Работа без актуального договора | Admin инкрементирует `contract_version_*` в настройках после деплоя — это автоматически выставляет `payments_frozen = true` затронутым пользователям |
+| Шаблон ГПХ не получен от юриста до Sprint 4 | Sprint 4 не может начаться | Заказать шаблон параллельно с Sprint 3; `gph.blade.php` уже создан как placeholder |
 | Horizon без Supervisor в production | Jobs останавливаются после перезапуска сервера | Добавить Supervisor конфиг до Sprint 3 |
 | Суфтех и Контур.Фокус — получение доступа занимает время | Sprint 3 начнётся с ручной проверкой | Подавать заявки заранее, параллельно с Sprint 2 |
 | Шаблон ГПХ без юридической проверки | Договор юридически недействителен, риск налоговых претензий | Получить проверенный шаблон до начала Sprint 4 |
