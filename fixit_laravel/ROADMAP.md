@@ -27,6 +27,7 @@
 | Адреса / зона работы | DaData (подсказки + автодополнение) |
 | ФССП | ~~Убрано из плана~~ — нет юридического требования для данного типа бизнеса |
 | ГПХ договор | Резервный вариант при потере НПД-статуса. `contract_type = 'gph'`. Платформа — налоговый агент: удерживает НДФЛ 13%, сверху платит страховые ~30% |
+| Формат договоров | Blade-шаблоны + MPDF. Шаблоны в `resources/views/contracts/`. Версия каждого типа хранится в `integration_settings` (`contract_version_self_employed`, `_ip`, `_ooo`, `_gph`). При смене версии — переподпись через тот же OTP-флоу, `payments_frozen = true` до завершения |
 | PDF договоры | MPDF (`mpdf/mpdf`) |
 | Очереди | Laravel Queue + Redis + Horizon |
 | Push-уведомления Flutter | Существующий `Modules/Firebase/` |
@@ -76,8 +77,8 @@
 
 | Блокер | Статус | Примечание |
 |--------|--------|------------|
-| Зарегистрироваться на DaData.ru, получить API-ключ и Secret-ключ | ❌ | Без этого `InnVerificationService` остаётся на mock |
-| Юридически проверенные PDF-шаблоны договоров (самозанятый / ИП / ООО) | ❌ | Без этого `ContractService` не может быть завершён |
+| Зарегистрироваться на DaData.ru, получить API-ключ и Secret-ключ | ✅ | Ключи внесены в adminку через `integration_settings` |
+| Юридически проверенные шаблоны договоров (самозанятый / ИП / ООО) | ✅ | Шаблоны готовы — можно реализовывать `ContractService` |
 
 ### Задачи Sprint 2
 
@@ -88,7 +89,10 @@
 | `NpdVerificationService` — nalog.ru напрямую + fallback при недоступности | ❌ | `Services/NpdVerificationService.php` |
 | `CheckPendingNpdOnLogin` listener — retry НПД при входе если `npd_status = pending` | ❌ | `Listeners/CheckPendingNpdOnLogin.php` |
 | MPDF: `composer require mpdf/mpdf` | ❌ | `composer.json` |
-| `ContractService` — генерация PDF по шаблону | ❌ | `Services/ContractService.php` |
+| Blade-шаблоны договоров: `self_employed.blade.php`, `ip.blade.php`, `ooo.blade.php` | ❌ | `resources/views/contracts/` |
+| `ContractService` — генерация PDF из Blade-шаблона + подстановка переменных | ❌ | `Services/ContractService.php` |
+| Миграция: добавить `contract_version` в `provider_verifications` | ❌ | `Database/Migrations/` |
+| `IntegrationSettingsSeeder` — версии шаблонов: `contract_version_self_employed`, `_ip`, `_ooo`, `_gph` (default `1`) | ❌ | `Database/Seeders/IntegrationSettingsSeeder.php` |
 | API Шаг 5a: `POST /api/onboarding/contract/generate` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 | API Шаг 5b: `POST /api/onboarding/contract/send-sms` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 | API Шаг 5c: `POST /api/onboarding/contract/sign` (SMS OTP) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
@@ -262,7 +266,7 @@ Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/on
 |------|---------|-----------|
 | nalog.ru недоступен при онбординге | НПД не проверяется сразу | Fallback: `npd_status = pending`, перепроверка при входе |
 | DaData API-ключ не получен до Sprint 2 | `InnVerificationService` остаётся на mock | Зарегистрироваться заранее на dadata.ru |
-| PDF-шаблоны без юр. проверки | Договора юридически недействительны | Получить проверенные шаблоны до начала Sprint 2 |
+| Версия договора изменилась, пользователь не переподписал | Работа без актуального договора | При смене `contract_version_*` выставлять `payments_frozen = true` всем затронутым пользователям автоматически |
 | Horizon без Supervisor в production | Jobs останавливаются после перезапуска сервера | Добавить Supervisor конфиг до Sprint 3 |
 | Суфтех и Контур.Фокус — получение доступа занимает время | Sprint 3 начнётся с ручной проверкой | Подавать заявки заранее, параллельно с Sprint 2 |
 | Шаблон ГПХ без юридической проверки | Договор юридически недействителен, риск налоговых претензий | Получить проверенный шаблон до начала Sprint 4 |
