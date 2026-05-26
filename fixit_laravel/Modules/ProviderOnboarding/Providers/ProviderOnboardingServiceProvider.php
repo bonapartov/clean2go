@@ -2,7 +2,10 @@
 
 namespace Modules\ProviderOnboarding\Providers;
 
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Modules\ProviderOnboarding\Listeners\CheckPendingNpdOnLogin;
 
 class ProviderOnboardingServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,7 @@ class ProviderOnboardingServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-        // Вьюшки хранятся в resources/views/backend/onboarding/ по паттерну проекта
+        Event::listen(Login::class, CheckPendingNpdOnLogin::class);
     }
 
     public function register(): void

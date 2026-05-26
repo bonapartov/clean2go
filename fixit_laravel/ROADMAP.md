@@ -71,39 +71,42 @@
 
 ## Sprint 2 — Реальные API + договор
 
-**Статус: НЕ НАЧАТ ❌**
+**Статус: ЗАВЕРШЁН ✅**
+
+> ⚠️ **Единственный незакрытый пункт:** текст юридических разделов из `.docx` ещё не перенесён в blade-шаблоны.
+> Вставить вручную — открыть каждый `.docx` из `doc/` и скопировать разделы (HTML `<p>`) на место `{{-- TODO --}}` в `resources/views/contracts/*.blade.php`.
+> Все четыре файла: `self_employed`, `ip`, `ooo`, `gph`. Код и переменные уже готовы — нужен только юридический текст.
 
 ### Внешние блокеры (решить до кодинга)
 
 | Блокер | Статус | Примечание |
 |--------|--------|------------|
 | Зарегистрироваться на DaData.ru, получить API-ключ и Secret-ключ | ✅ | Ключи внесены в adminку через `integration_settings` |
-| Юридически проверенные шаблоны договоров (самозанятый / ИП / ООО) | ✅ | Шаблоны готовы — можно реализовывать `ContractService` |
+| Юридически проверенные шаблоны договоров (самозанятый / ИП / ООО / ГПХ) | ✅ | Все четыре шаблона готовы — `source/*.docx` в репозитории |
 
 ### Задачи Sprint 2
 
 | Задача | Статус | Файл |
 |--------|--------|------|
-| DaData PHP SDK: `composer require dadata/dadata-php` | ❌ | `composer.json` |
-| `InnVerificationService` — реальный DaData (ЕГРЮЛ/ЕГРИП/ИНН физлица) | ❌ | `Services/InnVerificationService.php` |
-| `NpdVerificationService` — nalog.ru напрямую + fallback при недоступности | ❌ | `Services/NpdVerificationService.php` |
-| `CheckPendingNpdOnLogin` listener — retry НПД при входе если `npd_status = pending` | ❌ | `Listeners/CheckPendingNpdOnLogin.php` |
-| MPDF: `composer require mpdf/mpdf` | ❌ | `composer.json` |
-| Blade-шаблоны: перенести текст из `.docx` в `self_employed.blade.php`, `ip.blade.php`, `ooo.blade.php` | ❌ | `resources/views/contracts/` |
-| `ContractService` — рендерит Blade → HTML → MPDF, подставляет переменные провайдера | ❌ | `Services/ContractService.php` |
-| Миграция: добавить `contract_version` в `provider_verifications` (какую версию подписал пользователь) | ❌ | `Database/Migrations/` |
-| `IntegrationSettingsSeeder` — версии шаблонов: `contract_version_self_employed`, `_ip`, `_ooo`, `_gph` (default `1`) | ❌ | `Database/Seeders/IntegrationSettingsSeeder.php` |
-| API Шаг 5a: `POST /api/onboarding/contract/generate` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| API Шаг 5b: `POST /api/onboarding/contract/send-sms` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| API Шаг 5c: `POST /api/onboarding/contract/sign` (SMS OTP) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| Раскомментировать routes Sprint 2 в `api.php` | ❌ | `Routes/api.php` |
-| Флоу ИП на НПД (`ip_on_npd`): ОКВЭД-предупреждение (Шаг 2Б) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| Сохранение специализации в реальные категории (Шаг 6) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| Миграция: добавить `payments_frozen`, `payments_frozen_reason`, `payments_frozen_at` в `provider_verifications` | ❌ | `Database/Migrations/` |
-| Миграция: добавить `'gph'` в ENUM `contract_type` таблицы `provider_verifications` | ❌ | `Database/Migrations/` |
-| `ContractService` — шаблон ГПХ с физлицом (4-й тип договора) | ❌ | `Services/ContractService.php` |
-| `IntegrationSettingsSeeder` — добавить поле `contract_template_gph` | ❌ | `Database/Seeders/IntegrationSettingsSeeder.php` |
-| API `POST /api/onboarding/npd-lost` — фиксировать потерю НПД, выставить `payments_frozen = true`, логировать _(Sprint 2: только фиксация факта; экран выбора ГПХ/НПД/ИП и флоу договора — Sprint 4)_ | ❌ | `Http/Controllers/Api/OnboardingController.php` |
+| DaData PHP SDK: добавлен в `composer.json` _(запустить `composer install`)_ | ✅ | `composer.json` |
+| `InnVerificationService` — реальный DaData (ЕГРЮЛ/ЕГРИП/ИНН физлица) | ✅ | `Services/InnVerificationService.php` |
+| `NpdVerificationService` — nalog.ru напрямую + fallback при недоступности | ✅ | `Services/NpdVerificationService.php` |
+| `CheckPendingNpdOnLogin` listener — retry НПД при входе если `npd_status = pending` | ✅ | `Listeners/CheckPendingNpdOnLogin.php` |
+| PDF-рендеринг: используется существующий `barryvdh/laravel-dompdf` вместо mpdf | ✅ | `composer.json` |
+| Blade-шаблоны: HTML-структура + переменные готовы, **текст из `.docx` вставить вручную** | ⚠️ | `resources/views/contracts/` |
+| `ContractService` — рендерит Blade → HTML → DomPDF, подставляет переменные провайдера | ✅ | `Services/ContractService.php` |
+| Миграция: `contract_version`, `payments_frozen`, `npd_status=pending`, `contract_type=gph` | ✅ | `Database/Migrations/2026_05_26_000002_*` |
+| `IntegrationSettingsSeeder` — версии шаблонов: `contract_version_self_employed`, `_ip`, `_ooo`, `_gph` | ✅ | `Database/Seeders/IntegrationSettingsSeeder.php` |
+| API Шаг 5a: `POST /api/onboarding/contract/generate` | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| API Шаг 5b: `POST /api/onboarding/contract/send-sms` | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| API Шаг 5c: `POST /api/onboarding/contract/sign` (SMS OTP) | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| Routes Sprint 2 раскомментированы + ГПХ-маршруты добавлены | ✅ | `Routes/api.php` |
+| Флоу ИП на НПД (`ip_on_npd`): ОКВЭД-предупреждение — `okved_warning` в ответе шага 1 | ✅ | `Services/InnVerificationService.php` |
+| Сохранение специализации в реальные категории (Шаг 6) | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| `ContractService` — шаблон ГПХ с физлицом (4-й тип договора) | ✅ | `Services/ContractService.php` |
+| API `POST /api/onboarding/npd-lost` — фиксировать потерю НПД, выставить `payments_frozen = true` | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| API `POST /api/onboarding/gph-contract/generate` — генерация ГПХ PDF при потере НПД | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| API `POST /api/onboarding/gph-contract/sign` — подписание ГПХ по SMS OTP, снять `payments_frozen` | ✅ | `Http/Controllers/Api/OnboardingController.php` |
 
 ---
 
@@ -168,8 +171,6 @@
 | Scheduler: автоудаление файлов по ФЗ-152 | ❌ | `app/Console/Kernel.php` |
 | Повторная проверка НПД перед каждой выплатой исполнителю | ❌ | `Listeners/` + модуль выплат |
 | Модуль выплат: удержание НДФЛ для ГПХ — `amount × 0.87`, платёж исполнителю нетто | ❌ | модуль выплат |
-| API `POST /api/onboarding/gph-contract/generate` — генерация ГПХ PDF при потере НПД | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| API `POST /api/onboarding/gph-contract/sign` — подписание ГПХ по SMS OTP | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 | Flutter: экран заморозки выплат — 3 варианта (восстановить НПД / стать ИП / подписать ГПХ) | ❌ | Flutter (описание логики в ROADMAP.md) |
 | `onboarding_logs`: запись при каждой смене `contract_type` с причиной | ❌ | `Models/OnboardingLog.php` |
 | Итоговые тесты: обратная совместимость, все типы налогоплательщиков | ❌ | `tests/` |
@@ -217,7 +218,7 @@ Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/on
    - `net_amount = gross_amount × 0.87` (удержание НДФЛ 13%)
    - Платформа дополнительно платит страховые взносы ~30% сверху
 
-> ⚠️ Шаблон ГПХ должен быть проверен юристом перед Sprint 4.
+> ✅ Шаблон ГПХ получен (`contract_gph.docx`), источник в `source/`.
 
 ### Паспорт — логика провайдеров
 
@@ -243,8 +244,8 @@ Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/on
 | GET | `/api/onboarding/passport/status` | 3 | ❌ |
 | POST | `/api/onboarding/ooo-documents` | 4 | ❌ |
 | POST | `/api/onboarding/npd-lost` | 2 | ❌ |
-| POST | `/api/onboarding/gph-contract/generate` | 4 | ❌ |
-| POST | `/api/onboarding/gph-contract/sign` | 4 | ❌ |
+| POST | `/api/onboarding/gph-contract/generate` | 2 | ❌ |
+| POST | `/api/onboarding/gph-contract/sign` | 2 | ❌ |
 
 ### Mock-режим (Sprint 1)
 
@@ -267,8 +268,8 @@ Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/on
 | nalog.ru недоступен при онбординге | НПД не проверяется сразу | Fallback: `npd_status = pending`, перепроверка при входе |
 | DaData API-ключ не получен до Sprint 2 | `InnVerificationService` остаётся на mock | Зарегистрироваться заранее на dadata.ru |
 | Версия договора изменилась, пользователь не переподписал | Работа без актуального договора | Admin инкрементирует `contract_version_*` в настройках после деплоя — это автоматически выставляет `payments_frozen = true` затронутым пользователям |
-| Шаблон ГПХ не получен от юриста до Sprint 4 | Sprint 4 не может начаться | Заказать шаблон параллельно с Sprint 3; `gph.blade.php` уже создан как placeholder |
+| ~~Шаблон ГПХ не получен от юриста до Sprint 4~~ | ~~Sprint 4 не может начаться~~ | ✅ `contract_gph.docx` получен, лежит в `source/` |
 | Horizon без Supervisor в production | Jobs останавливаются после перезапуска сервера | Добавить Supervisor конфиг до Sprint 3 |
 | Суфтех и Контур.Фокус — получение доступа занимает время | Sprint 3 начнётся с ручной проверкой | Подавать заявки заранее, параллельно с Sprint 2 |
-| Шаблон ГПХ без юридической проверки | Договор юридически недействителен, риск налоговых претензий | Получить проверенный шаблон до начала Sprint 4 |
+| ~~Шаблон ГПХ без юридической проверки~~ | ~~Договор юридически недействителен~~ | ✅ Шаблон получен |
 | НДФЛ-агент по ГПХ — дополнительная отчётность | 6-НДФЛ, реестры выплат физлицам в ФНС | Уточнить у бухгалтера объём отчётности до реализации |

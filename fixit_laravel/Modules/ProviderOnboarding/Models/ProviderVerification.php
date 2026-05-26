@@ -20,8 +20,9 @@ class ProviderVerification extends Model
         'passport_photo_path', 'passport_selfie_path',
         'passport_status', 'passport_verified_at', 'passport_raw_response',
         'fssp_status', 'fssp_debt_amount', 'fssp_checked_at', 'fssp_raw_response',
-        'contract_type', 'contract_path', 'contract_signed_at',
+        'contract_type', 'contract_version', 'contract_path', 'contract_signed_at',
         'contract_sign_method', 'contract_sms_code', 'contract_sms_sent_at', 'contract_ip_address',
+        'payments_frozen', 'payments_frozen_reason', 'payments_frozen_at',
         'power_of_attorney_path', 'signatory_name',
         'onboarding_status', 'manual_review_reason', 'reviewed_by', 'reviewed_at', 'rejection_reason',
     ];
@@ -41,6 +42,8 @@ class ProviderVerification extends Model
         'fssp_checked_at' => 'datetime',
         'contract_signed_at' => 'datetime',
         'contract_sms_sent_at' => 'datetime',
+        'payments_frozen' => 'boolean',
+        'payments_frozen_at' => 'datetime',
         'reviewed_at' => 'datetime',
     ];
 

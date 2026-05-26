@@ -32,6 +32,12 @@ class IntegrationSettingsSeeder extends Seeder
             ['key' => 'contract_company_name', 'type' => 'text', 'group' => 'contract', 'label' => 'Наименование компании в договоре', 'value' => null],
             ['key' => 'contract_company_inn', 'type' => 'text', 'group' => 'contract', 'label' => 'ИНН компании', 'value' => null],
             ['key' => 'contract_director', 'type' => 'text', 'group' => 'contract', 'label' => 'ФИО директора', 'value' => null],
+
+            // Версии шаблонов договоров (инкрементировать после деплоя нового шаблона)
+            ['key' => 'contract_version_self_employed', 'type' => 'number', 'group' => 'contract', 'label' => 'Версия договора: Самозанятый', 'value' => '1'],
+            ['key' => 'contract_version_ip', 'type' => 'number', 'group' => 'contract', 'label' => 'Версия договора: ИП', 'value' => '1'],
+            ['key' => 'contract_version_ooo', 'type' => 'number', 'group' => 'contract', 'label' => 'Версия договора: ООО', 'value' => '1'],
+            ['key' => 'contract_version_gph', 'type' => 'number', 'group' => 'contract', 'label' => 'Версия договора: ГПХ', 'value' => '1'],
         ];
 
         foreach ($settings as $setting) {
