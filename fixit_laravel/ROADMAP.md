@@ -26,6 +26,7 @@
 | БИК банка | DaData |
 | Адреса / зона работы | DaData (подсказки + автодополнение) |
 | ФССП | ~~Убрано из плана~~ — нет юридического требования для данного типа бизнеса |
+| ГПХ договор | Резервный вариант при потере НПД-статуса. `contract_type = 'gph'`. Платформа — налоговый агент: удерживает НДФЛ 13%, сверху платит страховые ~30% |
 | PDF договоры | MPDF (`mpdf/mpdf`) |
 | Очереди | Laravel Queue + Redis + Horizon |
 | Push-уведомления Flutter | Существующий `Modules/Firebase/` |
@@ -94,6 +95,10 @@
 | Раскомментировать routes Sprint 2 в `api.php` | ❌ | `Routes/api.php` |
 | Флоу ИП на НПД (`ip_on_npd`): ОКВЭД-предупреждение (Шаг 2Б) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 | Сохранение специализации в реальные категории (Шаг 6) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
+| Миграция: добавить `'gph'` в ENUM `contract_type` таблицы `provider_verifications` | ❌ | `Database/Migrations/` |
+| `ContractService` — шаблон ГПХ с физлицом (4-й тип договора) | ❌ | `Services/ContractService.php` |
+| `IntegrationSettingsSeeder` — добавить поле `contract_template_gph` | ❌ | `Database/Seeders/IntegrationSettingsSeeder.php` |
+| API `POST /api/onboarding/npd-lost` — фиксировать потерю НПД, заморозить выплаты, логировать | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 
 ---
 
@@ -148,6 +153,11 @@
 | Rate limiting: SMS — 3/час/номер, sign — 3 попытки + 15 мин. блок | ❌ | `Routes/api.php` |
 | Scheduler: автоудаление файлов по ФЗ-152 | ❌ | `app/Console/Kernel.php` |
 | Повторная проверка НПД перед каждой выплатой исполнителю | ❌ | `Listeners/` + модуль выплат |
+| Модуль выплат: удержание НДФЛ для ГПХ — `amount × 0.87`, платёж исполнителю нетто | ❌ | модуль выплат |
+| API `POST /api/onboarding/gph-contract/generate` — генерация ГПХ PDF при потере НПД | ❌ | `Http/Controllers/Api/OnboardingController.php` |
+| API `POST /api/onboarding/gph-contract/sign` — подписание ГПХ по SMS OTP | ❌ | `Http/Controllers/Api/OnboardingController.php` |
+| Flutter: экран заморозки выплат — 3 варианта (восстановить НПД / стать ИП / подписать ГПХ) | ❌ | Flutter (описание логики в ROADMAP.md) |
+| `onboarding_logs`: запись при каждой смене `contract_type` с причиной | ❌ | `Models/OnboardingLog.php` |
 | Итоговые тесты: обратная совместимость, все типы налогоплательщиков | ❌ | `tests/` |
 
 ---
@@ -175,6 +185,26 @@
 - При следующем входе пользователя → автоматическая повторная проверка
 - При успехе → `npd_status = active`, пометка «подтверждён»
 
+### ГПХ — логика при потере НПД
+
+Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/onboarding/npd-lost` возвращает `npd_status = lost`.
+
+1. Выплаты исполнителю **замораживаются** (`payments_frozen = true`)
+2. Flutter показывает экран с 3 вариантами:
+   - **Восстановить НПД** — самостоятельно через nalog.ru, затем повторная проверка
+   - **Стать ИП** — переоформить анкету, пройти шаг 2Б заново
+   - **Подписать ГПХ** — продолжить как физлицо, платформа становится налоговым агентом
+3. При выборе ГПХ:
+   - `contract_type` меняется с `self_employed` на `'gph'`
+   - Генерируется новый PDF (шаблон ГПХ с физлицом)
+   - Подписание по SMS OTP (тот же механизм, что и Sprint 2)
+   - Запись в `onboarding_logs` с причиной и предыдущим `contract_type`
+4. Расчёт выплат по ГПХ:
+   - `net_amount = gross_amount × 0.87` (удержание НДФЛ 13%)
+   - Платформа дополнительно платит страховые взносы ~30% сверху
+
+> ⚠️ Шаблон ГПХ должен быть проверен юристом перед Sprint 4.
+
 ### Паспорт — логика провайдеров
 
 Единый интерфейс `PassportProviderInterface`, три реализации:
@@ -198,6 +228,9 @@
 | POST | `/api/onboarding/passport` | 3 | ❌ |
 | GET | `/api/onboarding/passport/status` | 3 | ❌ |
 | POST | `/api/onboarding/ooo-documents` | 4 | ❌ |
+| POST | `/api/onboarding/npd-lost` | 2 | ❌ |
+| POST | `/api/onboarding/gph-contract/generate` | 4 | ❌ |
+| POST | `/api/onboarding/gph-contract/sign` | 4 | ❌ |
 
 ### Mock-режим (Sprint 1)
 
@@ -222,3 +255,5 @@
 | PDF-шаблоны без юр. проверки | Договора юридически недействительны | Получить проверенные шаблоны до начала Sprint 2 |
 | Horizon без Supervisor в production | Jobs останавливаются после перезапуска сервера | Добавить Supervisor конфиг до Sprint 3 |
 | Суфтех и Контур.Фокус — получение доступа занимает время | Sprint 3 начнётся с ручной проверкой | Подавать заявки заранее, параллельно с Sprint 2 |
+| Шаблон ГПХ без юридической проверки | Договор юридически недействителен, риск налоговых претензий | Получить проверенный шаблон до начала Sprint 4 |
+| НДФЛ-агент по ГПХ — дополнительная отчётность | 6-НДФЛ, реестры выплат физлицам в ФНС | Уточнить у бухгалтера объём отчётности до реализации |
