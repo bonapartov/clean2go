@@ -95,10 +95,11 @@
 | Раскомментировать routes Sprint 2 в `api.php` | ❌ | `Routes/api.php` |
 | Флоу ИП на НПД (`ip_on_npd`): ОКВЭД-предупреждение (Шаг 2Б) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 | Сохранение специализации в реальные категории (Шаг 6) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
+| Миграция: добавить `payments_frozen`, `payments_frozen_reason`, `payments_frozen_at` в `provider_verifications` | ❌ | `Database/Migrations/` |
 | Миграция: добавить `'gph'` в ENUM `contract_type` таблицы `provider_verifications` | ❌ | `Database/Migrations/` |
 | `ContractService` — шаблон ГПХ с физлицом (4-й тип договора) | ❌ | `Services/ContractService.php` |
 | `IntegrationSettingsSeeder` — добавить поле `contract_template_gph` | ❌ | `Database/Seeders/IntegrationSettingsSeeder.php` |
-| API `POST /api/onboarding/npd-lost` — фиксировать потерю НПД, заморозить выплаты, логировать | ❌ | `Http/Controllers/Api/OnboardingController.php` |
+| API `POST /api/onboarding/npd-lost` — фиксировать потерю НПД, выставить `payments_frozen = true`, логировать _(Sprint 2: только фиксация факта; экран выбора ГПХ/НПД/ИП и флоу договора — Sprint 4)_ | ❌ | `Http/Controllers/Api/OnboardingController.php` |
 
 ---
 
