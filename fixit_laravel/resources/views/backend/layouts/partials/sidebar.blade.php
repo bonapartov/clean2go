@@ -907,6 +907,7 @@
                     <ul class="sidebar-submenu">
                         <li><a href="{{ route('backend.onboarding.settings') }}" class="{{ Request::is('backend/onboarding*') ? 'active' : '' }}">Интеграции РФ</a></li>
                         <li><a href="{{ route('backend.verifications.index') }}" class="{{ Request::is('backend/verifications*') ? 'active' : '' }}">Заявки исполнителей</a></li>
+                        <li><a href="/horizon/dashboard" target="_blank">Очереди (Horizon) ↗</a></li>
                     </ul>
                 </li>
                 @can('backend.payment_method.index')

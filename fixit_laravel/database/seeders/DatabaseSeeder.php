@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\ProviderOnboarding\Database\Seeders\IntegrationSettingsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,7 +27,8 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             HomePageSeeder::class,
             CustomSmsGatewaySettingSeeder::class,
-            SeoSettingSeeder::class
+            SeoSettingSeeder::class,
+            IntegrationSettingsSeeder::class,
         ]);
     }
 }
