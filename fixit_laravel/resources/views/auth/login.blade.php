@@ -4,7 +4,9 @@
 
 @section('content')
 @php
-    $settings = \App\Models\Setting::first()->values;
+    $settings        = \App\Models\Setting::first()?->values ?? [];
+    $general         = $settings['general'] ?? [];
+    $reCaptchaStatus = $settings['google_reCaptcha']['status'] ?? 0;
 @endphp
 <section class="auth-page" style="background-image: url('{{ env('APP_URL') }}/admin/images/login-bg.png')">
     <div class="container">
@@ -12,10 +14,10 @@
             <div class="col-xxl-5 col-xl-6 col-lg-8 ms-auto">
                 <div class="auth-card">
                     <div class="text-center">
-                        <img class="login-img" src="{{ asset($settings['general']['dark_logo']) ?? asset('admin/images/logo-dark.png') }}">
+                        <img class="login-img" src="{{ asset($general['dark_logo'] ?? 'admin/images/logo-dark.png') }}">
                     </div>
                     <div class="welcome">
-                        <h3>{{ __('static.welcome_note') }} {{ $settings['general']['site_name'] ?? ''}}</h3>
+                        <h3>{{ __('static.welcome_note') }} {{ $general['site_name'] ?? '' }}</h3>
                         <p>{{ __('static.sign_in_note') }}</p>
                     </div>
                     @if ($errors->any())
@@ -107,7 +109,7 @@
 <script src="https://www.google.com/recaptcha/api.js?render={{ config('app.google_recaptcha_key') }}"></script>
 
 <script type="text/javascript">
-    var recaptchaStatus = <?php echo json_encode($settings['google_reCaptcha']['status']); ?>;
+    var recaptchaStatus = {{ json_encode($reCaptchaStatus) }};
     var recaptchaKey = "{{ config('app.google_recaptcha_key') }}";
 
     $('#loginForm').submit(function(event) {
