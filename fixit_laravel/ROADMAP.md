@@ -70,7 +70,7 @@
 |--------|--------|------|
 | DaData PHP SDK: `composer require dadata/dadata-php` | ❌ | `composer.json` |
 | `InnVerificationService` — реальный DaData (ЕГРЮЛ/ЕГРИП/ИНН физлица) | ❌ | `Services/InnVerificationService.php` |
-| `NpdVerificationService` — Plat.ru | ❌ | `Services/NpdVerificationService.php` |
+| `NpdVerificationService` — DaData (проверка статуса НПД физлица) | ❌ | `Services/NpdVerificationService.php` |
 | MPDF: `composer require mpdf/mpdf` | ❌ | `composer.json` |
 | `ContractService` — генерация PDF по шаблону | ❌ | `Services/ContractService.php` |
 | API Шаг 5a: `POST /api/onboarding/contract/generate` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
