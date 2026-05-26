@@ -151,7 +151,7 @@
 
 ## Sprint 4 — ООО + полнота
 
-**Статус: НЕ НАЧАТ ❌**
+**Статус: ЧАСТИЧНО ЗАВЕРШЁН 🔄** (бэкенд готов, ждут внешние зависимости)
 
 ### Внешние блокеры
 
@@ -164,17 +164,17 @@
 
 | Задача | Статус | Файл |
 |--------|--------|------|
-| API Шаг 2В: `POST /api/onboarding/ooo-documents` (директор + доверенность + БИК) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| `BikLookupService` (DaData: БИК → банк / коррсчёт) | ❌ | `Services/BikLookupService.php` |
-| Полный флоу ООО (Шаг 2В → pending_manual → менеджер → Шаг 5 → ...) | ❌ | `Http/Controllers/Api/OnboardingController.php` |
-| Rate limiting: `/api/onboarding/inn` — 5 req/час/IP | ❌ | `Routes/api.php` |
-| Rate limiting: SMS — 3/час/номер, sign — 3 попытки + 15 мин. блок | ❌ | `Routes/api.php` |
-| Scheduler: автоудаление файлов по ФЗ-152 | ❌ | `app/Console/Kernel.php` |
+| API Шаг 2В: `POST /api/onboarding/ooo-documents` (директор + доверенность + БИК) | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| `BikLookupService` (DaData: БИК → банк / коррсчёт) | ✅ | `Services/BikLookupService.php` |
+| Полный флоу ООО (Шаг 2В → pending_manual → менеджер → Шаг 5 → ...) | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| Rate limiting: `/api/onboarding/inn` — 5 req/час/IP | ✅ | `app/Providers/AppServiceProvider.php` |
+| Rate limiting: SMS — 3/час/номер, sign — 3 попытки + 15 мин. блок | ✅ | `app/Providers/AppServiceProvider.php` |
+| Scheduler: автоудаление файлов по ФЗ-152 | ✅ | `Console/Commands/PurgePassportFiles.php` + `Kernel.php` |
 | Повторная проверка НПД перед каждой выплатой исполнителю | ❌ | `Listeners/` + модуль выплат |
 | Модуль выплат: удержание НДФЛ для ГПХ — `amount × 0.87`, платёж исполнителю нетто | ❌ | модуль выплат |
 | Flutter: экран заморозки выплат — 3 варианта (восстановить НПД / стать ИП / подписать ГПХ) | ❌ | Flutter (описание логики в ROADMAP.md) |
-| `onboarding_logs`: запись при каждой смене `contract_type` с причиной | ❌ | `Models/OnboardingLog.php` |
-| Итоговые тесты: обратная совместимость, все типы налогоплательщиков | ❌ | `tests/` |
+| `onboarding_logs`: запись при каждой смене `contract_type` с причиной | ✅ | `Http/Controllers/Api/OnboardingController.php` |
+| Итоговые тесты: обратная совместимость, все типы налогоплательщиков | ✅ | `tests/Feature/OnboardingFlowTest.php` (14 тестов, все зелёные) |
 
 ---
 
@@ -244,7 +244,7 @@ Triggered: `CheckPendingNpdOnLogin` или ручной вызов `POST /api/on
 | POST | `/api/onboarding/passport` | 3 | ✅ |
 | GET | `/api/onboarding/passport/status` | 3 | ✅ |
 | GET | `/api/onboarding/passport/file/{userId}/{type}` | 3 | ✅ |
-| POST | `/api/onboarding/ooo-documents` | 4 | ❌ |
+| POST | `/api/onboarding/ooo-documents` | 4 | ✅ |
 | POST | `/api/onboarding/npd-lost` | 2 | ✅ |
 | POST | `/api/onboarding/gph-contract/generate` | 2 | ✅ |
 | POST | `/api/onboarding/gph-contract/sign` | 2 | ✅ |
