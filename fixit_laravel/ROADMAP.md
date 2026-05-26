@@ -85,7 +85,7 @@
 | DaData PHP SDK: `composer require dadata/dadata-php` | ❌ | `composer.json` |
 | `InnVerificationService` — реальный DaData (ЕГРЮЛ/ЕГРИП/ИНН физлица) | ❌ | `Services/InnVerificationService.php` |
 | `NpdVerificationService` — nalog.ru напрямую + fallback при недоступности | ❌ | `Services/NpdVerificationService.php` |
-| Логика retry НПД при следующем входе пользователя (`npd_status = pending`) | ❌ | `Http/Middleware/` или login listener |
+| `CheckPendingNpdOnLogin` listener — retry НПД при входе если `npd_status = pending` | ❌ | `Listeners/CheckPendingNpdOnLogin.php` |
 | MPDF: `composer require mpdf/mpdf` | ❌ | `composer.json` |
 | `ContractService` — генерация PDF по шаблону | ❌ | `Services/ContractService.php` |
 | API Шаг 5a: `POST /api/onboarding/contract/generate` | ❌ | `Http/Controllers/Api/OnboardingController.php` |
@@ -147,6 +147,7 @@
 | Rate limiting: `/api/onboarding/inn` — 5 req/час/IP | ❌ | `Routes/api.php` |
 | Rate limiting: SMS — 3/час/номер, sign — 3 попытки + 15 мин. блок | ❌ | `Routes/api.php` |
 | Scheduler: автоудаление файлов по ФЗ-152 | ❌ | `app/Console/Kernel.php` |
+| Повторная проверка НПД перед каждой выплатой исполнителю | ❌ | `Listeners/` + модуль выплат |
 | Итоговые тесты: обратная совместимость, все типы налогоплательщиков | ❌ | `tests/` |
 
 ---
@@ -161,6 +162,11 @@
 | `individual_entrepreneur` | 12 цифр, ЕГРИП | 1 → 2Б → 3 → 5 → 6 → 7 |
 | `ip_on_npd` | 12 цифр, ЕГРИП + НПД | 1 → 2Б → 3 → 5 → 6 → 7 |
 | `legal_entity` | 10 цифр, ЕГРЮЛ | 1 → 2В → pending_manual → 3 → 5 → 6 → 7 |
+
+> ⚠️ **Шаг 2 для `self_employed` пропускается** — самозанятому не нужно ОКВЭД-предупреждение.  
+> `InnVerificationService` уже возвращает `next_step: 3` для самозанятых.  
+> Flutter управляет переходом. Бэкенд не блокирует переход к шагу 3 без шага 2 — это ожидаемое поведение, не баг.  
+> Проверить при интеграционном тесте Sprint 2: самозанятый после шага 1 не должен видеть экран шага 2.
 
 ### НПД — логика проверки
 
