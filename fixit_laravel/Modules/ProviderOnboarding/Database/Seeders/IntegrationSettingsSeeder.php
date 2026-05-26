@@ -14,13 +14,9 @@ class IntegrationSettingsSeeder extends Seeder
             ['key' => 'onboarding_mock_mode', 'type' => 'toggle', 'group' => 'general', 'label' => 'Режим Mock (Sprint 1)', 'value' => '1'],
             ['key' => 'onboarding_enabled', 'type' => 'toggle', 'group' => 'general', 'label' => 'Онбординг включён', 'value' => '1'],
 
-            // ФНС / DaData
+            // ФНС + НПД / DaData (один ключ покрывает оба: ЕГРЮЛ/ЕГРИП/ИНН физлица + статус НПД)
             ['key' => 'dadata_api_key', 'type' => 'password', 'group' => 'fns', 'label' => 'DaData API Key', 'value' => null],
             ['key' => 'dadata_secret_key', 'type' => 'password', 'group' => 'fns', 'label' => 'DaData Secret Key', 'value' => null],
-
-            // НПД / Plat.ru
-            ['key' => 'platru_api_key', 'type' => 'password', 'group' => 'npd', 'label' => 'Plat.ru API Key', 'value' => null],
-            ['key' => 'platru_endpoint', 'type' => 'text', 'group' => 'npd', 'label' => 'Plat.ru Endpoint URL', 'value' => null],
 
             // Паспорт
             ['key' => 'passport_provider', 'type' => 'select', 'group' => 'passport', 'label' => 'Провайдер верификации паспорта', 'value' => 'manual'],

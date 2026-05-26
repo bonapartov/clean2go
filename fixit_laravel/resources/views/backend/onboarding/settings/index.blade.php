@@ -24,8 +24,7 @@
                         <h5 class="mb-0">
                             @switch($group)
                                 @case('general') Общие @break
-                                @case('fns') ФНС / DaData @break
-                                @case('npd') НПД / Plat.ru @break
+                                @case('fns') ФНС + НПД / DaData @break
                                 @case('passport') Паспортная верификация @break
                                 @case('fssp') ФССП @break
                                 @case('contract') Договор @break
