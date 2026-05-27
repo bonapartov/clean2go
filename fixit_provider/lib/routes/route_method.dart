@@ -1,3 +1,8 @@
+import 'package:fixit_provider/screens/app_pages_screens/onboarding_screens/onboarding_inn_screen.dart';
+import 'package:fixit_provider/screens/app_pages_screens/onboarding_screens/onboarding_passport_screen.dart';
+import 'package:fixit_provider/screens/app_pages_screens/onboarding_screens/onboarding_pending_screen.dart';
+import 'package:fixit_provider/screens/app_pages_screens/onboarding_screens/onboarding_contract_screen.dart';
+import 'package:fixit_provider/screens/app_pages_screens/onboarding_screens/payments_frozen_screen.dart';
 import 'package:fixit_provider/screens/app_pages_screens/add_new_service_screen/home_add_new_service_screen.dart';
 import 'package:fixit_provider/screens/app_pages_screens/advertising_screens/ads_service_list.dart';
 import 'package:fixit_provider/screens/app_pages_screens/app_details_screen/app_details_screen.dart';
@@ -83,6 +88,11 @@ class AppRoute {
     routeName.chatWithStaffScreen: (p0) => const ChatWithStaffScreen(),
     routeName.referralScreen: (p0) => const ReferralScreen(),
     routeName.referralList: (p0) => const ReferralListScreen(),
+    routeName.onboardingInn:      (p0) => const OnboardingInnScreen(),
+    routeName.onboardingPassport: (p0) => const OnboardingPassportScreen(),
+    routeName.onboardingPending:  (p0) => const OnboardingPendingScreen(),
+    routeName.onboardingContract: (p0) => const OnboardingContractScreen(),
+    routeName.paymentsFrozen:     (p0) => const PaymentsFrozenScreen(),
     routeName.assignBooking: (p0) => const AssignBookingScreen(),
     routeName.pendingApprovalBooking: (p0) =>
         const PendingApprovalBookingScreen(),

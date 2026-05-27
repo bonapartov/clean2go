@@ -67,6 +67,7 @@ export '../providers/app_pages_provider/provider_details_provider.dart';
 export '../providers/app_pages_provider/payment_provider.dart';
 export '../providers/app_pages_provider/checkout_web_view_provider.dart';
 export '../providers/app_pages_provider/referral_provider.dart';
+export '../providers/app_pages_provider/onboarding_provider.dart';
 
 
 

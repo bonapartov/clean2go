@@ -91,4 +91,14 @@ class ApiMethods {
   String categoryService = '$apiUrl/category-services';
   String additionalService = '$apiUrl/additional-service';
   String referralBonus = '$apiUrl/referralBonus';
+
+  // Onboarding (Sprint 5)
+  String onboardingStatus       = '$apiUrl/onboarding/status';
+  String onboardingInn          = '$apiUrl/onboarding/inn';
+  String onboardingPassport     = '$apiUrl/onboarding/passport';
+  String onboardingPassportStatus = '$apiUrl/onboarding/passport/status';
+  String onboardingContractGenerate = '$apiUrl/onboarding/contract/generate';
+  String onboardingContractSendSms  = '$apiUrl/onboarding/contract/send-sms';
+  String onboardingContractSign     = '$apiUrl/onboarding/contract/sign';
+  String onboardingNpdLost          = '$apiUrl/onboarding/npd-lost';
 }

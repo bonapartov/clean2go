@@ -163,6 +163,7 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(create: (_) => PlanDetailsProvider()),
               ChangeNotifierProvider(create: (_) => CheckoutWebViewProvider()),
               ChangeNotifierProvider(create: (_) => ReferralProvider()),
+              ChangeNotifierProvider(create: (_) => OnboardingProvider()),
               ChangeNotifierProvider(create: (_) => SubscriptionPlanProvider()),
               ChangeNotifierProvider(create: (_) => WalletProvider()),
               ChangeNotifierProvider(create: (_) => BookingProvider()),

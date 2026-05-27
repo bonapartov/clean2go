@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:fixit_provider/config.dart';
 import 'package:fixit_provider/providers/app_pages_provider/app_details_provider.dart';
+import 'package:fixit_provider/providers/app_pages_provider/onboarding_provider.dart';
 import '../../firebase/firebase_api.dart';
 
 class LoginAsProvider with ChangeNotifier {
@@ -160,8 +161,16 @@ class LoginAsProvider with ChangeNotifier {
                 FirebaseApi().onlineActiveStatusChange(false);
               }
               hideLoading(context);
-              // stePro();
-              route.pushReplacementNamed(context, routeName.dashboard);
+              // Проверяем онбординг перед переходом на дашборд
+              final onboarding = Provider.of<OnboardingProvider>(context, listen: false);
+              await onboarding.fetchStatus(context);
+              if (!onboarding.onboardingCompleted) {
+                _navigateOnboarding(context, onboarding);
+              } else if (onboarding.paymentsFrozen) {
+                route.pushReplacementNamed(context, routeName.paymentsFrozen);
+              } else {
+                route.pushReplacementNamed(context, routeName.dashboard);
+              }
               emailController.text = "";
               passwordController.text = "";
               notifyListeners();
@@ -182,6 +191,23 @@ class LoginAsProvider with ChangeNotifier {
         notifyListeners();
         log("EEEE login : $e====> $s");
       }
+    }
+  }
+
+  void _navigateOnboarding(BuildContext context, OnboardingProvider onboarding) {
+    final step = onboarding.onboardingStep;
+    if (step <= 1) {
+      route.pushReplacementNamed(context, routeName.onboardingInn);
+    } else if (step <= 3) {
+      if (onboarding.passportStatus == 'approved') {
+        route.pushReplacementNamed(context, routeName.onboardingContract);
+      } else if (onboarding.passportStatus == 'not_uploaded') {
+        route.pushReplacementNamed(context, routeName.onboardingPassport);
+      } else {
+        route.pushReplacementNamed(context, routeName.onboardingPending);
+      }
+    } else {
+      route.pushReplacementNamed(context, routeName.onboardingContract);
     }
   }
 }

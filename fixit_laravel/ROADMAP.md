@@ -171,6 +171,28 @@
 
 ---
 
+## Sprint 5 — Flutter-онбординг (fixit_provider)
+
+**Статус: В РАБОТЕ 🔄**
+
+### Задачи Sprint 5
+
+| Задача | Статус | Файл |
+|--------|--------|------|
+| API methods для `/api/onboarding/*` | ✅ | `lib/services/api_methods.dart` |
+| `OnboardingProvider` — state management | ✅ | `lib/providers/app_pages_provider/onboarding_provider.dart` |
+| Экран Шаг 1: ввод и проверка ИНН | ✅ | `lib/screens/.../onboarding_inn_screen.dart` |
+| Экран Шаг 3: загрузка паспорта | ✅ | `lib/screens/.../onboarding_passport_screen.dart` |
+| Экран ожидания проверки паспорта | ✅ | `lib/screens/.../onboarding_pending_screen.dart` |
+| Экран Шаг 5: подписание договора (SMS OTP) | ✅ | `lib/screens/.../onboarding_contract_screen.dart` |
+| Экран заморозки выплат (3 варианта) | ✅ | `lib/screens/.../payments_frozen_screen.dart` |
+| Хук после логина — редирект на онбординг | ✅ | `lib/providers/auth_provider/login_as_provider_provider.dart` |
+| Регистрация маршрутов и провайдера | ✅ | `route_name.dart`, `route_method.dart`, `main.dart` |
+| Фикс DaData: Bearer → Token | ✅ | `InnVerificationService.php` |
+| UI-тестирование на реальном устройстве | ❌ | — |
+
+---
+
 ## Архитектура (справочник)
 
 ### Типы налогоплательщиков и их путь

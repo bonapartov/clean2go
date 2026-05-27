@@ -88,4 +88,11 @@ class RouteName {
   final String chatWithStaffScreen = 'chatWithStaffScreen';
   final String referralScreen = 'referralScreen';
   final String referralList = 'referralList';
+
+  // Onboarding (Sprint 5)
+  final String onboardingInn      = 'onboardingInn';
+  final String onboardingPassport = 'onboardingPassport';
+  final String onboardingPending  = 'onboardingPending';
+  final String onboardingContract = 'onboardingContract';
+  final String paymentsFrozen     = 'paymentsFrozen';
 }
