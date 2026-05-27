@@ -58,8 +58,7 @@ class InnVerificationService
     {
         try {
             $response = Http::timeout(self::TIMEOUT)
-                ->withToken($apiKey)
-                ->withHeaders(['Content-Type' => 'application/json'])
+                ->withHeaders(['Content-Type' => 'application/json', 'Authorization' => 'Token ' . $apiKey])
                 ->post(self::FIND_URL, [
                     'query' => $inn,
                     'type'  => 'INDIVIDUAL',
@@ -111,8 +110,7 @@ class InnVerificationService
     {
         try {
             $response = Http::timeout(self::TIMEOUT)
-                ->withToken($apiKey)
-                ->withHeaders(['Content-Type' => 'application/json'])
+                ->withHeaders(['Content-Type' => 'application/json', 'Authorization' => 'Token ' . $apiKey])
                 ->post(self::FIND_URL, [
                     'query' => $inn,
                     'type'  => 'LEGAL',
