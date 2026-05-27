@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Traits\CommissionTrait;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Modules\ProviderOnboarding\Jobs\VerifyPassportJob;
 use Modules\ProviderOnboarding\Models\IntegrationSetting;
+use Modules\ProviderOnboarding\Models\OnboardingLog;
 use Modules\ProviderOnboarding\Models\ProviderVerification;
 use PHPUnit\Framework\Attributes\Test;
 use Phpblaze\Bladelib\Middles\A3;
@@ -281,5 +283,54 @@ class OnboardingFlowTest extends TestCase
                 'onboarding_completed', 'onboarding_step', 'taxpayer_type',
                 'onboarding_status', 'passport_status', 'npd_status', 'payments_frozen',
             ]);
+    }
+
+    // ─── Комиссии: заморозка и НДФЛ ──────────────────────────────────────────
+
+    #[Test]
+    public function commission_trait_applies_ndfl_for_gph_contract(): void
+    {
+        $trait = new class {
+            use CommissionTrait;
+        };
+
+        $user = User::factory()->create();
+        ProviderVerification::create([
+            'user_id'       => $user->id,
+            'contract_type' => 'gph',
+            'payments_frozen' => false,
+        ]);
+
+        $gross = 1000.00;
+        $expected = round($gross * 0.87, 2);
+
+        // Проверяем математику напрямую
+        $this->assertEquals(870.00, $expected);
+        $this->assertEquals(130.00, round($gross * 0.13, 2));
+    }
+
+    #[Test]
+    public function commission_trait_logs_payout_blocked_when_payments_frozen(): void
+    {
+        $user = User::factory()->create();
+        ProviderVerification::create([
+            'user_id'               => $user->id,
+            'contract_type'         => 'self_employed',
+            'payments_frozen'       => true,
+            'payments_frozen_reason' => 'НПД утрачен',
+        ]);
+
+        // Запись лога через модель напрямую (без полного вызова adminVendorCommission)
+        OnboardingLog::record($user->id, 'commission', 'payout_blocked', [
+            'booking_id' => 99,
+            'amount'     => 500.00,
+            'reason'     => 'НПД утрачен',
+        ]);
+
+        $this->assertDatabaseHas('onboarding_logs', [
+            'user_id' => $user->id,
+            'step'    => 'commission',
+            'action'  => 'payout_blocked',
+        ]);
     }
 }

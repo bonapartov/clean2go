@@ -8,6 +8,8 @@ use App\Enums\WalletPointsDetail;
 use App\Helpers\Helpers;
 use App\Models\booking;
 use App\Models\CommissionHistory;
+use Modules\ProviderOnboarding\Models\OnboardingLog;
+use Modules\ProviderOnboarding\Models\ProviderVerification;
 
 trait CommissionTrait
 {
@@ -112,6 +114,30 @@ trait CommissionTrait
                         } else {
                             if (!$this->isExistsCommissionHistory($sub_booking)) {
                                 $providerCommission = array_sum($commissions['provider']);
+
+                                $verification = ProviderVerification::where('user_id', $providerId)->first();
+
+                                if ($verification?->payments_frozen) {
+                                    OnboardingLog::record($providerId, 'commission', 'payout_blocked', [
+                                        'booking_id' => $sub_booking->id,
+                                        'amount' => $providerCommission,
+                                        'reason' => $verification->payments_frozen_reason,
+                                    ]);
+                                    $this->createCommissionHistory($sub_booking, $providerId, $commissions, $category_id);
+                                    continue;
+                                }
+
+                                if ($verification?->contract_type === 'gph') {
+                                    $ndflAmount = round($providerCommission * 0.13, 2);
+                                    $providerCommission = round($providerCommission * 0.87, 2);
+                                    OnboardingLog::record($providerId, 'commission', 'ndfl_withheld', [
+                                        'booking_id' => $sub_booking->id,
+                                        'gross' => $providerCommission + $ndflAmount,
+                                        'ndfl' => $ndflAmount,
+                                        'net' => $providerCommission,
+                                    ]);
+                                }
+
                                 $this->creditProviderWallet($providerId, $providerCommission, WalletPointsDetail::COMMISSION);
                                 foreach ($sub_booking->servicemen as $serviceman) {
                                     $roleName = Helpers::getRoleNameByUserId($serviceman->id);
@@ -119,7 +145,7 @@ trait CommissionTrait
                                         $this->creditServicemanWallet($serviceman->id, $commissions['serviceman'], WalletPointsDetail::SERVICEMAN_COMMISSION);
                                         $this->debitProviderWallet($providerId, $commissions['serviceman'], "Sent commission to {$serviceman->name}");
                                     }
-                                } 
+                                }
                                 $this->createCommissionHistory($sub_booking, $providerId, $commissions, $category_id);
                             }
                         }

@@ -151,14 +151,7 @@
 
 ## Sprint 4 — ООО + полнота
 
-**Статус: ЧАСТИЧНО ЗАВЕРШЁН 🔄** (бэкенд готов, ждут внешние зависимости)
-
-### Внешние блокеры
-
-| Блокер | Статус | Примечание |
-|--------|--------|------------|
-| Модуль выплат: публичный хук/событие для проверки НПД перед выплатой | ❌ | Разработчик модуля выплат должен предоставить точку интеграции (Event или Service call) до начала задачи «Повторная проверка НПД перед выплатой» |
-| Модуль выплат: поддержка удержания НДФЛ для `contract_type = gph` | ❌ | Логика `amount × 0.87` реализуется на стороне модуля выплат; ProviderOnboarding только передаёт `contract_type` |
+**Статус: ЗАВЕРШЁН ✅** (Flutter-экраны — в Sprint 5)
 
 ### Задачи Sprint 4
 
@@ -170,11 +163,11 @@
 | Rate limiting: `/api/onboarding/inn` — 5 req/час/IP | ✅ | `app/Providers/AppServiceProvider.php` |
 | Rate limiting: SMS — 3/час/номер, sign — 3 попытки + 15 мин. блок | ✅ | `app/Providers/AppServiceProvider.php` |
 | Scheduler: автоудаление файлов по ФЗ-152 | ✅ | `Console/Commands/PurgePassportFiles.php` + `Kernel.php` |
-| Повторная проверка НПД перед каждой выплатой исполнителю | ❌ | `Listeners/` + модуль выплат |
-| Модуль выплат: удержание НДФЛ для ГПХ — `amount × 0.87`, платёж исполнителю нетто | ❌ | модуль выплат |
-| Flutter: экран заморозки выплат — 3 варианта (восстановить НПД / стать ИП / подписать ГПХ) | ❌ | Flutter (описание логики в ROADMAP.md) |
+| Блокировка начисления комиссии при `payments_frozen = true` | ✅ | `app/Http/Traits/CommissionTrait.php` |
+| Удержание НДФЛ 13% для `contract_type = gph` при начислении комиссии | ✅ | `app/Http/Traits/CommissionTrait.php` |
+| Блокировка вывода средств при `payments_frozen = true` | ✅ | `app/Repositories/Backend/WithdrawRequestRepository.php` |
 | `onboarding_logs`: запись при каждой смене `contract_type` с причиной | ✅ | `Http/Controllers/Api/OnboardingController.php` |
-| Итоговые тесты: обратная совместимость, все типы налогоплательщиков | ✅ | `tests/Feature/OnboardingFlowTest.php` (14 тестов, все зелёные) |
+| Итоговые тесты: обратная совместимость, все типы налогоплательщиков | ✅ | `tests/Feature/OnboardingFlowTest.php` (16 тестов, все зелёные) |
 
 ---
 

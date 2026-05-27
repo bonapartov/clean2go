@@ -60,6 +60,7 @@
                                            name="{{ $setting->key }}"
                                            class="form-control"
                                            autocomplete="new-password"
+                                           value="{{ $setting->value }}"
                                            placeholder="Оставьте пустым, чтобы не менять">
 
                                 @elseif($setting->type === 'toggle')

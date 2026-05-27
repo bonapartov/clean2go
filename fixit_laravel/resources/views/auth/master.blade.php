@@ -10,9 +10,9 @@
     
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{ asset($settings['general']['favicon']) ?? asset('admin/images/faviconIcon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset($themeOptions['general']['favicon_icon'] ?? 'admin/images/faviconIcon.png') }}" type="image/x-icon">
 
-    <link rel="shortcut icon" href="{{ asset($settings['general']['favicon']) ?? asset('admin/images/faviconIcon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset($themeOptions['general']['favicon_icon'] ?? 'admin/images/faviconIcon.png') }}" type="image/x-icon">
     <title>@yield('title')</title>
 
     <!-- Bootstrap css-->

@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->isDatabaseConnected()) {
             try {
-                return  Helpers::getThemeOptions();
+                return Helpers::getThemeOptions() ?? $this->getDefaultThemeOptions();
 
             } catch (Exception $e) {
                 return $this->getDefaultThemeOptions();

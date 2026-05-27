@@ -14,6 +14,7 @@ use App\Http\Traits\WalletPointsTrait;
 use App\Models\BankDetail;
 use App\Models\WithdrawRequest;
 use Exception;
+use Modules\ProviderOnboarding\Models\ProviderVerification;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -94,12 +95,18 @@ class WithdrawRequestRepository extends BaseRepository
 
             if ($roleName == RoleEnum::PROVIDER) {
                 $provider_id = auth()->user()->id;
+
+                $verification = ProviderVerification::where('user_id', $provider_id)->first();
+                if ($verification?->payments_frozen) {
+                    return redirect()->back()->with('error', 'Выплаты заморожены: ' . ($verification->payments_frozen_reason ?? 'обратитесь к администратору'));
+                }
+
                 $providerPaymentAccount = Helpers::getPaymentAccount($provider_id);
-          
+
                 $verificationResult = $this->verifyPaymentAccount($request, $providerPaymentAccount);
 
                 if ($verificationResult) {
-                    return $verificationResult; 
+                    return $verificationResult;
                 }
             }
             $providerWallet = $this->getProviderWallet($provider_id);
