@@ -5,9 +5,9 @@ import 'dart:io';
 import '../config.dart';
 
 // FOR USER
-String apiUrl = "Enter your Url";
-String paymentUrl = "Enter your payment url"; //
-String providerAppUrl = "Enter your provider app url";
+String apiUrl = "http://192.168.1.127:8000/api/";
+String paymentUrl = "http://192.168.1.127:8000/";
+String providerAppUrl = "http://192.168.1.127:8000/";
 // Global SharedPreferences and Locale
 late SharedPreferences sharedPreferences;
 String local = appSettingModel!.general!.defaultLanguage!.locale!;
