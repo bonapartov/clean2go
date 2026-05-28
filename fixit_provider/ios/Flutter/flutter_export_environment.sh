@@ -1,7 +1,8 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/bharatcholera/Documents/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/bharatcholera/flutter_projects/fixit_provider_api"
+export "FLUTTER_ROOT=/home/v/flutter"
+export "FLUTTER_APPLICATION_PATH=/home/v/clean2go/fixit_provider"
+export "FLUTTER_FRAMEWORK_SWIFT_PACKAGE_PATH=/home/v/clean2go/fixit_provider/ios/Flutter/ephemeral/Packages/.packages/FlutterFramework"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"

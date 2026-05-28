@@ -19,7 +19,7 @@ class OnboardingPendingScreen extends StatelessWidget {
                 size: 80,
                 color: isApproved
                     ? appColor(context).appTheme.primary
-                    : appColor(context).appTheme.orange,
+                    : const Color(0xFFFF9800),
               ),
               const VSpace(Sizes.s24),
               Text(

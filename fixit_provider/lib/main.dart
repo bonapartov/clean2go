@@ -45,7 +45,7 @@ void main() async {
       await Firebase.initializeApp(
           name: 'Fixit',
           options: const FirebaseOptions(
-              apiKey: "ENTER YOUR API KEY,
+              apiKey: "ENTER YOUR API KEY",
               projectId: "ENTER YOUR PROJECT ID",
               messagingSenderId: "ENTER YOUR MESSAGE SENDER ID",
               appId: "ENTER YOUR APP ID"));
@@ -211,7 +211,7 @@ class MyApp extends StatelessWidget {
                 darkTheme: AppTheme.fromType(ThemeType.dark).themeData,
                 themeMode: ThemeMode.light,
                 debugShowCheckedModeBanner: false,
-                home: const SplashLayout());
+                home: const SplashScreen());
           }
         });
   }

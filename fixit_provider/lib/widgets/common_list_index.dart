@@ -66,4 +66,5 @@ export '../widgets/common_image_layout.dart';
 
 export '../widgets/common_description_box.dart';
 export '../widgets/reviews_list_with_title.dart';
+export '../widgets/service_review_layout.dart';
 export '../widgets/common_list_index.dart';

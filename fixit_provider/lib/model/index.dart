@@ -54,3 +54,4 @@ export 'package:fixit_provider/model/zone_model.dart';
 export 'package:fixit_provider/model/additional_services.dart';
 export 'package:fixit_provider/model/job_request_model.dart';
 export 'package:fixit_provider/model/referral_model.dart';
+export 'package:fixit_provider/model/chart_data_model.dart';

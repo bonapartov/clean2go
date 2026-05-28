@@ -1,4 +1,6 @@
 import 'package:fixit_provider/screens/bottom_screens/booking_screen/booking_shimmer/booking_detail_shimmer.dart';
+import 'layouts/rating_layout.dart';
+import 'layouts/progress_bar_layout.dart';
 
 import '../../../config.dart';
 

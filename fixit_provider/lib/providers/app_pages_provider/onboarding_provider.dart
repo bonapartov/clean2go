@@ -39,7 +39,7 @@ class OnboardingProvider extends ChangeNotifier {
   Future<void> fetchStatus(BuildContext context) async {
     _setLoading(true);
     try {
-      final res = await apiServices.getApi(api.onboardingStatus, isToken: true);
+      final res = await apiServices.getApi(api.onboardingStatus, null, isToken: true);
       if (res.isSuccess == true && res.data != null) {
         final d = res.data is String ? jsonDecode(res.data) : res.data;
         onboardingCompleted = d['onboarding_completed'] == true;

@@ -39,4 +39,12 @@ class ThemeService extends ChangeNotifier {
   AppTheme get appTheme => isDarkMode
       ? AppTheme.fromType(ThemeType.dark)
       : AppTheme.fromType(ThemeType.light);
+
+  Color get stroke => appTheme.stroke;
+  Color get whiteBg => appTheme.whiteBg;
+  Color get primary => appTheme.primary;
+  Color get darkText => appTheme.darkText;
+  Color get lightText => appTheme.lightText;
+  Color get red => appTheme.red;
+  Color get green => appTheme.green;
 }

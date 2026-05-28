@@ -66,7 +66,7 @@ class PaymentsFrozenScreen extends StatelessWidget {
                 icon: Icons.business_center_outlined,
                 title: 'Стать ИП',
                 subtitle: 'Зарегистрируйте ИП и пройдите верификацию заново',
-                color: appColor(context).appTheme.orange,
+                color: const Color(0xFFFF9800),
                 onTap: () => route.pushNamed(context, routeName.onboardingInn),
               ),
               const VSpace(Sizes.s16),

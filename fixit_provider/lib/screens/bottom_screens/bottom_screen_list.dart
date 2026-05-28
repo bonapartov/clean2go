@@ -31,4 +31,4 @@ export '../../screens/bottom_screens/wallet_screen/layouts/add_money_layout.dart
 export '../../screens/bottom_screens/booking_screen/layouts/booking_layout.dart';
 export '../../screens/bottom_screens/booking_screen/layouts/status_row.dart';
 export '../../screens/bottom_screens/booking_screen/layouts/booking_filter_layout.dart';
-export '../../screens/bottom_screens/booking_screen/layouts/booking_status_layout.dart';
+export '../../screens/bottom_screens/booking_screen/layouts/booking_status_layout.dart' hide BookingStatusLayout;
