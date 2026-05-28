@@ -2,7 +2,7 @@
 
 **Проект:** Онбординг исполнителей (Provider & Serviceman Onboarding Module)  
 **Модуль:** `Modules/ProviderOnboarding/`  
-**Последнее обновление:** 2026-05-26
+**Последнее обновление:** 2026-05-28
 
 ---
 
@@ -173,7 +173,8 @@
 
 ## Sprint 5 — Flutter-онбординг (fixit_provider)
 
-**Статус: В РАБОТЕ 🔄**
+**Статус: ЗАВЕРШЁН ✅**  
+**Коммиты:** `c76371c` feat: Sprint 5 — Flutter-экраны онбординга исполнителей (2026-05-27), `8de628c` fix: 94 ошибки undefined_named_parameter, `cf4d377` fix: восстановлены экраны и конфликты стабов (2026-05-28)
 
 ### Задачи Sprint 5
 
@@ -189,6 +190,7 @@
 | Хук после логина — редирект на онбординг | ✅ | `lib/providers/auth_provider/login_as_provider_provider.dart` |
 | Регистрация маршрутов и провайдера | ✅ | `route_name.dart`, `route_method.dart`, `main.dart` |
 | Фикс DaData: Bearer → Token | ✅ | `InnVerificationService.php` |
+| Исправлены 94 ошибки компиляции (layout-стабы) | ✅ | `_missing_stubs.dart` + 33 layout-файла |
 | UI-тестирование на реальном устройстве | ❌ | — |
 
 ---
