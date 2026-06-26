@@ -19,8 +19,8 @@ class SettingController extends Controller
 
             $settingValues = Helpers::getSettings();
             $filteredValues = Arr::only($settingValues, array_column(FrontSettingsEnum::cases(), 'value'));
-            $filteredValues['general']['splash_screen_logo'] = $filteredValues['general']['splash_screen_logo'] ? config('app.url') . $filteredValues['general']['splash_screen_logo'] : null ;
-            $filteredValues['maintenance']['image'] = $filteredValues['maintenance']['image'] ? config('app.url') . $filteredValues['maintenance']['image'] : null;
+            $filteredValues['general']['splash_screen_logo'] = ($filteredValues['general']['splash_screen_logo'] ?? null) ? config('app.url') . $filteredValues['general']['splash_screen_logo'] : null;
+            $filteredValues['maintenance']['image'] = ($filteredValues['maintenance']['image'] ?? null) ? config('app.url') . $filteredValues['maintenance']['image'] : null;
 
             return new SettingResource($filteredValues);
 

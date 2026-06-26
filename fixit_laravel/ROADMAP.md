@@ -73,9 +73,7 @@
 
 **Статус: ЗАВЕРШЁН ✅**
 
-> ⚠️ **Единственный незакрытый пункт:** текст юридических разделов из `.docx` ещё не перенесён в blade-шаблоны.
-> Вставить вручную — открыть каждый `.docx` из `doc/` и скопировать разделы (HTML `<p>`) на место `{{-- TODO --}}` в `resources/views/contracts/*.blade.php`.
-> Все четыре файла: `self_employed`, `ip`, `ooo`, `gph`. Код и переменные уже готовы — нужен только юридический текст.
+> ✅ Blade-шаблоны договоров содержат полный юридический текст из `.docx` с Blade-переменными. Версия от 2026-06-14.
 
 ### Внешние блокеры (решить до кодинга)
 
@@ -93,7 +91,7 @@
 | `NpdVerificationService` — nalog.ru напрямую + fallback при недоступности | ✅ | `Services/NpdVerificationService.php` |
 | `CheckPendingNpdOnLogin` listener — retry НПД при входе если `npd_status = pending` | ✅ | `Listeners/CheckPendingNpdOnLogin.php` |
 | PDF-рендеринг: используется существующий `barryvdh/laravel-dompdf` вместо mpdf | ✅ | `composer.json` |
-| Blade-шаблоны: HTML-структура + переменные готовы, **текст из `.docx` вставить вручную** | ⚠️ | `resources/views/contracts/` |
+| Blade-шаблоны: HTML-структура + переменные + текст из `.docx` | ✅ | `resources/views/contracts/` |
 | `ContractService` — рендерит Blade → HTML → DomPDF, подставляет переменные провайдера | ✅ | `Services/ContractService.php` |
 | Миграция: `contract_version`, `payments_frozen`, `npd_status=pending`, `contract_type=gph` | ✅ | `Database/Migrations/2026_05_26_000002_*` |
 | `IntegrationSettingsSeeder` — версии шаблонов: `contract_version_self_employed`, `_ip`, `_ooo`, `_gph` | ✅ | `Database/Seeders/IntegrationSettingsSeeder.php` |

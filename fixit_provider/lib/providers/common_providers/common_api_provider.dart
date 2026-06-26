@@ -188,6 +188,7 @@ class CommonApiProvider extends ChangeNotifier {
   }
 
   updateDashboardData(data) {
+    if (translations == null || dashBoardModel == null) return;
     if (isServiceman) {
       appArray.serviceManEarningList.asMap().entries.forEach((element) {
         if (element.value['title'] == translations!.totalEarning) {
@@ -208,7 +209,7 @@ class CommonApiProvider extends ChangeNotifier {
       appArray.earningList.asMap().entries.forEach((element) {
         // log("element.value::${dashBoardModel!.totalRevenue}");
         if (element.value['title'] == translations!.totalEarning) {
-          element.value["price"] = dashBoardModel!.totalRevenue!.toString();
+          element.value["price"] = dashBoardModel!.totalRevenue?.toString() ?? '0';
         }
         if (element.value['title'] == translations!.totalBooking) {
           element.value["price"] = dashBoardModel!.totalBookings.toString();

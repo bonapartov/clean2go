@@ -34,6 +34,7 @@ class OnboardingInnScreen extends StatelessWidget {
                   controller: value.innController,
                   hintText: 'ИНН (10 или 12 цифр)',
                   keyboardType: TextInputType.number,
+                  isNumber: true,
                   maxLength: 12,
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Введите ИНН';
