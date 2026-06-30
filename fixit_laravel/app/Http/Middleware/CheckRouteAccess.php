@@ -25,14 +25,14 @@ class CheckRouteAccess
             
             if ($user->hasRole(RoleEnum::ADMIN) || $user->hasRole(RoleEnum::SERVICEMAN) || $user->hasRole(RoleEnum::PROVIDER)) {
                 if (!$request->is('backend*')) {
-                    return redirect()->back()->with('error', 'You cannot access frontend');
-                } 
+                    return redirect()->route('backend.dashboard');
+                }
                 return $next($request);
             }
-            
+
             if ($user->hasRole(RoleEnum::CONSUMER)) {
                 if ($request->is('backend*')) {
-                    return redirect()->back()->with('error', 'You cannot access admin panel');
+                    return redirect()->route('frontend.home');
                 }
                 return $next($request);
             }

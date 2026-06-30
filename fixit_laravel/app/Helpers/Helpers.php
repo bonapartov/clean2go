@@ -2264,9 +2264,11 @@ class Helpers
     public static function formatServiceType($type)
     {
         $mapping = [
-            ServiceTypeEnum::PROVIDER_SITE =>  __('static.provider_site'),
-            ServiceTypeEnum::FIXED => __('static.user_site'),
-            ServiceTypeEnum::REMOTELY => __('static.remotely'),
+            ServiceTypeEnum::FIXED         => __('static.fixed'),
+            ServiceTypeEnum::USER_SITE     => __('static.user_site'),
+            ServiceTypeEnum::PROVIDER_SITE => __('static.provider_site'),
+            ServiceTypeEnum::REMOTELY      => __('static.remotely'),
+            ServiceTypeEnum::SCHEDULED     => __('static.scheduled'),
         ];
 
         return $mapping[$type] ?? ucfirst(str_replace('_', ' ', $type));

@@ -112,6 +112,7 @@ Route::group(['middleware' => ['auth', 'route.access'], 'namespace' => 'Backend'
 
     Route::get('get-zone-categories', 'ServiceController@getZoneCategories')->name('get-zone-categories');
     Route::get('get-zone-taxes', 'ServiceController@getZoneTaxes')->name('get-zone-taxes');
+    Route::get('get-category-zones', 'ServiceController@getCategoryZones')->name('get-category-zones');
 
     // Document
     Route::resource('document', 'DocumentController', ['except' => ['show']]);
@@ -119,6 +120,7 @@ Route::group(['middleware' => ['auth', 'route.access'], 'namespace' => 'Backend'
     Route::delete('delete-documents', 'DocumentController@deleteRows')->name('delete.documents');
 
     // Categories
+    Route::get('category/{category}/commission', 'CategoryController@commission')->name('category.commission');
     Route::get('category/{category}/edit/{locale}', 'CategoryController@edit')->name('category.edit')->middleware('can:backend.service_category.edit');
     Route::get('category', 'CategoryController@index')->name('category.index')->middleware('zone.permission');
     Route::resource('category', 'CategoryController', ['except' => ['show', 'edit', 'index']]);
@@ -296,6 +298,8 @@ Route::group(['middleware' => ['auth', 'route.access'], 'namespace' => 'Backend'
     Route::post('systemLang/translate/{locale}/{file}', 'LanguageController@translate_update')->name('systemLang.translate.update')->middleware('can:backend.language.edit');
 
     //Zones
+    Route::get('zone/map-data', 'ZoneController@mapData')->name('zone.map-data')->middleware('can:backend.zone.index');
+    Route::post('zone/{zone}/duplicate', 'ZoneController@duplicate')->name('zone.duplicate')->middleware('can:backend.zone.create');
     Route::get('zone/{zone}/edit/{locale}', 'ZoneController@edit')->name('zone.edit')->middleware('can:backend.zone.edit');
     Route::resource('zone', 'ZoneController', ['except' => ['show', 'edit']]);
     Route::delete('delete-zones', 'ZoneController@deleteRows')->name('delete.zones')->middleware('can:backend.zone.destroy');

@@ -78,6 +78,15 @@ class CategoryController extends Controller
      */
     public function create() {}
 
+    public function commission(Category $category)
+    {
+        $commission = ($category->commission > 0)
+            ? $category->commission
+            : ($category->parent?->commission ?? 0);
+
+        return response()->json(['commission' => $commission]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

@@ -74,11 +74,12 @@
         <div class="form-group row">
             <label class="col-md-2" for="zone_id">{{ __('static.service.zone') }}<span> *</span></label>
             <div class="col-md-10 error-div">
-                <select class="select-2 form-control" id="zone_id" name="zone_id" data-placeholder="{{ __('static.service.select_zone') }}">
-                    <option class="select-placeholder" value=""></option>
+                <select class="select-2 form-control" id="zone_id" name="zone_id[]" multiple data-placeholder="{{ __('static.service.select_zone') }}">
                     @foreach ($zones as $key => $option)
                         <option value="{{ $key }}"
-                             @if (!empty($selected_zones) && in_array($key, $selected_zones)) selected @elseif (old('zone_id') == $key) selected @endif>
+                            @if (!empty($selected_zones) && in_array($key, $selected_zones)) selected
+                            @elseif (is_array(old('zone_id')) && in_array($key, old('zone_id'))) selected
+                            @endif>
                             {{ $option }}
                         </option>
                     @endforeach
@@ -118,7 +119,7 @@
                 <select class="select-2 form-control" id="type" name="type"
                     data-placeholder="{{ __('static.service.select_type') }}">
                     <option class="select-placeholder" value=""></option>
-                    @foreach ([ServiceTypeEnum::FIXED => Helpers::formatServiceType('fixed'), ServiceTypeEnum::PROVIDER_SITE => 'Provider Site', ServiceTypeEnum::REMOTELY => 'Remotely', ServiceTypeEnum::SCHEDULED => 'Scheduled'] as $key => $option)
+                    @foreach ([ServiceTypeEnum::FIXED => __('static.fixed'), ServiceTypeEnum::PROVIDER_SITE => __('static.provider_site'), ServiceTypeEnum::REMOTELY => __('static.remotely'), ServiceTypeEnum::SCHEDULED => __('static.scheduled')] as $key => $option)
                         <option class="option" value="{{ $key }}"
                             @if (old('type', isset($service) ? $service->type : '') == $key) selected @endif>{{ $option }}</option>
                     @endforeach
@@ -133,7 +134,7 @@
 
         @if (!auth()->user()->hasRole('provider') && auth()->user()->can('backend.provider.index'))
             <div class="form-group row">
-                <label class="col-md-2" for="user_id">{{ __('static.service.provider') }}<span> *</span></label>
+                <label class="col-md-2" for="user_id">{{ __('static.service.provider') }}</label>
                 <div class="col-md-10 error-div select-dropdown">
                     <select class="select-2 form-control user-dropdown" id="user_id" name="user_id" data-placeholder="{{ __('static.service.select_provider') }}">
                         <option class="select-placeholder" value=""></option>
@@ -345,7 +346,7 @@
         </div>
         <div class="form-group row">
             <label for="thumbnail" class="col-md-2">{{ __('static.categories.thumbnail') }}
-                ({{ request('locale', app()->getLocale()) }})<span> *</span></label>
+                ({{ request('locale', app()->getLocale()) }})</label>
             <div class="col-md-10">
                 <input class="form-control" type="file" id="thumbnail" name="thumbnail">
                 @error('thumbnail')
@@ -386,7 +387,7 @@
         @endif
         <div class="form-group row">
             <label for="image" class="col-md-2">{{ __('static.categories.image') }}
-                ({{ request('locale', app()->getLocale()) }})<span> *</span></label>
+                ({{ request('locale', app()->getLocale()) }})</label>
             <div class="col-md-10">
                 <input class="form-control" type="file" id="image[]" name="image[]" multiple>
                 @error('image')
@@ -428,7 +429,7 @@
 
         <div class="form-group row">
             <label for="web_thumbnail" class="col-md-2">{{ __('static.categories.web_thumbnail') }}
-                ({{ request('locale', app()->getLocale()) }})<span> *</span></label>
+                ({{ request('locale', app()->getLocale()) }})</label>
             <div class="col-md-10">
                 <input class="form-control" type="file" id="web_thumbnail" name="web_thumbnail">
                 @error('web_thumbnail')
@@ -469,7 +470,7 @@
         @endif
 
         <div class="form-group row">
-            <label for="web_images" class="col-md-2">{{ __('static.categories.web_images') }}({{ request('locale', app()->getLocale()) }})<span> *</span></label>
+            <label for="web_images" class="col-md-2">{{ __('static.categories.web_images') }}({{ request('locale', app()->getLocale()) }})</label>
             <div class="col-md-10">
                 <input class="form-control" type="file" id="web_images" name="web_images[]" multiple>
                 @error('web_images')
@@ -545,8 +546,7 @@
         </div>
 
         <div class="form-group row services" @if (isset($service) && $service->is_random_related_services) style="display:none" @endif>
-            <label class="col-md-2" for="service_id">{{ __('static.service.related_services') }} <span>
-                    *</span></label>
+            <label class="col-md-2" for="service_id">{{ __('static.service.related_services') }}</label>
             <div class="col-md-10 error-div select-dropdown">
                 <select id="related_services" class="select-2 form-control user-dropdown" search="true" name="service_id[]" data-placeholder="{{ __('static.service.select_related_services') }}" multiple>
                     <option value=""></option>
@@ -721,6 +721,23 @@
                 });
 
                 // ========== END OF SELECT2 FIX CODE ==========
+
+                // Подставляем комиссию из выбранной категории (только при создании)
+                var commissionUserEdited = {{ isset($service) ? 'true' : 'false' }};
+                $('#category_id').on('select2:select select2:unselect', function() {
+                    if (commissionUserEdited) return;
+                    var ids = $(this).val();
+                    if (!ids || !ids.length) return;
+                    var firstId = ids[0];
+                    $.getJSON('/backend/category/' + firstId + '/commission', function(data) {
+                        if (data.commission > 0 && !commissionUserEdited) {
+                            $('#per_serviceman_commission').val(data.commission);
+                        }
+                    });
+                });
+                $('#per_serviceman_commission').on('input', function() {
+                    commissionUserEdited = true;
+                });
 
                 const providerDropdown = document.getElementById('user_id');
                 const servicemenInput = document.getElementById('required_servicemen');
@@ -946,13 +963,13 @@
                         "duration": "required",
                         "duration_unit": "required",
                         "image[]": {
-                            required: isServiceImage,
+                            required: false,
                         },
                         "thumbnail": {
-                            required: isServiceImage,
+                            required: false,
                         },
                         "service_id[]": {
-                            required: isServiceRelated
+                            required: false
                         },
                         "country_id": {
                             required: isTabAddress
@@ -1146,32 +1163,41 @@
                 }
 
                 setTimeout(function () {
-                    var initialZoneID = $('#zone_id').val();
-
                     @isset($service)
                         var selectedCategories = {!! json_encode($service->categories->pluck('id')->toArray()) !!};
-                    @else
-                        var selectedCategories = [];
-                    @endisset
-
-                    @isset($service)
                         var selectedTaxes = {!! json_encode($service->taxes->pluck('id')->map(fn($id) => (int) $id)->toArray()) !!};
-                    @else
-                        var selectedTaxes = [];
-                    @endisset
-
-                     if (initialZoneID && initialZoneID !== '') {
-                            loadCategories(initialZoneID, selectedCategories);
-                            loadTaxes(initialZoneID, selectedTaxes);
+                        var initialZoneIDs = $('select[name="zone_id[]"]').val();
+                        if (initialZoneIDs && initialZoneIDs.length > 0) {
+                            loadCategories(initialZoneIDs, selectedCategories);
+                            loadTaxes(initialZoneIDs[0], selectedTaxes);
                         } else {
-                            console.warn("Zone ID not set yet");
+                            loadCategories(['selectAll'], selectedCategories);
                         }
+                    @else
+                        loadCategories(['selectAll'], []);
+                    @endisset
                 }, 500);
 
-            $('select[name="zone_id"]').on('change', function() {
+            var zoneUpdatingFromCategory = false;
+
+            $('select[name="zone_id[]"]').on('change', function() {
+                if (zoneUpdatingFromCategory) return;
                 var zoneId = $(this).val();
+                if (!zoneId || !zoneId.length) return;
                 loadCategories(zoneId);
-                loadTaxes(zoneId);
+                loadTaxes(zoneId[0]);
+            });
+
+            $('#category_id').on('select2:select select2:unselect', function() {
+                var categoryIds = $(this).val();
+                if (!categoryIds || !categoryIds.length) return;
+                $.getJSON('{{ route('backend.get-category-zones') }}', { category_ids: categoryIds }, function(zones) {
+                    if (!zones.length) return;
+                    var zoneIds = zones.map(function(z) { return String(z.id); });
+                    zoneUpdatingFromCategory = true;
+                    $('select[name="zone_id[]"]').val(zoneIds).trigger('change.select2');
+                    zoneUpdatingFromCategory = false;
+                });
             });
 
             function loadCategories(zoneId, selectedCategories = []) {

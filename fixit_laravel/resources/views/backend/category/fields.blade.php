@@ -204,6 +204,21 @@
         (function($) {
             "use strict";
             $(document).ready(function() {
+                // Подставляем комиссию из родительской категории
+                $('select[name="parent_id"]').on('change', function() {
+                    var parentId = $(this).val();
+                    var $commission = $('#commission');
+                    if (!parentId) return;
+                    $.getJSON('/backend/category/' + parentId + '/commission', function(data) {
+                        if (data.commission > 0 && !$commission.data('user-edited')) {
+                            $commission.val(data.commission);
+                        }
+                    });
+                });
+                $('#commission').on('input', function() {
+                    $(this).data('user-edited', true);
+                });
+
                 $("#categoryForm").validate({
                     ignore: [],
                     rules: {

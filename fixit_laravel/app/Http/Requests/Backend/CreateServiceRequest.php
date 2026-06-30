@@ -26,7 +26,7 @@ class CreateServiceRequest extends FormRequest
             'category_id' => 'array|required',
             'category_id*' => 'exists:categories,id',
             'type' => 'required|in:fixed,provider_site,remotely,scheduled',
-            'user_id' => 'exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'required_servicemen' => 'required|numeric',
             'price' => 'required',
             'duration' => 'required',

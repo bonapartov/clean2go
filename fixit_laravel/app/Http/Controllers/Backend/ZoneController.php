@@ -93,6 +93,17 @@ class ZoneController extends Controller
         }
     }
 
+    public function duplicate(Zone $zone)
+    {
+        return $this->repository->duplicate($zone->id);
+    }
+
+    public function mapData()
+    {
+        $zones = Zone::whereNull('deleted_at')->get(['id', 'name', 'locations']);
+        return response()->json($zones);
+    }
+
     public function export(Request $request)
     {
         return $this->repository->export($request);

@@ -67,7 +67,15 @@
             data-placeholder="{{ __('static.settings.select_currency') }}">
             <option class="select-placeholder" value=""></option>
             @forelse ($currencies as $key => $option)
-                <option class="option" value={{ $key }} @if (@$zone?->currency_id ?? old('currency_id')) @if ($key == @$zone?->currency_id) selected @endif @endif>{{ $option }}</option>
+                <option class="option" value={{ $key }}
+                    @if(isset($zone))
+                        @if($key == ($zone->currency_id ?? old('currency_id'))) selected @endif
+                    @elseif(old('currency_id'))
+                        @if($key == old('currency_id')) selected @endif
+                    @elseif(isset($defaultCurrencyId) && $key == $defaultCurrencyId)
+                        selected
+                    @endif
+                >{{ $option }}</option>
                 @empty
                     <option value="" disabled></option>
                 @endforelse
@@ -83,8 +91,14 @@
             <option></option>
             @foreach ($payment_methods as $key => $value)
                 <option value="{{ $value['slug'] }}"
-                    {{ (is_array(old('payment_methods')) && in_array($key, old('payment_methods'))) || (isset($zone?->payment_methods) && in_array($value['slug'], $zone?->payment_methods)) ? 'selected' : '' }}>
-                    {{ $value['name'] }}</option>
+                    @if(is_array(old('payment_methods')) && in_array($key, old('payment_methods')))
+                        selected
+                    @elseif(isset($zone) && is_array($zone->payment_methods) && in_array($value['slug'], $zone->payment_methods))
+                        selected
+                    @elseif(!isset($zone) && !old('payment_methods') && isset($defaultPaymentMethods) && in_array($value['slug'], $defaultPaymentMethods))
+                        selected
+                    @endif
+                >{{ $value['name'] }}</option>
             @endforeach
         </select>
         @error('payment_methods.*')

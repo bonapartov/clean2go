@@ -521,6 +521,20 @@ class ServiceRepository extends BaseRepository
         return response()->json($taxes);
     }
 
+    public function getCategoryZones($request)
+    {
+        $categoryIds = (array) $request->input('category_ids', []);
+        $zones = \App\Models\Category::whereIn('id', $categoryIds)
+            ->with(['zones' => fn($q) => $q->where('status', true)->whereNull('deleted_at')])
+            ->get()
+            ->flatMap(fn($cat) => $cat->zones)
+            ->unique('id')
+            ->values()
+            ->map(fn($z) => ['id' => $z->id, 'name' => $z->name]);
+
+        return response()->json($zones);
+    }
+
     public function export($request)
     {
         try {

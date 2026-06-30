@@ -501,6 +501,16 @@
             @endif
         @endcan
     @endisset
+    @isset($duplicate)
+        @can($duplicate_permission ?? $duplicate)
+            <form action="{{ route($duplicate, $data) }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="edit-icon border-0 bg-transparent p-0" data-bs-toggle="tooltip" data-placement="bottom" title="Дублировать">
+                    <i data-feather="copy"></i>
+                </button>
+            </form>
+        @endcan
+    @endisset
     @isset($providerDocument)
         @can('backend.provider_document.index')
             <a href="{{ route($providerDocument) }}?id={{ $data?->id }}" class="edit-icon" data-bs-toggle="tooltip" data-placement="bottom" title="documents">

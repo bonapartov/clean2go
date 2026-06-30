@@ -28,6 +28,8 @@ class ZoneDataTable extends DataTable
                 return view('backend.inc.action', [
                     'edit' => 'backend.zone.edit',
                     'locale' => Session::get('locale', app()->getLocale()),
+                    'duplicate' => 'backend.zone.duplicate',
+                    'duplicate_permission' => 'backend.zone.create',
                     'delete' => 'backend.zone.destroy',
                     'data' => $row,
                 ]);

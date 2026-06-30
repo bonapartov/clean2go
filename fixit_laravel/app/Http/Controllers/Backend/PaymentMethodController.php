@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Exception;
 use App\Helpers\Helpers;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Nwidart\Modules\Facades\Module;
@@ -77,6 +78,14 @@ class PaymentMethodController extends Controller
                         if ((int) $request->status) {
 
                             Module::enable($paymentMethod['name']);
+                            $slug = $paymentMethod['slug'];
+                            Zone::whereNull('deleted_at')->each(function ($zone) use ($slug) {
+                                $methods = $zone->payment_methods ?? [];
+                                if (!in_array($slug, $methods)) {
+                                    $zone->payment_methods = array_values(array_merge($methods, [$slug]));
+                                    $zone->save();
+                                }
+                            });
                         } else {
 
                             Module::disable($paymentMethod['name']);

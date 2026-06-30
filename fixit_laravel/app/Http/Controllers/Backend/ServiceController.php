@@ -119,6 +119,11 @@ class ServiceController extends Controller
         return $this->repository->getZoneCategories($request);
     }
 
+    public function getCategoryZones(Request $request)
+    {
+        return $this->repository->getCategoryZones($request);
+    }
+
     public function getZoneTaxes(Request $request)
     {
         return $this->repository->getZoneTaxes($request);

@@ -7,6 +7,7 @@ use App\Imports\ZoneImport;
 use App\Models\Zone;
 use Exception;
 use App\Models\Currency;
+use App\Helpers\Helpers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -32,7 +33,20 @@ class ZoneRepository extends BaseRepository
         $locale = request('locale') ?? Session::get('locale', app()->getLocale());
         request()->merge(['locale' => $locale]);
         $currencies = $this->currency->pluck('code', 'id');
-        return view('backend.zone.create' , ['currencies' => $currencies]);
+
+        $defaultCurrency = Helpers::getDefaultCurrency();
+        $defaultCurrencyId = $defaultCurrency?->id ?? null;
+
+        $defaultPaymentMethods = collect(Helpers::getPaymentMethodConfigs())
+            ->where('status', true)
+            ->pluck('slug')
+            ->toArray();
+
+        return view('backend.zone.create', [
+            'currencies'            => $currencies,
+            'defaultCurrencyId'     => $defaultCurrencyId,
+            'defaultPaymentMethods' => $defaultPaymentMethods,
+        ]);
     }
 
     public function store($request)
@@ -51,15 +65,6 @@ class ZoneRepository extends BaseRepository
 
             $lineString = new LineString($points);
             $place_points = new Polygon([$lineString]);
-            $wkt          = $place_points->toWkt();
-            $conflict     = $this->model->whereNull('deleted_at')->where(function ($query) use ($wkt) {
-                                $query->whereRaw("ST_Overlaps(place_points, ST_GeomFromText(?))", [$wkt])->orWhereRaw("ST_Contains(place_points, ST_GeomFromText(?))", [$wkt])->orWhereRaw("ST_Contains(ST_GeomFromText(?), place_points)", [$wkt]);
-                            })->first();
-
-            if ($conflict) {
-                return redirect()->back()->withInput()->withErrors(['place_points' => "Conflict with existing zone: {$conflict->name}. You cannot create overlapping or contained zones."]);
-            }
-
             $zone = $this->model->create([
                 'name' => $request->name,
                 'place_points' => $place_points,
@@ -111,14 +116,6 @@ class ZoneRepository extends BaseRepository
 
                 $lineString = new LineString($points);
                 $place_points = new Polygon([$lineString]);
-                $wkt          = $place_points->toWkt();
-                $conflict     = $this->model->where('id', '!=', $zone->id)->whereNull('deleted_at')->where(function ($query) use ($wkt) {
-                                $query->whereRaw("ST_Overlaps(place_points, ST_GeomFromText(?))", [$wkt])->orWhereRaw("ST_Contains(place_points, ST_GeomFromText(?))", [$wkt])->orWhereRaw("ST_Contains(ST_GeomFromText(?), place_points)", [$wkt]);
-                            })->first();
-
-                if ($conflict) {
-                    return redirect()->back()->withInput()->withErrors(['place_points' => "Conflict with existing zone: {$conflict->name}. You cannot create overlapping or contained zones."]);
-                }
                 unset($request['place_points']);
                 $zone->place_points = $place_points;
                 $zone->locations = $coordinates;
@@ -148,6 +145,27 @@ class ZoneRepository extends BaseRepository
             return redirect()->back()->with(['message' => __('static.zone.deleted')]);
         } catch (Exception $e) {
 
+            DB::rollback();
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function duplicate($id)
+    {
+        DB::beginTransaction();
+        try {
+            $zone = $this->model->findOrFail($id);
+            $copy = $zone->replicate();
+            $copy->status = $zone->status;
+
+            foreach ($zone->getTranslations('name') as $locale => $name) {
+                $copy->setTranslation('name', $locale, $name . ' (копия)');
+            }
+
+            $copy->save();
+            DB::commit();
+            return redirect()->route('backend.zone.index')->with('message', __('static.zone.created'));
+        } catch (Exception $e) {
             DB::rollback();
             return back()->with('error', $e->getMessage());
         }
