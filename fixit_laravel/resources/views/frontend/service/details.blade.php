@@ -126,30 +126,31 @@
                     {{ __('frontend::static.services.book_now')}}<span class="spinner-border spinner-border-sm" style="display: none;"></span>
                     </button>
 
+                    @if($service?->user)
                     <div class="provider-detail mt-sm-4 mt-3">
                         <label class="mb-sm-3 mb-2">{{ __('frontend::static.services.provider_details')}}</label>
                         <div class="provider-content">
                             <div class="profile-bg"></div>
                             <div class="profile">
-                                <a href="{{route('frontend.provider.details', ['slug' => $service?->user?->slug])}}"> 
-                                    <img src="{{ $service?->user?->media?->first()?->original_url ?? asset('frontend/images/user.png') }}" alt="{{ $service?->user->name }}" class="img">
+                                <a href="{{route('frontend.provider.details', ['slug' => $service?->user?->slug])}}">
+                                    <img src="{{ $service?->user?->media?->first()?->original_url ?? asset('frontend/images/user.png') }}" alt="{{ $service?->user?->name }}" class="img">
                                 </a>
-                                <a href="{{route('frontend.provider.details', ['slug' => $service?->user?->slug])}}"> 
-                                <h3 class="mt-sm-2 mt-1">{{ $service?->user->name }}</h3>
+                                <a href="{{route('frontend.provider.details', ['slug' => $service?->user?->slug])}}">
+                                <h3 class="mt-sm-2 mt-1">{{ $service?->user?->name }}</h3>
                                 </a>
                             </div>
                             <div class="profile-detail">
                                 <ul>
-                                    @if ($service?->user->known_languages && count($service?->user->known_languages))
+                                    @if ($service?->user?->known_languages && count($service?->user?->known_languages))
                                     <li>
                                         <label for="language">{{ __('frontend::static.services.known_language')}}</label>
-                                        <span>{{ implode($service?->user->known_languages) }}</span>
+                                        <span>{{ implode($service?->user?->known_languages) }}</span>
                                     </li>
                                     @endif
                                 </ul>
                             </div>
                             <div class="success-light-badge badge">
-                                <span>{{ $service?->user->served }} {{ __('frontend::static.services.service_delivered')}}</span>
+                                <span>{{ $service?->user?->served }} {{ __('frontend::static.services.service_delivered')}}</span>
                             </div>
                             @if($service?->user?->experience_duration)
                             <div class="danger-light-badge badge mb-0">
@@ -158,6 +159,7 @@
                             @endif
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="col-12 content-b-space">

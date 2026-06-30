@@ -163,28 +163,34 @@ class ServiceRepository extends BaseRepository
                     $service->related_services()->attach($request->service_id);
                 }
 
+                $mainImage = $request->file('main_image');
+
                 if ($request->hasFile('image')) {
-                    $images = $request->file('image');
-                    foreach ($images as $image) {
+                    foreach ($request->file('image') as $image) {
                         $service->addMedia($image)->withCustomProperties(['language' => $locale])->toMediaCollection('image');
                     }
-                    $service->media;
+                } elseif ($mainImage) {
+                    $service->addMedia($mainImage)->preservingOriginal()->withCustomProperties(['language' => $locale])->toMediaCollection('image');
                 }
 
                 if ($request->hasFile('web_images')) {
-                    $images = $request->file('web_images');
-                    foreach ($images as $image) {
+                    foreach ($request->file('web_images') as $image) {
                         $service->addMedia($image)->withCustomProperties(['language' => $locale])->toMediaCollection('web_images');
                     }
-                    $service->media;
+                } elseif ($mainImage) {
+                    $service->addMedia($mainImage)->preservingOriginal()->withCustomProperties(['language' => $locale])->toMediaCollection('web_images');
                 }
 
                 if ($request->hasFile('web_thumbnail') && $request->file('web_thumbnail')->isValid()) {
                     $service->addMedia($request->file('web_thumbnail'))->withCustomProperties(['language' => $locale])->toMediaCollection('web_thumbnail');
+                } elseif ($mainImage) {
+                    $service->addMedia($mainImage)->preservingOriginal()->withCustomProperties(['language' => $locale])->toMediaCollection('web_thumbnail');
                 }
 
                 if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
                     $service->addMedia($request->file('thumbnail'))->withCustomProperties(['language' => $locale])->toMediaCollection('thumbnail');
+                } elseif ($mainImage) {
+                    $service->addMedia($mainImage)->withCustomProperties(['language' => $locale])->toMediaCollection('thumbnail');
                 }
 
                 $service->setTranslation('title', $locale, $request['title']);
@@ -299,65 +305,56 @@ class ServiceRepository extends BaseRepository
                 $service->related_services()->sync($request->service_id);
             }
 
-            if ($request->image) {
-                $uploadedImages = $request->image;
-                $images = is_array($uploadedImages) ? $uploadedImages : [$uploadedImages];
-                $existingImages = $service->getMedia('image')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
-                foreach ($existingImages as $media) {
-                    $media->delete();
-                }
-                foreach ($images as $uploadedImage) {
+            $mainImage = $request->file('main_image');
+
+            $deleteMediaByLocale = function ($collection) use ($service, $locale) {
+                $service->getMedia($collection)->filter(fn($m) => $m->getCustomProperty('language') === $locale)->each->delete();
+            };
+
+            if ($request->hasFile('image')) {
+                $deleteMediaByLocale('image');
+                foreach ($request->file('image') as $uploadedImage) {
                     if ($uploadedImage->isValid()) {
                         $service->addMedia($uploadedImage)->withCustomProperties(['language' => $locale])->toMediaCollection('image');
                     }
-                    $service->media;
                 }
+            } elseif ($mainImage) {
+                $deleteMediaByLocale('image');
+                $service->addMedia($mainImage)->preservingOriginal()->withCustomProperties(['language' => $locale])->toMediaCollection('image');
             }
 
-            if ($request['thumbnail']) {
-                $existingThumbnail = $service->getMedia('thumbnail')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
-
-                foreach ($existingThumbnail as $media) {
-                    $media->delete();
-                }
-                $service->addMedia($request['thumbnail'])->withCustomProperties(['language' => $locale])->toMediaCollection('thumbnail');
-                $service->media;
+            if ($request->hasFile('thumbnail')) {
+                $deleteMediaByLocale('thumbnail');
+                $service->addMedia($request->file('thumbnail'))->withCustomProperties(['language' => $locale])->toMediaCollection('thumbnail');
+            } elseif ($mainImage) {
+                $deleteMediaByLocale('thumbnail');
+                $service->addMedia($mainImage)->preservingOriginal()->withCustomProperties(['language' => $locale])->toMediaCollection('thumbnail');
             }
 
-            if ($request->web_images) {
-                $uploadedImages = $request->web_images;
-                $web_images = is_array($uploadedImages) ? $uploadedImages : [$uploadedImages];
-                $existingWebImages = $service->getMedia('web_images')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
-                foreach ($existingWebImages as $media) {
-                    $media->delete();
-                }
-                foreach ($web_images as $uploadedImage) {
+            if ($request->hasFile('web_images')) {
+                $deleteMediaByLocale('web_images');
+                foreach ($request->file('web_images') as $uploadedImage) {
                     if ($uploadedImage->isValid()) {
                         $service->addMedia($uploadedImage)->withCustomProperties(['language' => $locale])->toMediaCollection('web_images');
                     }
-                    $service->media;
                 }
+            } elseif ($mainImage) {
+                $deleteMediaByLocale('web_images');
+                $service->addMedia($mainImage)->preservingOriginal()->withCustomProperties(['language' => $locale])->toMediaCollection('web_images');
             }
-            if ($request['web_thumbnail']) {
-                $webThumbnail = is_array($request['web_thumbnail']) ? $request['web_thumbnail'] : [$request['web_thumbnail']];
-                $existingWebThumbnail = $service->getMedia('web_thumbnail')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
-                foreach ($existingWebThumbnail as $media) {
-                    $media->delete();
-                }
+
+            if ($request->hasFile('web_thumbnail')) {
+                $webThumbnail = $request->file('web_thumbnail');
+                $webThumbnail = is_array($webThumbnail) ? $webThumbnail : [$webThumbnail];
+                $deleteMediaByLocale('web_thumbnail');
                 foreach ($webThumbnail as $image) {
                     if ($image->isValid()) {
                         $service->addMedia($image)->withCustomProperties(['language' => $locale])->toMediaCollection('web_thumbnail');
                     }
-                    $service->media;
                 }
+            } elseif ($mainImage) {
+                $deleteMediaByLocale('web_thumbnail');
+                $service->addMedia($mainImage)->withCustomProperties(['language' => $locale])->toMediaCollection('web_thumbnail');
             }
 
             // Update FAQs

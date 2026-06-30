@@ -61,7 +61,9 @@
         td, th, li, .form-control, .form-select,
         .btn, .badge, .nav-link, .dropdown-item,
         .select2-selection, .select2-search__field,
-        .select2-results__option, .datatable td, .datatable th {
+        .select2-results__option, .datatable td, .datatable th,
+        .dataTables_length, .dataTables_filter, .dataTables_info,
+        .dataTables_paginate, .dataTables_paginate .paginate_button {
             font-family: "DM Sans", "Golos Text", sans-serif !important;
         }
         ::placeholder { font-family: "DM Sans", "Golos Text", sans-serif !important; }
@@ -138,6 +140,25 @@
 
     <script src="{{ asset('admin/js/datatables.min.js') }}"></script>
     <script src="{{ asset('admin/js/buttons.server-side.js') }}"></script>
+    <script>
+        $.extend(true, $.fn.dataTable.defaults, {
+            language: {
+                search: "Поиск:",
+                lengthMenu: "Показать _MENU_ записей",
+                info: "Записи с _START_ по _END_ из _TOTAL_",
+                infoEmpty: "Записи с 0 по 0 из 0",
+                infoFiltered: "(отфильтровано из _MAX_ записей)",
+                zeroRecords: "Записи не найдены",
+                emptyTable: "Данные отсутствуют",
+                paginate: {
+                    first: "Первая",
+                    last: "Последняя",
+                    next: "След.",
+                    previous: "Пред."
+                }
+            }
+        });
+    </script>
 
     <script src="{{ asset('admin/js/jquery-validation/jquery-validate.js') }}"></script>
     <script src="{{ asset('admin/js/jquery-validation/jquery-validate.min.js') }}"></script>

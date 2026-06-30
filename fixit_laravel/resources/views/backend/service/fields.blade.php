@@ -344,79 +344,35 @@
                 </span>
             </div>
         </div>
+        {{-- Единое поле изображения --}}
         <div class="form-group row">
-            <label for="thumbnail" class="col-md-2">{{ __('static.categories.thumbnail') }}
+            <label for="main_image" class="col-md-2">{{ __('static.categories.image') }}
                 ({{ request('locale', app()->getLocale()) }})</label>
             <div class="col-md-10">
-                <input class="form-control" type="file" id="thumbnail" name="thumbnail">
-                @error('thumbnail')
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-        </div>
-        @if (isset($service))
-            @php
-                $locale = request('locale');
-                $mediaItems = $service->getMedia('thumbnail')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
-            @endphp
-            @if ($mediaItems->count() > 0)
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10">
-                            <div class="image-list">
-                                @foreach ($mediaItems as $media)
-                                    <div class="image-list-detail">
-                                        <div class="position-relative">
-                                            <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Service App Thumbnail" class="image-list-item">
-                                            <div class="close-icon">
-                                                <i data-feather="x"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
+                <input class="form-control" type="file" id="main_image" name="main_image" accept="image/*">
+                <small class="text-muted d-block mt-1">{{ __('static.service.main_image_hint') }}</small>
+                <div id="main_image_preview" style="display:none; margin-top:10px;">
+                    <img id="main_image_preview_img" style="max-height:150px; border-radius:6px;">
                 </div>
-            @endif
-        @endif
-        <div class="form-group row">
-            <label for="image" class="col-md-2">{{ __('static.categories.image') }}
-                ({{ request('locale', app()->getLocale()) }})</label>
-            <div class="col-md-10">
-                <input class="form-control" type="file" id="image[]" name="image[]" multiple>
-                @error('image')
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
             </div>
         </div>
+
         @if (isset($service))
             @php
                 $locale = request('locale');
-                $mediaItems = $service->getMedia('image')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
+                $thumbItems = $service->getMedia('thumbnail')->filter(fn($m) => $m->getCustomProperty('language') === $locale);
             @endphp
-            @if ($mediaItems->count() > 0)
+            @if ($thumbItems->count() > 0)
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2 text-muted small pt-2">{{ __('static.categories.thumbnail') }}</div>
                         <div class="col-md-10">
                             <div class="image-list">
-                                @foreach ($mediaItems as $media)
+                                @foreach ($thumbItems as $media)
                                     <div class="image-list-detail">
                                         <div class="position-relative">
-                                            <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="User Image" class="image-list-item">
-                                            <div class="close-icon">
-                                                <i data-feather="x"></i>
-                                            </div>
+                                            <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Thumbnail" class="image-list-item">
+                                            <div class="close-icon"><i data-feather="x"></i></div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -427,37 +383,52 @@
             @endif
         @endif
 
+        {{-- Раздельная загрузка --}}
         <div class="form-group row">
-            <label for="web_thumbnail" class="col-md-2">{{ __('static.categories.web_thumbnail') }}
-                ({{ request('locale', app()->getLocale()) }})</label>
-            <div class="col-md-10">
-                <input class="form-control" type="file" id="web_thumbnail" name="web_thumbnail">
-                @error('web_thumbnail')
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+            <div class="col-md-10 offset-md-2">
+                <a href="#individual-images" data-bs-toggle="collapse" class="text-primary small">
+                    <i data-feather="settings" style="width:14px;height:14px;"></i>
+                    {{ __('static.service.individual_images') }}
+                </a>
             </div>
         </div>
-        @if (isset($service))
-            @php
-                $locale = request('locale');
-                $mediaItems = $service->getMedia('web_thumbnail')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
-            @endphp
-            @if ($mediaItems->count() > 0)
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10">
-                            <div class="image-list">
-                                <div class="image-list-detail">
+        <div id="individual-images" class="collapse">
+            <div class="form-group row">
+                <label for="thumbnail" class="col-md-2">{{ __('static.categories.thumbnail') }}
+                    ({{ request('locale', app()->getLocale()) }})</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" id="thumbnail" name="thumbnail">
+                    @error('thumbnail')
+                        <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="image" class="col-md-2">{{ __('static.categories.image') }}
+                    ({{ request('locale', app()->getLocale()) }})</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" id="image[]" name="image[]" multiple>
+                    @error('image')
+                        <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+            </div>
+            @if (isset($service))
+                @php
+                    $mediaItems = $service->getMedia('image')->filter(fn($m) => $m->getCustomProperty('language') === $locale);
+                @endphp
+                @if ($mediaItems->count() > 0)
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-10">
+                                <div class="image-list">
                                     @foreach ($mediaItems as $media)
-                                        <div class="position-relative">
-                                            <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="User Image" class="image-list-item">
-                                            <div class="close-icon">
-                                                <i data-feather="x"></i>
+                                        <div class="image-list-detail">
+                                            <div class="position-relative">
+                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Image" class="image-list-item">
+                                                <div class="close-icon"><i data-feather="x"></i></div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -465,51 +436,79 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @endif
-        @endif
 
-        <div class="form-group row">
-            <label for="web_images" class="col-md-2">{{ __('static.categories.web_images') }}({{ request('locale', app()->getLocale()) }})</label>
-            <div class="col-md-10">
-                <input class="form-control" type="file" id="web_images" name="web_images[]" multiple>
-                @error('web_images')
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+            <div class="form-group row">
+                <label for="web_thumbnail" class="col-md-2">{{ __('static.categories.web_thumbnail') }}
+                    ({{ request('locale', app()->getLocale()) }})</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" id="web_thumbnail" name="web_thumbnail">
+                    @error('web_thumbnail')
+                        <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
             </div>
-        </div>
-        @if (isset($service))
-            @php
-                $locale = request('locale');
-                $mediaItems = $service->getMedia('web_images')->filter(function ($media) use ($locale) {
-                    return $media->getCustomProperty('language') === $locale;
-                });
-            @endphp
-            @if ($mediaItems->count() > 0)
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10">
-                            <div class="image-list">
-                                @foreach ($mediaItems as $media)
-                                    <div class="image-list-detail">
-                                        <div class="position-relative">
-                                            <img src="{{ $media->getUrl() }}" id="{{ $media->id }}"
-                                                alt="User Image" class="image-list-item">
-                                            <div class="close-icon">
-                                                <i data-feather="x"></i>
+            @if (isset($service))
+                @php
+                    $mediaItems = $service->getMedia('web_thumbnail')->filter(fn($m) => $m->getCustomProperty('language') === $locale);
+                @endphp
+                @if ($mediaItems->count() > 0)
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-10">
+                                <div class="image-list">
+                                    @foreach ($mediaItems as $media)
+                                        <div class="image-list-detail">
+                                            <div class="position-relative">
+                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Web Thumbnail" class="image-list-item">
+                                                <div class="close-icon"><i data-feather="x"></i></div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @endif
-        @endif
+
+            <div class="form-group row">
+                <label for="web_images" class="col-md-2">{{ __('static.categories.web_images') }}
+                    ({{ request('locale', app()->getLocale()) }})</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" id="web_images" name="web_images[]" multiple>
+                    @error('web_images')
+                        <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+            </div>
+            @if (isset($service))
+                @php
+                    $mediaItems = $service->getMedia('web_images')->filter(fn($m) => $m->getCustomProperty('language') === $locale);
+                @endphp
+                @if ($mediaItems->count() > 0)
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-10">
+                                <div class="image-list">
+                                    @foreach ($mediaItems as $media)
+                                        <div class="image-list-detail">
+                                            <div class="position-relative">
+                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Web Image" class="image-list-item">
+                                                <div class="close-icon"><i data-feather="x"></i></div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endif
+        </div>
 
         <div class="form-group row">
             <label for="image" class="col-md-2">{{ __('static.page.content') }}
@@ -949,7 +948,7 @@
                         "category_id[]": "required",
                         "type": "required",
                         "user_id": {
-                            required: isProvider
+                            required: false
                         },
                         "required_servicemen": "required",
                         "price": "required",
@@ -1311,6 +1310,21 @@
                 } else {
 
                     $currentSelect.find('option').prop('disabled', false);
+                }
+            });
+
+            // Превью главного изображения
+            $('#main_image').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#main_image_preview_img').attr('src', e.target.result);
+                        $('#main_image_preview').show();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    $('#main_image_preview').hide();
                 }
             });
     </script>
