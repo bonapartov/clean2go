@@ -513,8 +513,9 @@ class ServiceRepository extends BaseRepository
 
     public function getZoneTaxes($request)
     {
-        $taxes = [];
-        $taxes = Tax::where('zone_id', $request['zone_id'])->get();
+        $taxes = Tax::where('zone_id', $request['zone_id'])
+            ->orWhere('applies_to_all_zones', true)
+            ->get();
         return response()->json($taxes);
     }
 

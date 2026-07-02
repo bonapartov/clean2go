@@ -58,13 +58,17 @@
         <div class="form-group row">
             <label class="col-md-2" for="zone_id">{{ __('static.service.zone') }}<span> *</span></label>
             <div class="col-md-10 error-div">
-            <select id="blog_zones" class="select-2 form-control disable-all"
+            <select id="blog_zones" class="select-2 form-control"
                     name="zone_id" data-placeholder="{{ __('static.zone.select-zone') }}" required>
                 <option></option>
+                <option value="all"
+                    {{ old('zone_id', isset($tax) && $tax->applies_to_all_zones ? 'all' : ($tax->zone_id ?? '')) == 'all' ? 'selected' : '' }}>
+                    {{ __('static.zone.all') }}
+                </option>
 
                 @foreach($zones as $key => $value)
                     <option value="{{ $key }}"
-                        {{ old('zone_id', $tax->zone_id ?? '') == $key ? 'selected' : '' }}>
+                        {{ old('zone_id', isset($tax) && $tax->applies_to_all_zones ? 'all' : ($tax->zone_id ?? '')) == $key ? 'selected' : '' }}>
                         {{ $value }}
                     </option>
                 @endforeach
@@ -113,21 +117,6 @@
                         "rate": "required",
                     }
                 });
-
-                // $('.disable-all').on('change', function() {
-                //     const $currentSelect = $(this);
-                //     const selectedValues = $currentSelect.val();
-                //     const allOption = "all";
-
-                //     if (selectedValues && selectedValues.includes(allOption)) {
-
-                //         $currentSelect.val([allOption]);
-                //         $currentSelect.find('option').not(`[value="${allOption}"]`).prop('disabled', true);
-                //     } else {
-
-                //         $currentSelect.find('option').prop('disabled', false);
-                //     }
-                // });
             });
         })(jQuery);
     </script>

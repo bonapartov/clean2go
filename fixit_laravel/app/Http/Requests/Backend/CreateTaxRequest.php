@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Backend;
 
+use App\Models\Zone;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateTaxRequest extends FormRequest
@@ -27,7 +28,17 @@ class CreateTaxRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'rate' => ['required', 'regex:/^([0-9]{1,2}){1}(\.[0-9]{1,2})?$/'],
             'status' => ['required', 'min:0', 'max:1'],
-            'zone_id' => ['required', 'exists:zones,id'],
+            'zone_id' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($value === 'all') {
+                        return;
+                    }
+                    if (! Zone::whereKey($value)->exists()) {
+                        $fail(__('validation.exists', ['attribute' => 'zone id']));
+                    }
+                },
+            ],
         ];
     }
 

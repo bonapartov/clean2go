@@ -2489,14 +2489,6 @@
                         required: isFirebaseServiceJson,
                         accept: "application/JSON"
                     },
-                    "email[mail_mailer]": "required",
-                    "email[mail_host]": "required",
-                    "email[mail_port]": "required",
-                    "email[mail_encryption]": "required",
-                    "email[mail_username]": "required",
-                    "email[mail_password]": "required",
-                    "email[mail_from_name]": "required",
-                    "email[mail_from_address]": "required",
                     "general[site_name]": "required",
                     "general[default_language_id]": "required",
                     "general[default_currency_id]": "required",
@@ -2509,9 +2501,6 @@
                     "general[copyright]": "required",
                     "service_request[per_serviceman_commission]": "required",
                     "service_request[default_tax_id]": "required",
-                    "firebase[yandex_map_api_key]": "required",
-                    "agora[app_id]": "required",
-                    "agora[certificate]": "required",
                 },
                 invalidHandler: function(event, validator) {
                     let invalidTabs = [];

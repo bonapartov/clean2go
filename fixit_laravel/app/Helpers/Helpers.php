@@ -230,7 +230,7 @@ class Helpers
 
     public static function getCountryCodes()
     {
-        return Country::get(['phone_code', 'id', 'iso_3166_2', 'flag', 'name'])->unique('phone_code');
+        return Country::where('iso_3166_2', 'RU')->get(['phone_code', 'id', 'iso_3166_2', 'flag', 'name']);
     }
 
     public static function getStatesByCountryId($countryId)
@@ -240,7 +240,7 @@ class Helpers
 
     public static function getCountryCode()
     {
-       return Country::get(['phone_code', 'id', 'iso_3166_2', 'flag'])->unique('phone_code');
+       return Country::where('iso_3166_2', 'RU')->get(['phone_code', 'id', 'iso_3166_2', 'flag']);
     }
 
     public static function getConsumerById($consumer_id)

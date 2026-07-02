@@ -72,7 +72,9 @@ class TaxDataTable extends DataTable
         }
 
         if ($zoneId) {
-            $taxes->where('zone_id', $zoneId);
+            $taxes->where(function ($query) use ($zoneId) {
+                $query->where('zone_id', $zoneId)->orWhere('applies_to_all_zones', true);
+            });
         }
 
         // Filter by user's allowed zones if custom role and allow_all_zones is false
@@ -84,7 +86,9 @@ class TaxDataTable extends DataTable
             } else {
                 $allowedZoneIds = $user->getAllowedZoneIds();
                 if (!empty($allowedZoneIds)) {
-                    $taxes->whereIn('zone_id', $allowedZoneIds);
+                    $taxes->where(function ($query) use ($allowedZoneIds) {
+                        $query->whereIn('zone_id', $allowedZoneIds)->orWhere('applies_to_all_zones', true);
+                    });
                 } else {
                     // If no zones assigned, return empty result
                     $taxes->whereRaw('1 = 0');

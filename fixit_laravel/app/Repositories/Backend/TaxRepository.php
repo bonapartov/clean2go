@@ -38,12 +38,14 @@ class TaxRepository extends BaseRepository
         DB::beginTransaction();
         try {
             $locale = $request['locale'] ?? app()->getLocale();
+            $appliesToAllZones = $request->zone_id === 'all';
             $tax = $this->model->create(
                 [
                     'name' => $request->name,
                     'rate' => $request->rate,
                     'status' => $request->status,
-                    'zone_id' => $request->zone_id,
+                    'zone_id' => $appliesToAllZones ? null : $request->zone_id,
+                    'applies_to_all_zones' => $appliesToAllZones,
                 ]
             );
             
@@ -79,6 +81,10 @@ class TaxRepository extends BaseRepository
             $tax = $this->model->findOrFail($id);
             $tax->setTranslation('name', $locale, $request['name']);
             $data = Arr::except($request->all(), ['name', 'locale']);
+            $data['applies_to_all_zones'] = ($data['zone_id'] ?? null) === 'all';
+            if ($data['applies_to_all_zones']) {
+                $data['zone_id'] = null;
+            }
             $tax->update($data);
 
             DB::commit();

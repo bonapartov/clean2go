@@ -22,6 +22,7 @@ class Tax extends Model
         'rate',
         'status',
         'zone_id',
+        'applies_to_all_zones',
         'created_by_id',
     ];
 
@@ -30,6 +31,7 @@ class Tax extends Model
         'status' => 'integer',
         'created_by_id' => 'integer',
         'zone_id' => 'integer',
+        'applies_to_all_zones' => 'boolean',
     ];
     protected $hidden = [
         'updated_at',

@@ -59,7 +59,7 @@
         </button>
 
         <div class="form-group row">
-            <div class="col-md">
+            <div class="col-md d-flex align-items-center gap-2">
                 @php
                     $selected_zone = request()->get('zone_id') ?? '';
                 @endphp
@@ -72,6 +72,9 @@
                         </option>
                     @endforeach
                 </select>
+                <button type="button" id="zoneResetBtn" class="btn btn-sm btn-outline-secondary {{ $selected_zone ? '' : 'd-none' }}">
+                    {{ __('static.reset') }}
+                </button>
                 @error('zone_id')
                     <span class="invalid-feedback d-block" role="alert">
                         <strong>{{ $message }}</strong>
@@ -443,6 +446,10 @@
             window.location.href = url.toString();
         });
 
+        $('#zoneResetBtn').on('click', function() {
+            $('#zone_id').val('').trigger('change');
+        });
+
         /* -----------------------------------
            PAGE LOAD LOGIC
         ----------------------------------- */
@@ -458,6 +465,7 @@
             } else if (storedZone) {
                 $('#zone_id').val(storedZone).trigger('change.select2');
             }
+            $('#zoneResetBtn').toggleClass('d-none', !$('#zone_id').val());
 
             /* -----------------------------------
                SIDEBAR ZONE-BASED LINKS
