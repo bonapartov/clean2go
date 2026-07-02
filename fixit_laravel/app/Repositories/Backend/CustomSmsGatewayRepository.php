@@ -20,9 +20,18 @@ class CustomSmsGatewayRepository extends BaseRepository
 
     public function index()
     {
+        $gateway = $this->model->firstOrCreate([], [
+            'base_url' => '',
+            'method' => '',
+            'sid' => '',
+            'auth_token' => '',
+            'is_config' => [],
+            'from' => '',
+        ]);
+
         return view('backend.custom-sms-gateway.index', [
-            'settings' => Helpers::getSmsGatewaySettings(),
-            'id' => $this->model->pluck('id')->first()
+            'settings' => $gateway,
+            'id' => $gateway->id,
         ]);
     }
 
@@ -67,6 +76,12 @@ class CustomSmsGatewayRepository extends BaseRepository
             if (isset($request['header_key']) && isset($request['header_value'])) {
                 $header = $this->extractKeyValuePairs($request, 'header_key', 'header_value');
                 $request['headers'] = $header;
+            }
+
+            // Поля, hidden в форме в зависимости от выбранных "Конфигураций",
+            // но NOT NULL в БД — не должны улетать как null, если скрыты
+            foreach (['base_url', 'method', 'sid', 'auth_token', 'from'] as $field) {
+                $request[$field] = $request[$field] ?? '';
             }
 
             $settings = $this->model->findOrFail($id);
