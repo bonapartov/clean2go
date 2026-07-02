@@ -18,7 +18,7 @@
     "Iyzico": false,
     "Firebase": true,
     "Alphanet": false,
-    "TwoFactor": true,
+    "TwoFactor": false,
     "Nexmo": false,
     "CloudPayments": true,
     "YooKassa": true,
