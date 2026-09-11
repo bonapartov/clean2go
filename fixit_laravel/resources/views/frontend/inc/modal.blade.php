@@ -108,7 +108,7 @@
             </div>
             <div class="modal-body">
                 <div class="input-group search">
-                    <input class="form-control form-control-gray" type="text" placeholder="Search here...">
+                    <input class="form-control form-control-gray" type="text" placeholder="{{ __('frontend::static.modal.search_here') }}">
                     <i class="iconsax input-icon" icon-name="search-normal-2"></i>
                 </div>
                 <div class="row">

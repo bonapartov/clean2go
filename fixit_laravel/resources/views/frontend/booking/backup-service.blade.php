@@ -147,7 +147,7 @@
                                                 <div class="activity-dot"></div>
                                                 <div class="booking-data">
                                                     <h3 class="mb-2">{{__('frontend::static.bookings.custom_message')}}</h3>
-                                                    <textarea class="form-control form-control-white" name="description" placeholder="Write here.." rows="3"></textarea>
+                                                    <textarea class="form-control form-control-white" name="description" placeholder="{{ __('frontend::static.bookings.write_here') }}" rows="3"></textarea>
                                                     <p class="mb-4 mt-2 text-light">{{__('frontend::static.bookings.service_booking_note')}}</p>
                                                 </div>
                                             </li>
@@ -502,7 +502,7 @@
                         </div> --}}
 
                         <div class="input-group time-date-input date-time-slot-box">
-                            <input id="datetimepicker" class="form-control" placeholder="select date"/>
+                            <input id="datetimepicker" class="form-control" placeholder="{{ __('frontend::static.bookings.select_date') }}"/>
                         </div>
                     </div>
                 </div>

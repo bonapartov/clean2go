@@ -8,6 +8,8 @@ return [
     'filter' => 'Filter',
     'location_error_message' => 'Location out of service zone. Choose another.',
     'today_special_offers' => 'Today\'s special offers',
+    'delete_item_confirm_title' => 'Delete Item?',
+    'something_went_wrong_try_again' => 'Something went wrong. Please try again.',
     'location' => [
         'title' => 'We Need Your Location to Enhance Your Experience.',
         'use_current_location' => 'Use Current Location',
@@ -159,6 +161,7 @@ return [
         'notifications' => 'Notifications',
         'custom_jobs' => 'Custom Jobs',
         'request_new_job' => 'Request New Job' ,
+        'order_details' => 'Order Details',
         'my_wallet_sidebar' => 'My Wallet',
         'saved_addresses' => 'Saved Addresses',
         'my_reviews' => 'My Reviews',
@@ -390,6 +393,8 @@ return [
         'selected_servicemen' => 'Selected Servicemen',
         'edit' => 'Edit',
         'custom_message' => 'Custom Message',
+        'write_here' => 'Write here..',
+        'write_reason_here' => 'Write reason here..',
         'service_booking_note' => "*Add any extras you might like to this
                                                    service.",
         'service_delivery_location' => 'Select a service delivery location',
@@ -471,6 +476,7 @@ return [
         'servicemen_not_found' => 'Servicemen_not_found',
         'app_choose_note' => " Note: As you select earlier that the app will select your servicemen.",
         'included_services' => 'Included Services:',
+        'addons' => 'Addons',
         'description' => 'Description',
         'service_not_select' => 'No services have been selected.',
         'payment_summary' => 'Payment Summary',
@@ -515,6 +521,7 @@ return [
         'home' => 'Home',
         'services_not_found' => 'Services not found!',
         'categories_not_found' => 'Categories not found!',
+        'all' => 'All',
     ],
     'contact_us' => [
         'home' => 'Home',

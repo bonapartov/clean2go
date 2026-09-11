@@ -1514,7 +1514,7 @@
                                                 {{ __('frontend::static.bookings.reason') }}
                                             </label>
                                             <textarea class="form-control form-control-white" id="reason" name="reason" rows="5"
-                                                placeholder="Write reason here.."></textarea>
+                                                placeholder="{{ __('frontend::static.bookings.write_reason_here') }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -1793,7 +1793,7 @@
                                         <div class="form-group">
                                             <label
                                                 for="rating">{{ __('frontend::static.bookings.say_something_more') }}</label>
-                                            <textarea name="rate" id="rating" rows="5" placeholder="Write reason here.."
+                                            <textarea name="rate" id="rating" rows="5" placeholder="{{ __('frontend::static.bookings.write_reason_here') }}"
                                                 class="form-control form-control-white"></textarea>
                                         </div>
                                     </div>

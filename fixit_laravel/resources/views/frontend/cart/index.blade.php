@@ -153,7 +153,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                 </div>
                                             @endif
 
-                                            <span class="addons-title"> Addons: 1 </span>
+                                            <span class="addons-title"> {{ __('frontend::static.cart.addons') }}: {{ count($serviceBooking['additional_services'] ?? []) }} </span>
 
                                             <ul class="date-time pt-3">
                                                 <li class="w-100 lh-1">
@@ -298,8 +298,8 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                             @if(count($serviceBooking['service_packages']['services']))
                                                 <ul class="date-time pt-1">
                                                     <li class="w-100 lh-1">
-                                                        <span>Included services :</span>
-                                                        <small class="text-primary">{{ count($serviceBooking['service_packages']['services']) }} services</small>
+                                                        <span>{{ __('frontend::static.cart.included_services') }}</span>
+                                                        <small class="text-primary">{{ count($serviceBooking['service_packages']['services']) }} {{ __('frontend::static.bookings.services') }}</small>
                                                     </li>
                                                 </ul>
                                             @endif
@@ -762,7 +762,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             <div class="modal-body text-center">
                 <i class="iconsax modal-icon" icon-name="trash"></i>
-                <h3>Delete Item? </h3>
+                <h3>{{ __('frontend::static.delete_item_confirm_title') }} </h3>
                 <p class="mx-auto">
                 {{__('frontend::static.cart.remove_service_from_cart')}}
                 </p>
@@ -842,7 +842,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                 }
             },
             error: function() {
-                $('#couponMessage').html('<div class="alert alert-danger">Something went wrong. Please try again.</div>');
+                $('#couponMessage').html('<div class="alert alert-danger">{{ __('frontend::static.something_went_wrong_try_again') }}</div>');
                 $spinner.hide();
             },
             complete: function() {

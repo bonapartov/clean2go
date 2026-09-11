@@ -32,4 +32,5 @@ return [
     'reset_password_title' => "Hello, you have been missed !",
     'referral_code' => 'Referral Code',
     'enter_referral_code' => 'Enter Referral Code',
-]; 
+    'remembered_password' => 'Remembered your password?',
+];

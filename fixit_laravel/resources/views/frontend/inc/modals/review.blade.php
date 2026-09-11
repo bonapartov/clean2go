@@ -101,7 +101,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             <div class="modal-body text-center">
                 <i class="iconsax modal-icon" icon-name="trash"></i>
-                <h3>Delete Item? </h3>
+                <h3>{{ __('frontend::static.delete_item_confirm_title') }} </h3>
                 <p class="mx-auto">
                 {{ __('frontend::static.modal.remove_review') }}
                 </p>

@@ -32,4 +32,5 @@ return [
     'reset_password_title' => "Здравствуйте, мы соскучились!",
     'referral_code' => 'Реферальный код',
     'enter_referral_code' => 'Введите реферальный код',
+    'remembered_password' => 'Вспомнили пароль?',
 ];

@@ -8,6 +8,8 @@ return [
     'filter' => 'Фильтр',
     'location_error_message' => 'Адрес вне зоны обслуживания. Выберите другой.',
     'today_special_offers' => 'Специальные предложения дня',
+    'delete_item_confirm_title' => 'Удалить?',
+    'something_went_wrong_try_again' => 'Что-то пошло не так. Попробуйте ещё раз.',
     'location' => [
         'title' => 'Нам нужна ваша геолокация, чтобы улучшить сервис.',
         'use_current_location' => 'Использовать текущее местоположение',
@@ -159,6 +161,7 @@ return [
         'notifications' => 'Уведомления',
         'custom_jobs' => 'Индивидуальные заказы',
         'request_new_job' => 'Создать заказ' ,
+        'order_details' => 'Детали заказа',
         'my_wallet_sidebar' => 'Мой кошелёк',
         'saved_addresses' => 'Сохранённые адреса',
         'my_reviews' => 'Мои отзывы',
@@ -390,6 +393,8 @@ return [
         'selected_servicemen' => 'Выбранные мастера',
         'edit' => 'Изменить',
         'custom_message' => 'Произвольное сообщение',
+        'write_here' => 'Напишите здесь..',
+        'write_reason_here' => 'Укажите причину здесь..',
         'service_booking_note' => "*Добавьте любые дополнительные пожелания к
                                                    этой услуге.",
         'service_delivery_location' => 'Выберите адрес оказания услуги',
@@ -471,6 +476,7 @@ return [
         'servicemen_not_found' => 'Мастера не найдены',
         'app_choose_note' => " Примечание: вы выбрали, что мастеров подберёт приложение.",
         'included_services' => 'Включённые услуги:',
+        'addons' => 'Доп. услуги',
         'description' => 'Описание',
         'service_not_select' => 'Услуги не выбраны.',
         'payment_summary' => 'Сводка по оплате',
@@ -515,6 +521,7 @@ return [
         'home' => 'Главная',
         'services_not_found' => 'Услуги не найдены!',
         'categories_not_found' => 'Категории не найдены!',
+        'all' => 'Все',
     ],
     'contact_us' => [
         'home' => 'Главная',

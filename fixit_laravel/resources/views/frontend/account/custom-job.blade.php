@@ -97,7 +97,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Детали заказа</h5>
+                            <h3 class="modal-title">{{ __('frontend::static.account.order_details') }}</h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         @php
