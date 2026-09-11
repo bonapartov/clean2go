@@ -38,7 +38,7 @@
                                                             @if (!empty($backup->file_path['db']))
                                                                 <a href="{{ $backup->file_path['db'] }}"
                                                                     class="edit-icon" data-bs-toggle="tooltip"
-                                                                    title="Files" download>
+                                                                    title="{{ __('static.common.files') }}" download>
                                                                     <i class="ri-file-download-line"
                                                                         alt="no-data"></i>
                                                                 </a>
@@ -46,7 +46,7 @@
                                                             @if (!empty($backup->file_path['files']))
                                                                 <a href="{{ $backup->file_path['files'] }}"
                                                                     class="edit-icon" data-bs-toggle="tooltip"
-                                                                    title="Files" download>
+                                                                    title="{{ __('static.common.files') }}" download>
                                                                     <i class="ri-file-download-line"
                                                                         alt="no-data"></i>
                                                                 </a>
@@ -54,14 +54,14 @@
                                                             @if (!empty($backup->file_path['media']))
                                                                 <a href="{{ route('backend.backup.downoadUploadsBackup', $backup->id) }}"
                                                                     class="edit-icon" data-bs-toggle="tooltip"
-                                                                    title="Media">
+                                                                    title="{{ __('static.system_tools.media') }}">
                                                                     <i class="ri-folder-download-line"
                                                                         alt="no-data"></i>
                                                                 </a>
                                                             @endif
                                                             @if (!empty($backup->file_path['db']) && !empty($backup->file_path['media']))
                                                                 <a href="javascript:void(0)" class="edit-icon"
-                                                                    data-bs-toggle="tooltip" title="Restore"
+                                                                    data-bs-toggle="tooltip" title="{{ __('static.common.restore') }}"
                                                                     onclick="showRestoreModal('{{ route('backend.backup.restoreBackup', $backup->id) }}')">
                                                                     <i class="ri-arrow-turn-forward-line"
                                                                         alt="no-data"></i>
@@ -69,7 +69,7 @@
                                                             @endif
                                                             @if (!empty($backup->file_path))
                                                                 <a href="javascript:void(0)" class="delete-svg"
-                                                                    data-bs-toggle="tooltip" title="Delete Backup"
+                                                                    data-bs-toggle="tooltip" title="{{ __('static.common.delete_backup') }}"
                                                                     onclick="showDeleteModal('{{ route('backend.backup.deleteBackup', $backup->id) }}')">
                                                                     <i class="ri-delete-bin-line"
                                                                         alt="no-data"></i>

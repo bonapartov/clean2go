@@ -91,7 +91,7 @@
                                                                 <div class="position-relative">
                                                                     <img src="{{ asset($themeOptions['general']['header_logo']) }}"
                                                                         id="{{ $themeOptions['general']['header_logo'] }}"
-                                                                        alt="Header Logo" class="image-list-item">
+                                                                        alt="{{ __('static.theme_options.header_logo') }}" class="image-list-item">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -126,7 +126,7 @@
                                                                 <div class="position-relative">
                                                                     <img src="{{ asset($themeOptions['general']['favicon_icon']) }}"
                                                                         id="{{ $themeOptions['general']['favicon_icon'] }}"
-                                                                        alt="favicon" class="image-list-item">
+                                                                        alt="{{ __('static.settings.favicon') }}" class="image-list-item">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -161,7 +161,7 @@
                                                                 <div class="position-relative">
                                                                     <img src="{{ asset($themeOptions['general']['footer_logo']) }}"
                                                                         id="{{ $themeOptions['general']['footer_logo'] }}"
-                                                                        alt="Header Logo" class="image-list-item">
+                                                                        alt="{{ __('static.theme_options.header_logo') }}" class="image-list-item">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -770,7 +770,7 @@
                                     <ul class="nav mb-3 nav-tabs" id="pills-tab">
                                         <li class="nav-item">
                                             <a class="nav-link active" id="about_tab" data-bs-toggle="pill"
-                                                href="#about">About</a>
+                                                href="#about">{{ __('static.sections.about') }}</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="work_tab" data-bs-toggle="pill" href="#work">Work
@@ -778,11 +778,11 @@
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="provider_tab" data-bs-toggle="pill"
-                                                href="#provider">Providers List</a>
+                                                href="#provider">{{ __('static.home_pages.providers_list') }}</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="user_tab" data-bs-toggle="pill"
-                                                href="#user">Testimonial</a>
+                                                href="#user">{{ __('static.home_pages.testimonial') }}</a>
                                         </li>
                                         <!-- Add more nav items as needed -->
                                     </ul>
@@ -839,7 +839,7 @@
                                                                     <div class="position-relative">
                                                                         <img src="{{ asset($themeOptions['about_us']['left_bg_image_url']) }}"
                                                                             id="{{ $themeOptions['about_us']['left_bg_image_url'] }}"
-                                                                            alt="Float image" class="image-list-item">
+                                                                            alt="{{ __('static.common.float_image') }}" class="image-list-item">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -874,7 +874,7 @@
                                                                     <div class="position-relative">
                                                                         <img src="{{ asset($themeOptions['about_us']['right_bg_image_url']) }}"
                                                                             id="{{ $themeOptions['about_us']['right_bg_image_url'] }}"
-                                                                            alt="Float image" class="image-list-item">
+                                                                            alt="{{ __('static.common.float_image') }}" class="image-list-item">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1204,11 +1204,11 @@
                                     <ul class="nav mb-3 nav-tabs" id="pills-tab">
                                         <li class="nav-item">
                                             <a class="nav-link active" id="terms_and_conditions_tab"
-                                                data-bs-toggle="pill" href="#terms_and_conditions">Terms & Conditions</a>
+                                                data-bs-toggle="pill" href="#terms_and_conditions">{{ __('static.common.terms_conditions') }}</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="privacy_policy_tab" data-bs-toggle="pill"
-                                                href="#privacy_policy">Privacy Policy</a>
+                                                href="#privacy_policy">{{ __('static.common.privacy_policy') }}</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
@@ -1227,7 +1227,7 @@
                                             </div>
 
                                             <button type="button" id="add_terms_and_conditions_Banner"
-                                                class="btn btn-primary mt-3">Add Banner</button>
+                                                class="btn btn-primary mt-3">{{ __('static.common.add_banner') }}</button>
                                             <template id="terms_and_conditions_bannerTemplate">
                                                 @include(
                                                     'backend.theme-options.terms_and_condition_banners',
@@ -1254,7 +1254,7 @@
                                             </div>
 
                                             <button type="button" id="add_privacy_policy_Banner"
-                                                class="btn btn-primary mt-3">Add Banner</button>
+                                                class="btn btn-primary mt-3">{{ __('static.common.add_banner') }}</button>
                                             <template id="privacy_policy_bannerTemplate">
                                                 @include('backend.theme-options.privacy_policy_banners', [
                                                     'index' => '__INDEX__',
@@ -1292,7 +1292,7 @@
                                                             <div class="position-relative">
                                                                 <img src="{{ asset($themeOptions['authentication']['header_logo']) }}"
                                                                     id="{{ $themeOptions['authentication']['header_logo'] }}"
-                                                                    alt="Float image" class="image-list-item">
+                                                                    alt="{{ __('static.common.float_image') }}" class="image-list-item">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1326,7 +1326,7 @@
                                                             <div class="position-relative">
                                                                 <img src="{{ asset($themeOptions['authentication']['auth_images']) }}"
                                                                     id="{{ $themeOptions['authentication']['auth_images'] }}"
-                                                                    alt="Float image" class="image-list-item">
+                                                                    alt="{{ __('static.common.float_image') }}" class="image-list-item">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1394,7 +1394,7 @@
                                                             <div class="position-relative">
                                                                 <img src="{{ asset($themeOptions['seo']['og_image']) }}"
                                                                     id="{{ $themeOptions['seo']['og_image'] }}"
-                                                                    alt="OG Image" class="image-list-item">
+                                                                    alt="{{ __('static.seo_setting.og_image') }}" class="image-list-item">
                                                             </div>
                                                         </div>
                                                     </div>

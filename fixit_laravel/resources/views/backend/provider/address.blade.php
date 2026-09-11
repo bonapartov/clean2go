@@ -18,8 +18,8 @@
                     @endisset
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-gray" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary submitBtn spinner-btn">Submit</button>
+                    <button type="button" class="btn btn-gray" data-bs-dismiss="modal">{{ __('static.custom_sms_gateways.close') }}</button>
+                    <button type="submit" class="btn btn-primary submitBtn spinner-btn">{{ __('static.submit') }}</button>
                 </div>
             </form>
         </div>
@@ -50,8 +50,8 @@
                             @endisset
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-gray" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary submitBtn spinner-btn">Submit</button>
+                            <button type="button" class="btn btn-gray" data-bs-dismiss="modal">{{ __('static.custom_sms_gateways.close') }}</button>
+                            <button type="submit" class="btn btn-primary submitBtn spinner-btn">{{ __('static.submit') }}</button>
                         </div>
                     </form>
                 </div>

@@ -29,7 +29,7 @@
                     <li>
                         <a href="{{ route('backend.advertisement.edit', ['advertisement' => $advertisement->id, 'locale' => Session::get('locale', 'en')]) }}"
                             class="language-switcher active" target="blank"><img
-                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i
+                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i
                                 data-feather="arrow-up-right"></i></a>
                     </li>
                 @endforelse
@@ -175,7 +175,7 @@
                             @foreach ($mediaItems as $media)
                                 <div class="image-list-detail">
                                     <div class="position-relative">
-                                        <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Banner Image"
+                                        <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.banner.image') }}"
                                             class="image-list-item">
                                         <div class="close-icon">
                                             <i data-feather="x"></i>
@@ -214,9 +214,9 @@
         @if (isset($advertisement))
             <input class="form-control" id="date-range"
                 value="{{ \Carbon\Carbon::parse(@$advertisement->start_date)->format('d/m/Y') }} to {{ \Carbon\Carbon::parse(@$advertisement->end_date)->format('d/m/Y') }}"
-                name="start_end_date" placeholder="Select Date..">
+                name="start_end_date" placeholder="{{ __('static.common.select_date_placeholder') }}">
         @else
-            <input class="form-control" id="date-range" name="start_end_date" placeholder="Select Date..">
+            <input class="form-control" id="date-range" name="start_end_date" placeholder="{{ __('static.common.select_date_placeholder') }}">
         @endif
         @error('start_end_date')
             <span class="invalid-feedback d-block" role="alert">

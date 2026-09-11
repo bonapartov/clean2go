@@ -166,11 +166,11 @@ $(document).ready(function () {
                         <div class="file-info">
                             <small class="file-size">${formattedSize}</small>
                             <small class="file-divider">•</small>
-                            <small class="file-status">Ready</small>
+                            <small class="file-status">{{ __('static.common.ready') }}</small>
                         </div>
                     </div>
                 </div>
-                <i class="ri-delete-bin-6-line cancel-button" title="Remove File" style="cursor: pointer;"></i>
+                <i class="ri-delete-bin-6-line cancel-button" title="{{ __('static.common.remove_file') }}" style="cursor: pointer;"></i>
             </li>`;
         fileListContainer.append(fileItem);
     }

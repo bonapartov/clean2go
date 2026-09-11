@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Data Import & Export</h5>
+                    <h5>{{ __('static.common.data_import_export') }}</h5>
                     {{-- <div>
                         <div class="form-inline">
                         </div>
@@ -20,8 +20,8 @@
                             <table class="table table-hover mt-0">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Actions</th>
+                                        <th>{{ __('static.name') }}</th>
+                                        <th>{{ __('static.email_templates.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,7 +41,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="3" class="text-center">No templates available.</td>
+                                            <td colspan="3" class="text-center">{{ __('static.email_templates.no_templates_available') }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

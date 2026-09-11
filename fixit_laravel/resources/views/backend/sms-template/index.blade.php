@@ -11,12 +11,12 @@
                             <form action="{{ route('backend.sms-template.index') }}" method="GET" class="d-flex"
                                 id="searchForm">
                                 <input type="text" id="searchInput" class="form-control me-2" name="search"
-                                    placeholder="Search templates" value="{{ request()->get('search') }}">
+                                    placeholder="{{ __('static.common.search_templates') }}" value="{{ request()->get('search') }}">
                                 <button type="submit" class="btn btn-primary" id="searchButton">
                                     <i data-feather="search"></i>
                                 </button>
                                 <button type="button" class="btn btn-secondary ms-2" id="cancelButton"
-                                    style="display:none;">Cancel</button>
+                                    style="display:none;">{{ __('static.cancel') }}</button>
                             </form>
                         </div>
                     </div>
@@ -28,9 +28,9 @@
                             <table class="table table-hover mt-0">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
+                                        <th>{{ __('static.name') }}</th>
+                                        <th>{{ __('static.description') }}</th>
+                                        <th>{{ __('static.email_templates.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody id="templateTable">
@@ -41,7 +41,7 @@
                                                 <td>{{ $template['description'] ?? null }}</td>
                                                 <td>
                                                     <!-- <a href="{{ route('backend.sms-template.edit', ['slug' => $template['slug']]) }}"
-                                                            class="btn btn-link text-primary" title="Edit">
+                                                            class="btn btn-link text-primary" title="{{ __('static.edit') }}">
                                                             Edit
                                                         </a> -->
 
@@ -72,12 +72,12 @@
                     <div class="form-inline">
                         <form action="{{ route('backend.sms-template.index') }}" method="GET" class="d-flex" id="searchForm">
                             <input type="text" id="searchInput" class="form-control me-2" name="search"
-                                placeholder="Search templates" value="{{ request()->get('search') }}">
+                                placeholder="{{ __('static.common.search_templates') }}" value="{{ request()->get('search') }}">
                             <button type="submit" class="btn btn-primary" id="searchButton">
                                 <i data-feather="search"></i>
                             </button>
                             <button type="button" class="btn btn-secondary ms-2" id="cancelButton"
-                                style="display:none;">Cancel</button>
+                                style="display:none;">{{ __('static.cancel') }}</button>
                         </form>
                     </div>
                 </div>
@@ -88,9 +88,9 @@
                     <table class="table table-hover">
                         <thead class="thead-light">
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Actions</th>
+                                <th>{{ __('static.name') }}</th>
+                                <th>{{ __('static.description') }}</th>
+                                <th>{{ __('static.email_templates.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody id="templateTable">
@@ -101,7 +101,7 @@
                                         <td>{{ $template['description'] ?? null }}</td>
                                         <td>
                                             <!-- <a href="{{ route('backend.sms-template.edit', ['slug' => $template['slug']]) }}"
-                                                class="btn btn-link text-primary" title="Edit">
+                                                class="btn btn-link text-primary" title="{{ __('static.edit') }}">
                                                 Edit
                                             </a> -->
 

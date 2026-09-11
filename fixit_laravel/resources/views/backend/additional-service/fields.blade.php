@@ -27,7 +27,7 @@
                     <li>
                         <a href="{{ route('backend.additional-service.edit', ['additional_service' => $additionalService->id, 'locale' => Session::get('locale', 'en')]) }}"
                             class="language-switcher active" target="blank"><img
-                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i
+                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i
                                 data-feather="arrow-up-right"></i></a>
                     </li>
                 @endforelse
@@ -84,7 +84,7 @@
                         @foreach ($mediaItems as $media)
                             <div class="image-list-detail">
                                 <div class="position-relative">
-                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="User Image"
+                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.common.user_image') }}"
                                         class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>
@@ -121,7 +121,7 @@
                 data-content_type="service"
                 data-locale="{{ request('locale', app()->getLocale()) }}"
                 style="margin-left: 8px;">
-            Generate Title
+            {{ __('static.settings.generate_title') }}
         </button>
     </div>
 </div>

@@ -312,7 +312,7 @@
                                                 @endforeach
                                             </div>
 
-                                            <button type="button" id="addBanner" class="btn btn-primary mt-3">Add Banner</button>
+                                            <button type="button" id="addBanner" class="btn btn-primary mt-3">{{ __('static.common.add_banner') }}</button>
                                             <template id="bannerTemplate">
                                                 @include('backend.home-page.banners', [
                                                     'index' => '__INDEX__',
@@ -419,7 +419,7 @@
                                                                 <div class="image-list">
                                                                     <div class="image-list-detail">
                                                                         <div class="position-relative">
-                                                                            <img src="{{ asset($homePage['download']['image_url']) }}" id="{{ $homePage['download']['image_url'] }}" alt="Header Logo" class="image-list-item">
+                                                                            <img src="{{ asset($homePage['download']['image_url']) }}" id="{{ $homePage['download']['image_url'] }}" alt="{{ __('static.theme_options.header_logo') }}" class="image-list-item">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -759,7 +759,7 @@
                                                                 <div class="image-list">
                                                                     <div class="image-list-detail">
                                                                         <div class="position-relative">
-                                                                            <img src="{{ asset($homePage['custom_job']['image_url']) }}" id="{{ $homePage['custom_job']['image_url'] }}" alt="Header Logo" class="image-list-item">
+                                                                            <img src="{{ asset($homePage['custom_job']['image_url']) }}" id="{{ $homePage['custom_job']['image_url'] }}" alt="{{ __('static.theme_options.header_logo') }}" class="image-list-item">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -848,7 +848,7 @@
                                                                         <div class="position-relative">
                                                                             <img src="{{ asset($homePage['become_a_provider']['image_url']) }}"
                                                                                 id="{{ $homePage['become_a_provider']['image_url'] }}"
-                                                                                alt="Float image" class="image-list-item">
+                                                                                alt="{{ __('static.common.float_image') }}" class="image-list-item">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -882,7 +882,7 @@
                                                                         <div class="position-relative">
                                                                             <img src="{{ asset($homePage['become_a_provider']['float_image_1_url']) }}"
                                                                                 id="{{ $homePage['become_a_provider']['float_image_1_url'] }}"
-                                                                                alt="Become a image" class="image-list-item">
+                                                                                alt="{{ __('static.common.become_a_provider_image') }}" class="image-list-item">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -916,7 +916,7 @@
                                                                         <div class="position-relative">
                                                                             <img src="{{ asset($homePage['become_a_provider']['float_image_2_url']) }}"
                                                                                 id="{{ $homePage['become_a_provider']['float_image_2_url'] }}"
-                                                                                alt="Become a image" class="image-list-item">
+                                                                                alt="{{ __('static.common.become_a_provider_image') }}" class="image-list-item">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1126,7 +1126,7 @@
                                                                         <div class="position-relative">
                                                                             <img src="{{ asset($homePage['news_letter']['bg_image_url']) }}"
                                                                                 id="{{ $homePage['news_letter']['bg_image_url'] }}"
-                                                                                alt="Float image" class="image-list-item">
+                                                                                alt="{{ __('static.common.float_image') }}" class="image-list-item">
                                                                         </div>
                                                                     </div>
                                                                 </div>

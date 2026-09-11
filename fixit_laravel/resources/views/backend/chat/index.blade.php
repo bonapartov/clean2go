@@ -37,7 +37,7 @@
                                             </form>
                                             <ul class="chats-user" id="recentChats">
                                                 <li class="chat-item no-data-tab">
-                                                    <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="No chats">
+                                                    <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="{{ __('static.common.no_chats') }}">
                                                     <p>{{ __('static.chats.no_chats_found') }}</p>
                                                 </li>
                                             </ul>
@@ -73,7 +73,7 @@
                                                     </li>
                                                 @empty
                                                     <li class="chat-item no-data-tab">
-                                                        <img src="{{ asset('admin/images/no-user.png') }}" alt="No riders">
+                                                        <img src="{{ asset('admin/images/no-user.png') }}" alt="{{ __('static.common.no_riders') }}">
                                                         <p class="text-muted">{{ __('static.chats.no_users_found') }}</p>
                                                     </li>
                                                 @endforelse
@@ -108,7 +108,7 @@
                                                     </li>
                                                 @empty
                                                     <li class="chat-item no-data-tab">
-                                                        <img src="{{ asset('admin/images/no-user.png') }}" alt="No drivers">
+                                                        <img src="{{ asset('admin/images/no-user.png') }}" alt="{{ __('static.common.no_drivers') }}">
                                                         <p class="text-muted">{{ __('static.chats.no_provider_found') }}</p>
                                                     </li>
                                                 @endforelse
@@ -143,7 +143,7 @@
                                                     </li>
                                                 @empty
                                                     <li class="chat-item no-data-tab">
-                                                        <img src="{{ asset('admin/images/no-user.png') }}" alt="No drivers">
+                                                        <img src="{{ asset('admin/images/no-user.png') }}" alt="{{ __('static.common.no_drivers') }}">
                                                         <p class="text-muted">{{ __('static.chats.no_serviceman_found') }}</p>
                                                     </li>
                                                 @endforelse
@@ -161,7 +161,7 @@
                             <div class="inside">
                                 <div class="no-data-container" id="noDataContainer">
                                     <div class="d-flex">
-                                        <img src="{{ asset('admin/images/no-chat.png') }}" class="img-fluid" alt="No user selected">
+                                        <img src="{{ asset('admin/images/no-chat.png') }}" class="img-fluid" alt="{{ __('static.common.no_user_selected') }}">
                                     </div>
                                 </div>
                                 <div class="right-sidebar-title">
@@ -480,7 +480,7 @@
             if (chats.length === 0) {
                 chatList.append(`
                     <li class="chat-item no-data-tab">
-                        <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="No chats">
+                        <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="{{ __('static.common.no_chats') }}">
                         <p>{{ __('static.chats.no_chats_found') }}</p>
                     </li>
                 `);
@@ -550,7 +550,7 @@
                     console.error('Error loading chats:', error);
                     $('#recentChats').html(`
                         <li class="chat-item no-data-tab">
-                            <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="Error">
+                            <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="{{ __('static.common.error') }}">
                             <p>{{ __('static.chats.no_chats_found') }}</p>
                         </li>
                     `);
@@ -734,7 +734,7 @@
             let messageContent = '';
             if (msg.images && Array.isArray(msg.images) && msg.images.length > 0) {
                 messageContent = msg.images.map(imageUrl =>
-                    `<img src="${imageUrl}" class="chat-image img-fluid" alt="Chat image">`
+                    `<img src="${imageUrl}" class="chat-image img-fluid" alt="{{ __('static.common.chat_image') }}">`
                 ).join('');
             } else {
                 messageContent = `<p>${msg.message || ''}</p>`;
@@ -766,7 +766,7 @@
                 let messageContent = '';
                 if (msg.images && Array.isArray(msg.images) && msg.images.length > 0) {
                     messageContent = msg.images.map(imageUrl =>
-                        `<img src="${imageUrl}" class="chat-image img-fluid" alt="Chat image">`
+                        `<img src="${imageUrl}" class="chat-image img-fluid" alt="{{ __('static.common.chat_image') }}">`
                     ).join('');
                 } else {
                     messageContent = `<p>${msg.message || ''}</p>`;
@@ -804,8 +804,8 @@
             if (visibleItems === 0 && query) {
                 if ($noDataElement.length === 0) {
                     $tab.append(`<li class="chat-item no-data-tab">
-                            <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="No results">
-                            <p>No results found</p>
+                            <img src="{{ asset('admin/images/no-user.png') }}" class="img-fluid" alt="{{ __('static.common.no_results') }}">
+                            <p>{{ __('static.common.no_results_found') }}</p>
                         </li>`);
                 }
             } else {

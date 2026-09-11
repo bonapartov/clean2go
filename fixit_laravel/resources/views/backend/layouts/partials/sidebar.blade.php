@@ -34,7 +34,7 @@
         <ul class="sidebar-menu custom-scrollbar" id="sidebar-menu">
             <li class="pin-title sidebar-main-title">
                 <div>
-                    <h6>Pinned</h6>
+                    <h6>{{ __('static.common.pinned') }}</h6>
                 </div>
             </li>
             <li class="sidebar-main-title">
@@ -1012,14 +1012,14 @@
 
                             <div class="d-flex align-items-center gap-3">
                                 <a href="{{ route('frontend.home') }}" class="log-out-btn btn" target="_blank"
-                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Browse Frontend">
+                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ __('static.common.browse_frontend') }}">
                                     <i data-feather="globe"></i>
                                 </a>
 
                                 <button class="log-out-btn btn">
                                     <a href="{{ route('frontend.logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Logout">
+                                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ __('static.logout') }}">
                                         <i data-feather="log-out"></i>
                                     </a>
                                     <form action="{{ route('frontend.logout') }}" method="POST" class="d-none"
@@ -1045,7 +1045,7 @@
 
                         <div class="d-flex align-items-center gap-3">
                             <button class="log-out-btn btn">
-                                <a href="{{ route('frontend.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Logout">
+                                <a href="{{ route('frontend.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ __('static.logout') }}">
                                     <i data-feather="log-out"></i>
                                 </a>
                                 <form action="{{ route('frontend.logout') }}" method="POST" class="d-none" id="logout-form">

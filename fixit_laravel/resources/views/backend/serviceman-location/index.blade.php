@@ -24,7 +24,7 @@
                         </button>
                     </div>
                     <div class="search-box-group">
-                        <input type="search" placeholder="Search here...." name="" class="form-control" id="">
+                        <input type="search" placeholder="{{ __('static.common.search_here') }}" name="" class="form-control" id="">
                         <i class="ri-search-line"></i>
                     </div>
                     <ul class="location-list">

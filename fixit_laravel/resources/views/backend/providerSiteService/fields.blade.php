@@ -175,7 +175,7 @@
                             <div class="image-list-detail">
                                 <div class="position-relative">
                                     <img src="{{ $providerSiteService->getFirstMedia('thumbnail')->original_url }}"
-                                        id="{{ $providerSiteService->getFirstMedia('thumbnail')->id }}" alt="User Image"
+                                        id="{{ $providerSiteService->getFirstMedia('thumbnail')->id }}" alt="{{ __('static.common.user_image') }}"
                                         class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>
@@ -209,7 +209,7 @@
                                 <div class="image-list-detail">
                                     <div class="position-relative">
                                         <img src="{{ $media->original_url }}" id="{{ $media->id }}"
-                                            alt="User Image" class="image-list-item">
+                                            alt="{{ __('static.common.user_image') }}" class="image-list-item">
                                         <div class="close-icon">
                                             <i data-feather="x"></i>
                                         </div>

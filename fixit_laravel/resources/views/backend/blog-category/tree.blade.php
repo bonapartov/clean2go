@@ -13,7 +13,7 @@
             </div>
             <div class="card-body position-relative no-data">
                 <form class="d-flex gap-2" action="" method="get">
-                    <input type="text" name="search" id="searchCategory" value="{{request()->search}}" class="form-control" placeholder="Search Category...">
+                    <input type="text" name="search" id="searchCategory" value="{{request()->search}}" class="form-control" placeholder="{{ __('static.common.search_category_placeholder') }}">
                     <button id="submitBtn" type="submit" class="btn btn-primary"> {{ __('Search') }}</button>
                 </form>
                 <div class="jstree-loader">

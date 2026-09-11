@@ -76,7 +76,7 @@
                                 <div class="image-list-detail">
                                     <div class="position-relative">
                                         <img src="{{ $provider->getFirstMedia('image')->original_url }}"
-                                            id="{{ $provider->getFirstMedia('image')->id }}" alt="User Image"
+                                            id="{{ $provider->getFirstMedia('image')->id }}" alt="{{ __('static.common.user_image') }}"
                                             class="image-list-item">
                                         <div class="close-icon">
                                             <i data-feather="x"></i>
@@ -446,7 +446,7 @@
                                         <div class="position-relative">
                                             <img src="{{ $provider->company->getFirstMedia('company_logo')->original_url }}"
                                                 id="{{ $provider->company->getFirstMedia('company_logo')->id }}"
-                                                alt="User Image" class="image-list-item">
+                                                alt="{{ __('static.common.user_image') }}" class="image-list-item">
                                             <div class="close-icon">
                                                 <i data-feather="x"></i>
                                             </div>
@@ -698,7 +698,7 @@
             </div>
         @else
             <a href="javascript:void(0)" class="add-more" data-bs-toggle="modal" data-bs-target="#addaddress">
-                <h5>Address List</h5>
+                <h5>{{ __('static.common.address_list') }}</h5>
                 <div class="add-more-div">
                     <i data-feather="plus"></i>
                 </div>
@@ -741,7 +741,7 @@
                                     <img class="mx-auto d-flex" src="{{ asset('admin/images/no-category.png') }}"
                                         alt="no-image">
                                     <div class="data-not-found">
-                                        <span>Address Not Found</span>
+                                        <span>{{ __('static.common.address_not_found') }}</span>
                                     </div>
                                 </div>
                             @endforelse

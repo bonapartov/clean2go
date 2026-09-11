@@ -16,13 +16,13 @@
                     <span class="badge">{{ $address?->type }}</span>
                 </div>
                 <div class="address">
-                    <label>Address:</label>
+                    <label>{{ __('static.common.address_colon') }}</label>
                     <p>{{ $address?->address }}</p>
                 </div>
                 <div class="address-bottom-box">
                     <div class="action">
                         <input class="radio address-select" type="radio" value="{{ $address?->id }}" name="address_id">
-                        <button type="button" class="btn select-btn btn-outline">Select this</button>
+                        <button type="button" class="btn select-btn btn-outline">{{ __('static.common.select_this') }}</button>
                     </div>
                 </div>
             </li>
@@ -33,7 +33,7 @@
         </svg>
         {{-- <img src="{{ asset('admin/images/no-table-data.svg') }}" class="img-fluid"
             alt=""> --}}
-            <p>No Items Found</p>
+            <p>{{ __('static.common.no_items_found') }}</p>
     </div>
 
     @endforelse
@@ -46,7 +46,7 @@
         </svg>
         {{-- <img src="{{ asset('admin/images/no-table-data.svg') }}" class="img-fluid"
             alt=""> --}}
-            <p>No Items Found</p>
+            <p>{{ __('static.common.no_items_found') }}</p>
     </div>
 </div>
 @endif

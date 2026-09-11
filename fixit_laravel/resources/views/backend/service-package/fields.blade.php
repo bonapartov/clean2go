@@ -19,7 +19,7 @@
                     @endif
                 @empty
                     <li>
-                        <a href="{{ route('backend.service-package.edit', ['service_package' => $service_package->id, 'locale' => Session::get('locale', 'en')]) }}" class="language-switcher active" target="blank"><img src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i data-feather="arrow-up-right"></i></a>
+                        <a href="{{ route('backend.service-package.edit', ['service_package' => $service_package->id, 'locale' => Session::get('locale', 'en')]) }}" class="language-switcher active" target="blank"><img src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i data-feather="arrow-up-right"></i></a>
                     </li>
                 @endforelse
             </ul>
@@ -57,7 +57,7 @@
                             <div class="image-list-detail">
                                 <div class="position-relative">
                                     <img src="{{ $media->getUrl() }}" id="{{ $media->id }}"
-                                        alt="Service Package Image" class="image-list-item">
+                                        alt="{{ __('static.common.service_package_image') }}" class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>
                                     </div>
@@ -93,7 +93,7 @@
                     data-content_type="service"
                     data-locale="{{ request('locale', app()->getLocale()) }}"
                     style="margin-left: 8px;">
-                Generate Title
+                {{ __('static.settings.generate_title') }}
             </button>
         </div>
     </div>
@@ -205,7 +205,7 @@
                     data-url="{{ route('backend.custom-ai-model.generate-description') }}"
                     data-content_type="service_package"
                     data-locale="{{ request('locale', app()->getLocale()) }}">
-                Generate Description
+                {{ __('static.common.generate_description') }}
             </button>
         </div>
     </div>

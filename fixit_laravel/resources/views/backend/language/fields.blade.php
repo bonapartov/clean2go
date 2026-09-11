@@ -3,7 +3,7 @@
     <div class="col-md-10">
         <div class="input-group mb-3 phone-detail">
             <div class="col-sm-3">
-                <select id="select-country" class="form-control form-select form-select-transparent" name="flag" data-placeholder="Select Flag">
+                <select id="select-country" class="form-control form-select form-select-transparent" name="flag" data-placeholder="{{ __('static.common.select_flag') }}">
                     <option></option>
                     @foreach (App\Helpers\Helpers::getCountryCodes() as $key => $option)
                         <option value="{{ $option->flag }}" image="{{ asset('admin/images/flags/' . $option->flag) }}" {{ @$language?->flag == asset('admin/images/flags/' . $option->flag) ? 'selected' : '' }}>{{ $option['name'] }}</option>

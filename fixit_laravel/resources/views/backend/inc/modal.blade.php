@@ -11,8 +11,8 @@
                 </div>
             </div>
             <div class="modal-footer category-footer">
-                <button type="button" class="btn cancel" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary confirm">Confirm</button>
+                <button type="button" class="btn cancel" data-bs-dismiss="modal">{{ __('static.cancel') }}</button>
+                <button type="button" class="btn btn-primary confirm">{{ __('static.confirm') }}</button>
             </div>
         </div>
     </div>

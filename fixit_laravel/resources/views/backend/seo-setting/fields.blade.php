@@ -157,7 +157,7 @@
                         @foreach ($mediaItems as $media)
                             <div class="image-list-detail">
                                 <div class="position-relative">
-                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Service App Thumbnail" class="image-list-item">
+                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.common.service_app_thumbnail') }}" class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>
                                     </div>
@@ -199,7 +199,7 @@
                         @foreach ($mediaItems as $media)
                             <div class="image-list-detail">
                                 <div class="position-relative">
-                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Service App Thumbnail" class="image-list-item">
+                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.common.service_app_thumbnail') }}" class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>
                                     </div>
@@ -322,7 +322,7 @@
                             @foreach ($mediaItems as $media)
                                 <div class="image-list-detail">
                                     <div class="position-relative">
-                                        <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Twitter Image" class="image-list-item">
+                                        <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.common.twitter_image') }}" class="image-list-item">
                                         <div class="close-icon">
                                             <i data-feather="x"></i>
                                         </div>

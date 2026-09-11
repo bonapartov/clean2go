@@ -119,7 +119,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">
@@ -231,7 +231,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">

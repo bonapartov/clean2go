@@ -59,7 +59,7 @@
                 <div class="image-list-detail">
                     <div class="position-relative">
                         <img src="{{ $testimonial->media?->first()->original_url }}"
-                            id="{{ $testimonial->media?->first()->id }}" alt="User Image"
+                            id="{{ $testimonial->media?->first()->id }}" alt="{{ __('static.common.user_image') }}"
                             class="image-list-item">
                         <div class="close-icon">
                             <i data-feather="x"></i>

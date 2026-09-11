@@ -24,7 +24,7 @@
                     <li>
                         <a href="{{ route('backend.tag.edit', ['tag' => $tag->id, 'locale' => Session::get('locale', 'en')]) }}"
                             class="language-switcher active" target="blank"><img
-                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i
+                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i
                                 data-feather="arrow-up-right"></i></a>
                     </li>
                 @endforelse
@@ -42,7 +42,7 @@
         <input class="form-control" type="text" id="name" name="name"
             placeholder="{{ __('static.tag.enter_name') }} ({{ request('locale', app()->getLocale()) }})"
             value="{{ isset($tag->name) ? $tag->getTranslation('name', request('locale', app()->getLocale())) : old('name') }}">
-        <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="20">generate name</button>
+        <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="20">{{ __('static.common.generate_name') }}</button>
         @error('name')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
         <textarea class = "form-control" id="description"
             placeholder="{{ __('static.tag.enter_description') }} ({{ request('locale', app()->getLocale()) }})"
             rows="4" name="description" cols="50">{{ isset($tag) ? $tag->getTranslation('description', request('locale', app()->getLocale())) : old('description') }}</textarea>
-        <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="100">generate description</button>
+        <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="100">{{ __('static.common.generate_description') }}</button>
         @error('description')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>

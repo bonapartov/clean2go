@@ -53,14 +53,14 @@
         <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">Filter</h5>
+                    <h5 class="modal-title" id="myModalLabel">{{ __('static.report.filter') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"><i class="ri-close-line"></i></button>
                 </div>
                 <div class="modal-body">
                     <form id="additionalServiceFilterForm">
                         <div class="mb-3">
                             <label class="col-md-2" for="user_id">{{ __('static.daterange') }}</label>
-                            <input type="text" class="form-control" id="dateRange" placeholder="Select date range">
+                            <input type="text" class="form-control" id="dateRange" placeholder="{{ __('static.common.select_date_range') }}">
                             <span id="dateRangeError" class="text-danger" style="display:none;"></span>
                           
                             
@@ -77,8 +77,8 @@
                             <label class="col-md-2" for="filterStatus">{{ __('static.status') }}</label>
                             <select name="filterStatus" id="filterStatus" class="select-2 form-control" data-placeholder="{{ __('static.provider-document.select_status') }}">
                                     <option class="select-placeholder" value=""></option>      
-                                    <option value="1">Active</option>
-                                    <option value="0">Deactive</option>
+                                    <option value="1">{{ __('static.active') }}</option>
+                                    <option value="0">{{ __('static.common.deactive') }}</option>
                             </select>
 
                         </div>

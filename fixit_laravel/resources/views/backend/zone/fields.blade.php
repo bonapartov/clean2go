@@ -28,7 +28,7 @@
                     <li>
                         <a href="{{ route('backend.zone.edit', ['zone' => $zone->id, 'locale' => Session::get('locale', 'en')]) }}"
                             class="language-switcher active" target="blank"><img
-                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i
+                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i
                                 data-feather="arrow-up-right"></i></a>
                     </li>
                 @endforelse

@@ -26,7 +26,7 @@
                             <div class="inside">
                                 <div class="contentbox-title">
                                     <h3>{{ __('static.report.filter') }}</h3>
-                                    <button type="button" class="btn clear-btn" style="display: none;">Clear all</button>
+                                    <button type="button" class="btn clear-btn" style="display: none;">{{ __('static.common.clear_all') }}</button>
                                 </div>
                                 <div class="rider-height custom-scrollbar">
                                     <div class="form-group">

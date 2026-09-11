@@ -89,7 +89,7 @@
                     </div>
                 @empty
                     <div>
-                        <h4>Payment method not found</h4>
+                        <h4>{{ __('static.common.payment_method_not_found') }}</h4>
                     </div>
                 @endforelse
             </div>

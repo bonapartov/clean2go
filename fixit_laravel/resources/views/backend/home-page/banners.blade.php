@@ -9,10 +9,10 @@
         <div class="accordion-body">
             <!-- Banner Title -->
             <div class="form-group row">
-                <label  class="col-md-2">Title</label>
+                <label  class="col-md-2">{{ __('static.title') }}</label>
                 <div class="col-md-10">
                 <input type="text" class="form-control" name="value_banners[banners][{{ $index }}][title]"
-                    value="{{ $banner['title'] ?? '' }}" placeholder="Enter banner title">
+                    value="{{ $banner['title'] ?? '' }}" placeholder="{{ __('static.common.enter_banner_title') }}">
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
                             <div class="image-list-detail">
                                 <div class="position-relative">
                                     <img src="{{ asset($banner['image_url']) }}"
-                                        id="banners[{{ $index }}][image_url]" alt="favicon"
+                                        id="banners[{{ $index }}][image_url]" alt="{{ __('static.settings.favicon') }}"
                                         class="image-list-item">
                                 </div>
                             </div>
@@ -61,40 +61,40 @@
             </div>
             @endisset
             <div class="form-group row">
-                <label class="col-md-2">Sale Tag</label>
+                <label class="col-md-2">{{ __('static.common.sale_tag') }}</label>
                 <div class="col-md-10">
                     <input type="text" class="form-control" name="value_banners[banners][{{ $index }}][sale_tag]"
-                        value="{{ $banner['sale_tag'] ?? '' }}" placeholder="Enter sale tag">
+                        value="{{ $banner['sale_tag'] ?? '' }}" placeholder="{{ __('static.common.enter_sale_tag') }}">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label  class="col-md-2">Button Text</label>
+                <label  class="col-md-2">{{ __('static.email_templates.btn_text') }}</label>
                 <div class="col-md-10">
                 <input type="text" class="form-control" name="value_banners[banners][{{ $index }}][button_text]"
-                    value="{{ $banner['button_text'] ?? '' }}" placeholder="Enter button text">
+                    value="{{ $banner['button_text'] ?? '' }}" placeholder="{{ __('static.home_pages.enter_button_text') }}">
                 </div>
             </div>
 
             <!-- Redirect Type Selection -->
             <div class="form-group row">
-                <label class="col-md-2">Redirect Type</label>
+                <label class="col-md-2">{{ __('static.common.redirect_type') }}</label>
                 <div class="col-md-10">
                 <select class="form-control redirect-type select-2" id="redirectType-{{ $index }}" name="value_banners[banners][{{ $index }}][redirect_type]">
-                    <option selected disabled value="">Select Redirect Type</option>
-                    <option value="service" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'service' ? 'selected' : '' }}>Select Service</option>
-                    <option value="service-page" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'service-page' ? 'selected' : '' }}>Service Page</option>
-                    <option value="package" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'package' ? 'selected' : '' }}>Select Service Package</option>
-                    <option value="service-package-page" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'service-package-page' ? 'selected' : '' }}>Service Package Page</option>
-                    <option value="category-page" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'category-page' ? 'selected' : '' }}>Category Page</option>
-                    <option value="external_url" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'external_url' ? 'selected' : '' }}>External URL</option>
+                    <option selected disabled value="">{{ __('static.common.select_redirect_type') }}</option>
+                    <option value="service" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'service' ? 'selected' : '' }}>{{ __('static.additional_service.select_service') }}</option>
+                    <option value="service-page" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'service-page' ? 'selected' : '' }}>{{ __('static.common.service_page') }}</option>
+                    <option value="package" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'package' ? 'selected' : '' }}>{{ __('static.common.select_service_package') }}</option>
+                    <option value="service-package-page" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'service-package-page' ? 'selected' : '' }}>{{ __('static.common.service_package_page') }}</option>
+                    <option value="category-page" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'category-page' ? 'selected' : '' }}>{{ __('static.common.category_page') }}</option>
+                    <option value="external_url" {{ isset($banner['redirect_type']) && $banner['redirect_type'] == 'external_url' ? 'selected' : '' }}>{{ __('static.common.external_url') }}</option>
                 </select>
                 </div>
             </div>
 
             <!-- Dynamic ID Selection (Service, Category, Package) -->
             <div class="form-group dynamic-select row" id="dynamicSelect-{{ $index }}" style="display: none;">
-                <label class="col-md-2" id="dynamicLabel-{{ $index }}">Select</label>
+                <label class="col-md-2" id="dynamicLabel-{{ $index }}">{{ __('static.common.select') }}</label>
                 <div class="col-md-10">
                 <select class="form-control select-2" name="value_banners[banners][{{ $index }}][redirect_id]" id="dynamicSelectInput-{{ $index }}">
                     <!-- Options will be populated dynamically based on the selected redirect type -->
@@ -104,13 +104,13 @@
 
             <!-- External URL -->
             <div class="form-group row" id="externalUrl-{{ $index }}" style="display: none;">
-                <label class="col-md-2">External URL</label>
+                <label class="col-md-2">{{ __('static.common.external_url') }}</label>
                 <div class="col-md-10">
                 <input type="url" class="form-control" name="value_banners[banners][{{ $index }}][button_url]"
-                    value="{{ $banner['button_url'] ?? '' }}" placeholder="Enter external URL">
+                    value="{{ $banner['button_url'] ?? '' }}" placeholder="{{ __('static.common.enter_external_url') }}">
                     </div>
             </div>
-            <button type="button" class="btn btn-danger remove-banner">Remove</button>
+            <button type="button" class="btn btn-danger remove-banner">{{ __('static.common.remove') }}</button>
         </div>
     </div>
 </div>

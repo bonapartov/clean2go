@@ -35,7 +35,7 @@
                             <div class="image-list-detail">
                                 <div class="position-relative">
                                     <img src="{{ $customer->getFirstMedia('image')->original_url }}"
-                                        id="{{ $customer->getFirstMedia('image')->id }}" alt="User Image"
+                                        id="{{ $customer->getFirstMedia('image')->id }}" alt="{{ __('static.common.user_image') }}"
                                         class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>

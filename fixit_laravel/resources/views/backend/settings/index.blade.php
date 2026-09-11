@@ -98,7 +98,7 @@
                                                         <div class="image-list">
                                                             <div class="image-list-detail">
                                                                 <div class="position-relative">
-                                                                    <img src="{{ asset($settings['general']['light_logo']) }}" id="{{ asset($settings['general']['light_logo']) }}" alt="Light Logo" class="image-list-item">
+                                                                    <img src="{{ asset($settings['general']['light_logo']) }}" id="{{ asset($settings['general']['light_logo']) }}" alt="{{ __('static.settings.light_logo') }}" class="image-list-item">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -126,7 +126,7 @@
                                                     <div class="image-list">
                                                         <div class="image-list-detail">
                                                             <div class="position-relative">
-                                                                <img src="{{ asset($settings['general']['dark_logo']) }}" id="{{ asset($settings['general']['dark_logo']) }}" alt="Dark Logo" class="image-list-item">
+                                                                <img src="{{ asset($settings['general']['dark_logo']) }}" id="{{ asset($settings['general']['dark_logo']) }}" alt="{{ __('static.settings.dark_logo') }}" class="image-list-item">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -153,7 +153,7 @@
                                                     <div class="image-list">
                                                         <div class="image-list-detail">
                                                             <div class="position-relative">
-                                                                <img src="{{ asset($settings['general']['favicon']) }}" id="{{ asset($settings['general']['favicon']) }}" alt="favicon" class="image-list-item">
+                                                                <img src="{{ asset($settings['general']['favicon']) }}" id="{{ asset($settings['general']['favicon']) }}" alt="{{ __('static.settings.favicon') }}" class="image-list-item">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -183,7 +183,7 @@
                                                         <div class="image-list">
                                                             <div class="image-list-detail">
                                                                 <div class="position-relative">
-                                                                    <img src="{{ asset($settings['general']['splash_screen_logo']) }}" id="{{ asset($settings['general']['splash_screen_logo']) }}" alt="Light Logo" class="image-list-item">
+                                                                    <img src="{{ asset($settings['general']['splash_screen_logo']) }}" id="{{ asset($settings['general']['splash_screen_logo']) }}" alt="{{ __('static.settings.light_logo') }}" class="image-list-item">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1483,7 +1483,7 @@
                                                         <div class="image-list">
                                                             <div class="image-list-detail">
                                                                 <div class="position-relative">
-                                                                    <img src="{{ asset($settings['maintenance']['image']) }}" id="{{ $settings['maintenance']['image'] }}" alt="Light Logo" class="image-list-item">
+                                                                    <img src="{{ asset($settings['maintenance']['image']) }}" id="{{ $settings['maintenance']['image'] }}" alt="{{ __('static.settings.light_logo') }}" class="image-list-item">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2388,7 +2388,7 @@
                                                                     <div class="position-relative">
                                                                         <img src="{{ asset($settings['onboarding'][$index]['image']) }}"
                                                                             id="{{ asset($settings['onboarding'][$index]['image']) }}"
-                                                                            alt="Light Logo"
+                                                                            alt="{{ __('static.settings.light_logo') }}"
                                                                             class="image-list-item">
                                                                     </div>
                                                                 </div>

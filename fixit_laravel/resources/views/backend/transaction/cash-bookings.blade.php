@@ -45,7 +45,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">Filter</h5>
+                    <h5 class="modal-title" id="myModalLabel">{{ __('static.report.filter') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"><i class="ri-close-line"></i></button>
                 </div>
                 <div class="modal-body">
@@ -53,7 +53,7 @@
                         <div class="row g-sm-4 g-3 mb-3">
                             <div class="col-6">
                                 <label class="" for="user_id">{{ __('static.daterange') }}</label>
-                                <input type="text" class="form-control" id="dateRange" placeholder="Select date range">
+                                <input type="text" class="form-control" id="dateRange" placeholder="{{ __('static.common.select_date_range') }}">
                                 <span id="dateRangeError" class="text-danger" style="display:none;"></span>
                             </div>
                             <div class="col-6">

@@ -14,7 +14,7 @@
                 @endif
             @empty
                 <li>
-                    <a href="{{ route('backend.tax.edit', ['tax' => $tax->id, 'locale' => Session::get('locale', 'en')]) }}" class="language-switcher active" target="blank"><img src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i data-feather="arrow-up-right"></i></a>
+                    <a href="{{ route('backend.tax.edit', ['tax' => $tax->id, 'locale' => Session::get('locale', 'en')]) }}" class="language-switcher active" target="blank"><img src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i data-feather="arrow-up-right"></i></a>
                 </li>
             @endforelse
         </ul>

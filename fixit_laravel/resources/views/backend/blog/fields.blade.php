@@ -38,7 +38,7 @@
                                                 <li>
                                                     <a href="{{ route('backend.blog.edit', ['blog' => $blog->id, 'locale' => Session::get('locale', 'en')]) }}"
                                                         class="language-switcher active" target="blank"><img
-                                                            src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i
+                                                            src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i
                                                             data-feather="arrow-up-right"></i></a>
                                                 </li>
                                             @else
@@ -65,7 +65,7 @@
                                 <input class='form-control' type="text" name="title" id="title"
                                     value="{{ isset($blog->title) ? $blog->getTranslation('title', request('locale', app()->getLocale())) : old('title') }}"
                                     placeholder="{{ __('static.blog.enter_title') }} ({{ request('locale', app()->getLocale()) }})">
-                                <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="80">generate title</button>
+                                <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="80">{{ __('static.settings.generate_title') }}</button>
                                 @error('title')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -85,7 +85,7 @@
                                 <textarea class="form-control" rows="4" name="description" id="description"
                                     placeholder="{{ __('static.blog.enter_description') }} ({{ request('locale', app()->getLocale()) }})"
                                     cols="50">{{ isset($blog->description) ? $blog->getTranslation('description', request('locale', app()->getLocale())) : old('description') }}</textarea>
-                                <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="250">generate description</button>
+                                <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="250">{{ __('static.common.generate_description') }}</button>
                                 @error('description')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -105,7 +105,7 @@
                             <div class="col-md-10 d-flex flex-column-reverse input-copy-box">
                                 <textarea class="form-control summary-ckeditor" id="content" rows="4" name="content"
                                     cols="50">{{ isset($blog->content) ? $blog->getTranslation('content', request('locale', app()->getLocale())) : old('content') }}</textarea>
-                                <button type="button" class="btn ai-generate-content-btn" data-url="{{ route('backend.custom-ai-model.generate-content') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog">generate content</button>
+                                <button type="button" class="btn ai-generate-content-btn" data-url="{{ route('backend.custom-ai-model.generate-content') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog">{{ __('static.common.generate_content') }}</button>
                                 @error('content')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -143,7 +143,7 @@
                                                                     @foreach ($mediaItems as $media)
                                                                         <div class="image-list-detail">
                                                                             <div class="position-relative">
-                                                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Blog Image"
+                                                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.common.blog_image') }}"
                                                                                     class="image-list-item">
                                                                                 <div class="close-icon">
                                                                                     <i data-feather="x"></i>
@@ -187,7 +187,7 @@
                                                                     @foreach ($mediaItems as $media)
                                                                         <div class="image-list-detail">
                                                                             <div class="position-relative">
-                                                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Blog Image"
+                                                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.common.blog_image') }}"
                                                                                     class="image-list-item">
                                                                                 <div class="close-icon">
                                                                                     <i data-feather="x"></i>
@@ -208,7 +208,7 @@
             <div class="col-12">
                 <div class="card tab2-card">
                     <div class="card-header">
-                        <h5>Search Engine Optimization (SEO)</h5>
+                        <h5>{{ __('static.common.seo_full') }}</h5>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('backend.blog.store') }}" id="blogForm" method="POST"
@@ -220,7 +220,7 @@
                                     <input class='form-control' type="text" name="meta_title" id="meta_title"
                                         value="{{ isset($blog->meta_title) ? $blog->getTranslation('meta_title', request('locale', app()->getLocale())) : old('meta_title') }}"
                                         placeholder="{{ __('static.blog.enter_meta_title') }} ({{ request('locale', app()->getLocale()) }})">
-                                    <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="60">generate meta title</button>
+                                    <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="60">{{ __('static.common.generate_meta_title') }}</button>
                                     @error('meta_title')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -241,7 +241,7 @@
                                         placeholder="{{ __('static.blog.enter_meta_description') }} ({{ request('locale', app()->getLocale()) }})"
                                         id="meta_description" name="meta_description"
                                         cols="50">{{ isset($blog->meta_description) ? $blog->getTranslation('meta_description', request('locale', app()->getLocale())) : old('meta_description') }}</textarea>
-                                    <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="160">generate meta description</button>
+                                    <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="blog" data-length="160">{{ __('static.common.generate_meta_description') }}</button>
                                     @error('meta_description')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -286,7 +286,7 @@
                                                     <div class="image-list-detail">
                                                         <div class="position-relative">
                                                             <img src="{{ $media->getUrl() }}" id="{{ $media->id }}"
-                                                                alt="Meta Image" class="image-list-item">
+                                                                alt="{{ __('static.seo_setting.meta_image') }}" class="image-list-item">
                                                             <div class="close-icon">
                                                                 <i data-feather="x"></i>
                                                             </div>

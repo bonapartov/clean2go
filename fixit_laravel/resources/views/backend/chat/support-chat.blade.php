@@ -10,7 +10,7 @@
                             <div class="inside">
                                 <div class="no-data-container" id="noDataContainer">
                                     <div class="d-flex">
-                                        <img src="{{ asset('admin/images/no-chat.png') }}" class="img-fluid" alt="No user selected">
+                                        <img src="{{ asset('admin/images/no-chat.png') }}" class="img-fluid" alt="{{ __('static.common.no_user_selected') }}">
                                     </div>
                                 </div>
                                 <div class="right-sidebar-title">
@@ -317,7 +317,7 @@
     let messageContent = '';
     if (msg.images && Array.isArray(msg.images) && msg.images.length > 0) {
       messageContent = msg.images.map(imageUrl =>
-        `<img src="${imageUrl}" class="chat-image img-fluid" alt="Chat image">`
+        `<img src="${imageUrl}" class="chat-image img-fluid" alt="{{ __('static.common.chat_image') }}">`
       ).join('');
     } else {
       messageContent = `<p>${msg.message || ''}</p>`;
@@ -352,7 +352,7 @@
       let messageContent = '';
       if (msg.images && Array.isArray(msg.images) && msg.images.length > 0) {
         messageContent = msg.images.map(imageUrl =>
-          `<img src="${imageUrl}" class="chat-image img-fluid" alt="Chat image">`
+          `<img src="${imageUrl}" class="chat-image img-fluid" alt="{{ __('static.common.chat_image') }}">`
         ).join('');
       } else {
         messageContent = `<p>${msg.message || ''}</p>`;

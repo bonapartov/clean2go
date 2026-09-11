@@ -13,7 +13,7 @@
                             <form action="{{ route('backend.email-template.index') }}" method="GET" class="d-flex"
                                 id="searchForm">
                                 <input type="text" id="searchInput" class="form-control me-2" name="search"
-                                    placeholder="Search templates" value="{{ request()->get('search') }}">
+                                    placeholder="{{ __('static.common.search_templates') }}" value="{{ request()->get('search') }}">
 
                                 <!-- Dropdown for selecting filter options -->
                                 <select class="form-select me-2 card-head-select" name="role" id="userRoleFilter">
@@ -29,7 +29,7 @@
                                     <i data-feather="search"></i>
                                 </button>
                                 <button type="button" class="btn btn-secondary ms-2" id="cancelButton"
-                                    style="display:none;">Cancel</button>
+                                    style="display:none;">{{ __('static.cancel') }}</button>
                             </form>
                         </div>
                     </div>
@@ -40,9 +40,9 @@
                             <table class="table table-hover mt-0">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
+                                        <th>{{ __('static.name') }}</th>
+                                        <th>{{ __('static.description') }}</th>
+                                        <th>{{ __('static.email_templates.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,7 +53,7 @@
                                                 <td>{{ $template['description'] }}</td>
                                                 <td>
                                                     <!-- <a href="{{ route('backend.email-template.edit', ['slug' => $template['slug']]) }}"
-                                                                                                class="btn btn-link text-primary" title="Edit">
+                                                                                                class="btn btn-link text-primary" title="{{ __('static.edit') }}">
                                                                                                 Edit
                                                                                             </a> -->
 
@@ -68,7 +68,7 @@
                                         @endforeach
                                     @empty
                                         <tr>
-                                            <td colspan="3" class="text-center">No templates available.</td>
+                                            <td colspan="3" class="text-center">{{ __('static.email_templates.no_templates_available') }}</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -88,7 +88,7 @@
                         <form action="{{ route('backend.email-template.index') }}" method="GET" class="d-flex"
                             id="searchForm">
                             <input type="text" id="searchInput" class="form-control me-2" name="search"
-                                placeholder="Search templates" value="{{ request()->get('search') }}">
+                                placeholder="{{ __('static.common.search_templates') }}" value="{{ request()->get('search') }}">
 
                             <!-- Dropdown for selecting filter options -->
                             <select class="form-select me-2 " name="role" id="userRoleFilter">
@@ -104,7 +104,7 @@
                                 <i data-feather="search"></i>
                             </button>
                             <button type="button" class="btn btn-secondary ms-2" id="cancelButton"
-                                style="display:none;">Cancel</button>
+                                style="display:none;">{{ __('static.cancel') }}</button>
                         </form>
                     </div>
                 </div>
@@ -114,9 +114,9 @@
                     <table class="table table-hover">
                         <thead class="thead-light">
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Actions</th>
+                                <th>{{ __('static.name') }}</th>
+                                <th>{{ __('static.description') }}</th>
+                                <th>{{ __('static.email_templates.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,7 +127,7 @@
                                         <td>{{ $template['description'] }}</td>
                                         <td>
                                             <!-- <a href="{{ route('backend.email-template.edit', ['slug' => $template['slug']]) }}"
-                                                                            class="btn btn-link text-primary" title="Edit">
+                                                                            class="btn btn-link text-primary" title="{{ __('static.edit') }}">
                                                                             Edit
                                                                         </a> -->
 
@@ -142,7 +142,7 @@
                                 @endforeach
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center">No templates available.</td>
+                                    <td colspan="3" class="text-center">{{ __('static.email_templates.no_templates_available') }}</td>
                                 </tr>
                             @endforelse
                         </tbody>

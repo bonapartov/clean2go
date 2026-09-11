@@ -4,7 +4,7 @@
                 <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title m-0">Book your service</h5>
+                            <h5 class="modal-title m-0">{{ __('static.common.book_your_service') }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal">
                                 <i class="ri-close-line"></i>
                             </button>
@@ -12,9 +12,9 @@
                         <div class="modal-body">
                           <form method="post" id="bookingForm">
                             <div class="add-person-box">
-                                <h4 class="service-title">Add required person</h4>
+                                <h4 class="service-title">{{ __('static.common.add_required_person') }}</h4>
                                 <div class="select-servicemen">
-                                    <p>How many persons are required to do this service?</p>
+                                    <p>{{ __('static.common.how_many_persons_required') }}</p>
                                     <div class="plus-minus">
                                         <i data-feather="minus" id="minus-{{ $service?->id }}" class="minus"></i>
                                         <input id="quantityInput-{{ $service?->id }}" name="required_servicemen" type="number" value="{{ $service?->required_servicemen }}" min="{{ $service?->required_servicemen }}" max="100" readonly="">
@@ -24,8 +24,8 @@
                             </div>
 
                             <div class="service-title">
-                                <h4>Select a service delivery location</h4>
-                                <button class="btn" type="button" data-bs-target="#newAddress" data-bs-toggle="modal">+ Add new address</button>
+                                <h4>{{ __('static.common.select_service_delivery_location') }}</h4>
+                                <button class="btn" type="button" data-bs-target="#newAddress" data-bs-toggle="modal">{{ __('static.common.add_new_address') }}</button>
                             </div>
 
                             <div class="consumer-addresses-list">
@@ -58,17 +58,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-12" for="phone">Custom Message <span>*</span></label>
+                                <label class="col-12" for="phone">{{ __('static.common.custom_message') }} <span>*</span></label>
                                 <div class="col-12">
                                     <textarea class="form-control" type="text" id="custom_message" name="custom_message" value=""
-                                        placeholder="Enter Custom Message"></textarea>
+                                        placeholder="{{ __('static.common.enter_custom_message') }}"></textarea>
                                 </div>
                             </div>
                           </form>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary submit-booking-button">Save changes</button>
+                            <button type="button" class="btn btn-primary submit-booking-button">{{ __('static.common.save_changes') }}</button>
                         </div>
                     </div>
                 </div>

@@ -566,7 +566,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ __('static.booking.extra_charge_details') }}</h5>
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('static.custom_sms_gateways.close') }}"></button> --}}
                     <button type="button" class="btn-close" data-bs-dismiss="modal">
                         <i class="ri-close-line"></i>
                     </button>
@@ -597,7 +597,7 @@
                                         $userRole = Helpers::getRoleByUserId(auth()->id());
                                     @endphp
                                     @if (in_array($userRole, [RoleEnum::ADMIN, RoleEnum::PROVIDER]) && $childBooking->booking_status->slug !== BookingEnumSlug::COMPLETED)
-                                        <button class="btn delete-btn" type="submit" title="Delete Extra Charge">
+                                        <button class="btn delete-btn" type="submit" title="{{ __('static.common.delete_extra_charge') }}">
                                             <i class="ri-delete-bin-line"></i>
                                         </button>
                                     @endif

@@ -21,7 +21,7 @@
             <div class="col-12 text-end">
                 <form action="" method="GET" id="sort-form" class="dashboard-short-form">
                     <div class="short-box">
-                        <label class="form-label">Sort by</label>
+                        <label class="form-label">{{ __('static.common.sort_by') }}</label>
                         <select class="form-select" id="sort" name="sort">
                             <option class="select-placeholder" value="today"
                                 {{ request('sort') == 'today' ? 'selected' : '' }}>
@@ -136,7 +136,7 @@
                                         </use>
                                     </svg>
                                     <div data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                        data-bs-custom-class="custom-tooltip" data-bs-title="Providers">
+                                        data-bs-custom-class="custom-tooltip" data-bs-title="{{ __('static.chats.provider') }}">
                                         <h4>{{ Helpers::getTotalProviders($start_date, $end_date) }}</h4>
                                         <h6>{{ __('static.dashboard.providers') }}</h6>
                                     </div>
@@ -176,7 +176,7 @@
                                     </use>
                                 </svg>
                                 <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                                    data-bs-title="Provider Withdraw">
+                                    data-bs-title="{{ __('static.dashboard.provider_withdraw') }}">
                                     <h4>{{ Helpers::getProviderWithdraw($start_date, $end_date) }}</h4>
                                     <h6>{{ __('static.dashboard.provider_withdraw') }}</h6>
                                 </div>
@@ -214,7 +214,7 @@
                                 </use>
                             </svg>
                             <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                                data-bs-title="Serviceman Withdraw">
+                                data-bs-title="{{ __('static.dashboard.serviceman_withdraw') }}">
                                 <h4>{{ Helpers::getServicemanWithdraw($start_date, $end_date) }}</h4>
                                 <h6>{{ __('static.dashboard.serviceman_withdraw') }}</h6>
                             </div>
@@ -258,7 +258,7 @@
                             </use>
                         </svg>
                         <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                            data-bs-title="Services">
+                            data-bs-title="{{ __('static.services') }}">
                             <h4>{{ Helpers::getServicesCount($start_date, $end_date) }}</h4>
                             <h6>{{ __('static.dashboard.services') }}</h6>
                         </div>
@@ -297,7 +297,7 @@
                             </use>
                         </svg>
                         <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                            data-bs-title="Reviews">
+                            data-bs-title="{{ __('static.review.all') }}">
                             <h4>{{ Helpers::getReviewsCount($start_date, $end_date) }}</h4>
                             <h6>{{ __('static.dashboard.reviews') }}</h6>
                         </div>
@@ -333,7 +333,7 @@
                     <svg>
                         <use xlink:href="{{ asset('admin/images/svg/total-service.svg#reviews') }}"></use>
                     </svg>
-                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Wallet">
+                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="{{ __('static.dashboard.Wallet') }}">
                         @if (Helpers::getDefaultCurrency()->symbol_position === SymbolPositionEnum::LEFT)
                             <h4>{{ Helpers::getDefaultCurrencySymbol() }}{{ isset(auth()->user()->servicemanWallet) ? auth()->user()->servicemanWallet->balance : 0.0 }}</h4>
                         @else
@@ -453,7 +453,7 @@
                         </use>
                     </svg>
                     <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                        data-bs-title="Booking">
+                        data-bs-title="{{ __('static.dashboard.booking') }}">
                         <h4>{{ Helpers::getTotalBookings($start_date, $end_date) }}</h4>
                         <h6>{{ __('static.dashboard.booking') }}</h6>
                     </div>
@@ -495,7 +495,7 @@
                             </use>
                         </svg>
                         <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                            data-bs-title="Customers">
+                            data-bs-title="{{ __('static.dashboard.total_customers') }}">
                             <h4>{{ Helpers::getTotalCustomers($start_date, $end_date) }}</h4>
                             <h6>{{ __('static.dashboard.customers') }}</h6>
                         </div>
@@ -646,7 +646,7 @@
                     <div class="dashboard-card">
                         <div class="card-title">
                             <h4>{{ __('static.dashboard.top_services') }}</h4>
-                            <a href="{{ route('backend.service.index') }}">View All</a>
+                            <a href="{{ route('backend.service.index') }}">{{ __('static.dashboard.view_all') }}</a>
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -686,7 +686,7 @@
                                                         @endphp
 
                                                         @if ($imageUrl)
-                                                            <img src="{{ $imageUrl }}" alt="Image"
+                                                            <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
@@ -730,7 +730,7 @@
                     <div class="dashboard-card">
                         <div class="card-title">
                             <h4>{{ __('static.dashboard.top_providers') }}</h4>
-                            <a href="{{ route('backend.provider.index') }}">View All</a>
+                            <a href="{{ route('backend.provider.index') }}">{{ __('static.dashboard.view_all') }}</a>
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -754,7 +754,7 @@
                                                         @endphp
 
                                                         @if ($imageUrl)
-                                                            <img src="{{ $imageUrl }}" alt="Image"
+                                                            <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
@@ -800,7 +800,7 @@
                     <div class="dashboard-card">
                         <div class="card-title">
                             <h4>{{ __('static.dashboard.top_servicemen') }}</h4>
-                            <a href="{{ route('backend.serviceman.index') }}">View All</a>
+                            <a href="{{ route('backend.serviceman.index') }}">{{ __('static.dashboard.view_all') }}</a>
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -823,7 +823,7 @@
                                                         @endphp
 
                                                         @if ($imageUrl)
-                                                            <img src="{{ $imageUrl }}" alt="Image"
+                                                            <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
@@ -904,7 +904,7 @@
                 <div class="dashboard-card">
                     <div class="card-title">
                         <h4>{{ __('static.dashboard.recent_booking') }}</h4>
-                        <a href="{{ route('backend.booking.index') }}">View All</a>
+                        <a href="{{ route('backend.booking.index') }}">{{ __('static.dashboard.view_all') }}</a>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -932,7 +932,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image">
                                                     @else
                                                         <div class="initial-letter">
@@ -959,7 +959,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">
@@ -1004,7 +1004,7 @@
                 <div class="dashboard-card">
                     <div class="card-title">
                         <h4>{{ __('static.dashboard.latest_reviews') }}</h4>
-                        <a href="{{ route('backend.review.index') }}">View All</a>
+                        <a href="{{ route('backend.review.index') }}">{{ __('static.dashboard.view_all') }}</a>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -1028,7 +1028,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image">
                                                     @else
                                                         <div class="initial-letter">
@@ -1054,7 +1054,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">

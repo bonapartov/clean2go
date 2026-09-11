@@ -30,7 +30,7 @@
                     <li>
                         <a href="{{ route('backend.banner.edit', ['banner' => $banner->id, 'locale' => Session::get('locale', 'en')]) }}"
                             class="language-switcher active" target="blank"><img
-                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i
+                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i
                                 data-feather="arrow-up-right"></i></a>
                     </li>
                 @endforelse
@@ -90,7 +90,7 @@
                         @foreach ($mediaItems as $media)
                             <div class="image-list-detail">
                                 <div class="position-relative">
-                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Banner Image"
+                                    <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.banner.image') }}"
                                         class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>

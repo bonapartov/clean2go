@@ -7,7 +7,7 @@
         <div class="col-xl-4">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h5>Add Tag</h5>
+                    <h5>{{ __('static.common.add_tag') }}</h5>
                     <div class="btn-action">
                         @can('backend.tag.destroy')
                             <a href="javascript:void(0);" class="btn btn-sm btn-secondary deleteConfirmationBtn"

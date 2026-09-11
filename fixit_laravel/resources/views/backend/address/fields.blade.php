@@ -10,7 +10,7 @@
 <div class="form-group row">
     <label for="address" class="col-md-2">{{ __('static.users.address') }}<span> *</span></label>
     <div class="col-md-10">
-        <textarea class="form-control ui-widget autocomplete-yandex" placeholder="Enter Address " rows="4" id="address"
+        <textarea class="form-control ui-widget autocomplete-yandex" placeholder="{{ __('static.provider.enter_address') }}" rows="4" id="address"
             name="address" cols="50">{{ $address->address ?? old('address') }}</textarea>
         @error('address')
             <span class="invalid-feedback d-block" role="alert">

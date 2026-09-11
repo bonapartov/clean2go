@@ -17,12 +17,12 @@
         @endphp
         {{-- Custom Job Details (info icon) - opens modal --}}
         <a href="javascript:void(0)" class="booking-icon show-icon" data-bs-toggle="modal"
-            data-bs-target="#customJobDetailsModal{{ $serviceRequest->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="Custom Job Details">
+            data-bs-target="#customJobDetailsModal{{ $serviceRequest->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.common.custom_job_details') }}">
             <i data-feather="info"></i>
         </a>
         {{-- View Bids (eye icon) --}}
         <a href="javascript:void(0)" class="booking-icon show-icon" data-bs-toggle="modal"
-            data-bs-target="#bidsModal{{ $serviceRequest->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="View Bids">
+            data-bs-target="#bidsModal{{ $serviceRequest->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.common.view_bids') }}">
             <i data-feather="eye"></i>
         </a>
         {{-- Custom Job Details Modal --}}
@@ -33,9 +33,9 @@
                     <div class="modal-header border-bottom bg-light py-3 px-4">
                         <h5 class="modal-title fw-semibold d-flex align-items-center gap-2" id="customJobDetailsModalLabel{{ $serviceRequest->id }}">
                             <i data-feather="file-text" class="flex-shrink-0" style="width: 1.25rem; height: 1.25rem;"></i>
-                            Custom Job Details
+                            {{ __('static.common.custom_job_details') }}
                         </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('static.custom_sms_gateways.close') }}"></button>
                     </div>
                     <div class="modal-body p-0">
                         <div class="custom-job-details-body">
@@ -130,7 +130,7 @@
         </div>
     @endisset
     @isset($show)
-        <a href="{{ route($show, $data) }}" class="booking-icon show-icon" data-bs-toggle="tooltip" data-placement="bottom" title="Detail">
+        <a href="{{ route($show, $data) }}" class="booking-icon show-icon" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.transactions.detail') }}">
             <i data-feather="eye"></i>
         </a>
     @endisset
@@ -138,7 +138,7 @@
         @can($review_permission ?? $review, $data)
             <!-- Button trigger modal -->
             <a href="javascript:void(0)" class="booking-icon show-icon" data-bs-toggle="modal"
-                data-bs-target="#reviewModal{{ $data->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="Update">
+                data-bs-target="#reviewModal{{ $data->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.common.update') }}">
                 <i data-feather="eye"></i>
             </a>
 
@@ -163,7 +163,7 @@
                                     <div class="col-10">
                                         <input type="number" name="rating" id="rating" class="form-control" step="0.01" min="0"
                                             max="5" value="{{ $data->rating ?? old('rating') }}"
-                                            placeholder="Enter rating (e.g., 4.5)" required>
+                                            placeholder="{{ __('static.common.enter_rating_example') }}" required>
                                     </div>
                                 </div>
 
@@ -172,7 +172,7 @@
                                         for="description">{{ __('static.description') }}</label></label>
                                     <div class="col-10">
                                         <textarea class="form-control custom-scrollbar" name="description" id="description" rows="3"
-                                            placeholder="Type Here..."
+                                            placeholder="{{ __('static.common.type_here') }}"
                                             required>{{ $data->description ?? old('description') }}</textarea>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
     @endisset
     @isset($withdraw_request)
         <a href="javascript:void(0)" data-bs-toggle="modal" class="show-icon"
-            data-bs-target="#withdrawModal{{ $data->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="Withdraw">
+            data-bs-target="#withdrawModal{{ $data->id }}" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.common.withdraw') }}">
             <i data-feather="eye"></i>
         </a>
         <div class="modal fade withdrow-modal" id="withdrawModal{{ $data->id }}" tabindex="-1"
@@ -300,7 +300,7 @@
                                             for="admin_message">{{ __('static.withdraw.message') }}</label></label>
                                         <div class="col-12">
                                             <textarea class="form-control" name="admin_message" id="" rows="3"
-                                                placeholder="Type Here..." @if ($data->is_used) disabled
+                                                placeholder="{{ __('static.common.type_here') }}" @if ($data->is_used) disabled
                                                 @endif>{{ $data->admin_message ?? old('admin_message') }}</textarea>
                                         </div>
                                     </div>
@@ -327,7 +327,7 @@
     @isset($wallet)
     @canAny(['backend.wallet.credit', 'backend.wallet.debit'])
     <a href="javascript:void(0)" class="wallet-icon" data-bs-toggle="modal"
-        data-bs-target="#walletmodal{{ $data->id }}" data-placement="bottom" title="Wallet">
+        data-bs-target="#walletmodal{{ $data->id }}" data-placement="bottom" title="{{ __('static.dashboard.Wallet') }}">
         <i data-feather="credit-card"></i>
     </a>
     <div class="modal fade wallet-modal" id="walletmodal{{ $data->id }}" tabindex="-1"
@@ -410,7 +410,7 @@
     @isset($providerWallet)
     @canAny(['backend.provider_wallet.credit', 'backend.provider_wallet.debit'])
     <a href="javascript:void(0)" class="wallet-icon" data-bs-toggle="modal"
-        data-bs-target="#walletmodal{{ $data->id }}" data-placement="bottom" title="Wallet">
+        data-bs-target="#walletmodal{{ $data->id }}" data-placement="bottom" title="{{ __('static.dashboard.Wallet') }}">
         <i data-feather="credit-card"></i>
     </a>
     <div class="modal fade wallet-modal" id="walletmodal{{ $data->id }}" tabindex="-1"
@@ -424,7 +424,7 @@
                             <i data-feather="credit-card" class="wallet-icon"></i>
                             <div class="form-group row amount wallet">
                                 <h5 for="wallet">
-                                    Wallet Balance
+                                    {{ __('static.common.wallet_balance') }}
                                 </h5>
                                 <h3 id="wallet">
                                     <span>{{ \App\Helpers\Helpers::getSettings()['general']['default_currency']->symbol }}</span>
@@ -486,11 +486,11 @@
             @if (isset($data->system_reserve) ? !$data->system_reserve : true)
                 @if (isset($locale))
                     <a href="{{ route($edit, array_merge([$data], $locale ? ['locale' => $locale] : [])) }}" class="edit-icon"
-                        data-bs-toggle="tooltip" data-placement="bottom" title="Edit">
+                        data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.edit') }}">
                         <i data-feather="edit"></i>
                     </a>
                 @else
-                    <a href="{{ route($edit, $data) }}" class="edit-icon" data-bs-toggle="tooltip" data-placement="bottom" title="Edit">
+                    <a href="{{ route($edit, $data) }}" class="edit-icon" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.edit') }}">
                         <i data-feather="edit"></i>
                     </a>
                 @endif
@@ -513,14 +513,14 @@
     @endisset
     @isset($providerDocument)
         @can('backend.provider_document.index')
-            <a href="{{ route($providerDocument) }}?id={{ $data?->id }}" class="edit-icon" data-bs-toggle="tooltip" data-placement="bottom" title="documents">
+            <a href="{{ route($providerDocument) }}?id={{ $data?->id }}" class="edit-icon" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.document.document') }}">
                 <i data-feather="file"></i>
             </a>
         @endcan
     @endisset
     @isset($translate)
         @can($edit_permission ?? $edit, $data)
-            <a href="{{ route($translate, ['locale' => $data?->locale]) }}" class="lock-icon" data-bs-toggle="tooltip" data-placement="bottom" title="Translate">
+            <a href="{{ route($translate, ['locale' => $data?->locale]) }}" class="lock-icon" data-bs-toggle="tooltip" data-placement="bottom" title="{{ __('static.language.translate') }}">
                 <i data-feather="globe"></i>
             </a>
         @endcan
@@ -533,7 +533,7 @@
     @isset($delete)
         @can($delete_permission ?? $delete, $data)
             @if (isset($data->system_reserve) ? !$data->system_reserve : true)
-                <a href="#confirmationModal{{ $data->id }}" data-bs-toggle="modal" class="delete-svg" data-placement="bottom" title="Delete">
+                <a href="#confirmationModal{{ $data->id }}" data-bs-toggle="modal" class="delete-svg" data-placement="bottom" title="{{ __('static.delete') }}">
                     <i data-feather="trash-2" class="remove-icon delete-confirmation" ></i>
                 </a>
                 <!-- Delete Confirmation -->
@@ -620,7 +620,7 @@
         @can($status_permission)
             @if(Helpers::getCurrentRoleName() === RoleEnum::ADMIN)
             <div class="dropdown more-option-dropdown">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" title="Update Status" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" title="{{ __('static.common.update_status') }}" aria-expanded="false">
                     <i class="ri-more-2-line"></i>
                 </button>
 
@@ -694,7 +694,7 @@
             <div class="user-info">
                 <a href="{{ isset($route) ? route($route, $info?->id) : 'javascript:void(0)' }}">
                     @if ($imageUrl)
-                        <img src="{{ $imageUrl }}" alt="Image" class="img-thumbnail img-fix m-0">
+                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}" class="img-thumbnail img-fix m-0">
                     @else
                         <div class="initial-letter">{{ strtoupper(substr($info?->name, 0, 1)) }}</div>
                     @endif

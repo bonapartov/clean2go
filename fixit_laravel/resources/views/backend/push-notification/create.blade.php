@@ -137,7 +137,7 @@
                                                 <img id="notify-image"  src="{{ asset($settings['general']['favicon']) ?? asset('admin/images/faviconIcon.png') }}" alt="user">
                                                 <div class="notifi-head">
                                                     <h5>{{ config('app.name') }}</h5>
-                                                    <span>3 minutes ago</span>
+                                                    <span>{{ __('static.email_templates.3_min_ago') }}</span>
                                                 </div>
                                             </div>
                                             <div class="notifi-footer">

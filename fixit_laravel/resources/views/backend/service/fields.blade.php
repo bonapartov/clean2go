@@ -59,7 +59,7 @@
             <label class="col-md-2" for="title">{{ __('static.title') }} ({{ request('locale', app()->getLocale()) }})<span> *</span></label>
             <div class="col-md-10 input-copy-box">
                 <input class='form-control' type="text" id="title" name="title" value="{{ isset($service->title) ? $service->getTranslation('title', request('locale', app()->getLocale())) : old('title') }}" placeholder="{{ __('static.service.enter_title') }} ({{ request('locale', app()->getLocale()) }})">
-                <button class="btn ai-generate-btn" id="generateTitle" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}">generate title</button>
+                <button class="btn ai-generate-btn" id="generateTitle" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}">{{ __('static.settings.generate_title') }}</button>
                 @error('title')
                     <span class="invalid-feedback d-block" role="alert">
                         <strong>{{ $message }}</strong>
@@ -162,7 +162,7 @@
         <div class="form-group row d-none" id="address_id_wrapper">
             <label class="col-md-2" for="address_id">{{ __('Address') }}<span> *</span></label>
             <div class="col-md-10 error-div">
-                <select class="select-2 form-control" id="address_id" name="address_id" data-placeholder="Select address">
+                <select class="select-2 form-control" id="address_id" name="address_id" data-placeholder="{{ __('static.common.select_address') }}">
                     <option class="select-placeholder" value=""></option>
                 </select>
                 @error('address_id')
@@ -371,7 +371,7 @@
                                 @foreach ($thumbItems as $media)
                                     <div class="image-list-detail">
                                         <div class="position-relative">
-                                            <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Thumbnail" class="image-list-item">
+                                            <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.categories.thumbnail') }}" class="image-list-item">
                                             <div class="close-icon"><i data-feather="x"></i></div>
                                         </div>
                                     </div>
@@ -427,7 +427,7 @@
                                     @foreach ($mediaItems as $media)
                                         <div class="image-list-detail">
                                             <div class="position-relative">
-                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Image" class="image-list-item">
+                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.image') }}" class="image-list-item">
                                                 <div class="close-icon"><i data-feather="x"></i></div>
                                             </div>
                                         </div>
@@ -462,7 +462,7 @@
                                     @foreach ($mediaItems as $media)
                                         <div class="image-list-detail">
                                             <div class="position-relative">
-                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Web Thumbnail" class="image-list-item">
+                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.categories.web_thumbnail') }}" class="image-list-item">
                                                 <div class="close-icon"><i data-feather="x"></i></div>
                                             </div>
                                         </div>
@@ -497,7 +497,7 @@
                                     @foreach ($mediaItems as $media)
                                         <div class="image-list-detail">
                                             <div class="position-relative">
-                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="Web Image" class="image-list-item">
+                                                <img src="{{ $media->getUrl() }}" id="{{ $media->id }}" alt="{{ __('static.blog.web_image') }}" class="image-list-item">
                                                 <div class="close-icon"><i data-feather="x"></i></div>
                                             </div>
                                         </div>
@@ -516,7 +516,7 @@
             <div class="col-md-10">
                 <div class="input-copy-box">
                     <textarea class="summary-ckeditor" id="content" name="content" cols="65" rows="5">{{ isset($service->content) ? $service->getTranslation('content', request('locale', app()->getLocale())) : old('content') }}</textarea>
-                    <button class="btn ai-generate-content-btn" id="generateContent" data-url="{{ route('backend.custom-ai-model.generate-content') }}" data-content_type="service" data-locale="{{ request('locale', app()->getLocale()) }}">generate content</button>
+                    <button class="btn ai-generate-content-btn" id="generateContent" data-url="{{ route('backend.custom-ai-model.generate-content') }}" data-content_type="service" data-locale="{{ request('locale', app()->getLocale()) }}">{{ __('static.common.generate_content') }}</button>
                 </div>
                 @error('content')
                     <span class="invalid-feedback d-block" role="alert">

@@ -34,7 +34,7 @@
                                             <option value="openai" {{ old('provider', $model->provider) == 'openai' ? 'selected' : '' }}>OpenAI</option>
                                             <option value="google" {{ old('provider', $model->provider) == 'google' ? 'selected' : '' }}>Google (Gemini)</option>
                                             <option value="anthropic" {{ old('provider', $model->provider) == 'anthropic' ? 'selected' : '' }}>Anthropic (Claude)</option>
-                                            <option value="custom" {{ old('provider', $model->provider) == 'custom' ? 'selected' : '' }}>Custom</option>
+                                            <option value="custom" {{ old('provider', $model->provider) == 'custom' ? 'selected' : '' }}>{{ __('static.custom_range') }}</option>
                                         </select>
                                         @error('provider')
                                         <span class="invalid-feedback d-block" role="alert">
@@ -162,7 +162,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="testAIModelModalLabel">{{ __('static.custom_ai_models.test_model') }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-line"></i></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('static.custom_sms_gateways.close') }}"><i class="ri-close-line"></i></button>
             </div>
             <form id="testAIModelForm">
                 @csrf
@@ -296,11 +296,11 @@
                             } else {
                                 responseText = '<pre>' + response.raw_response + '</pre>';
                             }
-                            resultContent.html('<strong>Status Code:</strong> ' + response.status_code + '<br><br>' + responseText);
+                            resultContent.html('<strong>{{ __('static.common.status_code') }}</strong> ' + response.status_code + '<br><br>' + responseText);
                         } else {
                             resultAlert.removeClass('alert-success').addClass('alert-danger');
-                            resultContent.html('<strong>Error:</strong> ' + (response.error || 'Unknown error') +
-                                (response.status_code ? '<br><strong>Status Code:</strong> ' + response.status_code : '') +
+                            resultContent.html('<strong>{{ __('static.common.error_colon') }}</strong> ' + (response.error || 'Unknown error') +
+                                (response.status_code ? '<br><strong>{{ __('static.common.status_code') }}</strong> ' + response.status_code : '') +
                                 (response.response ? '<br><br><pre>' + JSON.stringify(response.response, null, 2) + '</pre>' : ''));
                         }
                     },
@@ -310,7 +310,7 @@
                         resultDiv.show();
                         resultAlert.removeClass('alert-success').addClass('alert-danger');
                         var errorMsg = xhr.responseJSON?.error || xhr.responseJSON?.message || 'An error occurred';
-                        resultContent.html('<strong>Error:</strong> ' + errorMsg);
+                        resultContent.html('<strong>{{ __('static.common.error_colon') }}</strong> ' + errorMsg);
                     }
                 });
             });

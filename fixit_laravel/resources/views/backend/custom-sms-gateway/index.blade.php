@@ -16,8 +16,8 @@
                             </div>
                             <div class="slide">
                                 <div class="note">
-                                    <span>Are you confuse how to do??
-                                        <a href="#documentModal" data-bs-toggle="modal">follow this for reference</a>
+                                    <span>{{ __('static.common.confused_how_to_do') }}
+                                        <a href="#documentModal" data-bs-toggle="modal">{{ __('static.common.follow_this_for_reference') }}</a>
                                     </span>
                                 </div>
                                 <div class="form-group row">
@@ -175,7 +175,7 @@
                                             </div>
                                             @endif
                                         </div>
-                                        <button type="button" class="btn btn-primary add-custom-key">Add</button>
+                                        <button type="button" class="btn btn-primary add-custom-key">{{ __('static.media.add') }}</button>
                                     </div>
                                 </div>
                             </div>

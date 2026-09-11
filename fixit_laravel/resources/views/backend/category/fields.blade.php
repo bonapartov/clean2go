@@ -14,7 +14,7 @@
                 @endif
             @empty
                 <li>
-                    <a href="{{ route('backend.category.edit', ['category' => $cat->id, 'locale' => Session::get('locale', 'en')]) }}" class="language-switcher active" target="blank"><img src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i data-feather="arrow-up-right"></i></a>
+                    <a href="{{ route('backend.category.edit', ['category' => $cat->id, 'locale' => Session::get('locale', 'en')]) }}" class="language-switcher active" target="blank"><img src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i data-feather="arrow-up-right"></i></a>
                 </li>
             @endforelse
         </ul>
@@ -28,7 +28,7 @@
     <label class="col-md-2" for="title">{{ __('static.title') }} ({{ request('locale', app()->getLocale()) }})<span> *</span></label>
     <div class="col-md-10 input-copy-box">
         <input class="form-control" type="text" name="title" id="title" placeholder="{{ __('static.categories.enter_title') }} ({{ request('locale', app()->getLocale()) }})" value="{{ isset($cat->title) ? $cat->getTranslation('title', request('locale', app()->getLocale())) : old('title') }}">
-        <button class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="30">generate title</button>
+        <button class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="30">{{ __('static.settings.generate_title') }}</button>
         @error('title')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
     <label for="description" class="col-md-2">{{ __('static.categories.description') }} ({{ request('locale', app()->getLocale()) }})<span> *</span></label>
     <div class="col-md-10 input-copy-box">
         <textarea class="form-control" placeholder="{{ __('static.categories.enter_description') }} ({{ request('locale', app()->getLocale()) }})" rows="4" name="description" cols="50">{{ isset($cat) ? $cat->getTranslation('description', request('locale', app()->getLocale())) : old('description') }}</textarea>
-        <button class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="150">generate content</button>
+        <button class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="150">{{ __('static.common.generate_content') }}</button>
         @error('description')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>
@@ -123,7 +123,7 @@
                             <div class="image-list-detail">
                                 <div class="position-relative">
                                     <img src="{{ $media->getUrl() }}" id="{{ $media->id }}"
-                                        alt="Service Category Image" class="image-list-item">
+                                        alt="{{ __('static.common.service_category_image') }}" class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>
                                     </div>

@@ -38,7 +38,7 @@
             </svg>
             {{-- <img src="{{ asset('admin/images/no-table-data.svg') }}" class="img-fluid"
                 alt=""> --}}
-            <p>Not Found</p>
+            <p>{{ __('static.user_dashboard.not_found') }}</p>
         </div>
       @endforelse
   </ul>

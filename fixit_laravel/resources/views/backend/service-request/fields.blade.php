@@ -20,7 +20,7 @@
                     @foreach ($Request->getMedia('image') as $media)
                         <div class="image-list-detail">
                             <div class="position-relative">
-                                <img src="{{ $media->original_url }}" id="{{ $media->id }}" alt="User Image"
+                                <img src="{{ $media->original_url }}" id="{{ $media->id }}" alt="{{ __('static.common.user_image') }}"
                                     class="image-list-item">
                                 <div class="close-icon">
                                     <i data-feather="x"></i>
@@ -38,7 +38,7 @@
     <label class="col-md-2" for="title">{{ __('static.title') }}<span> *</span></label>
     <div class="col-md-10 input-copy-box">
         <input class='form-control' type="text" id="title" name="title" value="{{ isset($Request->title) ? $Request->title : old('title') }}" placeholder="{{ __('static.service.enter_title') }}">
-        <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-content_type="service_request" data-length="60">generate title</button>
+        <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-content_type="service_request" data-length="60">{{ __('static.settings.generate_title') }}</button>
         @error('title')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>
@@ -54,7 +54,7 @@
     <label for="description" class="col-md-2">{{ __('static.service.description') }}</label>
     <div class="col-md-10 input-copy-box">
         <textarea class="form-control" rows="4" name="description" placeholder="{{ __('static.service.enter_description') }}" cols="50">{{ $Request->description ?? old('description') }}</textarea>
-        <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-content_type="service_request" data-length="200">generate description</button>
+        <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-content_type="service_request" data-length="200">{{ __('static.common.generate_description') }}</button>
         @error('description')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>

@@ -122,7 +122,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">
@@ -396,7 +396,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image">
                                                     @else
                                                         <div class="initial-letter">
@@ -460,11 +460,11 @@
                                             @endphp
 
                                                 @if ($media)
-                                                    <img src="{{ $media?->getUrl() }}" alt="Image"
+                                                    <img src="{{ $media?->getUrl() }}" alt="{{ __('static.image') }}"
                                                         class="img-fluid card-image">
                                                 @else
                                                     <img src="{{ asset('admin/images/No-image-found.jpg') }}"
-                                                        alt="Placeholder Image" class="img-thumbnail img-fix">
+                                                        alt="{{ __('static.common.placeholder_image') }}" class="img-thumbnail img-fix">
                                                 @endif
                                             </td>
                                             <td>
@@ -531,7 +531,7 @@
                                                     @endphp
 
                                                     @if ($imageUrl)
-                                                        <img src="{{ $imageUrl }}" alt="Image"
+                                                        <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">

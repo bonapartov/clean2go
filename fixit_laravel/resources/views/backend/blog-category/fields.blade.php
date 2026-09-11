@@ -24,7 +24,7 @@
                     <li>
                         <a href="{{ route('backend.blog-category.edit', ['blog_category' => $cat->id, 'locale' => Session::get('locale', 'en')]) }}"
                             class="language-switcher active" target="blank"><img
-                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">English<i
+                                src="{{ asset('admin/images/flags/LR.png') }}" alt="">{{ __('static.common.english') }}<i
                                 data-feather="arrow-up-right"></i></a>
                     </li>
                 @endforelse
@@ -41,7 +41,7 @@
         <input class='form-control' type="text" name="title" id="title"
             value="{{ isset($cat->title) ? $cat->getTranslation('title', request('locale', app()->getLocale())) : old('title') }}"
             placeholder="{{ __('static.blog.enter_title') }} ({{ request('locale', app()->getLocale()) }})">
-        <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="30">generate title</button>
+        <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="30">{{ __('static.settings.generate_title') }}</button>
         @error('title')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>
@@ -61,7 +61,7 @@
         <textarea class="form-control" rows="4" name="description"
             placeholder="{{ __('static.categories.enter_description') }} ({{ request('locale', app()->getLocale()) }})"
             cols="50">{{ isset($cat->description) ? $cat->getTranslation('description', request('locale', app()->getLocale())) : old('description') }}</textarea>
-        <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="150">generate description</button>
+        <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="category" data-length="150">{{ __('static.common.generate_description') }}</button>
         @error('description')
             <span class="invalid-feedback d-block" role="alert">
                 <strong>{{ $message }}</strong>
@@ -125,7 +125,7 @@
                             <div class="image-list-detail">
                                 <div class="position-relative">
                                     <img src="{{ $media->getUrl() }}" id="{{ $media['id'] }}"
-                                        alt="Blog Category Image" class="image-list-item">
+                                        alt="{{ __('static.common.blog_category_image') }}" class="image-list-item">
                                     <div class="close-icon">
                                         <i data-feather="x"></i>
                                     </div>

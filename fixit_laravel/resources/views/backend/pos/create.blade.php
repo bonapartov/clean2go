@@ -30,7 +30,7 @@
                                 <div class="inside p-0">
                                     <div class="contentbox-title">
                                         <div class="contentbox-subtitle">
-                                            <h3>Category List</h3>
+                                            <h3>{{ __('static.common.category_list') }}</h3>
                                             <div class="slider-buttons">
                                                 <div class="swiper-button-prev category-button-prev">
                                                     <i class="ri-arrow-left-s-line"></i>
@@ -89,7 +89,7 @@
                                         <div class="inside p-0">
                                             <div class="contentbox-title">
                                                 <div class="contentbox-subtitle">
-                                                    <h3>Find A Service</h3>
+                                                    <h3>{{ __('static.common.find_a_service') }}</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +116,7 @@
                                     <div class="form-group row">
 
                                         <div class="col-12">
-                                        <input class="form-control" type="text" id="service-search" name="name" value="" placeholder="Find Service">
+                                        <input class="form-control" type="text" id="service-search" name="name" value="" placeholder="{{ __('static.common.find_service') }}">
                                             @error('phone')
                                                 <span class="invalid-feedback d-block" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -162,8 +162,8 @@
                                             <div class="inside p-0">
                                                 <div class="contentbox-title">
                                                     <div class="contentbox-subtitle">
-                                                        <h3>Added Items details</h3>
-                                                        <button class="btn clear-btn confirmationBtn" type="button" id="clear-cart-button">Clear all</button>
+                                                        <h3>{{ __('static.common.added_items_details') }}</h3>
+                                                        <button class="btn clear-btn confirmationBtn" type="button" id="clear-cart-button">{{ __('static.common.clear_all') }}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,27 +183,27 @@
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="discount_type" id="fixed" value="fixed"
                                                                 checked>
-                                                            <label class="form-check-label" for="fixed">Fixed</label>
+                                                            <label class="form-check-label" for="fixed">{{ __('static.common.fixed') }}</label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="discount_type" id="percent" value="Percentage">
-                                                            <label class="form-check-label" for="percent">Percentage</label>
+                                                            <label class="form-check-label" for="percent">{{ __('static.coupon.percentage') }}</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="form-group row">
-                                                        <label class="col-12">Discount</label>
+                                                        <label class="col-12">{{ __('static.service_package.discount') }}</label>
                                                         <div class="col-12">
                                                             <div class="d-flex gap-2">
                                                                 <div class="position-relative w-100">
                                                                     <input class="form-control discount-input" type="text" id="discount-amount" name="discount_amount"
-                                                                        placeholder="Enter Discount">
+                                                                        placeholder="{{ __('static.service_package.enter_discount') }}">
                                                                         <i data-feather="percent"></i> 
                                                                         {{-- <i data-feather="dollar-sign"></i> --}}
                                                                         <span class="custom-currency">{{ Helpers::getDefaultCurrency()->symbol }}</span>
                                                                     </div>
-                                                                <button type="button" class="btn btn-sm btn-primary" id="apply-discount">Apply</button>
+                                                                <button type="button" class="btn btn-sm btn-primary" id="apply-discount">{{ __('static.common.apply') }}</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -216,7 +216,7 @@
                                             <div class="inside p-0">
                                                 <div class="contentbox-title">
                                                     <div class="contentbox-subtitle">
-                                                        <h3>Payment Summary</h3>
+                                                        <h3>{{ __('static.common.payment_summary') }}</h3>
                                                     </div>
                                                 </div>
                                             </div>
@@ -230,14 +230,14 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="payment_method" id="wallet" value="wallet"
                                                     checked>
-                                                <label class="form-check-label" for="wallet">Wallet</label>
+                                                <label class="form-check-label" for="wallet">{{ __('static.dashboard.Wallet') }}</label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="payment_method" id="cash" value="cash">
-                                                <label class="form-check-label" for="cash">Cash</label>
+                                                <label class="form-check-label" for="cash">{{ __('static.cash') }}</label>
                                             </div>
                                         </div>
-                                        <button class="btn place-btn" type="button" id="checkout-button">place order</button>
+                                        <button class="btn place-btn" type="button" id="checkout-button">{{ __('static.common.place_order') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +256,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title m-0">Add Address</h5>
+                    <h5 class="modal-title m-0">{{ __('static.address.add') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal">
                         <i class="ri-close-line"></i>
                     </button>
@@ -307,7 +307,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group row mb-0">
-                                    <label class="col-12" for="phone">Phone</label>
+                                    <label class="col-12" for="phone">{{ __('static.phone') }}</label>
                                     <div class="col-12">
                                         <div class="input-group mb-3 phone-detail">
                                             <div class="col-sm-1">
@@ -352,7 +352,7 @@
                                     <label class="label-title" for="address">{{ __('static.users.address') }} <span
                                             class="required-span">*</span></label>
                                     <div class="w-100">
-                                        <textarea class="form-control ui-widget autocomplete-yandex" placeholder="Enter Address " rows="4" id="address"
+                                        <textarea class="form-control ui-widget autocomplete-yandex" placeholder="{{ __('static.provider.enter_address') }}" rows="4" id="address"
                                             name="address" cols="50">{{ $address->address ?? old('address') }}</textarea>
                                         @error('address')
                                             <span class="invalid-feedback d-block" role="alert">
@@ -489,7 +489,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light text-dark" data-bs-target="#bookNowModal"
-                            data-bs-toggle="modal">Close</button>
+                            data-bs-toggle="modal">{{ __('static.custom_sms_gateways.close') }}</button>
                         <button class="btn btn-primary" type="submit">{{ __('static.submit') }}</button>
                     </div>
                 </form>
@@ -502,7 +502,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title m-0">Add New Users</h5>
+                    <h5 class="modal-title m-0">{{ __('static.common.add_new_users') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal">
                         <i class="ri-close-line"></i>
                     </button>
@@ -510,15 +510,15 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group row">
-                            <label class="col-12" for="name">Name<span> *</span></label>
+                            <label class="col-12" for="name">{{ __('static.name') }}<span> *</span></label>
                             <div class="col-12">
-                                <input class="form-control" type="text" id="name" placeholder="Enter Name">
+                                <input class="form-control" type="text" id="name" placeholder="{{ __('static.tag.enter_name') }}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-12" for="name">Email<span> *</span></label>
+                            <label class="col-12" for="name">{{ __('static.email') }}<span> *</span></label>
                             <div class="col-12">
-                                <input class="form-control" type="mail" id="name" placeholder="Enter Email Address">
+                                <input class="form-control" type="mail" id="name" placeholder="{{ __('static.common.enter_email_address') }}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -562,8 +562,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('static.custom_sms_gateways.close') }}</button>
+                    <button type="button" class="btn btn-primary">{{ __('static.common.save_changes') }}</button>
                 </div>
             </div>
         </div>
@@ -985,7 +985,7 @@
                 },
                 dataType: 'json',
                 success: function(result) {
-                    $('.select-state').html('<option value="">Select State</option>');
+                    $('.select-state').html('<option value="">{{ __('static.serviceman.select_state') }}</option>');
                     $.each(result.states, function(key, value) {
                        $('.select-state').append(
                                     `<option value="${value.id}" ${value.id === state ? 'selected' : ''}>${value.name}</option>`

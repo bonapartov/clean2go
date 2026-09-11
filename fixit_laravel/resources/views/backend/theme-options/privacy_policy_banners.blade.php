@@ -11,7 +11,7 @@
             <div class="form-group row">
                 <label class="col-md-2">{{ __('Title') }}</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" name="privacy_policy[banners][{{ $index }}][title]" value="{{ $banner['title'] ?? '' }}" placeholder="Enter banner title">
+                    <input type="text" class="form-control" name="privacy_policy[banners][{{ $index }}][title]" value="{{ $banner['title'] ?? '' }}" placeholder="{{ __('static.common.enter_banner_title') }}">
                 </div>
             </div>
             <div class="form-group row">
@@ -20,7 +20,7 @@
                     <textarea class="form-control summary-ckeditor" name="privacy_policy[banners][{{ $index }}][description]" id="banner_description___INDEX__" placeholder="{{ __('static.theme_options.enter_description') }}" rows="2">{{ $banner['description'] ?? '' }}</textarea>
                 </div>
             </div>
-            <button type="button" class="btn btn-danger remove-banner">Remove</button>
+            <button type="button" class="btn btn-danger remove-banner">{{ __('static.common.remove') }}</button>
         </div>
     </div>
 </div>

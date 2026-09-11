@@ -201,7 +201,7 @@
                         <li>
                             <a href="{{ route('lang', Helpers::getDefaultLanguageLocale()) }}" data-lng="en"><img
                                     class="active-icon" src="{{ asset('admin/images/flags/LR.png') }}"><a
-                                    href="javascript:void(0)" data-lng="en">English</a>
+                                    href="javascript:void(0)" data-lng="en">{{ __('static.common.english') }}</a>
                         </li>
                     @endforelse
                 </ul>
@@ -236,7 +236,7 @@
                         </div>
                     @endforelse
                     <li>
-                        <a href="{{ route('backend.list-notification') }}" class="btn btn-primary">View All</a>
+                        <a href="{{ route('backend.list-notification') }}" class="btn btn-primary">{{ __('static.dashboard.view_all') }}</a>
                     </li>
                 </ul>
             </li>
@@ -276,7 +276,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4>Search box</h4>
+                <h4>{{ __('static.home_pages.search_box') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                     <i class="ri-close-line"></i>
                 </button>
@@ -284,7 +284,7 @@
             <div class="modal-body">
                 <div class="from-group">
                     <div class="position-relative">
-                        <input type="text" class="form-control" placeholder="Enter your search"
+                        <input type="text" class="form-control" placeholder="{{ __('static.common.enter_your_search') }}"
                             id="menu-item-search" autofocus>
                         <i class="ri-search-line"></i>
                     </div>
@@ -292,14 +292,14 @@
 
                 <div class="search-suggestion-box">
                     <div class="search-input-box" id="recent-search">
-                        <h6>Recent Searches</h6>
+                        <h6>{{ __('static.common.recent_searches') }}</h6>
                         <div class="search-list" id="recent-searches">
-                            <h4>No recent searches</h4>
+                            <h4>{{ __('static.common.no_recent_searches') }}</h4>
                         </div>
                     </div>
 
                     <div class="search-input-box d-none" id="search-result">
-                        <h6>Search Results</h6>
+                        <h6>{{ __('static.common.search_results') }}</h6>
                         <ul class="search-list d-none" id="search-results"></ul>
                     </div>
                 </div>
@@ -342,7 +342,7 @@
 
             container.innerHTML = '';
             if (recentSearches.length === 0) {
-                container.innerHTML = '<h4>No recent searches</h4>';
+                container.innerHTML = '<h4>{{ __('static.common.no_recent_searches') }}</h4>';
                 return;
             }
 
@@ -389,7 +389,7 @@
                 }
 
                 if (!hasMatches) {
-                    resultsContainer.innerHTML = '<li class="no-data">No result found</li>';
+                    resultsContainer.innerHTML = '<li class="no-data">{{ __('static.common.no_result_found') }}</li>';
                     $("#recent-search").addClass("d-none");
                     $("#search-results").removeClass("d-none").addClass("d-block");
                     $("#search-result").removeClass("d-none");

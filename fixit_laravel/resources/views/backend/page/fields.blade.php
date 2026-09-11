@@ -41,7 +41,7 @@
                                                     <a href="{{ route('backend.page.edit', ['page' => $page->id, 'locale' => Session::get('locale', 'en')]) }}"
                                                         class="language-switcher active" target="blank"><img
                                                             src="{{ asset('admin/images/flags/LR.png') }}"
-                                                            alt="">English<i data-feather="arrow-up-right"></i></a>
+                                                            alt="">{{ __('static.common.english') }}<i data-feather="arrow-up-right"></i></a>
                                                 </li>
                                             @endforelse
                                         </ul>
@@ -75,7 +75,7 @@
                                     <input class='form-control' type="text" name="title" id="title"
                                         value="{{ isset($page->title) ? $page->getTranslation('title', request('locale', app()->getLocale())) : old('title') }}"
                                         placeholder="{{ __('static.page.enter_title') }} ({{ request('locale', app()->getLocale()) }})">
-                                    <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page" data-length="60">generate title</button>
+                                    <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page" data-length="60">{{ __('static.settings.generate_title') }}</button>
                                     @error('title')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -93,7 +93,7 @@
                                     ({{ request('locale', app()->getLocale()) }})<span> *</span></label>
                                 <div class="col-md-10 error-div input-copy-box">
                                     <textarea class="summary-ckeditor" id="content" name="content" cols="65" rows="5">{{ isset($page->content) ? $page->getTranslation('content', request('locale', app()->getLocale())) : old('content') }}</textarea>
-                                    <button type="button" class="btn ai-generate-content-btn" data-url="{{ route('backend.custom-ai-model.generate-content') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page">generate content</button>
+                                    <button type="button" class="btn ai-generate-content-btn" data-url="{{ route('backend.custom-ai-model.generate-content') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page">{{ __('static.common.generate_content') }}</button>
                                     @error('content')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -130,7 +130,7 @@
                                                 <div class="image-list-detail">
                                                     <div class="position-relative">
                                                         <img src="{{ $media->getUrl() }}"
-                                                            id="{{ $media->id }}" alt="App Icon"
+                                                            id="{{ $media->id }}" alt="{{ __('static.page.app_icon') }}"
                                                             class="image-list-item">
                                                         <div class="close-icon">
                                                             <i data-feather="x"></i>
@@ -158,7 +158,7 @@
             <div class="col-12">
                 <div class="card tab2-card">
                     <div class="card-header">
-                        <h5>Search Engine Optimization (SEO)</h5>
+                        <h5>{{ __('static.common.seo_full') }}</h5>
                     </div>
                     <div class="card-body">
                             <div class="form-group row">
@@ -168,7 +168,7 @@
                                     <input class='form-control' type="text" name="meta_title" id="meta_title"
                                         value="{{ isset($page->meta_title) ? $page->getTranslation('meta_title', request('locale', app()->getLocale())) : old('meta_title') }}"
                                         placeholder="{{ __('static.page.placeholder_meta_title') }} ({{ request('locale', app()->getLocale()) }})">
-                                    <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page" data-length="60">generate meta title</button>
+                                    <button type="button" class="btn ai-generate-btn" data-url="{{ route('backend.custom-ai-model.generate-title') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page" data-length="60">{{ __('static.common.generate_meta_title') }}</button>
                                     @error('meta_title')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -188,7 +188,7 @@
                                     <textarea class = "form-control" id="meta_descripation" rows="4"
                                         placeholder="{{ __('static.pages.meta_description') }} ({{ request('locale', app()->getLocale()) }})"
                                         name="meta_description" cols="50">{{ isset($page->meta_description) ? $page->getTranslation('meta_description', request('locale', app()->getLocale())) : old('meta_descripation') }}</textarea>
-                                    <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page" data-length="160">generate meta description</button>
+                                    <button type="button" class="btn ai-generate-description-btn" data-url="{{ route('backend.custom-ai-model.generate-description') }}" data-locale="{{ request('locale', app()->getLocale()) }}" data-content_type="page" data-length="160">{{ __('static.common.generate_meta_description') }}</button>
                                     @error('meta_description')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -265,7 +265,7 @@
                 <div class="col-12">
                     <div class="card tab2-card">
                         <div class="card-header">
-                            <h5>Publish</h5>
+                            <h5>{{ __('static.publish') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -283,7 +283,7 @@
                 <div class="col-12">
                     <div class="card tab2-card">
                         <div class="card-header">
-                            <h5>Additional Info</h5>
+                            <h5>{{ __('static.blog.additional_info') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
@@ -300,8 +300,8 @@
                                                 <input class="form-check-input" type="checkbox" name="status" id="" value="0"
                                                     checked>
                                             @endif
-                                            <span class="box-1">Active</span>
-                                            <span class="box-2">Deactivate</span>
+                                            <span class="box-1">{{ __('static.active') }}</span>
+                                            <span class="box-2">{{ __('static.deactivate') }}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -329,12 +329,12 @@
                                         <div class="switch-field-box">
                                             <input type="radio" name="status" id="feature_active" checked
                                                 value="1">
-                                            <label for="feature_active">Active</label>
+                                            <label for="feature_active">{{ __('static.active') }}</label>
                                         </div>
                                         <div class="switch-field-box">
                                             <input type="radio" name="status" id="feature_deactivate"
                                                 value="0">
-                                            <label for="feature_deactivate">Deactivate</label>
+                                            <label for="feature_deactivate">{{ __('static.deactivate') }}</label>
                                         </div>
                                     </div>
                                 </div> --}}

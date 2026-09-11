@@ -27,7 +27,7 @@
                 $imageUrl = $media ? $media->getUrl() : null;
             @endphp
             @if ($imageUrl)
-                <img src="{{ $imageUrl }}" alt="Image" class="img-fluid">
+                <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}" class="img-fluid">
             @else
                 <div class="initial-letter">{{ strtoupper(substr($user->name, 0, 1)) }}
                 </div>

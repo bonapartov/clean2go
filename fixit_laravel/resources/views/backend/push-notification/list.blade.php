@@ -24,7 +24,7 @@
                                 <img class="mx-auto d-flex" src="{{ asset('admin/images/svg/no-data.svg') }}"
                                     alt="no-image">
                                 <div class="data-not-found">
-                                    <span>Data Not Found</span>
+                                    <span>{{ __('static.dashboard.data_not_found') }}</span>
                                 </div>
                             </div>
                         @endforelse

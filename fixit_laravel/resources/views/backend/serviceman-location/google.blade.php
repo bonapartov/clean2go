@@ -22,11 +22,11 @@
         function generateInfoContent(serviceman) {
             const rating = serviceman.review ? `${serviceman.review.toFixed(1)} / 5` : "UNRATED";
             return `<div style="display: flex; flex-direction: column; align-items: center; font-family: Arial, sans-serif;">
-                        <img src="${serviceman.image}" alt="Serviceman Image" width="70" height="70" style="border-radius: 50%; margin-bottom: 10px;">
+                        <img src="${serviceman.image}" alt="{{ __('static.common.serviceman_image') }}" width="70" height="70" style="border-radius: 50%; margin-bottom: 10px;">
                         <h3 style="margin: 5px 0; font-size: 16px; color: #333;">${serviceman.name}</h3>
-                        <p style="margin: 2px 0; font-size: 14px; color: #777;">Phone: <strong>${serviceman.phone}</strong></p>
-                        <p style="margin: 2px 0; font-size: 14px; color: #777;">Email: <strong>${serviceman.email}</strong></p>
-                        <p style="margin: 2px 0; font-size: 14px; color: #777;">Rating: <strong>${rating}</strong></p>
+                        <p style="margin: 2px 0; font-size: 14px; color: #777;">{{ __('static.common.phone_colon') }} <strong>${serviceman.phone}</strong></p>
+                        <p style="margin: 2px 0; font-size: 14px; color: #777;">{{ __('static.common.email_colon') }} <strong>${serviceman.email}</strong></p>
+                        <p style="margin: 2px 0; font-size: 14px; color: #777;">{{ __('static.common.rating_colon') }} <strong>${rating}</strong></p>
                     </div>`;
         }
 

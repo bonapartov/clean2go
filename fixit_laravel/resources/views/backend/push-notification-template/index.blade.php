@@ -11,12 +11,12 @@
                             <form action="{{ route('backend.push-notification-template.index') }}" method="GET"
                                 class="d-flex" id="searchForm">
                                 <input type="text" id="searchInput" class="form-control me-2" name="search"
-                                    placeholder="Search templates" value="{{ request()->get('search') }}">
+                                    placeholder="{{ __('static.common.search_templates') }}" value="{{ request()->get('search') }}">
                                 <button type="submit" class="btn btn-primary" id="searchButton">
                                     <i data-feather="search"></i>
                                 </button>
                                 <button type="button" class="btn btn-secondary ms-2" id="cancelButton"
-                                    style="display:none;">Cancel</button>
+                                    style="display:none;">{{ __('static.cancel') }}</button>
                             </form>
                         </div>
                     </div>
@@ -79,11 +79,11 @@
                         <form action="{{ route('backend.push-notification-template.index') }}" method="GET" class="d-flex"
                             id="searchForm">
                             <input type="text" id="searchInput" class="form-control me-2" name="search"
-                                placeholder="Search templates" value="{{ request()->get('search') }}">
+                                placeholder="{{ __('static.common.search_templates') }}" value="{{ request()->get('search') }}">
                             <button type="submit" class="btn btn-primary" id="searchButton">
                                 <i data-feather="search"></i>
                             </button>
-                            <button type="button" class="btn btn-secondary ms-2" id="cancelButton" style="display:none;">Cancel</button>
+                            <button type="button" class="btn btn-secondary ms-2" id="cancelButton" style="display:none;">{{ __('static.cancel') }}</button>
                         </form>
                     </div>
                 </div>

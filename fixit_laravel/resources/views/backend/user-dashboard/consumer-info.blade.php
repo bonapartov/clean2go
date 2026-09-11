@@ -111,7 +111,7 @@ foreach ([BookingEnum::PENDING => 'box', BookingEnum::ON_GOING => 'calendar',
                                                         @endphp
 
                                                         @if ($imageUrl)
-                                                            <img src="{{ $imageUrl }}" alt="Image" class="img-fluid service-image rounded-circle">
+                                                            <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}" class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">{{ strtoupper(substr($booking?->consumer?->name, 0, 1)) }}</div>
                                                         @endif
@@ -216,7 +216,7 @@ foreach ([BookingEnum::PENDING => 'box', BookingEnum::ON_GOING => 'calendar',
                                                         @endphp
 
                                                         @if ($imageUrl)
-                                                            <img src="{{ $imageUrl }}" alt="Image"
+                                                            <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}"
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
