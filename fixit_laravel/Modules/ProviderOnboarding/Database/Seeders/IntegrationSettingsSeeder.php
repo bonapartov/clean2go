@@ -11,7 +11,6 @@ class IntegrationSettingsSeeder extends Seeder
     {
         $settings = [
             // Общие
-            ['key' => 'onboarding_mock_mode', 'type' => 'toggle', 'group' => 'general', 'label' => 'Режим Mock (Sprint 1)', 'value' => '1'],
             ['key' => 'onboarding_enabled', 'type' => 'toggle', 'group' => 'general', 'label' => 'Онбординг включён', 'value' => '1'],
 
             // ФНС + НПД / DaData (один ключ покрывает оба: ЕГРЮЛ/ЕГРИП/ИНН физлица + статус НПД)

@@ -64,14 +64,15 @@
                                            placeholder="Оставьте пустым, чтобы не менять">
 
                                 @elseif($setting->type === 'toggle')
-                                    <div class="form-check form-switch mt-1">
+                                    <label class="switch mt-1">
                                         <input type="hidden" name="{{ $setting->key }}" value="0">
                                         <input type="checkbox"
                                                name="{{ $setting->key }}"
                                                class="form-check-input"
                                                value="1"
                                                {{ $setting->value ? 'checked' : '' }}>
-                                    </div>
+                                        <span class="switch-state"></span>
+                                    </label>
 
                                 @elseif($setting->type === 'number')
                                     <input type="number"
