@@ -26,7 +26,13 @@ class CreateServiceRequestListener
         $serviceRequest = $event->serviceRequest;
         $categoryIds = is_array($serviceRequest->category_ids) ? $serviceRequest->category_ids : json_decode($serviceRequest->category_ids, true);
         $zones = Category::whereIn('id', $categoryIds)->with('zones:id')->get()->pluck('zones.*.id')->flatten()->unique()->toArray();
-        
+
+        // Если известна зона самого заказчика — сужаем до неё, чтобы не звать
+        // исполнителей из других городов, где просто доступна та же категория.
+        if (!empty($event->zoneIds)) {
+            $zones = array_values(array_intersect($zones, $event->zoneIds));
+        }
+
         foreach ($zones as $zoneId) {
             $topic = "zone_{$zoneId}";
             $this->sendPushNotification($topic, $event); 

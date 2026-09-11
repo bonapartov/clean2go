@@ -34,6 +34,7 @@ class CreateRequestServiceRequest extends FormRequest
             'booking_date' => ['required'],
             'category_ids' => ['required','array'],
             'category_ids.*' => ['exists:categories,id'],
+            'zone_ids' => ['nullable', 'string'],
         ];
     }
 }

@@ -312,6 +312,7 @@ class AddJobRequestProvider with ChangeNotifier {
         "required_servicemen": minRequired.text,
         "booking_date":
             DateFormat("dd-MMM-yyyy,hh:mm aa").format(DateTime.now()),
+        "zone_ids": zoneIds,
         for (var i = 0; i < categories.length; i++)
           "category_ids[$i]": categories[i].id,
       };

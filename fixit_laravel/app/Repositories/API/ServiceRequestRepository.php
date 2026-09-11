@@ -48,7 +48,8 @@ class ServiceRequestRepository extends BaseRepository
                 $serviceRequest->media;
             }
 
-            event(new CreateServiceRequestEvent($serviceRequest));
+            $zoneIds = $request->filled('zone_ids') ? explode(',', $request->zone_ids) : [];
+            event(new CreateServiceRequestEvent($serviceRequest, $zoneIds));
 
             DB::commit();
             return response()->json([

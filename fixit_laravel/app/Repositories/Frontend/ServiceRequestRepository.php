@@ -58,7 +58,7 @@ class ServiceRequestRepository extends BaseRepository
             }
 
             DB::commit();
-            event(new CreateServiceRequestEvent($serviceRequest));
+            event(new CreateServiceRequestEvent($serviceRequest, session('zoneIds', [])));
 
             return redirect()->back()->with('message', __('frontend::static.home_page.store'));
         } catch (Exception $e) {
