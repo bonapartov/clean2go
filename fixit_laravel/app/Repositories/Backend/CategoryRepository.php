@@ -73,7 +73,9 @@ class CategoryRepository extends BaseRepository
                     $allZones = Zone::pluck('id')->toArray();
                     $request->merge(['zones' => $allZones]);
                 }
-                $category->zones()->attach($request->zones);
+                // Категория уже привязана ко всем зонам моделью (Category::created).
+                // syncWithoutDetaching — чтобы не плодить дубли строк в category_zones.
+                $category->zones()->syncWithoutDetaching($request->zones);
                 $category->zones;
             }
 

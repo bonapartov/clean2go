@@ -51,6 +51,9 @@ class Zone extends Model
         static::saving(function ($model) {
             $model->created_by_id = auth()?->user()?->id;
         });
+        static::created(function ($zone) {
+            $zone->categories()->syncWithoutDetaching(Category::pluck('id'));
+        });
     }
 
     public function toArray()

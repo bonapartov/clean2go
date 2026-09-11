@@ -56,6 +56,14 @@ class Category extends Model implements HasMedia
         'commission' => 'float',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function ($category) {
+            $category->zones()->syncWithoutDetaching(Zone::pluck('id'));
+        });
+    }
+
     public function sluggable(): array
     {
         return [
