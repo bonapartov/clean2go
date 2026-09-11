@@ -54,6 +54,8 @@ class ServiceController extends Controller
             $zoneIds = explode(',', $request->zone_ids);
             $query->whereHas('categories.zones', function ($q) use ($zoneIds) {
                 $q->whereIn('zones.id', $zoneIds);
+            })->whereHas('user.zones', function ($q) use ($zoneIds) {
+                $q->whereIn('zones.id', $zoneIds);
             });
         }
 
@@ -169,6 +171,8 @@ class ServiceController extends Controller
 
             $query->whereHas('categories.zones', function (Builder $zones) use ($zone_ids) {
                 $zones->whereIn('zones.id', $zone_ids);
+            })->whereHas('user.zones', function (Builder $zones) use ($zone_ids) {
+                $zones->whereIn('zones.id', $zone_ids);
             });
         }
 
@@ -209,6 +213,8 @@ class ServiceController extends Controller
                             $zones->WhereIn('zones.id', $zone_ids);
                         });
                     });
+                })->whereHas('user.zones', function (Builder $zones) use ($zone_ids) {
+                    $zones->whereIn('zones.id', $zone_ids);
                 });
             }
 

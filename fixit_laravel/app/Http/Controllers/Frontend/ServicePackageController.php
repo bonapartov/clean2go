@@ -46,6 +46,10 @@ class ServicePackageController extends Controller
                     $zones->WhereIn('zones.id', $zoneIds);
                 });
             });
+        })->whereHas('user', function (Builder $user) use ($zoneIds) {
+            $user->whereHas('zones', function (Builder $zones) use ($zoneIds) {
+                $zones->whereIn('zones.id', $zoneIds);
+            });
         });
 
         return  $servicePackages;

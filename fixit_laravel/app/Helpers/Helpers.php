@@ -1617,12 +1617,16 @@ class Helpers
     public static function getServiceByProviderId($providerId)
     {
         $zoneIds = session('zoneIds', []);
-        
+
         $query = Service::query()->where('user_id', $providerId)?->where('status', true);
-        
+
         if (!empty($zoneIds)) {
             $query->whereHas('categories', function ($categoryQuery) use ($zoneIds) {
                 $categoryQuery->whereHas('zones', function ($zoneQuery) use ($zoneIds) {
+                    $zoneQuery->whereIn('zones.id', $zoneIds);
+                });
+            })->whereHas('user', function ($userQuery) use ($zoneIds) {
+                $userQuery->whereHas('zones', function ($zoneQuery) use ($zoneIds) {
                     $zoneQuery->whereIn('zones.id', $zoneIds);
                 });
             });
@@ -1804,6 +1808,10 @@ class Helpers
             $categories->whereHas('zones', function (Builder $zones) use ($zoneIds) {
                 $zones->WhereIn('zones.id', $zoneIds);
             });
+        })->whereHas('user', function (Builder $user) use ($zoneIds) {
+            $user->whereHas('zones', function (Builder $zones) use ($zoneIds) {
+                $zones->whereIn('zones.id', $zoneIds);
+            });
         });
     }
 
@@ -1834,6 +1842,10 @@ class Helpers
         if (count($zoneIds)) {
             $query->whereHas('categories', function ($categories) use ($zoneIds) {
                 $categories->whereHas('zones', function ($zones) use ($zoneIds) {
+                    $zones->whereIn('zones.id', $zoneIds);
+                });
+            })->whereHas('user', function ($user) use ($zoneIds) {
+                $user->whereHas('zones', function ($zones) use ($zoneIds) {
                     $zones->whereIn('zones.id', $zoneIds);
                 });
             });
