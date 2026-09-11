@@ -137,6 +137,10 @@
     @endif
 @endif
 
+@if(isset($cat))
+{{-- Категория при создании автоматически привязывается ко всем зонам
+     (Category::created). Редактировать состав зон можно только здесь,
+     на форме редактирования уже существующей категории. --}}
 <div class="form-group row">
     <label class="col-md-2" for="zones">{{ __('static.zone.zones') }}<span> *</span> </label>
     <div class="col-md-10 error-div select-dropdown">
@@ -160,6 +164,7 @@
         </span>
     </div>
 </div>
+@endif
 
 <div class="form-group row">
     <label class="col-md-2" for="status">{{ __('static.status') }}</label>
