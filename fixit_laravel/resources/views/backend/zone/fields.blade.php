@@ -196,6 +196,12 @@
                 let mapInstance, polygonInstance = null;
                 let drawingDone = false;
                 let existingPolygon = @json(isset($zone->locations) ? $zone->locations : null);
+                let currentZoneId = @json(isset($zone->id) ? $zone->id : null);
+                let otherZonePolygons = [];
+                const ZONE_COLORS = [
+                    '#0055FF', '#FF5500', '#00AA44', '#AA00FF',
+                    '#FF0088', '#00AAAA', '#FF8800', '#5500AA'
+                ];
 
                 ymaps.ready(function() { initMap(); });
 
@@ -206,6 +212,8 @@
                         controls: ['zoomControl', 'searchControl', 'geolocationControl']
                     });
                     mapInstance.controls.get('searchControl').options.set({ provider: 'yandex#search' });
+
+                    loadOtherZonesOnMap();
 
                     $('#startZoneBtn').on('click', startNewZone);
 
@@ -231,6 +239,42 @@
                     });
 
                     loadExistingPolygon();
+                }
+
+                function loadOtherZonesOnMap() {
+                    $.getJSON('{{ route('backend.zone.map-data') }}', function(zones) {
+                        otherZonePolygons.forEach(function(p) { mapInstance.geoObjects.remove(p); });
+                        otherZonePolygons = [];
+
+                        var bounds = null;
+                        zones.forEach(function(zone, idx) {
+                            if (currentZoneId && zone.id === currentZoneId) return;
+                            if (!zone.locations || zone.locations.length < 3) return;
+                            var coords = zone.locations.map(function(p) { return [p.lat, p.lng]; });
+                            var color = ZONE_COLORS[idx % ZONE_COLORS.length];
+                            var polygon = new ymaps.Polygon([coords], {}, {
+                                fillColor: color,
+                                fillOpacity: 0.15,
+                                strokeColor: color,
+                                strokeWidth: 1,
+                                interactivityModel: 'default#transparent'
+                            });
+                            polygon._zoneName = zone.name;
+                            mapInstance.geoObjects.add(polygon);
+                            otherZonePolygons.push(polygon);
+
+                            var b = polygon.geometry.getBounds();
+                            if (b) bounds = bounds ? ymaps.util.bounds.fromPoints([
+                                [Math.min(bounds[0][0], b[0][0]), Math.min(bounds[0][1], b[0][1])],
+                                [Math.max(bounds[1][0], b[1][0]), Math.max(bounds[1][1], b[1][1])]
+                            ]) : b;
+                        });
+
+                        // Своей зоны ещё нет (создание или пустое редактирование) — покажем существующие зоны целиком
+                        if (!existingPolygon && bounds) {
+                            mapInstance.setBounds(bounds, { checkZoomRange: true, zoomMargin: 40 });
+                        }
+                    });
                 }
 
                 function startNewZone() {
