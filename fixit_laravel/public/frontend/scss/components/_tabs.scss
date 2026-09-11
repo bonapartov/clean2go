@@ -177,7 +177,7 @@
             }
 
             span {
-                font-family: "DM Sans", serif !important;
+                font-family: "DM Sans", "Golos Text", sans-serif !important;
                 margin: 0 auto;
                 font-size: calc(15px + (18 - 15) * ((100vw - 320px) / (1920 - 320)));
                 color: $title-color;
@@ -192,7 +192,7 @@
             }
 
             small {
-                font-family: "DM Sans", serif !important;
+                font-family: "DM Sans", "Golos Text", sans-serif !important;
                 margin: 0 auto;
                 font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
                 color: rgba($title-color, 0.6);

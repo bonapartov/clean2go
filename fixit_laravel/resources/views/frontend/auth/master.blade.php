@@ -3,7 +3,7 @@
 
 @php
     $settings = Setting::first()->values;
-    $lang = Helpers::getLanguageByLocale(Session::get('locale', 'en'));
+    $lang = Helpers::getLanguageByLocale(Session::get('locale', app()->getLocale()));
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $lang->is_rtl ? 'rtl' : 'ltr' }}"
@@ -39,19 +39,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/vendors/select2.css') }}">
 
     @vite(['public/frontend/scss/style.scss'])
-    <style>
-        :root {
-            --bs-body-font-family: "DM Sans", "Golos Text", sans-serif;
-            --bs-font-sans-serif: "DM Sans", "Golos Text", sans-serif;
-            --bs-btn-font-family: "DM Sans", "Golos Text", sans-serif;
-        }
-        body, p, h1, h2, h3, h4, h5, h6, a, span,
-        input, textarea, select, button, label,
-        td, th, li, .form-control, .form-select, .btn {
-            font-family: "DM Sans", "Golos Text", sans-serif !important;
-        }
-        ::placeholder { font-family: "DM Sans", "Golos Text", sans-serif !important; }
-    </style>
 
 </head>
 
@@ -96,7 +83,7 @@
                     <div class="pt-4">
                         <div class="dropdown language-dropdown">
                             @php
-                                $lang = Helpers::getLanguageByLocale(Session::get('locale', 'en'));
+                                $lang = Helpers::getLanguageByLocale(Session::get('locale', app()->getLocale()));
                                 $flag = $lang?->flag;
                             @endphp
 
@@ -112,7 +99,7 @@
                                                 class="img-fluid">
                                         @endif
 
-                                        {{ strtoupper(Session::get('locale', 'en')) }}
+                                        {{ strtoupper(Session::get('locale', app()->getLocale())) }}
                                     </span>
                                 </a>
                             @else
@@ -127,7 +114,7 @@
                                                 class="img-fluid">
                                         @endif
 
-                                        {{ strtoupper(Session::get('locale', 'en')) }}
+                                        {{ strtoupper(Session::get('locale', app()->getLocale())) }}
                                     </span>
                                     <i class="iconsax" icon-name="chevron-down"></i>
                                 </button>

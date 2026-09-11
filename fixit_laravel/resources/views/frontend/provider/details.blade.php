@@ -124,11 +124,11 @@
                                         </h5>
                                     </div>
                                     <div class="delivered">
-                                        <span>Services delivered :</span>
+                                        <span>{{ __('frontend::static.providers.services_delivered') }}</span>
                                         <small>{{ $provider->served }}</small>
                                     </div>
                                 </div>
-                                <label class="mt-3 mb-2">Details of Provider</label>
+                                <label class="mt-3 mb-2">{{ __('frontend::static.providers.details_of_provider') }}</label>
                                 <div class="profile-info">
                                     {{-- <div class="mb-3">
                                         <label>
@@ -156,7 +156,7 @@
                                     <div>
                                         <label>
                                             <i class="iconsax" icon-name="globe"></i>
-                                            Known languages
+                                            {{ __('frontend::static.providers.known_languages') }}
                                         </label>
                                         <div class="d-flex align-content-center gap-3 mt-2">
                                             @foreach($provider?->knownLanguages as $knownLanguages)
@@ -205,7 +205,7 @@
                 </div>
             </div>
             <div class="col-custom-9 no-data-col-custom-9">
-                <button class="filter-btn btn theme-bg-color text-white w-max d-xl-none d-inline-block mb-3">Provider Details</button>
+                <button class="filter-btn btn theme-bg-color text-white w-max d-xl-none d-inline-block mb-3">{{ __('frontend::static.providers.details_of_provider') }}</button>
                 <div class="tab-content m-0" id="providerDetailTabContent">
                     <div class="tab-pane fade show active" id="provider-service" role="tabpanel"
                         aria-labelledby="provider-service-tab">

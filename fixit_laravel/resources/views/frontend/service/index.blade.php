@@ -134,7 +134,7 @@
                                                             <div class="search-div">
                                                                 <div class="form-group d-flex">
                                                                     <i class="iconsax" icon-name="user-1"></i>
-                                                                    <input type="search" id="accordion_search_bar" placeholder="Search" autocomplete="off" />
+                                                                    <input type="search" id="accordion_search_bar" placeholder="{{ __('frontend::static.bookings.search_here') }}" autocomplete="off" />
                                                                 </div>
                                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesearch-provider" aria-expanded="true" aria-controls="collapsesearch-provider"></button>
                                                             </div>
@@ -195,10 +195,10 @@
 
                                         <div class="accordion-body">
                                             <div class="search-div">
-                                                <input type="search" autocomplete="off" class="form-control form-control-white" id="accordion_category_search_bar" placeholder="Search" />
+                                                <input type="search" autocomplete="off" class="form-control form-control-white" id="accordion_category_search_bar" placeholder="{{ __('frontend::static.bookings.search_here') }}" />
                                             </div>
                                             <input type="hidden" name="categories" id="select-category" class="form-check-input" value="">
-                                            <p id="no-results-message" class="no-results mt-3 no-category-results-message" style="display: none;">Category not found</p>
+                                            <p id="no-results-message" class="no-results mt-3 no-category-results-message" style="display: none;">{{ __('frontend::static.bookings.category_not_found') }}</p>
                                             <div class="category-body">
                                                 <ul class="category-list custom-scroll">
                                                     @forelse($categories as $category)

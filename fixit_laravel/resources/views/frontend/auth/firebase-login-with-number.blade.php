@@ -50,7 +50,7 @@
         </div>
         <div id="recaptcha-container"></div>
         <button type="button" class="btn btn-solid submit spinner-btn" id="generate_otp"><span class="spinner-border spinner-border-sm" style="display: none;"></span>{{ __('frontend::auth.login_now') }}</button>
-        <button type="button" class="btn btn-solid submit spinner-btn" id="verify_otp" style="display:none"><span class="spinner-border spinner-border-sm" style="display: none;"></span>Verify</button>
+        <button type="button" class="btn btn-solid submit spinner-btn" id="verify_otp" style="display:none"><span class="spinner-border spinner-border-sm" style="display: none;"></span>{{ __('frontend::auth.verify_otp') }}</button>
     </form>
 </div>
 

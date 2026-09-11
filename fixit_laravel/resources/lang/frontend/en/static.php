@@ -107,6 +107,7 @@ return [
         'banners_not_found' => 'Banners not found!',
         'providers_not_found' => 'Providers not found!',
         'testimonials_not_found' => 'Testimonials not found!',
+        'view_all' => 'View all',
     ],
     'account' => [
         'save_address' => 'Addresses',
@@ -455,6 +456,8 @@ return [
         'total_scheduled_services' => 'Total Scheduled Services',
         'edit_time' => 'Edit Time',
         'remove' => 'Remove',
+        'no_slots_available' => 'No slots available for this day.',
+        'select_booking_status' => 'Select Booking Status',
     ],
     'cart' => [
         'use_code' => 'User Code',
@@ -681,7 +684,9 @@ return [
         'description' => 'Description',
         'enter_description' => 'Enter Description',
         'post' => 'Post',
-        'store' => 'Custom Job sent successfully'
+        'store' => 'Custom Job sent successfully',
+        'reject' => 'Reject',
+        'accept' => 'Accept',
     ],
 
 ];

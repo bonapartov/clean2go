@@ -32,7 +32,7 @@
                     <form action="{{ route('frontend.comments.store', $blog->id) }}"
                         class="comment-box reply-box d-flex align-items-center gap-3" method="POST">
                         @csrf
-                        <textarea class="form-control form-control-white" maxlength="150" placeholder="Reply"
+                        <textarea class="form-control form-control-white" maxlength="150" placeholder="{{ __('frontend::static.comment.reply') }}"
                             name="message" rows="1"></textarea>
                         <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                         <button type="submit"

@@ -233,7 +233,7 @@
              },
              dataType: 'json',
              success: function(result) {
-                 $('.select-state').html('<option value="">Select State</option>');
+                 $('.select-state').html('<option value="">{{ __('static.users.select_state') }}</option>');
                  result.states.forEach(function(value) {
                      $(".select-state").append(`<option value="${value.id}">${value.name}</option>`);
                  });

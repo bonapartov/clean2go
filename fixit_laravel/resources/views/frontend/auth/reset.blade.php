@@ -43,7 +43,7 @@
             <div class="form-group mb-3">
                 <div class="position-relative">
                     <i class="iconsax" icon-name="lock-2"></i>
-                    <input class="form-control form-control-white" id="confirm_password" placeholder="Enter your password"
+                    <input class="form-control form-control-white" id="confirm_password" placeholder="{{ __('frontend::auth.enter_your_password') }}"
                         name="confirm_password" type="password">
                 </div>
                 <div class="toggle-password">

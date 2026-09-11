@@ -2,7 +2,7 @@
 
 @php
 
-$lang = Helpers::getLanguageByLocale(Session::get('locale', 'en'));
+$lang = Helpers::getLanguageByLocale(Session::get('locale', app()->getLocale()));
 $themeOptions = Helpers::getThemeOptions();
 
 @endphp

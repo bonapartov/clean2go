@@ -328,7 +328,7 @@
                                     <ul class="nav nav-tabs tab-content-2 custom-nav-tabs mb-3" id="subTab-{{ $category->id }}">
                                         <li class="nav-item">
                                             <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#sub-all-{{ $category->id }}">
-                                                <div class="text-box"><span>ALL</span></div>
+                                                <div class="text-box"><span>ВСЕ</span></div>
                                             </button>
                                         </li>
                                         @foreach ($category->children as $sub)

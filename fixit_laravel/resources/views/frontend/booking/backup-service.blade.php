@@ -89,13 +89,13 @@
                                                             <div class="input-group flatpicker-calender">
                                                                 <input class="form-control form-control-gray datetime-local"
                                                                     id="datetime-local" type="text" readonly="readonly"
-                                                                    placeholder="Select Date">
+                                                                    placeholder="{{ __('frontend::static.bookings.select_date') }}">
                                                                 <i class="iconsax input-icon" icon-name="calendar-1"></i>
                                                             </div>
 
                                                             <div class="input-group flatpicker-calender">
                                                                 <input class="form-control form-control-gray time-local"
-                                                                    id="time-picker" type="time" placeholder="Select time">
+                                                                    id="time-picker" type="time" placeholder="{{ __('frontend::static.bookings.select_time') }}">
                                                                 <i class="iconsax input-icon" icon-name="clock"></i>
                                                             </div>
                                                         </div>
@@ -231,7 +231,7 @@
                                             <li class="d-flex align-items-start booking-list">
                                                 <div class="activity-dot"></div>
                                                 <div class="booking-data">
-                                                    <h3 class="mb-2">Date and Time</h3>
+                                                    <h3 class="mb-2">{{ __('frontend::static.bookings.date_and_time') }}</h3>
                                                     <p class="text-light mb-2">{{__('frontend::static.bookings.take_around')}}</p>
 
                                                     <div class="date-time-picket-sec">
@@ -263,14 +263,14 @@
                                                             <div class="input-group flatpicker-calender">
                                                                 <input class="form-control form-control-gray datetime-local-1"
                                                                     id="datetime-local" type="text" readonly="readonly"
-                                                                    placeholder="Select Date">
+                                                                    placeholder="{{ __('frontend::static.bookings.select_date') }}">
                                                                 <i class="iconsax input-icon" icon-name="calendar-1"></i>
                                                             </div>
                                                             <div class="input-group">
                                                                 <input
                                                                     class="form-control form-control-gray time-picker time-local-1"
                                                                     id="time-picker" type="time"
-                                                                    placeholder="Select time">
+                                                                    placeholder="{{ __('frontend::static.bookings.select_time') }}">
                                                                 <i class="iconsax input-icon" icon-name="clock"></i>
                                                             </div>
                                                         </div>

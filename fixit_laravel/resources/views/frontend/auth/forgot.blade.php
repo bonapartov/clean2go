@@ -28,7 +28,7 @@
             {{ __('frontend::static.account.send_otp') }}<span class="spinner-border spinner-border-sm" style="display: none;"></span>
             </button>
             <div class="not-member">
-                <span>Not Forgot Password</span>
+                <span>Вспомнили пароль?</span>
                 <a href="{{ route('frontend.login.index') }}">{{ __('frontend::auth.sign_in') }}</a>
             </div>
             

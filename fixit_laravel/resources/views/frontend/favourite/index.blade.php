@@ -24,7 +24,7 @@ $activeType = request()->type ?? 'provider';
     <div class="container-fluid-lg">
         <div class="service-list-content">
             <div class="favorite-tab">
-                <h3>Wishlist</h3>
+                <h3>{{ __('frontend::static.wishlist.wishlist') }}</h3>
                 <ul class="nav nav-tabs" id="faviconTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link {{ ($activeType == 'provider') ? 'show active' : '' }}" id="provider-tab" data-bs-toggle="tab" data-bs-target="#provider" type="button" role="tab" aria-controls="provider" aria-selected="true">{{__('frontend::static.wishlist.provider')}}</button>

@@ -220,7 +220,7 @@ $services = $package->services;
                                 </li>
                             </div>
                             <div class="booking-data mt-3">
-                                <h3 class="mb-2">Date and Time</h3>
+                                <h3 class="mb-2">{{ __('frontend::static.bookings.date_and_time') }}</h3>
                                 <div class="date-time-picket-sec">
                                     <div class="select-option">
                                         <div class="form-check mb-0">
@@ -246,7 +246,7 @@ $services = $package->services;
                                                     <div class="modal-body pb-0">
                                                         <div class="row g-3">
                                                             <div class="date-time-slot-box">
-                                                                <input id="datetimepicker" type="date" class="form-control flatpicker-calender" placeholder="Select Date" />
+                                                                <input id="datetimepicker" type="date" class="form-control flatpicker-calender" placeholder="{{ __('frontend::static.bookings.select_date') }}" />
                                                             </div>
                                                             <div class="col-12">
                                                                 <div id="timeSlotsContainer" class="time-slot-main-box"></div>
@@ -268,13 +268,13 @@ $services = $package->services;
                                     <div class="date-time-picker">
                                         <div class="input-group flatpicker-calender">
                                             <input class="form-control form-control-gray date-picker" id="date-picker-{{ $index }}"
-                                                type="date" placeholder="Select Date">
+                                                type="date" placeholder="{{ __('frontend::static.bookings.select_date') }}">
                                             <i class="iconsax input-icon" icon-name="calendar-1"></i>
                                         </div>
 
                                         <div class="input-group">
                                             <input class="form-control form-control-gray time-picker" id="time-picker-{{ $index }}"
-                                                type="time" placeholder="Select time">
+                                                type="time" placeholder="{{ __('frontend::static.bookings.select_time') }}">
                                             <i class="iconsax input-icon" icon-name="clock"></i>
                                         </div>
                                         <input type="hidden" name="service_packages[services][{{ $index }}][date_time]" id="dateTime-{{ $index }}" value="">
@@ -456,7 +456,7 @@ $services = $package->services;
                 container.append(btn);
             });
         } else {
-            container.html('<p class="no-data">No slots available for this day.</p>');
+            container.html('<p class="no-data">{{ __('frontend::static.bookings.no_slots_available') }}</p>');
         }
     });
 

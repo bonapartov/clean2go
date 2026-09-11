@@ -345,7 +345,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                 @csrf
                                 <div class="input-group">
                                     <div class="coupon-input-box">
-                                        <input type="text" id="couponInput" name="coupon" placeholder="Enter code"
+                                        <input type="text" id="couponInput" name="coupon" placeholder="{{ __('frontend::static.cart.use_code') }}"
                                         class="form-control form-control-white text-start text-muted {{($isCouponApplied)? 'pattern-input' : ''}}"
                                         value="{{session('coupon', old('coupon'))}}">
                                     </div>

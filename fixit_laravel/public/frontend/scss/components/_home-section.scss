@@ -317,7 +317,7 @@
                 top: -21px;
                 left: -27px;
                 z-index: -1;
-                width: calc(375px + (513 - 375) * ((100vw - 991px) / (1920 - 991)));
+                width: calc(400px + (555 - 400) * ((100vw - 991px) / (1920 - 991)));
                 height: calc(81px + (108 - 81) * ((100vw - 991px) / (1920 - 991)));
 
                 [dir="rtl"] & {
@@ -326,7 +326,7 @@
                 }
 
                 @media (max-width: 991.98px) {
-                    width: calc(237px + (530 - 237) * ((100vw - 320px) / (1920 - 320)));
+                    width: calc(255px + (570 - 255) * ((100vw - 320px) / (1920 - 320)));
                     height: calc(46px + (90 - 46) * ((100vw - 320px) / (1920 - 320)));
                     top: -12px;
                     left: -23px;

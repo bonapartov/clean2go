@@ -1659,27 +1659,27 @@ class Helpers
         return [
             [
                 'slug' => '/',
-                'name' => 'Home',
+                'name' => __('frontend::static.header.home'),
             ],
             [
                 'slug' => 'category',
-                'name' => 'Categories',
+                'name' => __('frontend::static.header.category'),
             ],
             [
                 'slug' => 'service',
-                'name' => 'Services',
+                'name' => __('frontend::static.header.service'),
             ],
             [
                 'slug' => 'booking',
-                'name' => 'Bookings',
+                'name' => __('frontend::static.header.booking'),
             ],
             [
                 'slug' => 'blog',
-                'name' => 'Blogs',
+                'name' => __('frontend::static.header.blog'),
             ],
             [
                 'slug' => 'provider',
-                'name' => 'Providers',
+                'name' => __('frontend::static.providers.providers'),
             ],
         ];
     }
@@ -1689,46 +1689,45 @@ class Helpers
         return [
             [
                 'slug' => 'privacy-policy',
-                'name' => 'Privacy Policy',
+                'name' => __('frontend::static.privacy.privacy_policy'),
             ],
             [
                 'slug' => 'terms-conditions',
-                'name' => 'Terms & Conditions',
+                'name' => __('frontend::static.terms.terms_conditions'),
             ],
             [
                 'slug' => 'contact-us',
-                'name' => 'Contact Us',
+                'name' => __('frontend::static.contact_us.contact_us'),
             ],
             [
                 'slug' => 'about-us',
-                'name' => 'About Us',
+                'name' => __('frontend::static.about_us.about_us'),
             ],
         ];
     }
 
     public static function getFooterOthersLinks()
     {
-        $language = __('static.accept'); 
         return [
             [
                 'slug' => 'account/profile',
-                'name' => __('static.accept'),
+                'name' => __('frontend::static.account.profile'),
             ],
             [
                 'slug' => 'wishlist',
-                'name' => 'Wishlist',
+                'name' => __('frontend::static.wishlist.wishlist'),
             ],
             [
                 'slug' => 'booking',
-                'name' => 'Bookings',
+                'name' => __('frontend::static.header.booking'),
             ],
             [
                 'slug' => 'providers',
-                'name' => 'Providers',
+                'name' => __('frontend::static.providers.providers'),
             ],
             [
                 'slug' => 'service',
-                'name' => 'Services',
+                'name' => __('frontend::static.header.service'),
             ],
         ];
     }

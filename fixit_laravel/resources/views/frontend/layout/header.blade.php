@@ -193,7 +193,7 @@
                         </div>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <div class="navbar-header d-xl-none d-flex">
-                                <h4>Menu</h4>
+                                <h4>{{ __('frontend::static.account.menu') }}</h4>
                                 <button class="btn-close" type="button"></button>
                             </div>
                             <ul class="navbar-nav mx-auto custom-scroll">

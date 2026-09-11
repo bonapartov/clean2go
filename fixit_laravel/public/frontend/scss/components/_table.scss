@@ -542,7 +542,7 @@
           &.sorting_asc,
           &.sorting_desc {
             &:after {
-              font-family: "DM Sans", serif;
+              font-family: "DM Sans", "Golos Text", sans-serif;
               top: 50%;
               transform: translateY(-50%);
             }
@@ -573,7 +573,7 @@
   }
 
   .dataTables_wrapper {
-    font-family: "DM Sans", serif;
+    font-family: "DM Sans", "Golos Text", sans-serif;
     position: static;
     overflow: auto;
     background-color: white;

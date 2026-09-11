@@ -58,12 +58,12 @@
                                                     <div class="search-div">
                                                         <input type="search" autocomplete="off"
                                                             class="form-control form-control-white"
-                                                            id="accordion_search_bar" placeholder="Search" />
+                                                            id="accordion_search_bar" placeholder="{{ __('frontend::static.bookings.search_here') }}" />
                                                     </div>
                                                     <input type="hidden" name="categories" id="select-category"
                                                         class="form-check-input" value="">
                                                     <p id="no-results-message" class="no-results mt-3"
-                                                        style="display: none;">Category not found</p>
+                                                        style="display: none;">{{ __('frontend::static.bookings.category_not_found') }}</p>
                                                     <div class="category-body">
                                                         <ul class="category-list custom-scroll">
                                                             @forelse($categories as $category)
@@ -115,14 +115,14 @@
                                                 <div class="accordion-body">
                                                     <div class="input-group flatpicker-calender">
                                                         <input class="form-control form-control-white"
-                                                            placeholder="Start date" id="datetime-local" type="text"
+                                                            placeholder="{{ __('frontend::static.bookings.start_date') }}" id="datetime-local" type="text"
                                                             readonly="readonly" name="start_date"
                                                             value="{{ request()->start_date }}">
                                                         <i class="iconsax input-icon" icon-name="calendar-1"></i>
                                                     </div>
                                                     <div class="input-group flatpicker-calender mt-3">
                                                         <input class="form-control form-control-white"
-                                                            placeholder="End date" id="datetime-local" type="text"
+                                                            placeholder="{{ __('frontend::static.bookings.end_date') }}" id="datetime-local" type="text"
                                                             readonly="readonly" name="end_date"
                                                             value="{{ request()->end_date }}">
                                                         <i class="iconsax input-icon" icon-name="calendar-1"></i>
@@ -163,7 +163,7 @@
                         <form class="mb-0">
                             <div class="form-group d-flex align-items-center">
                                 <select class="form-select select-2" id="booking_status"
-                                    data-placeholder="Select Booking Status">
+                                    data-placeholder="{{ __('frontend::static.bookings.select_booking_status') }}">
                                     <option></option>
                                     @foreach ($bookingStatus as $status)
                                         <option value="{{ $status?->slug }}"
@@ -289,7 +289,7 @@
                                                                                     </div>
                                                                                     <div class="modal-footer">
                                                                                         <button type="submit"
-                                                                                            class="btn btn-solid">Submit</button>
+                                                                                            class="btn btn-solid">{{ __('frontend::static.bookings.submit') }}</button>
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
@@ -1315,7 +1315,7 @@
                                                     @endif
                                                     @if (count($serviceman->expertise))
                                                         <div>
-                                                            <p class="mt-3 mb-2">Expertise in</p>
+                                                            <p class="mt-3 mb-2">{{ __('frontend::static.bookings.expertise_in') }}</p>
                                                             <ul class="expert">
                                                                 @foreach ($serviceman?->expertise as $expertise)
                                                                     <li>{{ $expertise?->title }}</li>

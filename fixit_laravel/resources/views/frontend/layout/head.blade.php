@@ -48,21 +48,3 @@
 @stack('css')
 
 @vite(['public/frontend/scss/style.scss'])
-
-<style>
-    :root {
-        --bs-body-font-family: "DM Sans", "Golos Text", sans-serif;
-        --bs-font-sans-serif: "DM Sans", "Golos Text", sans-serif;
-        --bs-btn-font-family: "DM Sans", "Golos Text", sans-serif;
-    }
-    body, p, h1, h2, h3, h4, h5, h6, a, span,
-    input, textarea, select, button, label, li,
-    .form-control, .form-select, .btn, .badge,
-    .nav-link, .dropdown-item,
-    .select2-selection, .select2-search__field, .select2-results__option {
-        font-family: "DM Sans", "Golos Text", sans-serif !important;
-    }
-    ::placeholder { font-family: "DM Sans", "Golos Text", sans-serif !important; }
-    ::-webkit-input-placeholder { font-family: "DM Sans", "Golos Text", sans-serif !important; }
-    ::-moz-placeholder { font-family: "DM Sans", "Golos Text", sans-serif !important; }
-</style>

@@ -120,7 +120,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content section-bg">
             <div class="modal-header">
-                <h3 class="modal-title fs-5">Terms and Conditions</h3>
+                <h3 class="modal-title fs-5">{{ __('frontend::static.terms.terms_conditions') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body custom-scroll">

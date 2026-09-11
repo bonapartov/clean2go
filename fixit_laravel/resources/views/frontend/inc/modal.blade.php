@@ -221,7 +221,7 @@
                             <div class="information">
                                 @if ($serviceman->knownLanguages?->toArray())
                                 <div>
-                                    <p class="mt-3 mb-2">Known languages</p>
+                                    <p class="mt-3 mb-2">{{ __('frontend::static.modal.known_language') }}</p>
                                     @php
                                     $knownLanguages = $serviceman->knownLanguages;
                                     @endphp
@@ -295,7 +295,7 @@
                     <div class="list">
                         <img src="${item.find('img').attr('src')}" alt="feature" class="img-45">
                         <div>
-                            <p>Servicemen</p>
+                            <p>{{ __('frontend::static.bookings.servicemen') }}</p>
                             <ul>
                                 <li><h5>${item.find('.detail').text()}</h5></li>
                                 <li>

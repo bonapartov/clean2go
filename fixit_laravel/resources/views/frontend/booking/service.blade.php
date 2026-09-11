@@ -206,12 +206,12 @@
                                                             </div>
                                                             <div class="date-time-picker">
                                                                 <div class="input-group flatpicker-calender">
-                                                                    <input class="form-control form-control-gray datetime-local" id="datetime-local" type="text" readonly="readonly" placeholder="Select Date">
+                                                                    <input class="form-control form-control-gray datetime-local" id="datetime-local" type="text" readonly="readonly" placeholder="{{ __('frontend::static.bookings.select_date') }}">
                                                                     <i class="iconsax input-icon" icon-name="calendar-1"></i>
                                                                 </div>
 
                                                                 <div class="input-group flatpicker-calender">
-                                                                    <input class="form-control form-control-gray time-local" id="time-picker" type="time" placeholder="Select time">
+                                                                    <input class="form-control form-control-gray time-local" id="time-picker" type="time" placeholder="{{ __('frontend::static.bookings.select_time') }}">
                                                                     <i class="iconsax input-icon" icon-name="clock"></i>
                                                                 </div>
                                                             </div>
@@ -364,7 +364,7 @@
                                             <li class="d-flex align-items-start booking-list">
                                                 <div class="activity-dot"></div>
                                                 <div class="booking-data">
-                                                    <h3 class="mb-2">Date and Time</h3>
+                                                    <h3 class="mb-2">{{ __('frontend::static.bookings.date_and_time') }}</h3>
                                                     <p class="text-light mb-2">{{ __('frontend::static.bookings.take_around') }}</p>
 
                                                     @if($isScheduledService)
@@ -401,11 +401,11 @@
 
                                                             <div class="date-time-picker">
                                                                 <div class="input-group flatpicker-calender">
-                                                                    <input class="form-control form-control-gray datetime-local datetime-local-1" id="datetime-local" type="text" readonly="readonly" placeholder="Select Date">
+                                                                    <input class="form-control form-control-gray datetime-local datetime-local-1" id="datetime-local" type="text" readonly="readonly" placeholder="{{ __('frontend::static.bookings.select_date') }}">
                                                                     <i class="iconsax input-icon" icon-name="calendar-1"></i>
                                                                 </div>
                                                                 <div class="input-group">
-                                                                    <input class="form-control form-control-gray time-picker time-local-1" id="time-picker" type="time" placeholder="Select time">
+                                                                    <input class="form-control form-control-gray time-picker time-local-1" id="time-picker" type="time" placeholder="{{ __('frontend::static.bookings.select_time') }}">
                                                                     <i class="iconsax input-icon" icon-name="clock"></i>
                                                                 </div>
                                                             </div>
@@ -775,7 +775,7 @@
                 <div class="modal-body pb-0">
                     <div class="row g-3">
                         <div class="date-time-slot-box">
-                            <input id="datetimepicker" type="date" class="form-control flatpicker-calender" placeholder="Select Date" />
+                            <input id="datetimepicker" type="date" class="form-control flatpicker-calender" placeholder="{{ __('frontend::static.bookings.select_date') }}" />
                         </div>
                         <div class="col-12">
                             <div id="timeSlotsContainer" class="time-slot-main-box"></div>
@@ -819,7 +819,7 @@
                     dateFormat: "d-m-Y",
                     minDate: "today",
                     maxDate: maxDate,
-                    placeholder: "Select Date",
+                    placeholder: "{{ __('frontend::static.bookings.select_date') }}",
                     disableMobile: true,
                 });
 
@@ -828,7 +828,7 @@
                     noCalendar: true,
                     dateFormat: "H:i",
                     minTime: getMinTime(),
-                   placeholder: "Select Time",
+                   placeholder: "{{ __('frontend::static.bookings.select_time') }}",
                     disableMobile: true,
                 });
                 
@@ -837,7 +837,7 @@
                     dateFormat: "Y-m-d",
                     minDate: new Date(),
                     maxDate: maxDate,
-                    placeholder: "Select Date",
+                    placeholder: "{{ __('frontend::static.bookings.select_date') }}",
                     disableMobile: true,
                 });
             });
@@ -862,7 +862,7 @@
                     container.appendChild(btn);
                 });
             } else {
-                container.innerHTML = '<p class="no-data">No slots available for this day.</p>';
+                container.innerHTML = '<p class="no-data">{{ __('frontend::static.bookings.no_slots_available') }}</p>';
             }
             
             });

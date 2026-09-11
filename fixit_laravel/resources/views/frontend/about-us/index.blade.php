@@ -187,7 +187,7 @@
         <div class="title dark-title">
             <h2>{{ $themeOptions['about_us']['provider_title'] }}</h2>
             <a class="view-all" href="{{ route('frontend.provider.index') }}" target="_blank">
-                View all
+                {{ __('frontend::static.about_us.view_all') }}
                 <i class="iconsax" icon-name="arrow-right"></i>
             </a>
         </div>

@@ -555,7 +555,7 @@
                                         @endif
                                         <div class="overflow-hidden b-r-5">
                                             <a href="{{ route('frontend.service.details', $service?->slug) }}" class="card-img">
-                                                <span class="ribbon">Trending</span>
+                                                <span class="ribbon">{{ __('frontend::static.home_page.trending') }}</span>
                                                 <img src="{{ $service?->web_img_thumb_url }}" alt="{{ $service?->title }}" class="img-fluid lozad">
                                             </a>
                                         </div>
@@ -1076,7 +1076,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Custom job Request</h5>
+                        <h3 class="modal-title">{{ __('frontend::static.home_page.custom_job_request') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <form action="{{ route('frontend.custom-job.store') }}" method="POST" class="job-request-form" id="customJobForm" enctype="multipart/form-data">
@@ -1096,7 +1096,7 @@
                                         <label for="payment" class="form-check-label">{{ __('frontend::static.home_page.images') }}</label>
                                         <div class="position-relative">
                                             <i class="iconsax" icon-name="import-2"></i>
-                                            <input type="file" class="form-control form-control-white" name="images[]" multiple id="images[]" placeholder="Click to upload">
+                                            <input type="file" class="form-control form-control-white" name="images[]" multiple id="images[]" placeholder="{{ __('frontend::static.home_page.choose_files') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -1269,7 +1269,7 @@
                                 // Show "no results" message
                                 const noResultDiv = document.createElement('div');
                                 noResultDiv.className = 'autocomplete-item no-result';
-                                noResultDiv.innerHTML = `<h5>No result found</h5>`;
+                                noResultDiv.innerHTML = `<h5>{{ __('frontend::static.home_page.services_not_found') }}</h5>`;
                                 resultsContainer.append(noResultDiv).show();
                             }
                         });

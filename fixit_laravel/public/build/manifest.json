@@ -44,7 +44,7 @@
     "src": "public/admin/images/svg/warning.svg"
   },
   "public/admin/scss/admin.scss": {
-    "file": "assets/admin-812f5800.css",
+    "file": "assets/admin-db59de4d.css",
     "isEntry": true,
     "src": "public/admin/scss/admin.scss"
   },
@@ -129,7 +129,7 @@
     "src": "public/frontend/images/svg/warning.svg"
   },
   "public/frontend/scss/style.scss": {
-    "file": "assets/style-bce9ca5d.css",
+    "file": "assets/style-95bb2f2a.css",
     "isEntry": true,
     "src": "public/frontend/scss/style.scss"
   },

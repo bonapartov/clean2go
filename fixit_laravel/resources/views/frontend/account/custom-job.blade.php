@@ -29,7 +29,7 @@
                                          <h3> {{ __('frontend::static.account.custom_jobs') }}</h3>
                                     </div>
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#jobRequestModal"
-                                        class="btn btn-solid w-auto d-inline">Request New Job</button>
+                                        class="btn btn-solid w-auto d-inline">{{ __('frontend::static.account.request_new_job') }}</button>
                                 </div>
 
                                 <div class="card-body">
@@ -97,7 +97,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Custom Job Details</h5>
+                            <h3 class="modal-title">Детали заказа</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         @php
@@ -118,7 +118,7 @@
                             <div class="account-details-box">
                                 {{-- <img src="{{ asset('frontend/images/account-bg.svg') }}" alt=""> --}}
                                 <svg class="bg-color"><use xlink:href="{{ asset('frontend/images/account-bg.svg#accountBg') }}"></use></svg>
-                                    <h4>Amount</h4>
+                                    <h4>{{ __('frontend::static.home_page.price') }}</h4>
                                     @if (Helpers::getDefaultCurrency()->symbol_position === SymbolPositionEnum::LEFT)    
                                         <h3>{{ Helpers::getDefaultCurrencySymbol() }}{{ number_format($serviceRequest?->initial_price, 2) }}</h3>
                                     @else
@@ -131,7 +131,7 @@
                                     <div class="listing-box">
                                         <i class="iconsax icon" icon-name="clock"> </i>
                                         <div>
-                                            <h6 class="title-color listing-title">Time</h6>
+                                            <h6 class="title-color listing-title">{{ __('frontend::static.bookings.time') }}</h6>
                                             <h5>{{ $serviceRequest?->duration }} {{ $serviceRequest?->duration_unit }}</h5>
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                                     <div class="listing-box">
                                         <i class="iconsax icon" icon-name="layers-1"> </i>
                                         <div>
-                                            <h6 class="title-color listing-title">Category</h6>
+                                            <h6 class="title-color listing-title">{{ __('frontend::static.bookings.category') }}</h6>
                                             @php
 
                                                 $categories = Category::whereIn('id', $serviceRequest?->category_ids)
@@ -158,15 +158,15 @@
                                     <div class="listing-box">
                                         <i class="iconsax icon" icon-name="tag-user"> </i>
                                         <div>
-                                            <h6 class="title-color listing-title">Required Servicemen</h6>
-                                            <h5>{{ $serviceRequest?->required_servicemen }} Servicemen</h5>
+                                            <h6 class="title-color listing-title">{{ __('frontend::static.home_page.required_servicemen') }}</h6>
+                                            <h5>{{ $serviceRequest?->required_servicemen }} {{ __('frontend::static.bookings.servicemen') }}</h5>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
 
                             <div class="custom-job-title">
-                                <h3 class="description-title">Description</h3>
+                                <h3 class="description-title">{{ __('frontend::static.blogs.description') }}</h3>
                                 <p class="description-content">{{ $serviceRequest?->description }} </p>
                             </div>
 
@@ -205,9 +205,9 @@
                                             @if ($bid->status == BidStatusEnum::REQUESTED)
                                                 <div class="button-part">
                                                     <button type="submit" name="status" value="rejected"
-                                                        class="btn btn-outline job-btn">Reject</button>
+                                                        class="btn btn-outline job-btn">{{ __('frontend::static.home_page.reject') }}</button>
                                                     <button type="submit" name="status" value="accepted"
-                                                        class="btn btn-solid job-btn">Accept</button>
+                                                        class="btn btn-solid job-btn">{{ __('frontend::static.home_page.accept') }}</button>
                                                 </div>
                                             @else
                                                 <div class="job-title">
@@ -258,7 +258,7 @@
                                     <div class="position-relative">
                                         <i class="iconsax" icon-name="import-2"></i>
                                         <input type="file" class="form-control form-control-white" name="images[]"
-                                            multiple id="images[]" placeholder="Click to upload">
+                                            multiple id="images[]" placeholder="{{ __('frontend::static.home_page.choose_files') }}">
                                     </div>
                                 </div>
                             </div>
