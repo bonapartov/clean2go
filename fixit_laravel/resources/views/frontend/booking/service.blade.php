@@ -802,6 +802,8 @@
 
     <!-- Flat-picker js -->
     <script src="{{ asset('frontend/js/flat-pickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('frontend/js/flat-pickr/l10n/ru.js') }}"></script>
+    <script>flatpickr.localize(flatpickr.l10ns.ru);</script>
     {{-- <script src="{{ asset('frontend/js/flat-pickr/custom-flatpickr.js') }}"></script> --}}
     <script>
             const maxBookingDays = {{ Helpers::getsettings()['default_creation_limits']['max_booking_days'] ?? 30 }};
