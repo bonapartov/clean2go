@@ -25,7 +25,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                     <div class="cart-header">
                         <h3 class="mb-0 f-w-600">{{__('frontend::static.cart.added_items_details')}}</h3>
                         @if(count($cartItems ?? []))
-                        <span>{{ count($cartItems ?? []) }} {{__('frontend::static.cart.items_in_cart')}}</span>
+                        <span>{{ count($cartItems ?? []) }} {{trans_choice('frontend::static.cart.items_in_cart', count($cartItems ?? []))}}</span>
                         @endif
                     </div> 
                     <div class="cart-body">
@@ -68,7 +68,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                             <div class="rate">
                                                 <img src="{{ asset('frontend/images/svg/star.svg') }}" alt="star"
                                                     class="img-fluid star">
-                                                <small>{{ $provider?->review_ratings ?? 'Unrated' }}</small>
+                                                <small>{{ $provider?->review_ratings ?? __('frontend::static.bookings.unrated') }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                                     <div class="rate">
                                                                         <img src="{{ asset('frontend/images/svg/star.svg') }}"
                                                                             alt="star" class="img-fluid star">
-                                                                        <small>{{ $serviceman?->review_ratings ?? 'Unrated' }}</small>
+                                                                        <small>{{ $serviceman?->review_ratings ?? __('frontend::static.bookings.unrated') }}</small>
                                                                     </div>
                                                                 </li>
                                                             </ul>
@@ -255,7 +255,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                             <div class="rate">
                                                 <img src="{{ asset('frontend/images/svg/star.svg') }}" alt="star"
                                                     class="img-fluid star">
-                                                <small>{{ $servicePackage?->user?->review_ratings ?? 'Unrated' }}</small>
+                                                <small>{{ $servicePackage?->user?->review_ratings ?? __('frontend::static.bookings.unrated') }}</small>
                                             </div>
                                         </div>
                                     </div>

@@ -473,7 +473,7 @@ return [
         'use_code' => 'User Code',
         'my_cart' => 'My Cart',
         'added_items_details' => 'Added Items details',
-        'items_in_cart' => 'Items in cart',
+        'items_in_cart' => 'item in cart|items in cart',
         'off' => 'Off',
         'date_time' => 'Date & time',
         'selected_servicemen' => 'Selected Servicemen',
