@@ -185,6 +185,18 @@
                                                     id="selectManuallyBtn" class="btn btn-solid manually-location-btn"
                                                     data-bs-toggle="modal">
                                                     {{ __('frontend::static.location.select_manually') }} </button>
+                                                @auth
+                                                    @php
+                                                        $headerSavedAddresses = auth()->user()->addresses()?->get();
+                                                    @endphp
+                                                    @if ($headerSavedAddresses && $headerSavedAddresses->count())
+                                                        <span class="or-text">{{ __('frontend::static.location.or') }}</span>
+                                                        <button type="button" data-bs-target="#selectSavedAddressModal"
+                                                            id="selectSavedAddressBtn" class="btn btn-outline manually-location-btn"
+                                                            data-bs-toggle="modal">
+                                                            {{ __('frontend::static.location.select_from_addresses') }} </button>
+                                                    @endif
+                                                @endauth
                                             </div>
                                         </div>
                                     </div>
@@ -458,6 +470,34 @@
     </div>
 </div>
 <!-- location detected modal end -->
+
+@auth
+<!-- select saved address modal start -->
+<div class="modal fade location-detected-modal" id="selectSavedAddressModal" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">{{ __('frontend::static.location.my_addresses') }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="saved-address-list" class="location-list">
+                    @foreach (auth()->user()->addresses()?->get() ?? [] as $savedHeaderAddress)
+                        <li class="location" data-address-id="{{ $savedHeaderAddress->id }}">
+                            <div>
+                                <h5>{{ $savedHeaderAddress->label ?? $savedHeaderAddress->alternative_name ?? $savedHeaderAddress->type }}</h5>
+                                <h6>{{ $savedHeaderAddress->address }}</h6>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- select saved address modal end -->
+@endauth
 
 <!-- Iconsax js -->
 <script src="{{ asset('frontend/js/iconsax/iconsax.js') }}"></script>

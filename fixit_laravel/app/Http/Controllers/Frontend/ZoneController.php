@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Zone;
+use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Integration\GoogleMap;
@@ -88,11 +89,39 @@ class ZoneController extends Controller
         return response()->json(['error' => $response]);
     }
 
-    public function setZone($lat, $lng, $address = null)
+    public function setZone($lat, $lng, $address = null, $source = 'manual')
     {
         session(['location' => $address]);
         $zoneIds = $this->getZoneIds($lat, $lng);
         session(['zoneIds' => $zoneIds]);
+
+        // Only a guest's own manual address search is a candidate to offer as
+        // their first saved address at registration (GPS is where they are
+        // standing, not necessarily where they want deliveries).
+        if ($source === 'manual' && !auth()->check()) {
+            session(['guest_manual_address' => [
+                'address' => $address,
+                'latitude' => $lat,
+                'longitude' => $lng,
+            ]]);
+        } elseif ($source !== 'manual' || auth()->check()) {
+            session()->forget('guest_manual_address');
+        }
+
         return $zoneIds;
+    }
+
+    public function setZoneFromAddress(Request $request, $address)
+    {
+        $address = Address::where('user_id', auth()->id())->findOrFail($address);
+
+        if (!$address->latitude || !$address->longitude) {
+            return response()->json(['error' => __('frontend::static.location.address_missing_coordinates')], 422);
+        }
+
+        $zoneIds = $this->setZone($address->latitude, $address->longitude, $address->address, 'saved');
+        session(['selected_address_id' => $address->id]);
+
+        return response()->json(['status' => 'OK', 'zoneIds' => $zoneIds]);
     }
 }

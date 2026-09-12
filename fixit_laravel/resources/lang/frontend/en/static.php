@@ -14,7 +14,11 @@ return [
         'title' => 'We Need Your Location to Enhance Your Experience.',
         'use_current_location' => 'Use Current Location',
         'or' => 'OR',
-        'select_manually' => 'Select Manually'
+        'select_manually' => 'Select Manually',
+        'select_from_addresses' => 'Choose from My Addresses',
+        'my_addresses' => 'My Addresses',
+        'address_missing_coordinates' => 'This address has no coordinates, please edit it first.',
+        'confirm_save_searched_address' => 'Would you like to save the address you searched for as your first saved address?',
     ],
     'address' => [
         'saved_successfully' => 'Address saved successfully',

@@ -14,7 +14,11 @@ return [
         'title' => 'Нам нужна ваша геолокация, чтобы улучшить сервис.',
         'use_current_location' => 'Использовать текущее местоположение',
         'or' => 'ИЛИ',
-        'select_manually' => 'Выбрать вручную'
+        'select_manually' => 'Выбрать вручную',
+        'select_from_addresses' => 'Выбрать из моих адресов',
+        'my_addresses' => 'Мои адреса',
+        'address_missing_coordinates' => 'У этого адреса не указаны координаты, сначала отредактируйте его.',
+        'confirm_save_searched_address' => 'Сохранить адрес, который вы искали, как ваш первый адрес?',
     ],
     'address' => [
         'saved_successfully' => 'Адрес успешно сохранён',

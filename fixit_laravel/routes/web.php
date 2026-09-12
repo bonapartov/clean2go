@@ -178,6 +178,7 @@ Route::group(['middleware' => [ 'route.access', 'localization', 'maintenance'], 
         Route::post('account/wallet/top-up', 'AccountController@walletTopUp')->name('wallet.topUp');
         Route::get('account/address', 'AccountController@address')->name('account.address');
         Route::delete('account/address/{id}', 'AddressController@destroy')->name('account.address.delete');
+        Route::post('zone/set-from-address/{address}', 'ZoneController@setZoneFromAddress')->name('zone.setFromAddress');
         Route::get('account/password', 'AccountController@password')->name('account.password');
         Route::post('notifications/mark-as-read', 'AccountController@markAsRead')->name('notifications.markAsRead');
         Route::post('notifications/web/mark-as-read', 'AccountController@webMarkAsRead')->name('notifications.webMarkAsRead');

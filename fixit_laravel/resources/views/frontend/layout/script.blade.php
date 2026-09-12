@@ -314,4 +314,28 @@
              }
          });
      });
+
+     // Select a saved address to set the zone
+     $('#saved-address-list').on('click', '.location', function() {
+         const addressId = $(this).data('address-id');
+         const label = $(this).find('h5').text();
+         $.ajax({
+             url: "{{ url('zone/set-from-address') }}/" + addressId,
+             method: 'POST',
+             data: {
+                 _token: '{{ csrf_token() }}'
+             },
+             success: function(data) {
+                 if (data.status === "OK") {
+                     $('#location').html(`<i class="iconsax" icon-name="location"></i><span>${label}</span>`);
+                     location.reload();
+                 } else {
+                     toastr.error(data.error || "Unable to set zone from this address.");
+                 }
+             },
+             error: function(xhr) {
+                 toastr.error(xhr.responseJSON?.error || "Unable to set zone from this address.");
+             }
+         });
+     });
  </script>
