@@ -370,6 +370,7 @@ return [
         'add_new_location' => 'Добавить новый адрес',
         'address' => 'Адрес:',
         'select_this' => 'Выбрать',
+        'selected' => 'Выбрано',
         'address_not_found' => 'Адреса не найдены',
         'save' => 'сохранить',
         'custom_date_time' => 'Другая дата и время',

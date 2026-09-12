@@ -44,7 +44,9 @@
         <div class="address-bottom-box">
           <div class="action">
             <input class="radio address-select" type="radio" value="{{ $serviceAddress['id'] ?? null }}" name="{{$name ?? 'address_id'}}">
-            <button type="button" type="button" class="btn select-btn btn-outline">{{__('frontend::static.bookings.select_this')}}</button>
+            <button type="button" class="btn select-btn btn-outline"
+                data-select-text="{{__('frontend::static.bookings.select_this')}}"
+                data-selected-text="{{__('frontend::static.bookings.selected')}}">{{__('frontend::static.bookings.select_this')}}</button>
           </div>
         </div>
     </div>

@@ -370,6 +370,7 @@ return [
         'add_new_location' => 'Add New Location',
         'address' => 'Address:',
         'select_this' => 'Select this',
+        'selected' => 'Selected',
         'address_not_found' => 'Addresses not found',
         'save' => 'save',
         'custom_date_time' => 'Custom date & time',

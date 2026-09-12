@@ -119,25 +119,32 @@ $(".filter-close").click(function () {
 });
 
 // select radio button
+function selectBtnText(btn, selected) {
+    if (selected) {
+        return btn.getAttribute('data-selected-text') || "Selected";
+    }
+    return btn.getAttribute('data-select-text') || "Select this";
+}
+
 document.querySelectorAll(".action .radio").forEach(function (radio) {
     radio.addEventListener("change", function () {
         var btns = document.querySelectorAll('.action .btn');
         btns.forEach(function (btn) {
             if (btn !== this.nextElementSibling) {
-                btn.textContent = "Select this";
+                btn.textContent = selectBtnText(btn, false);
             }
         }, this);
 
         if (this.checked) {
-            this.nextElementSibling.textContent = "Selected";
+            this.nextElementSibling.textContent = selectBtnText(this.nextElementSibling, true);
         } else {
-            this.nextElementSibling.textContent = "Select this";
+            this.nextElementSibling.textContent = selectBtnText(this.nextElementSibling, false);
         }
     });
     if (radio.checked) {
-        radio.nextElementSibling.textContent = "Selected";
+        radio.nextElementSibling.textContent = selectBtnText(radio.nextElementSibling, true);
     } else {
-        radio.nextElementSibling.textContent = "Select this";
+        radio.nextElementSibling.textContent = selectBtnText(radio.nextElementSibling, false);
     }
 });
 
