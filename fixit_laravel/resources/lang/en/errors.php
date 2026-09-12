@@ -17,6 +17,7 @@ return  [
     'turn_on_wallet_feature' => 'Wallet feature currently disabled. Turn it on in Settings > Activation.',
     'turn_on_additional_services' => 'Additional Service feature currently disabled. Turn it on in Settings > Activation.',
     'invalid_address_id' => 'Invalid address id',
+    'address_outside_provider_zone' => 'This provider does not serve the selected address. Please choose a different address or provider.',
     'invalid_booking_status' => 'Invalid booking status provided.',
     'booking_cannot_be_accepted' => 'The booking cannot be accepted in its current status.',
     'assign_servicemen_first' => 'Please assign servicemen before changing the booking status.',

@@ -552,6 +552,9 @@ class BookingRepository extends BaseRepository
             $settings = Helpers::getSettings();
             if (isset($request['date_time']) || isset($request['address_id'])) {
                 if ($booking->booking_status_id === Helpers::getbookingStatusId(BookingEnum::PENDING)) {
+                    if (isset($request['address_id'])) {
+                        $this->assertAddressWithinProviderZone($booking->provider_id, $request['address_id']);
+                    }
                     $date_time = $this->dateTimeFormater($request['date_time'] ?? null);
                     $booking->update([
                         'date_time' => $date_time ?? $booking->date_time,

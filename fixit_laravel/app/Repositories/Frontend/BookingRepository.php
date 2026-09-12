@@ -93,6 +93,7 @@ class BookingRepository extends BaseRepository
       
       if ($booking->booking_status_id === Helpers::getbookingStatusId(BookingEnum::PENDING)) {
         if (isset($request['address_id'])) {
+          $this->assertAddressWithinProviderZone($booking->provider_id, $request['address_id']);
           $booking->address_id = $request['address_id'] ?? $booking->address_id;
           $booking->save();
         }

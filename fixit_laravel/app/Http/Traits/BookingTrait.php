@@ -10,15 +10,19 @@ use App\Events\CreateBookingEvent;
 use App\Events\UpdateBookingStatusEvent;
 use App\Exceptions\ExceptionHandler;
 use App\Helpers\Helpers;
+use App\Models\Address;
 use App\Models\Booking;
 use App\Models\BookingReasonLog;
 use App\Models\BookingStatusLog;
 use App\Models\Service;
+use App\Models\User;
 use App\Models\VideoConsultation;
+use App\Models\Zone;
 use Carbon\Carbon;
 use Exception;
 use Jubaer\Zoom\Facades\Zoom;
 use Illuminate\Support\Str;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 
 trait BookingTrait
 {
@@ -34,11 +38,53 @@ trait BookingTrait
         return $booking_number;
     }
 
+    /**
+     * Guard against the provider being assigned an address outside the
+     * zone(s) they actually serve (a provider with no configured zones is
+     * treated as unrestricted, matching pre-existing behavior).
+     */
+    protected function assertAddressWithinProviderZone($providerId, $addressId): void
+    {
+        if (!$providerId || !$addressId) {
+            return;
+        }
+
+        $provider = User::find($providerId);
+        if (!$provider || $provider->zones()->doesntExist()) {
+            return;
+        }
+
+        $address = Address::find($addressId);
+        if (!$address || !$address->latitude || !$address->longitude) {
+            return;
+        }
+
+        $addressZoneIds = Zone::whereContains('place_points', new Point($address->latitude, $address->longitude))->pluck('id');
+
+        if ($provider->zones()->whereIn('zones.id', $addressZoneIds)->doesntExist()) {
+            throw new ExceptionHandler(__('errors.address_outside_provider_zone'), 422);
+        }
+    }
+
+    protected function assertBookingItemsWithinProviderZones($items): void
+    {
+        foreach ($items['services'] ?? [] as $service) {
+            $this->assertAddressWithinProviderZone($service['provider_id'] ?? null, $service['address_id'] ?? null);
+        }
+
+        foreach ($items['services_package'] ?? [] as $package) {
+            foreach ($package['services'] ?? [] as $service) {
+                $this->assertAddressWithinProviderZone($service['provider_id'] ?? null, $service['address_id'] ?? null);
+            }
+        }
+    }
+
     public function placeBooking($request)
     {
         try {
             $items = $this->calculate($request);
-            
+            $this->assertBookingItemsWithinProviderZones($items);
+
             // Check if any service is a scheduled booking
             $hasScheduledBooking = false;
             if (isset($items['services']) && is_array($items['services'])) {
