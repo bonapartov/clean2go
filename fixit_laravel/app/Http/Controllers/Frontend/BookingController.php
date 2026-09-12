@@ -47,6 +47,7 @@ class BookingController extends Controller
     public function service()
     {
         $servicemen = [];
+        $providerTimeSlot = null;
         $cartItem = session('cart', []);
         if (isset($cartItem['select_serviceman'])) {
             if ($cartItem['select_serviceman'] == 'as_per_my_choice') {
