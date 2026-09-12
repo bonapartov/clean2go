@@ -59,6 +59,9 @@ $savedAddresses = auth()?->user()?->addresses;
                                                 </div>
                                             </div>
                                             <div class="address">
+                                                @if ($savedAddress?->label)
+                                                <p class="mb-1"><strong>{{ $savedAddress?->label }}</strong></p>
+                                                @endif
                                                 <label>{{ __('frontend::static.account.addresses') }} :</label>
                                                 <p>{{ $savedAddress?->address }}
                                                     ,{{ $savedAddress?->state?->name }} -

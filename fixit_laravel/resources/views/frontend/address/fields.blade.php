@@ -1,5 +1,5 @@
-@use('app\Helpers\Helpers')
-@use('app\Models\State')
+@use('App\Helpers\Helpers')
+@use('App\Models\State')
 @php
     $countries = Helpers::getCountries();
     $countryCodes = Helpers::getCountryCodes();
@@ -32,6 +32,22 @@
                         @isset($address->type){{ $address->type == 'Other' ? 'checked' : '' }}@endisset>
                     <label class="form-check-label mb-0 cursor-pointer" for="other">{{ __('static.other') }} <span class="check-box"></span></label>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="category-list-box">
+            <label class="label-title" for="label">{{ __('static.address.label') }}</label>
+            <div class="w-100">
+                <input class='form-control' type="text" name="label" id="label"
+                    value="{{ $address->label ?? old('label') }}"
+                    placeholder="{{ __('static.address.enter_label') }}">
+                @error('label')
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
     </div>
@@ -87,31 +103,16 @@
             </div>
         </div>
     </div>
-    <input type="hidden" name="lat" id="lat"
-        value="{{ isset($address->lat) ? $address->lat : old('lat') }}">
-    <input type="hidden" name="lng" id="lng"
-        value="{{ isset($address->lng) ? $address->lng : old('lng') }}">
-
-    <div class="col-12">
-        <div class="category-list-box">
-            <label class="label-title" for="address">{{ __('static.address.address') }}</label>
-            <div class="w-100">
-                <textarea class="form-control ui-widget autocomplete-yandex" placeholder="{{ __('static.address.enter_address') }}"
-                    rows="4" id="address" name="address" cols="50">{{ $address->address ?? old('address') }}</textarea>
-                @error('address')
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-        </div>
-    </div>
+    <input type="hidden" name="latitude" id="lat"
+        value="{{ isset($address->latitude) ? $address->latitude : old('latitude') }}">
+    <input type="hidden" name="longitude" id="lng"
+        value="{{ isset($address->longitude) ? $address->longitude : old('longitude') }}">
 
     <div class="col-12">
         <div class="category-list-box">
             <label class="label-title" for="street_address_1">{{ __('static.address.street_address') }}</label>
             <div class="w-100">
-                <input class='form-control' type="text" name="street_address" id="street_address_1"
+                <input class='form-control ui-widget autocomplete-yandex' type="text" name="street_address" id="street_address_1"
                     value="{{ $address->street_address ?? old('street_address') }}"
                     placeholder="{{ __('static.address.enter_street_address') }}">
                 @error('street_address')
@@ -127,16 +128,22 @@
         <div class="category-list-box">
             <label class="label-title" for="country_id">{{ __('static.users.country') }}</label>
             <div class="w-100 error-div select-dropdown">
-                <select class="select-2 form-control select-country" id="country_id" name="country_id"
-                    data-placeholder="{{ __('static.users.select_country') }}">
-                    <option class="select-placeholder" value=""></option>
-                    @forelse ($countries as $key => $option)
-                        <option class="option" value={{ $key }}
-                            @if (old('country_id', $address->country_id ?? '') == $key) selected @endif> {{ $option }}</option>
-                    @empty
-                        <option value="" disabled></option>
-                    @endforelse
-                </select>
+                @if ($countries->count() <= 1)
+                    <input type="text" class="form-control" value="{{ $countries->first() }}" disabled readonly>
+                    <input type="hidden" class="select-country" name="country_id" id="country_id"
+                        value="{{ old('country_id', $address->country_id ?? $countries->keys()->first()) }}">
+                @else
+                    <select class="select-2 form-control select-country" id="country_id" name="country_id"
+                        data-placeholder="{{ __('static.users.select_country') }}">
+                        <option class="select-placeholder" value=""></option>
+                        @forelse ($countries as $key => $option)
+                            <option class="option" value={{ $key }}
+                                @if (old('country_id', $address->country_id ?? '') == $key) selected @endif> {{ $option }}</option>
+                        @empty
+                            <option value="" disabled></option>
+                        @endforelse
+                    </select>
+                @endif
                 @error('country_id')
                     <span class="invalid-feedback d-block" role="alert">
                         <strong>{{ $message }}</strong>
@@ -234,12 +241,6 @@
                 $('.select-2').each(function() {
                     $(this).select2({
                         dropdownParent: $(this).closest('.modal').length ? $(this).closest('.modal') : document.body
-                    });
-                });
-
-                $('.modal').on('shown.bs.modal', function() {
-                    $(this).find('.select-2').select2({
-                        dropdownParent: $(this)
                     });
                 });
 

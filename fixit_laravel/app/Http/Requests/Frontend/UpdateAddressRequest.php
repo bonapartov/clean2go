@@ -26,7 +26,10 @@ class UpdateAddressRequest extends FormRequest
             'state_id' => 'required|exists:states,id',
             'city' => 'required|string',
             'postal_code' => 'required|string',
-            'address' => 'required',
+            'street_address' => 'required|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'label' => 'nullable|string|max:255',
         ];
     }
 }

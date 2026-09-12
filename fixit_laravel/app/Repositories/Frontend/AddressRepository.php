@@ -38,6 +38,7 @@ class AddressRepository extends BaseRepository
                 $address['type'] = $request?->address_type;
                 $address['country'] = $this->getCountryById($request->country_id);
                 $address['state'] = $this->getStateById($request->state_id);
+                $address['address'] = $this->buildFullAddress($request->street_address, $request->city, $request->state_id);
                 $addresses[] = $address;
                 session(['addresses' => $addresses]);
             }
@@ -61,6 +62,18 @@ class AddressRepository extends BaseRepository
         return State::where('id', $state_id)?->first()?->toArray();
     }
 
+    /**
+     * There is no separate free-text "address" field in the form anymore, so
+     * it is derived from street+house and city. State/postal code/country
+     * are deliberately left out — every place that displays `address`
+     * (account address list, booking address picker) already appends them
+     * separately, so including them here would duplicate them on screen.
+     */
+    public function buildFullAddress($streetAddress, $city, $stateId = null)
+    {
+        return implode(', ', array_filter([$streetAddress, $city]));
+    }
+
     public function addressPayload($request)
     {
         return [
@@ -71,10 +84,13 @@ class AddressRepository extends BaseRepository
             'state_id' => $request->state_id,
             'city' => $request->city,
             'code' => $request->code,
-            'address' => $request->address,
+            'address' => $this->buildFullAddress($request->street_address, $request->city, $request->state_id),
             'street_address' => $request->street_address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'alternative_name' => $request->alternative_name,
             'alternative_phone' => $request->alternative_phone,
+            'label' => $request->label,
             'is_primary' => $request->is_primary ?? 0,
         ];
     }
@@ -99,8 +115,11 @@ class AddressRepository extends BaseRepository
                 'country_id' => $request['country_id'],
                 'state_id' => $request['state_id'],
                 'city' => $request['city'],
-                'address' => $request['address'],
+                'address' => $this->buildFullAddress($request['street_address'], $request['city'], $request['state_id']),
                 'street_address' => $request['street_address'],
+                'latitude' => $request['latitude'] ?? $address?->latitude,
+                'longitude' => $request['longitude'] ?? $address?->longitude,
+                'label' => $request['label'] ?? null,
                 'is_primary' => $request['is_primary'] ?? $address?->is_primary,
             ]);
 
