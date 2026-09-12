@@ -1740,6 +1740,10 @@ class Helpers
 
     public static function getServicemenByProviderId($provider_id)
     {
+        if (!$provider_id) {
+            return collect();
+        }
+
         return User::where('provider_id', $provider_id)?->whereNull('deleted_at')?->get();
     }
 
