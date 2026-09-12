@@ -31,5 +31,9 @@ class CountriesSeeder extends Seeder
                 'flag' => ((isset($country['flag'])) ? $country['flag'] : null),
             ]);
         }
+
+        // The package only ships an English name; this product only serves
+        // Russia, so give it the name users actually see in the UI.
+        DB::table('countries')->where('iso_3166_2', 'RU')->update(['name' => 'Российская Федерация']);
     }
 }
