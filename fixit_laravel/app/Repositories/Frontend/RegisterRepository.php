@@ -56,7 +56,16 @@ class RegisterRepository extends BaseRepository
                 $this->applyReferralCode($request->referral_code, $user, 'user');
             }
             DB::commit();
+
+            $guestManualAddress = session('guest_manual_address');
+            session()->forget('guest_manual_address');
+
             Auth::login($user);
+
+            if ($guestManualAddress) {
+                return to_route('frontend.account.address')->with('prefill_address', $guestManualAddress);
+            }
+
             return to_route('frontend.home');
 
         } catch (Exception $e) {

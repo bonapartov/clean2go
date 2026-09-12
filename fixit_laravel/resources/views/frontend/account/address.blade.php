@@ -162,6 +162,25 @@ $savedAddresses = auth()?->user()?->addresses;
     </div>
 </div>
 
+@if (session('prefill_address'))
+    @push('js')
+        <script>
+            (function($) {
+                "use strict";
+                $(document).ready(function() {
+                    var prefill = @json(session('prefill_address'));
+                    $('#locationModal #address').val(prefill.address || '');
+                    $('#locationModal #lat').val(prefill.latitude || '');
+                    $('#locationModal #lng').val(prefill.longitude || '');
+                    $('#locationModal #label').attr('placeholder', "{{ __('static.address.enter_label') }}").focus();
+                    toastr.info("{{ __('frontend::static.location.confirm_save_searched_address') }}");
+                    $('#locationModal').modal('show');
+                });
+            })(jQuery);
+        </script>
+    @endpush
+@endif
+
 @foreach($savedAddresses as $savedAddress)
 <!-- Delete Address modal -->
 <div class="modal fade delete-modal" id="deleteaddressModel-{{ $savedAddress?->id }}">

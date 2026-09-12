@@ -37,7 +37,7 @@ class ZoneController extends Controller
 
             if ($response->successful() && isset($response['results'][0])) {
                 $address = $response['results'][0]['formatted_address'] ?? null;
-                $this->setZone($lat, $lng, $address);
+                $this->setZone($lat, $lng, $address, 'gps');
                 return response()->json(json_decode($response));
             }
 
@@ -81,7 +81,7 @@ class ZoneController extends Controller
                 $address = $response['result']['formatted_address'];
                 $lng = $response['result']['geometry']['location']['lng'];
                 $lat = $response['result']['geometry']['location']['lat'];
-                $zoneIds = $this->setZone($lat, $lng, $address);
+                $zoneIds = $this->setZone($lat, $lng, $address, 'manual');
                 return response()->json(['status' => 'OK', 'zoneIds'=> $zoneIds]);
             }
         }
