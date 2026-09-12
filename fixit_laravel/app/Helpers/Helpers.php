@@ -225,7 +225,7 @@ class Helpers
 
     public static function getCountries()
     {
-        return Country::pluck('name', 'id');
+        return Country::where('iso_3166_2', 'RU')->pluck('name', 'id');
     }
 
     public static function getCountryCodes()
