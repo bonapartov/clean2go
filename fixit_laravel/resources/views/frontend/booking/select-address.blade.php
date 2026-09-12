@@ -11,7 +11,7 @@
 
 <div class="row g-sm-4 g-3 position-relative">
   @php
-    $addresses = auth()?->user()?->addresses()?->with('country:id,name','state:id,name')?->get()->toArray() ?? session('addresses', []);
+    $addresses = auth()?->user()?->addresses()?->with('country:id,name','state:id,name')?->get()?->each->makeVisible('label')?->toArray() ?? session('addresses', []);
   @endphp
   @forelse ($addresses as $serviceAddress)
   <div class="col-xl-6 col-lg-12 col-md-6">
@@ -24,7 +24,7 @@
               </svg>
             </div>
             <div class="name">
-              <h4>{{ $serviceAddress['alternative_name'] ?? auth()?->user()?->name }}</h4>
+              <h4>{{ $serviceAddress['label'] ?? $serviceAddress['alternative_name'] ?? auth()?->user()?->name }}</h4>
               <span>({{ $serviceAddress['code'] ?? auth()?->user()?->code }}) {{ $serviceAddress['alternative_phone'] ?? auth()?->user()?->phone }}</span>
             </div>
           </div>

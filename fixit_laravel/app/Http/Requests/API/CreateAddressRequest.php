@@ -32,6 +32,7 @@ class CreateAddressRequest extends FormRequest
             'postal_code' => ['required'],
             'alternative_phone' => ['required_if:role_type,service'],
             'alternative_name' => ['required_if:role_type,service'],
+            'label' => ['nullable', 'string', 'max:255'],
         ];
 
         return $rules;

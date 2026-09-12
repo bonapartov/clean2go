@@ -74,6 +74,7 @@ class AddressRepository extends BaseRepository
                         'address' => $request->address,
                         'area' => $request->area,
                         'availability_radius' => $request->availability_radius,
+                        'label' => $request->label,
                         'is_primary' => $request->is_primary,
                     ]);
 
@@ -94,6 +95,7 @@ class AddressRepository extends BaseRepository
                         'availability_radius' => $request->availability_radius,
                         'alternative_name' => $request->alternative_name,
                         'alternative_phone' => $request->alternative_phone,
+                        'label' => $request->label,
                         'is_primary' => $request->is_primary,
                     ]);
                 }
@@ -102,7 +104,7 @@ class AddressRepository extends BaseRepository
 
                 return response()->json([
                     'message' => __('static.address.create_successfully'),
-                    'address' => $address,
+                    'address' => $address->makeVisible('label'),
                 ]);
             }
 
@@ -133,7 +135,7 @@ class AddressRepository extends BaseRepository
 
             return response()->json([
                 'message' => __('static.address.update_successfully'),
-                'address' => $address,
+                'address' => $address->makeVisible('label'),
             ]);
 
         } catch (Exception $e) {

@@ -133,6 +133,7 @@ class UserSelfResource extends JsonResource
                     'type' => $this?->primary_address?->type,
                     'alternative_name' => $this?->primary_address?->alternative_name,
                     'alternative_phone' => $this?->primary_address?->alternative_phone,
+                    'label' => $this?->primary_address?->label,
                     'country' => [
                         'id' => $this?->primary_address?->country?->id,
                         'name' => $this?->primary_address?->country?->name,

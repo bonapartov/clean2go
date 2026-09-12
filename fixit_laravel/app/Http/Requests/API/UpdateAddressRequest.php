@@ -36,6 +36,7 @@ class UpdateAddressRequest extends FormRequest
             'type' => ['required', 'string'],
             'alternative_phone' => ['required_if:role_type,service'],
             'alternative_name' => ['required_if:role_type,service'],
+            'label' => ['nullable', 'string', 'max:255'],
         ];
     }
 

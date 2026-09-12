@@ -27,6 +27,7 @@ class Address extends Model
         'is_primary',
         'type',
         'alternative_name',
+        'label',
         'alternative_phone',
         'code',
         'availability_radius',
@@ -45,7 +46,8 @@ class Address extends Model
     protected $hidden = [
         'deleted_at',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'label',
     ];
 
     // protected $with = [

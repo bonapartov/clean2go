@@ -30,6 +30,7 @@ class AddressController extends Controller
         $address = $this->model->where('user_id', auth()->user()->id);
         $paginate = $request->input('paginate', $address->count());
         $addresses = $address->latest('created_at')->simplePaginate($paginate);
+        $addresses->getCollection()->transform(fn ($item) => $item->makeVisible('label'));
 
         return response()->json(['success' => true, 'data' => $addresses]);
     }
