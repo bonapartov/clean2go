@@ -25,7 +25,7 @@ class UpdateAddressRequest extends FormRequest
             'country_id' => 'required|exists:countries,id',
             'state_id' => 'required|exists:states,id',
             'city' => 'required|string',
-            'postal_code' => 'required|string',
+            'postal_code' => 'nullable|string',
             'street_address' => 'required|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
