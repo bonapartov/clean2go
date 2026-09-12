@@ -54,14 +54,14 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                 
                                 @if($media)
                                     <img src="{{ $media->getUrl() }}"
-                                        alt="{{ $provider->name }}" class="img-45">
+                                        alt="{{ $provider?->name }}" class="img-45">
                                 @else
                                     <div class="avatar-placeholder img-45">
-                                        {{ strtoupper(substr($provider?->name, 0, 1)) }}
+                                        {{ strtoupper(substr($provider?->name ?? '?', 0, 1)) }}
                                     </div>
                                 @endif
                                         <div>
-                                            <a href="{{route('frontend.provider.details', $provider->slug)}}"
+                                            <a href="{{route('frontend.provider.details', $provider?->slug)}}"
                                                 target="_blank">
                                                 <p class="mb-1">{{ $provider?->name }}</p>
                                             </a>
