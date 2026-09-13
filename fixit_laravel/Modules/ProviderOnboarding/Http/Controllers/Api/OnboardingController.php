@@ -2,6 +2,7 @@
 
 namespace Modules\ProviderOnboarding\Http\Controllers\Api;
 
+use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -46,11 +47,18 @@ class OnboardingController extends Controller
             return response()->json($result, 422);
         }
 
-        // Для физлиц и самозанятых сразу проверяем НПД
+        // Для физлиц, самозанятых и ИП (реальная связка ЕГРИП не отличает обычного ИП
+        // от ИП, совмещающего НПД — это отдельный реестр ФНС) сразу проверяем НПД.
         $npdStatus = $result['npd_status'] ?? null;
-        if (in_array($result['taxpayer_type'], ['self_employed', 'ip_on_npd']) && $npdStatus === null) {
+        if (in_array($result['taxpayer_type'], ['self_employed', 'ip_on_npd', 'individual_entrepreneur'], true) && $npdStatus === null) {
             $npd = $this->npdService->check($inn);
             $npdStatus = $npd['status'];
+
+            // ИП из ЕГРИП, у которого статус НПД активен (или ожидает подтверждения) —
+            // это именно "ИП на НПД", а не обычный ИП на другой системе налогообложения.
+            if ($result['taxpayer_type'] === 'individual_entrepreneur' && in_array($npdStatus, ['active', 'pending'], true)) {
+                $result['taxpayer_type'] = 'ip_on_npd';
+            }
         }
 
         $okveds = $result['okveds'] ?? null;
@@ -120,7 +128,7 @@ class OnboardingController extends Controller
 
         $poaPath = null;
         if ($request->hasFile('power_of_attorney')) {
-            $poaPath = $request->file('power_of_attorney')->store("ooo_docs/{$user->id}", 'local');
+            $poaPath = $request->file('power_of_attorney')->store("ooo_docs/{$user->id}", 'onboarding_private');
         }
 
         $verification->update([
@@ -163,8 +171,8 @@ class OnboardingController extends Controller
         $user = $request->user();
         $verification = ProviderVerification::where('user_id', $user->id)->firstOrFail();
 
-        $photoPath  = $request->file('photo')->store("passports/{$user->id}", 'local');
-        $selfiePath = $request->file('selfie')->store("passports/{$user->id}", 'local');
+        $photoPath  = $request->file('photo')->store("passports/{$user->id}", 'onboarding_private');
+        $selfiePath = $request->file('selfie')->store("passports/{$user->id}", 'onboarding_private');
 
         $verification->update([
             'passport_series'      => $request->input('series'),
@@ -220,10 +228,10 @@ class OnboardingController extends Controller
         $verification = ProviderVerification::where('user_id', $userId)->firstOrFail();
         $path = $type === 'photo' ? $verification->passport_photo_path : $verification->passport_selfie_path;
 
-        abort_unless($path && Storage::disk('local')->exists($path), 404);
+        abort_unless($path && Storage::disk('onboarding_private')->exists($path), 404);
 
-        return response(Storage::disk('local')->get($path), 200, [
-            'Content-Type' => Storage::disk('local')->mimeType($path),
+        return response(Storage::disk('onboarding_private')->get($path), 200, [
+            'Content-Type' => Storage::disk('onboarding_private')->mimeType($path),
         ]);
     }
 
@@ -232,6 +240,13 @@ class OnboardingController extends Controller
     {
         $user = $request->user();
         $verification = ProviderVerification::where('user_id', $user->id)->firstOrFail();
+
+        if (!$verification->canProceedToContract()) {
+            return response()->json([
+                'error' => 'not_eligible',
+                'message' => $verification->contractBlockReason(),
+            ], 422);
+        }
 
         ['path' => $path, 'version' => $version] = $this->contractService->generate($verification);
 
@@ -275,7 +290,7 @@ class OnboardingController extends Controller
         ]);
 
         $phone = $user->phone ?? $user->mobile;
-        \App\SMS\SMS::send($phone, "Код подтверждения договора: {$code}. Никому не сообщайте.");
+        Helpers::sendSMS($phone, "Код подтверждения договора: {$code}. Никому не сообщайте.");
 
         OnboardingLog::record($user->id, 'contract', 'sms_sent', [], $request->ip());
 
@@ -289,6 +304,13 @@ class OnboardingController extends Controller
 
         $user = $request->user();
         $verification = ProviderVerification::where('user_id', $user->id)->firstOrFail();
+
+        if (!$verification->canProceedToContract()) {
+            return response()->json([
+                'error' => 'not_eligible',
+                'message' => $verification->contractBlockReason(),
+            ], 422);
+        }
 
         if (!$verification->contract_sms_code || !$verification->contract_sms_sent_at) {
             return response()->json(['error' => 'no_sms_sent', 'message' => 'Сначала запросите SMS с кодом.'], 422);

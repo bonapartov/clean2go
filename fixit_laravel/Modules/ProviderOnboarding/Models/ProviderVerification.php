@@ -65,4 +65,34 @@ class ProviderVerification extends Model
     {
         return $this->belongsTo(User::class, 'reviewed_by');
     }
+
+    /**
+     * Можно ли генерировать/подписывать договор: паспорт должен быть подтверждён,
+     * а заявка не должна ждать ручной проверки (например, документов ООО) или быть отклонённой.
+     */
+    public function canProceedToContract(): bool
+    {
+        return $this->passport_status === 'verified'
+            && !in_array($this->onboarding_status, ['pending_manual', 'rejected'], true);
+    }
+
+    /**
+     * Человекочитаемая причина, почему подписание договора пока недоступно.
+     */
+    public function contractBlockReason(): ?string
+    {
+        if ($this->onboarding_status === 'rejected') {
+            return 'Заявка отклонена. Обратитесь в поддержку.';
+        }
+
+        if ($this->onboarding_status === 'pending_manual') {
+            return 'Документы ещё на ручной проверке у менеджера.';
+        }
+
+        if ($this->passport_status !== 'verified') {
+            return 'Паспорт ещё не подтверждён.';
+        }
+
+        return null;
+    }
 }

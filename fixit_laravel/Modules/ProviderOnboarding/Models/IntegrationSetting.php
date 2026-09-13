@@ -15,11 +15,23 @@ class IntegrationSetting extends Model
     public static function get(string $key, ?string $default = null): ?string
     {
         $setting = self::where('key', $key)->first();
-        if (!$setting) return $default;
-        $value = $setting->type === 'password'
-            ? decrypt($setting->value)
-            : $setting->value;
-        return $value ?? $default;
+        if (!$setting || $setting->value === null) {
+            return $default;
+        }
+
+        if ($setting->type !== 'password') {
+            return $setting->value ?? $default;
+        }
+
+        try {
+            return decrypt($setting->value) ?? $default;
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('IntegrationSetting: failed to decrypt value', [
+                'key' => $key,
+                'error' => $e->getMessage(),
+            ]);
+            return $default;
+        }
     }
 
     public static function set(string $key, string $value, ?int $updatedBy = null): void

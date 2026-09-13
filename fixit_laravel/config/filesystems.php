@@ -56,6 +56,15 @@ return [
  'driver' => 'local',
  'root' => storage_path('app/backup'),
  ],
+
+        // Паспорта, селфи и доверенности ООО из онбординга исполнителей — персональные
+        // данные (ФЗ-152), не должны быть доступны напрямую через веб-сервер, в отличие
+        // от диска 'local' выше (root: public_path()). Отдаются только через
+        // OnboardingController::servePassportFile() по подписанной ссылке с TTL.
+        'onboarding_private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/onboarding'),
+        ],
     ],
 
     /*

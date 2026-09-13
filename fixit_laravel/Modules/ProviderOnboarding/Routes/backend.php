@@ -20,4 +20,9 @@ Route::prefix('backend')
             ->name('backend.verifications.reject');
         Route::post('verifications/{id}/request-docs', 'Backend\VerificationController@requestDocs')
             ->name('backend.verifications.request-docs');
+
+        Route::post('verifications/{id}/passport/approve', 'Backend\VerificationController@approvePassport')
+            ->name('backend.verifications.passport.approve');
+        Route::post('verifications/{id}/passport/reject', 'Backend\VerificationController@rejectPassport')
+            ->name('backend.verifications.passport.reject');
     });

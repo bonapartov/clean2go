@@ -17,12 +17,16 @@ class PurgePassportFiles extends Command
         $days = (int) $this->option('days');
         $cutoff = now()->subDays($days);
 
-        $verifications = ProviderVerification::where('passport_status', 'approved')
+        // 'passport_status' раньше в этой команде сверялся с 'approved' — такого значения
+        // нет в ENUM (успешный статус называется 'verified'), поэтому запрос никогда не
+        // находил ни одной записи и требование ФЗ-152 об удалении файлов по истечении
+        // срока хранения фактически не выполнялось.
+        $verifications = ProviderVerification::where('passport_status', 'verified')
             ->where('passport_verified_at', '<=', $cutoff)
             ->whereNotNull('passport_photo_path')
             ->orWhere(function ($q) use ($cutoff) {
                 $q->whereNotNull('passport_selfie_path')
-                  ->where('passport_status', 'approved')
+                  ->where('passport_status', 'verified')
                   ->where('passport_verified_at', '<=', $cutoff);
             })
             ->get();
@@ -31,8 +35,8 @@ class PurgePassportFiles extends Command
 
         foreach ($verifications as $v) {
             foreach (['passport_photo_path', 'passport_selfie_path'] as $field) {
-                if ($v->$field && Storage::disk('local')->exists($v->$field)) {
-                    Storage::disk('local')->delete($v->$field);
+                if ($v->$field && Storage::disk('onboarding_private')->exists($v->$field)) {
+                    Storage::disk('onboarding_private')->delete($v->$field);
                     $deleted++;
                 }
             }

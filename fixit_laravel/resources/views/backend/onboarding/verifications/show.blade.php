@@ -65,10 +65,36 @@
                                 @endswitch
                             </dd>
                         </dl>
-                        @if($verification->passport_photo_path)
-                            <div class="mt-2">
-                                <a href="{{ URL::signedRoute('onboarding.file', ['path' => $verification->passport_photo_path], now()->addMinutes(15)) }}"
+                        <div class="mt-2 d-flex gap-2 flex-wrap">
+                            @if($verification->passport_photo_path)
+                                <a href="{{ URL::signedRoute('api.onboarding.passport.file', ['userId' => $verification->user_id, 'type' => 'photo'], now()->addMinutes(15)) }}"
                                    target="_blank" class="btn btn-sm btn-outline-secondary">Фото паспорта</a>
+                            @endif
+                            @if($verification->passport_selfie_path)
+                                <a href="{{ URL::signedRoute('api.onboarding.passport.file', ['userId' => $verification->user_id, 'type' => 'selfie'], now()->addMinutes(15)) }}"
+                                   target="_blank" class="btn btn-sm btn-outline-secondary">Селфи</a>
+                            @endif
+                        </div>
+
+                        @if(in_array($verification->passport_status, ['pending', 'manual_review']))
+                            <div class="mt-3 d-flex gap-2 flex-wrap">
+                                <form method="POST" action="{{ route('backend.verifications.passport.approve', $verification->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success"
+                                            onclick="return confirm('Подтвердить паспорт?')">Подтвердить паспорт</button>
+                                </form>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="collapse"
+                                        data-bs-target="#rejectPassportForm">Отклонить паспорт</button>
+                            </div>
+                            <div class="collapse mt-2" id="rejectPassportForm">
+                                <form method="POST" action="{{ route('backend.verifications.passport.reject', $verification->id) }}">
+                                    @csrf
+                                    <div class="mb-2">
+                                        <label class="form-label">Причина отказа</label>
+                                        <textarea name="reason" class="form-control" rows="2" required minlength="10"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger btn-sm">Подтвердить отказ</button>
+                                </form>
                             </div>
                         @endif
                     </div>

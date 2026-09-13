@@ -18,7 +18,6 @@ class NotifyAdminOnManualReview
             return;
         }
 
-        $provider = $event->user->load('providerVerification')->providerVerification;
         $adminEmails = User::role(RoleEnum::ADMIN)->pluck('email')->toArray();
 
         $subject = "Требуется ручная проверка паспорта — {$event->user->name}";
