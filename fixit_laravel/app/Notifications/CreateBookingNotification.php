@@ -35,7 +35,7 @@ class CreateBookingNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -62,7 +62,7 @@ class CreateBookingNotification extends Notification implements ShouldQueue
                 ->subject("The booking #{$this->booking->booking_id} has been placed")
                 ->line('A booking has been placed successfully.')
                 ->line('Booking Payment Status: '.$this->booking->payment_status)
-                ->line('Booking Status: '.$this->booking->booking_status->name)
+                ->line('Booking Status: '.$this->booking->booking_status?->name)
                 ->line('Your prompt attention is requested.');
         }
     
@@ -73,7 +73,7 @@ class CreateBookingNotification extends Notification implements ShouldQueue
         $data = [
             '{{booking_id}}' => $this->booking->booking_id,
             '{{payment_status}}' => $this->booking->payment_status,
-            '{{booking_status}}' => $this->booking->booking_status->name,
+            '{{booking_status}}' => $this->booking->booking_status?->name,
             '{{company_name}}' => config('app.name'),
         ];
     
@@ -97,7 +97,7 @@ class CreateBookingNotification extends Notification implements ShouldQueue
             ->subject("New booking #{$this->booking->booking_number} from Your Services")
             ->line('Congratulations! A new booking has been received from your Services.')
             ->line('booking Payment Status: '.$this->booking->payment_status)
-            ->line('booking Status: '.$this->booking->booking_status->name)
+            ->line('booking Status: '.$this->booking->booking_status?->name)
             ->line('Thank you for partnering with us!')
             ->line('If you have any questions, please contact us.');
         }
@@ -109,7 +109,7 @@ class CreateBookingNotification extends Notification implements ShouldQueue
             '{{provider_name}}' => $notifiable->name, 
             '{{booking_number}}' => $this->booking->booking_number,
             '{{payment_status}}' => $this->booking->payment_status,
-            '{{booking_status}}' => $this->booking->booking_status->name,
+            '{{booking_status}}' => $this->booking->booking_status?->name,
             '{{company_name}}' => config('app.name'),
         ];
         
@@ -134,7 +134,7 @@ class CreateBookingNotification extends Notification implements ShouldQueue
                 ->greeting("Hello {$this->booking->consumer->name},")
                 ->line("We're excited to confirm your booking #{$this->booking->booking_number}.")
                 ->line("Booking Payment Status: {$this->booking->payment_status}")
-                ->line("Booking Status: {$this->booking->booking_status->name}")
+                ->line("Booking Status: {$this->booking->booking_status?->name}")
                 ->line('Thank you for choosing us for your service needs.');
         }
 
@@ -146,7 +146,7 @@ class CreateBookingNotification extends Notification implements ShouldQueue
             '{{booking_number}}' => $this->booking->booking_number,
             '{{consumer_name}}' => $this->booking->consumer->name,
             '{{payment_status}}' => $this->booking->payment_status,
-            '{{booking_status}}' => $this->booking->booking_status->name,
+            '{{booking_status}}' => $this->booking->booking_status?->name,
             '{{company_name}}' => config('app.name'),
         ];
 

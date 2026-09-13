@@ -49,7 +49,7 @@ class CreateBookingListener
             }
 
         } catch (Exception $e) {
-
+            \Log::error('CreateBookingListener failed: '.$e->getMessage(), ['booking_id' => $event->booking->id ?? null]);
         }
     }
 

@@ -691,7 +691,7 @@
                                                         <ul class="date">
                                                             <li class="d-flex align-items-center gap-1">
                                                                 <i class="iconsax" icon-name="calendar-1"></i>
-                                                                <span>{{ \Carbon\Carbon::parse($serviceItem['date_time'])?->format('j F, Y') }}</span>
+                                                                <span>{{ \Carbon\Carbon::parse($serviceItem['date_time'])?->translatedFormat('j F, Y') }}</span>
                                                             </li>
                                                             <li class="d-flex align-items-center gap-1">
                                                                 <i class="iconsax" icon-name="clock"></i>

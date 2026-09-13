@@ -118,7 +118,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                         @if(isset($serviceBooking['schedule_start_date']) && isset($serviceBooking['schedule_end_date']))
                                                             <li class="d-flex align-items-center gap-1">
                                                                 <i class="iconsax" icon-name="calendar-1"></i>
-                                                                <span>{{ \Carbon\Carbon::parse($serviceBooking['schedule_start_date'])->format('j F, Y') }} - {{ \Carbon\Carbon::parse($serviceBooking['schedule_end_date'])->format('j F, Y') }}</span>
+                                                                <span>{{ \Carbon\Carbon::parse($serviceBooking['schedule_start_date'])->translatedFormat('j F, Y') }} - {{ \Carbon\Carbon::parse($serviceBooking['schedule_end_date'])->translatedFormat('j F, Y') }}</span>
                                                             </li>
                                                         @endif
                                                         @if(isset($serviceBooking['schedule_time']))
@@ -142,7 +142,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                         @if(isset($serviceBooking['date_time']))
                                                             <li class="d-flex align-items-center gap-1">
                                                                 <i class="iconsax" icon-name="calendar-1"></i>
-                                                                <span>{{ \Carbon\Carbon::parse($serviceBooking['date_time'])->format('j F, Y') }}</span>
+                                                                <span>{{ \Carbon\Carbon::parse($serviceBooking['date_time'])->translatedFormat('j F, Y') }}</span>
                                                             </li>
                                                             <li class="d-flex align-items-center gap-1">
                                                                 <i class="iconsax" icon-name="clock"></i>
@@ -619,7 +619,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                         </div>
                         <div class="circle"></div>
                         <div class="coupon-footer">
-                            <p>{{__('frontend::static.cart.valid_till')}}<span>{{ \Carbon\Carbon::parse($coupon?->end_date)->format('j F, Y') }}</span>
+                            <p>{{__('frontend::static.cart.valid_till')}}<span>{{ \Carbon\Carbon::parse($coupon?->end_date)->translatedFormat('j F, Y') }}</span>
                             </p>
                             <!-- Add data-coupon to the 'Use Code' button -->
                             <a href="javascript:void(0)" id="useCode" class="use-code"

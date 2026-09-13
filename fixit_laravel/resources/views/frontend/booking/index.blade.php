@@ -243,7 +243,7 @@
                                                         @endif --}}
                                                             </div>
                                                             <span
-                                                                class="value">{{ \Carbon\Carbon::parse($booking?->date_time)->format('j F, Y - g:i a') }}</span>
+                                                                class="value">{{ \Carbon\Carbon::parse($booking?->date_time)->translatedFormat('j F, Y - g:i a') }}</span>
                                                         </li>
                                                         @if ($booking?->service?->type != ServiceTypeEnum::REMOTELY)
                                                             <li>
@@ -550,7 +550,7 @@
                                                     <span>{{ __('frontend::static.bookings.date_time') }}</span>
                                                 </div>
                                                 <span
-                                                    class="value">{{ \Carbon\Carbon::parse($booking?->date_time)->format('j F, Y - g:i a') }}</span>
+                                                    class="value">{{ \Carbon\Carbon::parse($booking?->date_time)->translatedFormat('j F, Y - g:i a') }}</span>
                                             </li>
                                             <li>
                                                 <div class="label">
