@@ -166,7 +166,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                 </li>
                                             </ul>
                                             <div class="dashed-border mt-3"></div>
-                                            @if($serviceBooking['select_serviceman'] = 'as_per_my_choice')
+                                            @if($serviceBooking['select_serviceman'] == 'as_per_my_choice')
                                             @if(!empty($serviceBooking['serviceman_id']))
                                             @php
                                             $servicemenIds = explode(',', $serviceBooking['serviceman_id']);
@@ -176,7 +176,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                 @forelse($servicemen as $serviceman)
                                                 <div class="servicemen-list-item">
                                                     <div class="list">
-                                                        <img src="{{ $serviceman?->media->first()->getUrl() }}"
+                                                        <img src="{{ $serviceman?->media->first()?->getUrl() }}"
                                                             alt="feature" class="img-45">
                                                         <div>
                                                             <p>{{__('frontend::static.cart.servicemen')}}</p>
@@ -202,7 +202,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                 @endforelse
                                             </div>
                                             @endif
-                                            @elseif($serviceBooking['select_serviceman'] = 'app_choose')
+                                            @elseif($serviceBooking['select_serviceman'] == 'app_choose')
                                             <div class="note m-0">
                                                 <p class="mt-1">
                                                     {{__('frontend::static.cart.app_choose_note')}}

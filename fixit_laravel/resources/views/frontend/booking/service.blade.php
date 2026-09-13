@@ -492,7 +492,7 @@
                                                                 <span>{{ $symbol }}{{ $perAmount }}</span>
                                                             </li>
                                                             <li>
-                                                                <p>{{ $maxSelected }}{{ __('frontend::static.bookings.servicemen') }}({{ $symbol }} {{ $perAmount }}.00*{{ $maxSelected }})</p>
+                                                                <p>{{ $maxSelected }} {{ __('frontend::static.bookings.servicemen') }} ({{ $symbol }} {{ $perAmount }}*{{ $maxSelected }})</p>
                                                                 <span id="servicemenTotalDisplay">{{ $symbol }} {{ $total }}</span>
                                                             </li>
                                                             @if($isScheduledService)
@@ -502,7 +502,7 @@
                                                             </li>
                                                             @endif
                                                             <li>
-                                                                <p>{{ isset($cartItem['additional_services']) ? $additionalCount : 0 }}{{ __('frontend::static.bookings.add_ons') }}</p>
+                                                                <p>{{ isset($cartItem['additional_services']) ? $additionalCount : 0 }} {{ __('frontend::static.bookings.add_ons') }}</p>
                                                                 <span id="addonsTotalDisplay">{{ $symbol }}{{ isset($cartItem['additional_services']) ? number_format($additionalTotal, 2) : '0.00' }}</span>
                                                             </li>
                                                              {{-- ✅ Individual Add-on Details with Unit Price * Qty = Total --}}

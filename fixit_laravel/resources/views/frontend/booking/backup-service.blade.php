@@ -388,7 +388,7 @@
                                 <div class="cart-item">
                                     <div class="cart-heading">
                                         <div class="cart-title">
-                                            <img src="{{ $provider?->media->first()->getUrl() }}" alt="{{ $provider?->name }}" class="img-45">
+                                            <img src="{{ $provider?->media->first()?->getUrl() }}" alt="{{ $provider?->name }}" class="img-45">
                                             <div>
                                                 <p class="mb-1">{{ $provider?->name }}</p>
                                                 <div class="rate">
