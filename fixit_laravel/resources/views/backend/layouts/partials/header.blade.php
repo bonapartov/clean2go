@@ -246,7 +246,7 @@
                         <img class="align-self-center profile-image pull-right img-fluid rounded-circle blur-up lazyloaded"
                             src="{{ Auth::user()->getFirstMediaUrl('image') }}" alt="header-user">
                     @else
-                        <div class="initial-letter">{{ substr(Auth::user()->name, 0, 1) }}</div>
+                        <div class="initial-letter">{{ mb_substr(Auth::user()->name, 0, 1) }}</div>
                     @endif
                     <span class="d-md-flex d-none">{{ Auth::user()->name }}</span>
                 </a>

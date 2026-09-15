@@ -29,7 +29,7 @@
             @if ($imageUrl)
                 <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}" class="img-fluid">
             @else
-                <div class="initial-letter">{{ strtoupper(substr($user->name, 0, 1)) }}
+                <div class="initial-letter">{{ mb_strtoupper(mb_substr($user->name, 0, 1)) }}
                 </div>
             @endif
         </div>

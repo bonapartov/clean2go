@@ -9,7 +9,7 @@
                 @if(Helpers::isFileExistsFromURL($profileImg))
                 <img src="{{ Helpers::isFileExistsFromURL($profileImg, true) }}" alt="feature" class="img-fluid">
                 @else
-                <span class="profile-name initial-letter">{{ substr($comment?->user?->name, 0, 1) }}</span>
+                <span class="profile-name initial-letter">{{ mb_substr($comment?->user?->name, 0, 1) }}</span>
                 @endif
             </div>
             <div class="review-auth-name">

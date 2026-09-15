@@ -57,7 +57,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                         alt="{{ $provider?->name }}" class="img-45">
                                 @else
                                     <div class="avatar-placeholder img-45">
-                                        {{ strtoupper(substr($provider?->name ?? '?', 0, 1)) }}
+                                        {{ mb_strtoupper(mb_substr($provider?->name ?? '?', 0, 1)) }}
                                     </div>
                                 @endif
                                         <div>

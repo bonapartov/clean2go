@@ -40,7 +40,7 @@
                                                     $media = $provider->getFirstMedia('image');
                                                     $imageUrl = $media
                                                         ? $media->getUrl()
-                                                        : strtoupper(substr($provider?->name, 0, 1));
+                                                        : mb_strtoupper(mb_substr($provider?->name, 0, 1));
                                                 @endphp
                                                 <option value="{{ $provider->id }}" sub-title="{{ $provider->email }}"
                                                     image="{{ $imageUrl }}">
@@ -61,7 +61,7 @@
                                                     $media = $user->getFirstMedia('image');
                                                     $imageUrl = $media
                                                         ? $media->getUrl()
-                                                        : strtoupper(substr($user?->name, 0, 1));
+                                                        : mb_strtoupper(mb_substr($user?->name, 0, 1));
                                                 @endphp
                                                 <option value="{{ $user->id }}" sub-title="{{ $user->email }}"
                                                     image="{{ $imageUrl }}">

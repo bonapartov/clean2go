@@ -34,7 +34,7 @@ foreach ([BookingEnum::PENDING => 'box', BookingEnum::ON_GOING => 'calendar',
                         @if ($user?->getFirstMediaUrl('image'))
                             <img class="img-fluid" src="{{ $user?->getFirstMediaUrl('image') }}" alt="header-user">
                         @else
-                            <div class="initial-letter">{{ substr($user?->name, 0, 1) }}</div>
+                            <div class="initial-letter">{{ mb_substr($user?->name, 0, 1) }}</div>
                         @endif
                         <i data-feather="check" class="check-icon"></i>
                     </div>
@@ -113,7 +113,7 @@ foreach ([BookingEnum::PENDING => 'box', BookingEnum::ON_GOING => 'calendar',
                                                         @if ($imageUrl)
                                                             <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}" class="img-fluid service-image rounded-circle">
                                                         @else
-                                                            <div class="initial-letter">{{ strtoupper(substr($booking?->consumer?->name, 0, 1)) }}</div>
+                                                            <div class="initial-letter">{{ mb_strtoupper(mb_substr($booking?->consumer?->name, 0, 1)) }}</div>
                                                         @endif
 
                                                     <div class="service-details">
@@ -220,7 +220,7 @@ foreach ([BookingEnum::PENDING => 'box', BookingEnum::ON_GOING => 'calendar',
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
-                                                                {{ strtoupper(substr($review?->consumer?->name, 0, 1)) }}</div>
+                                                                {{ mb_strtoupper(mb_substr($review?->consumer?->name, 0, 1)) }}</div>
                                                         @endif
 
                                                     <div class="service-details">

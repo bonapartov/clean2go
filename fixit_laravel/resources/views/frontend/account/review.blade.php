@@ -38,7 +38,7 @@
                                                 <img src="{{ Helpers::isFileExistsFromURL($profileImg, true) }}" alt="" class="img-fluid">
                                                 @else
                                                 <span
-                                                    class="profile-name initial-letter">{{ substr(auth()->user()?->name, 0, 1) }}</span>
+                                                    class="profile-name initial-letter">{{ mb_substr(auth()->user()?->name, 0, 1) }}</span>
                                                 @endif
                                             </div>
                                             <div class="review-note">

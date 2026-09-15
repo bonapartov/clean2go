@@ -327,7 +327,7 @@
                                                                                 alt="feature" class="img-45">
                                                                         @else
                                                                             <div class="avatar-placeholder img-45">
-                                                                                {{ strtoupper(substr($booking->provider->name, 0, 1)) }}
+                                                                                {{ mb_strtoupper(mb_substr($booking->provider->name, 0, 1)) }}
                                                                             </div>
                                                                         @endif
                                                                         <div>
@@ -406,7 +406,7 @@
                                                                         alt="feature" class="img-45">
                                                                 @else
                                                                     <div class="avatar-placeholder img-45">
-                                                                        {{ strtoupper(substr($serviceman?->name, 0, 1)) }}
+                                                                        {{ mb_strtoupper(mb_substr($serviceman?->name, 0, 1)) }}
                                                                     </div>
                                                                 @endif
                                                                 <div>
@@ -637,7 +637,7 @@
                                                                                 alt="feature" class="img-45">
                                                                         @else
                                                                             <div class="avatar-placeholder img-45">
-                                                                                {{ strtoupper(substr($booking->provider?->name, 0, 1)) }}
+                                                                                {{ mb_strtoupper(mb_substr($booking->provider?->name, 0, 1)) }}
                                                                             </div>
                                                                         @endif
                                                                         <div>
@@ -692,7 +692,7 @@
                                                                                         alt="feature" class="img-45">
                                                                                 @else
                                                                                     <div class="avatar-placeholder img-45">
-                                                                                        {{ strtoupper(substr($serviceman?->name, 0, 1)) }}
+                                                                                        {{ mb_strtoupper(mb_substr($serviceman?->name, 0, 1)) }}
                                                                                     </div>
                                                                                 @endif
                                                                                 <div>
@@ -1156,7 +1156,7 @@
                                                 @else
                                                     <div class="initial-letter">
                                                         <span
-                                                            class="profile-name initial-letter">{{ substr($provider?->name, 0, 1) }}</span>
+                                                            class="profile-name initial-letter">{{ mb_substr($provider?->name, 0, 1) }}</span>
                                                     </div>
                                                 @endif
                                                 <div class="d-flex align-content-center gap-2 mt-2">
@@ -1262,7 +1262,7 @@
                                                     @else
                                                         <div class="initial-letter">
                                                             <span
-                                                                class="profile-name initial-letter">{{ substr($serviceman?->name, 0, 1) }}</span>
+                                                                class="profile-name initial-letter">{{ mb_substr($serviceman?->name, 0, 1) }}</span>
                                                         </div>
                                                     @endif
                                                     <div class="d-flex align-content-center gap-2 mt-2">

@@ -184,7 +184,7 @@
                                                     alt="Image">
                                             @else
                                                 <div class="initial-letter">
-                                                    {{ strtoupper(substr($bid->provider?->name, 0, 1)) }}</div>
+                                                    {{ mb_strtoupper(mb_substr($bid->provider?->name, 0, 1)) }}</div>
                                             @endif
                                         </div>
                                         <div class="job-provider-content">

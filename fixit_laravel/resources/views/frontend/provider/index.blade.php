@@ -92,7 +92,7 @@
                                 @if(Helpers::isFileExistsFromURL($profileImg, true))
                                 <img src="{{ $profileImg ?? asset('frontend/images/img-not-found.jpg')}}" alt="{{ $provider?->name }}" class="img-fluid profile-pic">
                                 @else
-                                <span class="profile-name initial-letter">{{ substr($provider?->name, 0, 1) }}</span>
+                                <span class="profile-name initial-letter">{{ mb_substr($provider?->name, 0, 1) }}</span>
                                 @endif
                                 @auth
                                 <div class="like-icon" id="favouriteDiv" data-provider-id="{{ $provider?->id }}">

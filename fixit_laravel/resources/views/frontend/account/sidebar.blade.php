@@ -14,7 +14,7 @@
                 @if (Helpers::isFileExistsFromURL($profieImg))
                     <img class="align-self-center profile-image pull-right img-fluid blur-up lazyloaded" src="{{ Helpers::isFileExistsFromURL($profieImg, true) }}" alt="header-user">
                 @else
-                    <span class="profile-name initial-letter">{{ substr(auth()->user()?->name, 0, 1) }}</span>
+                    <span class="profile-name initial-letter">{{ mb_substr(auth()->user()?->name, 0, 1) }}</span>
                 @endif
                 <button type="button" class="edit-modal" data-bs-toggle="modal" data-bs-target="#personalDetailModal">
                     <i class="iconsax" icon-name="edit-2"></i>
@@ -170,7 +170,7 @@
                         <img class="align-self-center profile-image pull-right img-fluid blur-up lazyloaded"
                             src="{{ Helpers::isFileExistsFromURL($profieImg, true) }}" alt="header-user">
                         @else
-                        <span class="profile-name initial-letter">{{ substr(auth()->user()?->name, 0, 1) }}</span>
+                        <span class="profile-name initial-letter">{{ mb_substr(auth()->user()?->name, 0, 1) }}</span>
                         @endif
                         <label class="custom-file-upload">
                             <input type="file" name="image" accept=".jpg, .png, .jpeg" value="{{ old('image') }}">

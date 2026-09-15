@@ -45,7 +45,7 @@
         </a>
       @else
       <div class="initial-letter">
-      {{ strtoupper(substr($service?->user?->name, 0, 1)) }}
+      {{ mb_strtoupper(mb_substr($service?->user?->name, 0, 1)) }}
       </div>
     @endif
           <div>

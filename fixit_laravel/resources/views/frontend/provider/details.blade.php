@@ -107,7 +107,7 @@
                                     @if(Helpers::isFileExistsFromURL($profileImg))
                                     <img src="{{ $profileImg }}" alt="{{ $provider?->name }}" class="img-fluid provider-profile-img">
                                     @else
-                                    <span class="profile-name initial-letter">{{ substr($provider?->name, 0, 1) }}</span>
+                                    <span class="profile-name initial-letter">{{ mb_substr($provider?->name, 0, 1) }}</span>
                                     @endif
 
                                     <div class="d-flex align-content-center gap-2 mt-2">

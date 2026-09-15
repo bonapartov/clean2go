@@ -696,7 +696,7 @@
                     @if ($imageUrl)
                         <img src="{{ $imageUrl }}" alt="{{ __('static.image') }}" class="img-thumbnail img-fix m-0">
                     @else
-                        <div class="initial-letter">{{ strtoupper(substr($info?->name, 0, 1)) }}</div>
+                        <div class="initial-letter">{{ mb_strtoupper(mb_substr($info?->name, 0, 1)) }}</div>
                     @endif
                 </a>
                 <div class="user-details">

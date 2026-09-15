@@ -68,7 +68,7 @@
                                         <img class="img-fluid" src="{{ Auth::user()->getFirstMediaUrl('image') }}"
                                             alt="header-user">
                                     @else
-                                        <div class="initial-letter">{{ substr(Auth::user()->name, 0, 1) }}</div>
+                                        <div class="initial-letter">{{ mb_substr(Auth::user()->name, 0, 1) }}</div>
                                     @endif
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -690,7 +690,7 @@
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
-                                                                {{ strtoupper(substr($service?->user?->name, 0, 1)) }}</div>
+                                                                {{ mb_strtoupper(mb_substr($service?->user?->name, 0, 1)) }}</div>
                                                         @endif
                                                         <div class="service-details">
                                                             <h5>{{ $service->user?->name }}</h5>
@@ -758,7 +758,7 @@
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
-                                                                {{ strtoupper(substr($provider?->name, 0, 1)) }}</div>
+                                                                {{ mb_strtoupper(mb_substr($provider?->name, 0, 1)) }}</div>
                                                         @endif
 
                                                         <div class="service-details">
@@ -827,7 +827,7 @@
                                                                 class="img-fluid service-image rounded-circle">
                                                         @else
                                                             <div class="initial-letter">
-                                                                {{ strtoupper(substr($Serviceman?->name, 0, 1)) }}</div>
+                                                                {{ mb_strtoupper(mb_substr($Serviceman?->name, 0, 1)) }}</div>
                                                         @endif
 
                                                         <div class="service-details">
@@ -936,7 +936,7 @@
                                                             class="img-fluid service-image">
                                                     @else
                                                         <div class="initial-letter">
-                                                            {{ strtoupper(substr($booking?->service?->title, 0, 1)) }}
+                                                            {{ mb_strtoupper(mb_substr($booking?->service?->title, 0, 1)) }}
                                                         </div>
                                                     @endif
 
@@ -963,7 +963,7 @@
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">
-                                                            {{ strtoupper(substr($booking?->provider?->name, 0, 1)) }}
+                                                            {{ mb_strtoupper(mb_substr($booking?->provider?->name, 0, 1)) }}
                                                         </div>
                                                     @endif
 
@@ -1032,7 +1032,7 @@
                                                             class="img-fluid service-image">
                                                     @else
                                                         <div class="initial-letter">
-                                                            {{ strtoupper(substr($review?->service?->title, 0, 1)) }}
+                                                            {{ mb_strtoupper(mb_substr($review?->service?->title, 0, 1)) }}
                                                         </div>
                                                     @endif
 
@@ -1058,7 +1058,7 @@
                                                             class="img-fluid service-image rounded-circle">
                                                     @else
                                                         <div class="initial-letter">
-                                                            {{ strtoupper(substr($review?->consumer?->name, 0, 1)) }}
+                                                            {{ mb_strtoupper(mb_substr($review?->consumer?->name, 0, 1)) }}
                                                         </div>
                                                     @endif
 
