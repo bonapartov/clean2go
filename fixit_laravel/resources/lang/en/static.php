@@ -72,6 +72,21 @@ return [
     'years' => 'years',
     'months' => 'months',
     'months_short' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    'payment_status' => [
+        'pending' => 'Awaiting Payment',
+        'partial' => 'Partially Paid',
+        'completed' => 'Paid',
+        'cancelled' => 'Cancelled',
+        'processing' => 'Processing',
+        'failed' => 'Failed',
+        'expired' => 'Expired',
+        'refund' => 'Refunded',
+        'awaiting_for_approval' => 'Awaiting Approval',
+    ],
+    'payment_method' => [
+        'cash' => 'Cash',
+        'wallet' => 'Wallet',
+    ],
     'login' => [
         'login' => 'Login',
         'password' => 'Enter password',

@@ -2291,6 +2291,28 @@ class Helpers
         return \Illuminate\Support\Facades\Lang::has($key) ? __($key) : $bookingStatus->name;
     }
 
+    public static function formatPaymentStatus($status)
+    {
+        if (!$status) {
+            return '';
+        }
+
+        $key = 'static.payment_status.' . strtolower($status);
+
+        return \Illuminate\Support\Facades\Lang::has($key) ? __($key) : $status;
+    }
+
+    public static function formatPaymentMethod($method)
+    {
+        if (!$method) {
+            return '';
+        }
+
+        $key = 'static.payment_method.' . strtolower($method);
+
+        return \Illuminate\Support\Facades\Lang::has($key) ? __($key) : ucfirst($method);
+    }
+
     public static function formatServiceType($type)
     {
         $mapping = [

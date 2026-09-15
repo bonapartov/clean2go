@@ -57,7 +57,7 @@
                                                                 @else
                                                                     @if (isset($user?->name))    
                                                                         <div class="user-round">
-                                                                            <h6>{{ strtoupper($user?->name[0]) }}</h6>
+                                                                            <h6>{{ mb_strtoupper(mb_substr($user?->name ?? '', 0, 1)) }}</h6>
                                                                         </div>
                                                                     @endif
                                                                 @endif
@@ -93,7 +93,7 @@
                                                                     <img class="img-fluid rounded-circle" src="{{ $provider?->media?->first()?->original_url }}" alt="user">
                                                                 @else
                                                                     <div class="user-round">
-                                                                        <h6>{{ strtoupper($provider?->name[0]) }}</h6>
+                                                                        <h6>{{ mb_strtoupper(mb_substr($provider?->name ?? '', 0, 1)) }}</h6>
                                                                     </div>
                                                                 @endif
                                                                 <div data-user-id="{{ $provider?->id }}"></div>
@@ -128,7 +128,7 @@
                                                                     <img class="img-fluid rounded-circle" src="{{ $serviceman?->media?->first()?->original_url }}" alt="user">
                                                                 @else
                                                                     <div class="user-round">
-                                                                        <h6>{{ strtoupper($serviceman?->name[0]) }}</h6>
+                                                                        <h6>{{ mb_strtoupper(mb_substr($serviceman?->name ?? '', 0, 1)) }}</h6>
                                                                     </div>
                                                                 @endif
                                                                 <div data-user-id="{{ $serviceman?->id }}"></div>

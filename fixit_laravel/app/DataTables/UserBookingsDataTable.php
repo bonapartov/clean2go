@@ -69,15 +69,15 @@ class UserBookingsDataTable extends DataTable
             })
             ->editColumn('payment_status', function ($row) {
                 if (count($row->sub_bookings)) {
-                    return '<lable class="badge '.$row->sub_bookings->first()?->payment_status.'">'.$row->sub_bookings->first()?->payment_status.'</lable>';
+                    return '<lable class="badge '.$row->sub_bookings->first()?->payment_status.'">'.Helpers::formatPaymentStatus($row->sub_bookings->first()?->payment_status).'</lable>';
                 } else if (isset($row->payment_status)) {
-                    return '<lable class="badge '.$row->payment_status.'">'.$row->payment_status.'</lable>';
+                    return '<lable class="badge '.$row->payment_status.'">'.Helpers::formatPaymentStatus($row->payment_status).'</lable>';
                 }
 
                 return '<lable class="form-controll">Н/Д</lable>';
             })
             ->editColumn('payment_method', function ($row) {
-                return ucfirst($row->payment_method);
+                return Helpers::formatPaymentMethod($row->payment_method);
             })
             ->editColumn('action', function ($row) {
                 return view('backend.inc.action', [

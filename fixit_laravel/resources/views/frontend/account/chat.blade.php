@@ -41,7 +41,7 @@
                                                                                 alt="admin">
                                                                         @else
                                                                             <div class="user-round message-profile">
-                                                                                <span>{{ strtoupper($admin?->name[0] ?? '') }}</span>
+                                                                                <span>{{ mb_strtoupper(mb_substr($admin?->name ?? '', 0, 1)) }}</span>
                                                                             </div>
                                                                         @endif
                                                                     </div>

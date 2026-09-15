@@ -41,7 +41,7 @@ class TransactionsDataTable extends DataTable
             })
             ->editColumn('payment_status', function ($row) {
                 if (isset($row->payment_status)) {
-                    return '<lable class="badge badge-'.$row->payment_status.'">'.$row->payment_status.'</lable>';
+                    return '<lable class="badge badge-'.$row->payment_status.'">'.Helpers::formatPaymentStatus($row->payment_status).'</lable>';
                 }
 
                 return '<lable class="form-controll">Н/Д</lable>';

@@ -68,11 +68,11 @@
                             </li>
                             <li>
                                 {{ __('static.booking.payment_method') }}:
-                                <span>{{ $childBooking->payment_method }}</span>
+                                <span>{{ Helpers::formatPaymentMethod($childBooking->payment_method) }}</span>
                             </li>
                             <li>
                                 {{ __('static.booking.payment_status') }}:
-                                <span>{{ $childBooking?->payment_status }}</span>
+                                <span>{{ Helpers::formatPaymentStatus($childBooking?->payment_status) }}</span>
                             </li>
                             <li>
                                 {{ __('static.service.required_servicemen') }}:
@@ -150,7 +150,7 @@
                                         alt="{{ $childBooking?->consumer?->name ?? 'User Image' }}">
                                 @else
                                     <div class="initial-letter">
-                                        <span>{{ strtoupper($childBooking?->consumer?->name[0]) }}</span>
+                                        <span>{{ mb_strtoupper(mb_substr($childBooking?->consumer?->name ?? '', 0, 1)) }}</span>
                                     </div>
                                 @endif
 
@@ -193,7 +193,7 @@
                                         alt="{{ $childBooking?->provider?->name ?? 'User Image' }}">
                                 @else
                                     <div class="initial-letter">
-                                        <span>{{ strtoupper($childBooking?->provider?->name[0]) }}</span>
+                                        <span>{{ mb_strtoupper(mb_substr($childBooking?->provider?->name ?? '', 0, 1)) }}</span>
                                     </div>
                                 @endif
                                 <div class="mt-3">
@@ -296,7 +296,7 @@
                                         @foreach ($statuses as $status)
                                             <option value="{{ $status?->slug }}"
                                                 @if ($bookingStatus == $status?->slug) selected @endif>
-                                                {{ $status?->name }}
+                                                {{ Helpers::formatBookingStatusName($status) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -309,7 +309,7 @@
                                 <input class="form-control" type="text" id="booking-date"
                                     placeholder="{{ __('static.service_package.select_date') }}">
                                 <button id="confirmDateBtn" class="btn btn-primary"
-                                    style="display: none;">{{ __('Confirm') }}</button>
+                                    style="display: none;">{{ __('static.confirm') }}</button>
                                 <form id="updateBookingForm" action="{{ route('backend.booking.updateDateTime') }}"
                                     method="POST">
                                     @csrf
@@ -327,12 +327,12 @@
                                     @foreach ($paymentStatuses as $paymentStatus)
                                         <option value="{{ $paymentStatus }}"
                                             @if ($childBooking->payment_status === strtoupper($paymentStatus)) selected @endif>
-                                            {{ $paymentStatus }}
+                                            {{ Helpers::formatPaymentStatus($paymentStatus) }}
                                         </option>
                                     @endforeach
                                 </select>
                                 <button id="confirmPaymentBtn" class="btn btn-primary" style="display: none;">
-                                    {{ __('Confirm') }}</button>
+                                    {{ __('static.confirm') }}</button>
                                 <form id="updatePaymentForm" action="{{ route('backend.booking.updatePaymentStatus') }}"
                                     method="POST">
                                     @csrf
@@ -367,7 +367,7 @@
                 <div class="booking-details-box">
                     <div class="booking-title">
                         <h4>{{ __('static.booking.details') }} #{{ $childBooking->booking_number }}</h4>
-                        <h5>{{ __('static.booking.created_at') }}{{ $childBooking->created_at->format('j F Y, g:i A') }}
+                        <h5>{{ __('static.booking.created_at') }} {{ $childBooking->created_at->translatedFormat('j F Y, g:i A') }}
                         </h5>
                     </div>
                     <div class="booking-content">
@@ -382,11 +382,11 @@
                                         <div class="left-box">
 
                                             <h6 class="date">{{ $status->created_at->format('d-m-Y') }}</h6>
-                                            <h6 class="name">{{ $status->status->name }}</h6>
+                                            <h6 class="name">{{ Helpers::formatBookingStatusName($status->status) }}</h6>
                                             <h6 class="content">{{ $status->description }}</h6>
                                         </div>
                                         <div class="right-box">
-                                            <h6>{{ $status->created_at->format('h:i A') }}</h6>
+                                            <h6>{{ $status->created_at->translatedFormat('h:i A') }}</h6>
                                         </div>
                                     </div>
                                 </li>
