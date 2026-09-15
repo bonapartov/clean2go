@@ -28,7 +28,7 @@ class CommissionDataTable extends DataTable
             ->setRowId('id')
             ->editColumn('booking.booking_number', function ($row) {
                 if (!$row->booking) {
-                    return '<span>N/A</span>';
+                    return '<span>Н/Д</span>';
                 }
                 return view('backend.inc.action', [
                     'collaps' => [

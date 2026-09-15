@@ -44,7 +44,7 @@ class TransactionsDataTable extends DataTable
                     return '<lable class="badge badge-'.$row->payment_status.'">'.$row->payment_status.'</lable>';
                 }
 
-                return '<lable class="form-controll">N/A</lable>';
+                return '<lable class="form-controll">Н/Д</lable>';
             })
             ->editColumn('created_at', function ($row) {
                 return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');

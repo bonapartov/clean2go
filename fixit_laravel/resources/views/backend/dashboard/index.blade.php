@@ -976,10 +976,10 @@
                                             <td>
                                                 @if (count($booking->sub_bookings))
                                                     <span
-                                                        class="badge booking-status-{{ $booking->sub_bookings?->first()?->booking_status?->color_code }}">{{ $booking->sub_bookings?->first()?->booking_status?->name }}</span>
+                                                        class="badge booking-status-{{ $booking->sub_bookings?->first()?->booking_status?->color_code }}">{{ Helpers::formatBookingStatusName($booking->sub_bookings?->first()?->booking_status) }}</span>
                                                 @elseif (isset($booking->booking_status?->color_code))
                                                     <span
-                                                        class="badge booking-status-{{ $booking->booking_status?->color_code }}">{{ $booking->booking_status?->name }}</span>
+                                                        class="badge booking-status-{{ $booking->booking_status?->color_code }}">{{ Helpers::formatBookingStatusName($booking->booking_status) }}</span>
                                                 @endif
                                             </td>
                                         </tr>

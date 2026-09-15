@@ -56,17 +56,17 @@ class BookingDataTable extends DataTable
                     $row->sub_bookings->first()->id); 
                 } 
                 return ' 
-                <div> <a href="'.$route.'" class="form-controll">'.$service.'</a> <br> <small> <a href="'.$route.'" class="form-controll"> Amount: '. Helpers::getSettings()['general']['default_currency']->symbol . number_format($total, 2).' </a> </small> </div> ';
+                <div> <a href="'.$route.'" class="form-controll">'.$service.'</a> <br> <small> <a href="'.$route.'" class="form-controll"> '.__('static.booking.amount').': '. Helpers::getSettings()['general']['default_currency']->symbol . number_format($total, 2).' </a> </small> </div> ';
             })
 
             ->editColumn('booking_status', function ($row) {
                 if (count($row->sub_bookings)) {
-                    return '<span class="badge booking-status-'.$row->sub_bookings?->first()?->booking_status?->color_code.'">'.$row->sub_bookings?->first()?->booking_status?->name.'</span>';
+                    return '<span class="badge booking-status-'.$row->sub_bookings?->first()?->booking_status?->color_code.'">'.Helpers::formatBookingStatusName($row->sub_bookings?->first()?->booking_status).'</span>';
                 } else if (isset($row->booking_status?->color_code)) {
-                    return '<span class="badge booking-status-'.$row->booking_status?->color_code.'">'.$row->booking_status?->color_code.'</span>';
+                    return '<span class="badge booking-status-'.$row->booking_status?->color_code.'">'.Helpers::formatBookingStatusName($row->booking_status).'</span>';
                 }
 
-                return '<span class="form-controll">N/A</span>';
+                return '<span class="form-controll">Н/Д</span>';
             })
 
             ->editColumn('provider_name', function ($row) {
@@ -104,7 +104,7 @@ class BookingDataTable extends DataTable
                     return '<lable class="badge '.$row->payment_status.'">'.$row->payment_status.'</lable>';
                 }
 
-                return '<lable class="form-controll">N/A</lable>';
+                return '<lable class="form-controll">Н/Д</lable>';
             })
             ->editColumn('payment_method', function ($row) {
                 return ucfirst($row->payment_method);

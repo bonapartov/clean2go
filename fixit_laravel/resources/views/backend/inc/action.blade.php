@@ -718,7 +718,7 @@
                 </div>
             </div>
         @else
-            <p class="no-date">N/A</p>
+            <p class="no-date">Н/Д</p>
         @endif
     @endif
 

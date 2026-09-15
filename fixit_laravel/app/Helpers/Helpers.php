@@ -2280,6 +2280,17 @@ class Helpers
         }
     }
 
+    public static function formatBookingStatusName($bookingStatus)
+    {
+        if (!$bookingStatus?->slug) {
+            return '';
+        }
+
+        $key = 'static.booking.' . str_replace('-', '_', $bookingStatus->slug);
+
+        return \Illuminate\Support\Facades\Lang::has($key) ? __($key) : $bookingStatus->name;
+    }
+
     public static function formatServiceType($type)
     {
         $mapping = [

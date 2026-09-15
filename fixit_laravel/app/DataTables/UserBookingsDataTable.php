@@ -36,7 +36,7 @@ class UserBookingsDataTable extends DataTable
                     return '<a href="'.route('backend.booking.show',$row->id).'" class="form-controll">'.$row->service?->title.'</a>';
                 }
 
-                return '<a href="#" class="form-controll">N/A</a>';
+                return '<a href="#" class="form-controll">Н/Д</a>';
             })
             ->editColumn('booking_status', function ($row) {
                 if (count($row->sub_bookings)) {
@@ -45,7 +45,7 @@ class UserBookingsDataTable extends DataTable
                     return '<span class="badge booking-status-'.$row->booking_status->color_code.'">'.$row->booking_status->color_code.'</span>';
                 }
 
-                return '<span class="form-controll">N/A</span>';
+                return '<span class="form-controll">Н/Д</span>';
             })
             ->editColumn('provider_name', function ($row) {
                 if (count($row->sub_bookings)) {
@@ -74,7 +74,7 @@ class UserBookingsDataTable extends DataTable
                     return '<lable class="badge '.$row->payment_status.'">'.$row->payment_status.'</lable>';
                 }
 
-                return '<lable class="form-controll">N/A</lable>';
+                return '<lable class="form-controll">Н/Д</lable>';
             })
             ->editColumn('payment_method', function ($row) {
                 return ucfirst($row->payment_method);
