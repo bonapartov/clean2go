@@ -676,7 +676,6 @@ Admin CSS Start
     overflow: hidden;
 
     &:hover {
-      transform: translateY(calc(-2px + (-5 - -2) * ((100vw - 320px) / (1920 - 320))));
       box-shadow: 4px 5px 18px rgba(221, 221, 221, 0.412);
 
       .card-title {
@@ -1253,7 +1252,6 @@ Admin CSS Start
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      transform: translateY(-5px);
       box-shadow: 4px 5px 18px rgba(221, 221, 221, 0.412);
     }
 
@@ -1537,7 +1535,6 @@ Admin CSS Start
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      transform: translateY(-5px);
       box-shadow: 4px 5px 18px rgba(221, 221, 221, 0.412);
 
       .card-title {
@@ -1890,7 +1887,6 @@ Admin CSS Start
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      transform: translateY(-5px);
       box-shadow: 4px 5px 18px rgba(221, 221, 221, 0.412);
     }
 
@@ -2080,7 +2076,6 @@ Admin CSS Start
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    transform: translateY(-5px);
     box-shadow: 4px 5px 18px rgba(221, 221, 221, 0.412);
   }
 
@@ -2207,7 +2202,6 @@ Admin CSS Start
   }
 
   &:hover {
-    transform: translateY(calc(-2px + (-5 - -2) * ((100vw - 320px) / (1920 - 320))));
     box-shadow: 4px 5px 18px rgba(221, 221, 221, 0.412);
   }
 

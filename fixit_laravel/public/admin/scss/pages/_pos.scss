@@ -498,14 +498,6 @@
     gap: 10px;
     border: 1px solid rgba($white-dark, 0.71);
 
-    &:hover {
-        .servicemen-image {
-            img {
-                transform: scale(1.1);
-            }
-        }
-    }
-
     .servicemen-image {
         border-radius: 7px;
         overflow: hidden;
@@ -514,7 +506,6 @@
         img {
             aspect-ratio: 9/5;
             object-fit: cover;
-            transition: opacity .5s, transform 1.25s cubic-bezier(0, 0, .44, 1.18);
         }
 
         span {
@@ -681,14 +672,6 @@
         gap: 14px;
     }
 
-    &:hover {
-        .servicemen-image {
-            img {
-                transform: scale(1.1);
-            }
-        }
-    }
-
     .servicemen-image {
         border-radius: 7px;
         overflow: hidden;
@@ -698,7 +681,6 @@
             width: 110px;
             height: 82px;
             object-fit: cover;
-            transition: opacity .5s, transform 1.25s cubic-bezier(0, 0, .44, 1.18);
         }
 
         span {
