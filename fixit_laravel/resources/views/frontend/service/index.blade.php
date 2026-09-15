@@ -163,7 +163,7 @@
                                                                                 </li>
                                                                                 <li class="year">
                                                                                     {{ $provider?->experience_duration }}
-                                                                                    {{ $provider?->experience_interval }}
+                                                                                    {{ $provider?->experience_interval ? __('frontend::static.' . $provider->experience_interval) : '' }}
                                                                                 </li>
                                                                             </ul>
                                                                         </div>

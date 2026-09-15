@@ -20,7 +20,7 @@ class ProviderTimeSlotDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->setRowId('id')
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('provider.name', function ($row) {
                 $provider = $row->provider;
@@ -31,7 +31,7 @@ class ProviderTimeSlotDataTable extends DataTable
                         'route' => 'backend.provider.general-info'
                     ]);
                 }
-                return 'N/A';
+                return 'Н/Д';
             })
             ->editColumn('checkbox', function ($row) {
                 return '<div class="form-check"><input type="checkbox" name="row" class="rowClass form-check-input" value='.$row->id.' id="rowId'.$row->id.'"></div>';
@@ -91,7 +91,7 @@ class ProviderTimeSlotDataTable extends DataTable
         $builder->setTableId('providertimeslot-table');
         if ($user?->can('backend.provider_time_slot.destroy')) {
             if($timeslot->count() > 1) {
-            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
         $builder->addColumn(['data' => 'provider.name', 'title' => __('static.provider_time_slot.provider_name'), 'orderable' => false, 'searchable' => true])

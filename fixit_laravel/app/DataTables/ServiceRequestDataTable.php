@@ -34,12 +34,12 @@ class ServiceRequestDataTable extends DataTable
                 $imageUrl = $media ? $media->getUrl() : asset('admin/images/No-image-found.jpg');
                 $imageTag = '<img src="'.$imageUrl.'" alt="Image" class="img-thumbnail img-fix">';
 
-                 $formattedPrice = $row->initial_price ? number_format($row->initial_price, 2) : 'N/A';
+                 $formattedPrice = $row->initial_price ? number_format($row->initial_price, 2) : 'Н/Д';
                 $price = $row->initial_price ? (
                     $symbolPosition === SymbolPositionEnum::LEFT->value ?
                     $currencySymbol . ' ' . $formattedPrice :
                     $formattedPrice . ' ' . $currencySymbol  
-                ) : 'N/A';
+                ) : 'Н/Д';
 
                 return '
                     <div class="service-list-item">
@@ -64,10 +64,10 @@ class ServiceRequestDataTable extends DataTable
                         'route' => 'backend.provider.general-info'
                     ]);
                 }
-                return 'N/A';
+                return 'Н/Д';
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('action', function ($row) {
                 return view('backend.inc.action', [
@@ -151,7 +151,7 @@ class ServiceRequestDataTable extends DataTable
 
         if ($user->can('backend.service_request.destroy')) {
             if($service_requests->count() > 1) {
-                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

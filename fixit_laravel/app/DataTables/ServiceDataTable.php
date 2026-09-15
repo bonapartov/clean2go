@@ -99,7 +99,7 @@ class ServiceDataTable extends DataTable
                 ]);
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('services.categories', function ($row) {
                 $categories = $row->categories->take(2)->pluck('title')->toArray();
@@ -271,7 +271,7 @@ class ServiceDataTable extends DataTable
 
         if ($user->can('backend.service.destroy')) {
             if($services->count() > 1) {
-                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
         $builder

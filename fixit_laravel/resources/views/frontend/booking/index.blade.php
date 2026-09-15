@@ -662,7 +662,7 @@
                                                                 </td>
 
                                                                 <td>{{ $booking?->provider?->experience_duration }}
-                                                                    {{ $booking?->provider?->experience_interval }}
+                                                                    {{ $booking?->provider?->experience_interval ? __('frontend::static.' . $booking->provider->experience_interval) : '' }}
                                                                 </td>
 
                                                                 @if ($booking?->booking_status?->slug != BookingEnumSlug::COMPLETED)
@@ -717,7 +717,7 @@
                                                                         </td>
 
                                                                         <td>{{ $serviceman?->experience_duration }}
-                                                                            {{ $serviceman?->experience_interval }}
+                                                                            {{ $serviceman?->experience_interval ? __('frontend::static.' . $serviceman->experience_interval) : '' }}
                                                                         </td>
 
                                                                         @if ($booking?->booking_status?->slug != BookingEnumSlug::COMPLETED)
@@ -1172,7 +1172,7 @@
                                                     <p class="text-light">
                                                         @if ($provider?->experience_duration)
                                                             {{ $provider?->experience_duration }}
-                                                            {{ $provider?->experience_interval }}
+                                                            {{ $provider?->experience_interval ? __('frontend::static.' . $provider->experience_interval) : '' }}
                                                             {{ __('frontend::static.bookings.of_experience') }}
                                                         @else
                                                             {{ __('frontend::static.bookings.fresher') }}
@@ -1276,7 +1276,7 @@
                                                     <div class="d-flex align-items-center gap-2">
                                                         @if ($provider?->experience_duration)
                                                             {{ $provider?->experience_duration }}
-                                                            {{ $provider?->experience_interval }}
+                                                            {{ $provider?->experience_interval ? __('frontend::static.' . $provider->experience_interval) : '' }}
                                                             {{ __('frontend::static.bookings.of_experience') }}
                                                         @else
                                                             {{ __('frontend::static.bookings.fresher') }}

@@ -122,7 +122,7 @@ foreach ([BookingEnum::PENDING => 'box', BookingEnum::ON_GOING => 'calendar',
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>{{ date('d-M-Y', strtotime($booking->created_at)) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($booking->created_at)->translatedFormat('d-M-Y') }}</td>
                                             <td>
                                             @if (count($booking->sub_bookings))
                                                     <span class="badge booking-status-{{ $booking->sub_bookings?->first()?->booking_status?->color_code }}">{{ $booking->sub_bookings?->first()?->booking_status?->name }}</span>

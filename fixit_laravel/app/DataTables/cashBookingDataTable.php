@@ -29,7 +29,7 @@ class cashBookingDataTable extends DataTable
                 });
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('booking_number', function ($row) {
                 if (count($row->sub_bookings) > 1) {
@@ -47,7 +47,7 @@ class cashBookingDataTable extends DataTable
                 ]);
             })
             ->editColumn('service_name', function ($row) {
-                $service = $row->sub_bookings->first()?->service?->title ?? 'N/A'; 
+                $service = $row->sub_bookings->first()?->service?->title ?? 'Н/Д'; 
                 $total = $row->sub_bookings->sum('total');
                 if (count($row->sub_bookings) > 1) { 
                     $route = route('backend.booking.show', $row->id); 

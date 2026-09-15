@@ -133,7 +133,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>{{ date('d-M-Y', strtotime($booking->created_at)) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($booking->created_at)->translatedFormat('d-M-Y') }}</td>
                                             <td>
                                                 @if (count($booking->sub_bookings))
                                                     <span

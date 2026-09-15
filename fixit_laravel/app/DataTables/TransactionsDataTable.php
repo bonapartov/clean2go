@@ -47,7 +47,7 @@ class TransactionsDataTable extends DataTable
                 return '<lable class="form-controll">N/A</lable>';
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->rawColumns(['created_at','payment_status']);
     }

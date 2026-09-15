@@ -70,18 +70,18 @@ class WalletBonusFilterExport implements FromCollection,WithMapping,WithHeadings
     public function map($walletBonus): array
     {
         return [
-                $walletBonus->id ?? 'N/A',
-                $walletBonus->name ?? 'N/A',
-                $walletBonus->description ?? 'N/A',
-                $walletBonus->type ?? 'N/A',
-                $walletBonus->bonus ?? 'N/A',
-                $walletBonus->min_top_up_amount  ?? 'N/A',
-                $walletBonus->max_bonus ?? 'N/A',
-                $walletBonus->status ?? 'N/A',
-                $walletBonus->created_by_id ?? 'N/A',
-                $walletBonus->created_at ?? 'N/A',
-                $walletBonus->updated_at ?? 'N/A',
-                $walletBonus->deleted_at ?? 'N/A',
+                $walletBonus->id ?? 'Н/Д',
+                $walletBonus->name ?? 'Н/Д',
+                $walletBonus->description ?? 'Н/Д',
+                $walletBonus->type ?? 'Н/Д',
+                $walletBonus->bonus ?? 'Н/Д',
+                $walletBonus->min_top_up_amount  ?? 'Н/Д',
+                $walletBonus->max_bonus ?? 'Н/Д',
+                $walletBonus->status ?? 'Н/Д',
+                $walletBonus->created_by_id ?? 'Н/Д',
+                $walletBonus->created_at ?? 'Н/Д',
+                $walletBonus->updated_at ?? 'Н/Д',
+                $walletBonus->deleted_at ?? 'Н/Д',
 
         ];
     }

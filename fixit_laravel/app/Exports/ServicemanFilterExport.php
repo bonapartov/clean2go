@@ -69,17 +69,17 @@ class ServicemanFilterExport implements FromCollection,WithMapping,WithHeadings
     {
         return [
             $serviceman->provider_id,
-            $serviceman->name ?? 'N/A',
-            $serviceman->email ?? 'N/A',
-            $serviceman->password ?? 'N/A',
-            $serviceman->phone ?? 'N/A',
-            $serviceman->code ?? 'N/A',
-            $serviceman->description ?? 'N/A',
+            $serviceman->name ?? 'Н/Д',
+            $serviceman->email ?? 'Н/Д',
+            $serviceman->password ?? 'Н/Д',
+            $serviceman->phone ?? 'Н/Д',
+            $serviceman->code ?? 'Н/Д',
+            $serviceman->description ?? 'Н/Д',
             $serviceman->media->first()->original_url ,
-            $serviceman->system_reserve ?? 'N/A',
-            $serviceman->experience_interval ?? 'N/A',
-            $serviceman->experience_duration ?? 'N/A',
-            $serviceman->status ?? 'N/A',
+            $serviceman->system_reserve ?? 'Н/Д',
+            $serviceman->experience_interval ?? 'Н/Д',
+            $serviceman->experience_duration ?? 'Н/Д',
+            $serviceman->status ?? 'Н/Д',
             $serviceman?->role?->id,
         ];
     }

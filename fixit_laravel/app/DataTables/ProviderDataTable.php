@@ -35,14 +35,14 @@ class ProviderDataTable extends DataTable
                 return $row->servicemans->count();
             })
             ->editColumn('type', function ($row) {
-                return ucfirst($row->type);
+                return $row->type ? __('static.' . $row->type) : '';
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('action', function ($row) {
                 if ($row->getRoleNames()->first() == 'Admin') {
-                    return '<p class="text-success">System Reserved</p>';
+                    return '<p class="text-success">Защищено системой</p>';
                 }
 
                 return view('backend.inc.action', [
@@ -132,7 +132,7 @@ class ProviderDataTable extends DataTable
         $builder->setTableId('provider-table');
         if ($user?->can('backend.provider.destroy')) {
             if($provider->count() > 1) {
-                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
         $builder->addColumn(['data' => 'name', 'title' => __('static.name'), 'orderable' => true, 'searchable' => true])

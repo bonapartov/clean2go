@@ -154,7 +154,7 @@
                             </div>
                             @if($service?->user?->experience_duration)
                             <div class="danger-light-badge badge mb-0">
-                                <span>{{$service?->user?->experience_duration}} {{$service?->user?->experience_interval}} {{ __('frontend::static.services.of_experience')}}</span>
+                                <span>{{$service?->user?->experience_duration}} {{ $service?->user?->experience_interval ? __('frontend::static.' . $service->user->experience_interval) : '' }} {{ __('frontend::static.services.of_experience')}}</span>
                             </div>
                             @endif
                         </div>

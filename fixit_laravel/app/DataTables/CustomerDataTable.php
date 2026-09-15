@@ -28,13 +28,13 @@ class CustomerDataTable extends DataTable
             })
             ->editColumn('created_at', function ($row) {
 
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
 
             ->editColumn('phone', function ($row) {
                 return isset($row->phone) && isset($row->code)
                     ? '+' . $row->code . ' ' . $row->phone
-                    : 'N/A';
+                    : 'Н/Д';
             })
             ->editColumn('action', function ($row) {
                 return view('backend.inc.action', [
@@ -105,7 +105,7 @@ class CustomerDataTable extends DataTable
         if ($user?->can('backend.role.destroy')) {
             if($users->count() > 1) {
                 $builder->setTableId('customer-table')
-                ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

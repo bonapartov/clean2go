@@ -136,7 +136,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>{{ date('d-M-Y', strtotime($booking->created_at)) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($booking->created_at)->translatedFormat('d-M-Y') }}</td>
                                             <td>
                                                 @if (count($booking->sub_bookings))
                                                     <span
@@ -412,9 +412,9 @@
 
                                             <td>
                                                 {{ $serviceman->experience_duration }}
-                                                {{ $serviceman->experience_interval }}
+                                                {{ $serviceman->experience_interval ? __('static.' . $serviceman->experience_interval) : '' }}
                                             </td>
-                                            <td>{{ date('d-M-Y', strtotime($serviceman->created_at)) }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($serviceman->created_at)->translatedFormat('d-M-Y') }}</td>
                                         </tr>
                                     @empty
                                         <div class="no-table-data">

@@ -42,7 +42,7 @@ class ServicePackageDataTable extends DataTable
                     $symbolPosition === SymbolPositionEnum::LEFT ?
                     $currencySymbol . '' . number_format($row->price, 2) :
                     number_format($row->price, 2) . ' ' . $currencySymbol
-                ) : 'N/A';
+                ) : 'Н/Д';
                 return '
                 <div class="service-list-item">
                     '.$imageTag.'
@@ -198,7 +198,7 @@ class ServicePackageDataTable extends DataTable
         $builder->setTableId('servicepackage-table');
         if ($user->can('backend.service-package.destroy')) {
             if($servicePackages->count() > 1) {
-            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
             $builder

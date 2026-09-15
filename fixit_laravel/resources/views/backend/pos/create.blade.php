@@ -101,7 +101,7 @@
                                                 <option class="select-placeholder" value=""></option>
                                                 @foreach ($providers as $provider)
                                                     <option value="{{ $provider->id }}" data-provider-type="{{ $provider->type }}" sub-title="{{ $provider->email }}" image="{{ $provider->getFirstMedia('image')?->getUrl() }}" {{ $provider->id == request()->query('provider_id') ? 'selected' : '' }}>
-                                                        {{ $provider->name }} ({{ $provider->type }})
+                                                        {{ $provider->name }} ({{ $provider->type ? __('static.' . $provider->type) : '' }})
                                                     </option>
                                                 @endforeach
                                             </select>

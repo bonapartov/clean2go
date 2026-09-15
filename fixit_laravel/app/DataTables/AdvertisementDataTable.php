@@ -34,10 +34,10 @@ class AdvertisementDataTable extends DataTable
                         'route' => 'backend.provider.general-info'
                     ]);
                 }
-                return 'N/A';
+                return 'Н/Д';
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('price', function ($row) use ($currencySymbol, $symbolPosition) {
                 $formattedPrice = number_format($row->price, 2);
@@ -46,16 +46,16 @@ class AdvertisementDataTable extends DataTable
                     $symbolPosition === SymbolPositionEnum::LEFT ? 
                     $currencySymbol . '' . $formattedPrice :
                     $formattedPrice . ' ' . $currencySymbol
-                ) : 'N/A';
+                ) : 'Н/Д';
 
                 return $price;
             })
             ->editColumn('zone', function ($row)  {
 
-                return $row?->zone_id?->name ?? 'N/A' ;
+                return $row?->zone_id?->name ?? 'Н/Д' ;
             })
             ->editColumn('start_date', function ($row) {
-                return date('d-M-Y', strtotime($row->start_date)). ' to ' .date('d-M-Y', strtotime($row->end_date));
+                return \Carbon\Carbon::parse($row->start_date)->translatedFormat('d-M-Y') . ' — ' . \Carbon\Carbon::parse($row->end_date)->translatedFormat('d-M-Y');
             })
             ->editColumn('action', function ($row) {
                 return view('backend.inc.action', [
@@ -158,7 +158,7 @@ class AdvertisementDataTable extends DataTable
         $builder->setTableId('advertisement-table');
         if ($user->can('backend.advertisement.destroy')) {
             if($advertisements->count() > 1) {
-                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

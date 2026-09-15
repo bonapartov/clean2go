@@ -76,7 +76,7 @@
                             </li>
                             <li>
                                 {{ __('static.service.required_servicemen') }}:
-                                <span>{{ $childBooking?->service?->required_servicemen ?? 'N/A' }}</span>
+                                <span>{{ $childBooking?->service?->required_servicemen ?? 'Н/Д' }}</span>
                             </li>
                             <li>
                                 @php
@@ -493,7 +493,7 @@
                                                         @foreach ($commission->serviceman_commissions as $servicemanCommission)
                                                             @if ($isAdmin || $isProvider || ($isServiceman && $servicemanCommission->serviceman_id === $user->id))
                                                                 {{-- <span> --}}
-                                                                    <span>{{ $servicemanCommission->serviceman?->name ?? 'N/A' }}:
+                                                                    <span>{{ $servicemanCommission->serviceman?->name ?? 'Н/Д' }}:
                                                                         {{ Helpers::getSettings()['general']['default_currency']->symbol }}{{ number_format($servicemanCommission->commission, 2) }}
                                                                     </span>
                                                                 {{-- </span> --}}

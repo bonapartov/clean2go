@@ -35,10 +35,10 @@ class UserServiceMenDataTable extends DataTable
                         'ratings' => $provider->review_ratings
                     ]);
                 }
-                return 'N/A'; 
+                return 'Н/Д'; 
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('action', function ($row) {
                 return view('backend.inc.action', [
@@ -85,7 +85,7 @@ class UserServiceMenDataTable extends DataTable
 
         return $this->builder()
             ->setTableId('user-serviceman-table')
-            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false])
+            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false])
             ->addColumn(['data' => 'name', 'title' => __('static.name'), 'orderable' => true, 'searchable' => true]) 
             ->addColumn(['data' => 'provider.name', 'title' => __('static.provider.provider'), 'orderable' => false, 'searchable' => false])
             ->addColumn(['data' => 'created_at', 'title' => __('static.created_at'), 'orderable' => true, 'searchable' => true])

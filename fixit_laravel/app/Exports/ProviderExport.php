@@ -62,9 +62,9 @@ class ProviderExport implements FromCollection,WithMapping,WithHeadings
     public function map($provider): array
     {
         return [
-            $provider->name ?? 'N/A',
-            $provider->email ?? 'N/A',
-            $provider->type ?? 'N/A',
+            $provider->name ?? 'Н/Д',
+            $provider->email ?? 'Н/Д',
+            $provider->type ? __('static.' . $provider->type) : 'Н/Д',
             $provider->getReviewRatingsAttribute() ?? '0.0',
             $provider->total_provider_commission ?? '0.0',
             Helpers::getTotalProviderBookingsByStatus(BookingStatusReq::PENDING,$provider->id) ?? '0',

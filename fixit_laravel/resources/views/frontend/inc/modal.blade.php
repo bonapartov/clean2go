@@ -138,7 +138,7 @@
                                         <div class="experience">
                                             @if($serviceman?->experience_duration)
                                             <p>{{ $serviceman?->experience_duration}}
-                                                {{ $serviceman?->experience_interval }} {{ __('frontend::static.modal.of_experience') }}
+                                                {{ $serviceman?->experience_interval ? __('frontend::static.' . $serviceman->experience_interval) : '' }} {{ __('frontend::static.modal.of_experience') }}
                                             </p>
                                             @else
                                             <p>
@@ -202,7 +202,7 @@
                                 <div class="d-flex align-items-center gap-2">
                                     <p class="text-light">
                                         {{ $serviceman?->experience_duration }}
-                                        {{ $serviceman?->experience_interval }} {{ __('frontend::static.modal.of_experience') }}
+                                        {{ $serviceman?->experience_interval ? __('frontend::static.' . $serviceman->experience_interval) : '' }} {{ __('frontend::static.modal.of_experience') }}
                                     </p>
                                     <div class="location">
                                         <i class="iconsax" icon-name="location"></i>

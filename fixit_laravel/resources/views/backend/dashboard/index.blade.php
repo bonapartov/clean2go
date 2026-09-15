@@ -699,7 +699,7 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $service->bookings_count }}</td>
-                                                <td>{{ $service->type }}</td>
+                                                <td>{{ $service->type ? Helpers::formatServiceType($service->type) : '' }}</td>
                                                 <td>
                                                     <div class="rating">
                                                         <img src="{{ asset('admin/images/svg/star.svg') }}"
@@ -767,11 +767,11 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>{{ $provider?->type }}</td>
+                                                <td>{{ $provider?->type ? __('static.' . $provider->type) : '' }}</td>
 
                                                 <td>{{ $provider?->bookings->count() }}</td>
                                                 <td>{{ $provider?->experience_duration }}+
-                                                    {{ $provider?->experience_interval }}
+                                                    {{ $provider?->experience_interval ? __('static.' . $provider->experience_interval) : '' }}
                                                 </td>
 
                                             </tr>
@@ -849,7 +849,7 @@
                                                     @endisset
                                                 </td>
                                                 <td>{{ $Serviceman?->experience_duration }}+
-                                                    {{ $Serviceman?->experience_interval }} </td>
+                                                    {{ $Serviceman?->experience_interval ? __('static.' . $Serviceman->experience_interval) : '' }} </td>
                                             </tr>
                                         @empty
                                             <div class="no-table-data">
@@ -1078,7 +1078,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{ date('d-M-Y', strtotime($review->created_at)) }}
+                                                {{ \Carbon\Carbon::parse($review->created_at)->translatedFormat('d-M-Y') }}
                                             </td>
                                         </tr>
                                     @empty
@@ -1173,7 +1173,7 @@
 
             var servicePieChart = {
                 series: serviceTypeCounts,
-                labels: ["User Site", "Remotely", "Provider Site"],
+                labels: [@json(__('static.fixed')), @json(__('static.remotely')), @json(__('static.provider_site'))],
                 chart: {
                     height: 338,
                     type: "donut",
@@ -1204,7 +1204,7 @@
                                     fontWeight: 500,
                                     fontFamily: "var(--font-family)",
                                     label: TotalServiceCount,
-                                    formatter: () => "Total",
+                                    formatter: () => @json(__('static.total')),
                                 },
                             },
                         },
@@ -1259,7 +1259,7 @@
 
             var revenueChart = {
                 series: [{
-                    name: "Revenue",
+                    name: @json(__('static.dashboard.revenue')),
                     data: revenueData,
                 }, ],
                 chart: {
@@ -1285,9 +1285,7 @@
                 },
                 colors: ["var(--primary-color)", "#C9CED4", "#FFBC58"],
                 xaxis: {
-                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
-                        "Dec"
-                    ],
+                    categories: @json(__('static.months_short')),
                     tickPlacement: "between",
                     labels: {
                         style: {

@@ -81,18 +81,18 @@ class AdvertisementFilterExport implements FromCollection,WithMapping,WithHeadin
     public function map($advertisements): array
     {
         return [
-            $advertisements->id ?? 'N/A',
-            $advertisements->provider_id ?? 'N/A',
-            $advertisements->type ?? 'N/A',
-            $advertisements->screen ?? 'N/A',
-            $advertisements->status ?? 'N/A',
-            $advertisements->start_date ?? 'N/A',
-            $advertisements->end_date ?? 'N/A',
-            $advertisements->created_by ?? 'N/A',
-            $advertisements->zone ?? 'N/A',
-            $advertisements->banner_type ?? 'N/A',
-            $advertisements->video_link ?? 'N/A',
-            $advertisements->price ?? 'N/A',
+            $advertisements->id ?? 'Н/Д',
+            $advertisements->provider_id ?? 'Н/Д',
+            $advertisements->type ?? 'Н/Д',
+            $advertisements->screen ?? 'Н/Д',
+            $advertisements->status ?? 'Н/Д',
+            $advertisements->start_date ?? 'Н/Д',
+            $advertisements->end_date ?? 'Н/Д',
+            $advertisements->created_by ?? 'Н/Д',
+            $advertisements->zone ?? 'Н/Д',
+            $advertisements->banner_type ?? 'Н/Д',
+            $advertisements->video_link ?? 'Н/Д',
+            $advertisements->price ?? 'Н/Д',
         ];
     }
 

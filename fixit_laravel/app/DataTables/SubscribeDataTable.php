@@ -20,7 +20,7 @@ class SubscribeDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->rawColumns(['email','created_at']);
     }

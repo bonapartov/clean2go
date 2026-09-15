@@ -92,7 +92,7 @@
                                 <label class="">{{ __('static.type') }}</label>
                                 <select id="provider_type" class="select-2 form-control user-dropdown Dropdown" data-placeholder="{{ __('static.provider.select_type') }}">
                                 <option class="select-placeholder" value=""></option>
-                                @foreach (['company' => 'Company', 'freelancer' => 'Freelancer'] as $key => $option)
+                                @foreach (['company' => __('static.company'), 'freelancer' => __('static.freelancer')] as $key => $option)
                                     <option value="{{ $key }}">
                                         {{ $option }}
                                     </option>

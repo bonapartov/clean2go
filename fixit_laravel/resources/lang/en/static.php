@@ -67,6 +67,11 @@ return [
     'bookings' => 'Bookings',
     'daterange' => 'Date Range',
     'reset' => 'Reset',
+    'company' => 'Company',
+    'freelancer' => 'Freelancer',
+    'years' => 'years',
+    'months' => 'months',
+    'months_short' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     'login' => [
         'login' => 'Login',
         'password' => 'Enter password',

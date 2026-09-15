@@ -42,7 +42,7 @@ class CommissionHistoriesExport implements FromCollection,WithMapping,WithHeadin
     {
 
         return [
-            $Commission->booking->booking_number ?? 'N/A',
+            $Commission->booking->booking_number ?? 'Н/Д',
             $Commission->provider->name,
             Helpers::getSettings()['general']['default_currency']->symbol.''.$Commission->admin_commission,
             Helpers::getSettings()['general']['default_currency']->symbol.''.$Commission->provider_commission,

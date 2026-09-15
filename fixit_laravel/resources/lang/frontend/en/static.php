@@ -10,6 +10,8 @@ return [
     'today_special_offers' => 'Today\'s special offers',
     'delete_item_confirm_title' => 'Delete Item?',
     'something_went_wrong_try_again' => 'Something went wrong. Please try again.',
+    'years' => 'years',
+    'months' => 'months',
     'location' => [
         'title' => 'We Need Your Location to Enhance Your Experience.',
         'use_current_location' => 'Use Current Location',

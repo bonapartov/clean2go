@@ -80,7 +80,7 @@ class ReferralDataTable extends DataTable
                     : $formattedAmount . ' ' . $currencySymbol;
             })
             ->editColumn('credited_at', function($row) {
-                return $row->credited_at ?? 'N/A';
+                return $row->credited_at ?? 'Н/Д';
             })
             ->editColumn('status', function ($row) {
                 if($row->status === 'pending'){
@@ -90,10 +90,10 @@ class ReferralDataTable extends DataTable
                 }
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('credited_at', function ($row) {
-                return date('d-M-Y', strtotime($row->credited_at));
+                return \Carbon\Carbon::parse($row->credited_at)->translatedFormat('d-M-Y');
             })
             ->rawColumns(['created_at','status']);
     }

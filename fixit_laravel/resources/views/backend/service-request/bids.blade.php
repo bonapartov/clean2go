@@ -40,9 +40,9 @@
                                     <tr>
                                         <td>{{ Helpers::getSettings()['general']['default_currency']->symbol }}{{ $bid->amount }}
                                         </td>
-                                        <td>{{ $bid->provider->name ?? 'N/A' }}</td>
-                                        <td>{{ $bid->provider->email ?? 'N/A' }}</td>
-                                        <td>{{ $bid->description ?? 'N/A' }}</td>
+                                        <td>{{ $bid->provider->name ?? 'Н/Д' }}</td>
+                                        <td>{{ $bid->provider->email ?? 'Н/Д' }}</td>
+                                        <td>{{ $bid->description ?? 'Н/Д' }}</td>
                                         <td>{{ ucfirst($bid->status) }}</td>
                                     </tr>
                                 @endif

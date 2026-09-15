@@ -30,7 +30,7 @@ class SeoSettingsDataTable extends DataTable
                 ]);
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('updated_at', function ($row) {
                 return $row->updated_at->diffForHumans();

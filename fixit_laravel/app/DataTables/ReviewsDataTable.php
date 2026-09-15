@@ -83,7 +83,7 @@ class ReviewsDataTable extends DataTable
         $builder->setTableId('review-table');
         if ($user->can('backend.review.destroy')) {
             if($reviews->count() > 1) {
-            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows"/> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows"/> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

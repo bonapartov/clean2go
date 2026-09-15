@@ -30,11 +30,11 @@ class UserDataTable extends DataTable
                 return $row->getRoleNames()->first();
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('action', function ($row) {
                 if ($row->getRoleNames()->first() == RoleEnum::ADMIN) {
-                    return '<p class="text-success">System Reserved</p>';
+                    return '<p class="text-success">Защищено системой</p>';
                 }
 
                 return view('backend.inc.action', [
@@ -97,7 +97,7 @@ class UserDataTable extends DataTable
         if ($user?->can('backend.user.destroy')) {
             if($users->count() > 1) {
             $builder->setTableId('user-table')
-            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
         }
     }
 

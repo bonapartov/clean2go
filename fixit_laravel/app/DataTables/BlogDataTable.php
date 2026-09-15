@@ -21,7 +21,7 @@ class BlogDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->setRowId('id')
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('blog.categories', function ($row) {
                 $categories = $row->categories->take(2)->pluck('title')->toArray();
@@ -135,7 +135,7 @@ class BlogDataTable extends DataTable
         $builder->setTableId('blog-table');
         if ($user->can('backend.blog.destroy')) {
             if($blogs->count() > 1) {
-                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

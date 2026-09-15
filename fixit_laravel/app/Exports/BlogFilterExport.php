@@ -68,15 +68,15 @@ class BlogFilterExport implements FromCollection,WithMapping,WithHeadings
     public function map($blog): array
     {
         return [
-            $blog->id ?? 'N/A',
-            $blog->title ?? 'N/A',
-            $blog->description ?? 'N/A',
-            $blog->content ?? 'N/A',
-            $blog->meta_title ?? 'N/A',
-            $blog->meta_description ?? 'N/A',
-            $blog->is_featured ?? 'N/A',
-            $blog->status ?? 'N/A',
-            $blog->created_by_id ?? 'N/A',
+            $blog->id ?? 'Н/Д',
+            $blog->title ?? 'Н/Д',
+            $blog->description ?? 'Н/Д',
+            $blog->content ?? 'Н/Д',
+            $blog->meta_title ?? 'Н/Д',
+            $blog->meta_description ?? 'Н/Д',
+            $blog->is_featured ?? 'Н/Д',
+            $blog->status ?? 'Н/Д',
+            $blog->created_by_id ?? 'Н/Д',
         ];
     }
 

@@ -94,7 +94,7 @@ class ServicemanReviewDataTable extends DataTable
         if ($user?->can('backend.serviceman.destroy')) {
             if($reviews->count() > 1) {
                 $builder->setTableId('servicemanreview-table')
-                ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows"/> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows"/> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

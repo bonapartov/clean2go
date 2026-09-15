@@ -21,7 +21,7 @@ class CouponDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->setRowId('id')
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('type', function ($row) {
                 return $row->type . ' : ' . ($row->type == 'fixed'
@@ -107,7 +107,7 @@ class CouponDataTable extends DataTable
 
         return $this->builder()
             ->setTableId('coupon-table')
-            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false])
+            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false])
             ->addColumn(['data' => 'code', 'title' => __('static.coupon.code'), 'orderable' => true, 'searchable' => true])
             ->addColumn(['data' => 'type', 'title' => __('static.coupon.discount'), 'orderable' => false, 'searchable' => false])
             ->addColumn(['data' => 'start_date', 'title' => __('static.coupon.validity'), 'orderable' => false, 'searchable' => false])

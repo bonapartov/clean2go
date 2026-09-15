@@ -40,7 +40,7 @@ class ZoneManagerDataTable extends DataTable
                 ]);
             })
             ->editColumn('role', function ($row) {
-                return $row->getRoleNames()->first() ?? 'N/A';
+                return $row->getRoleNames()->first() ?? 'Н/Д';
             })
             ->editColumn('zones', function ($row) {
                 if ($row->allow_all_zones) {
@@ -53,7 +53,7 @@ class ZoneManagerDataTable extends DataTable
                 return $zones->pluck('name')->implode(', ');
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('action', function ($row) {
                 return view('backend.inc.action', [
@@ -113,7 +113,7 @@ class ZoneManagerDataTable extends DataTable
         
         if ($user->can('backend.zone_manager.destroy')) {
             if($users->count() > 1) {
-                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

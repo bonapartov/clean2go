@@ -39,7 +39,7 @@ class UserReviewDataTable extends DataTable
                 ]);
             })
             ->editColumn('service.title', function ($row) {
-                return $row->service?->title ?? 'N/A';
+                return $row->service?->title ?? 'Н/Д';
             })
 
             ->setRowId('id')
@@ -83,7 +83,7 @@ class UserReviewDataTable extends DataTable
         
         $builder->setTableId('userreview-table');
         if ($user->can('backend.review.destroy')) {
-            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows"/> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows"/> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
         }
 
         $builder->addColumn(['data' => 'consumer.name', 'title' => __('static.serviceman.customer'), 'orderable' => true, 'searchable' => true])

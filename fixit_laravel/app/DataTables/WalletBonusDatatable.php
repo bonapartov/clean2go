@@ -26,10 +26,10 @@ class WalletBonusDatatable extends DataTable
         
         return (new EloquentDataTable($query))
             ->editColumn('name', function ($row) {
-                return $row->name ?? 'N/A'; 
+                return $row->name ?? 'Н/Д'; 
             })
             ->editColumn('description', function ($row) {
-                return $row->description ?? 'N/A'; 
+                return $row->description ?? 'Н/Д'; 
             })
             ->editColumn('status', function ($row) {
                 return view('backend.inc.action', [
@@ -59,7 +59,7 @@ class WalletBonusDatatable extends DataTable
                     : $row->bonus . '%');
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->addColumn('action', function ($row) {
                 return view('backend.inc.action', [
@@ -129,7 +129,7 @@ class WalletBonusDatatable extends DataTable
 
          if ($user->can('backend.wallet_bonus.destroy')) {
             if($walletBonuses->count() > 1) {
-                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+                $builder->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
              }
         }
         $builder

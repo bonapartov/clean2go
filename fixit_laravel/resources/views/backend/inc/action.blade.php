@@ -10,10 +10,10 @@
             $currencySetting = Helpers::getSettings()['general']['default_currency'];
             $currencySymbol = $currencySetting->symbol;
             $symbolPosition = $currencySetting->symbol_position ?? SymbolPositionEnum::LEFT->value;
-            $formattedPrice = $serviceRequest->initial_price ? number_format($serviceRequest->initial_price, 2) : 'N/A';
+            $formattedPrice = $serviceRequest->initial_price ? number_format($serviceRequest->initial_price, 2) : 'Н/Д';
             $priceDisplay = $serviceRequest->initial_price
                 ? ($symbolPosition === SymbolPositionEnum::LEFT->value ? $currencySymbol . ' ' . $formattedPrice : $formattedPrice . ' ' . $currencySymbol)
-                : 'N/A';
+                : 'Н/Д';
         @endphp
         {{-- Custom Job Details (info icon) - opens modal --}}
         <a href="javascript:void(0)" class="booking-icon show-icon" data-bs-toggle="modal"
@@ -61,7 +61,7 @@
                             </div>
                             <div class="detail-row">
                                 <span class="detail-label">{{ __('static.service.provider_name') }}</span>
-                                <span class="detail-value">{{ $serviceRequest->provider?->name ?? 'N/A' }}</span>
+                                <span class="detail-value">{{ $serviceRequest->provider?->name ?? 'Н/Д' }}</span>
                             </div>
                             <div class="detail-row">
                                 <span class="detail-label">{{ __('static.status') }}</span>
@@ -111,9 +111,9 @@
                                         <tr>
                                             <td>{{ Helpers::getSettings()['general']['default_currency']->symbol }}{{ $bid->amount }}
                                             </td>
-                                            <td>{{ $bid->provider->name ?? 'N/A' }}</td>
-                                            <td>{{ $bid->provider->email ?? 'N/A' }}</td>
-                                            <td>{{ $bid->description ?? 'N/A' }}</td>
+                                            <td>{{ $bid->provider->name ?? 'Н/Д' }}</td>
+                                            <td>{{ $bid->provider->email ?? 'Н/Д' }}</td>
+                                            <td>{{ $bid->description ?? 'Н/Д' }}</td>
                                             <td>{{ ucfirst($bid->status) }}</td>
                                         </tr>
                                     @endif

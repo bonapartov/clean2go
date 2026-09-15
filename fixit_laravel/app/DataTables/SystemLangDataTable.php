@@ -22,7 +22,7 @@ class SystemLangDataTable extends DataTable
             ->editColumn('action', 'systemLang.action')
             ->setRowId('id')
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('is_rtl', function ($row) {
                 return view('backend.inc.action', [
@@ -93,7 +93,7 @@ class SystemLangDataTable extends DataTable
         $builder->setTableId('language-table');
         if ($user->can('backend.language.destroy')) {
             if($languages->count() > 1) {
-            $builder ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            $builder ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

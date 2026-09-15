@@ -10,6 +10,8 @@ return [
     'today_special_offers' => 'Специальные предложения дня',
     'delete_item_confirm_title' => 'Удалить?',
     'something_went_wrong_try_again' => 'Что-то пошло не так. Попробуйте ещё раз.',
+    'years' => 'лет',
+    'months' => 'месяцев',
     'location' => [
         'title' => 'Нам нужна ваша геолокация, чтобы улучшить сервис.',
         'use_current_location' => 'Использовать текущее местоположение',

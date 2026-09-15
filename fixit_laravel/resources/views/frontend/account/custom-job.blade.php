@@ -70,7 +70,7 @@
                                                     <div class="job-date">
                                                         <h5 class="date"><i class="iconsax date-icon"
                                                                 icon-name="calendar-1"></i>
-                                                            {{ date('d-M-Y', strtotime($serviceRequest->created_at)) }}
+                                                            {{ \Carbon\Carbon::parse($serviceRequest->created_at)->translatedFormat('d-M-Y') }}
                                                         </h5>
                                                         <i class="iconsax trash-icon" icon-name="trash"
                                                             data-bs-toggle="modal"

@@ -171,7 +171,7 @@ $services = $package->services;
                                                                             <div class="experience">
                                                                                 @if($serviceman?->experience_duration)
                                                                                 <p>{{ $serviceman?->experience_duration}}
-                                                                                    {{ $serviceman?->experience_interval }} {{__('frontend::static.bookings.of_experience')}}
+                                                                                    {{ $serviceman?->experience_interval ? __('frontend::static.' . $serviceman->experience_interval) : '' }} {{__('frontend::static.bookings.of_experience')}}
                                                                                 </p>
                                                                                 @else
                                                                                 <p>

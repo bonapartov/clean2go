@@ -33,10 +33,10 @@ class ProviderTransactionsDataTable extends DataTable
             ->editColumn('type', function ($row) {
                 $labelClass = $row->type === 'credit' ? 'success' : 'danger';
 
-                return '<span class="badge badge-'.$labelClass.'-light">'.ucfirst($row->type).'</span>';
+                return '<span class="badge badge-'.$labelClass.'-light">'.__('static.wallet.' . $row->type).'</span>';
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->setRowId('id')
             ->rawColumns(['type', 'amount', 'created_at']);

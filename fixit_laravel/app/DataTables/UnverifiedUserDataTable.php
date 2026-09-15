@@ -32,7 +32,7 @@ class UnverifiedUserDataTable extends DataTable
                 ]);
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('is_verified', function ($row) {
                 return view('backend.inc.action', [
@@ -44,7 +44,7 @@ class UnverifiedUserDataTable extends DataTable
             })
             ->editColumn('action', function ($row) {
                 if ($row->getRoleNames()->first() == 'Admin') {
-                    return '<p class="text-success">System Reserved</p>';
+                    return '<p class="text-success">Защищено системой</p>';
                 }
 
                 return view('backend.inc.action', [
@@ -113,7 +113,7 @@ public function query(User $model): QueryBuilder
         if ($user?->can('backend.user.destroy')) {
             if($unverifiedUser->count() > 1) {
             $builder->setTableId('user-table')
-            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
         }
     }
         $builder->addColumn(['data' => 'email', 'title' => __('static.name'), 'orderable' => true, 'searchable' => true])

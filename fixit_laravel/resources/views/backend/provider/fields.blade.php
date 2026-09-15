@@ -39,7 +39,7 @@
                         data-placeholder="{{ __('static.provider.select_type') }}"
                         @if (isset($provider)) disabled @endif>
                         <option value=""></option>
-                        @foreach (['company' => 'Company', 'freelancer' => 'Freelancer'] as $key => $option)
+                        @foreach (['company' => __('static.company'), 'freelancer' => __('static.freelancer')] as $key => $option)
                             <option class="option" value="{{ $key }}"
                                 @if (old('type', isset($provider) ? $provider->type : '') == $key) selected @endif>{{ $option }}
                             </option>

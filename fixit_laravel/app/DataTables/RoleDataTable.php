@@ -26,7 +26,7 @@ class RoleDataTable extends DataTable
                 ]);
             })
             ->editColumn('created_at', function ($row) {
-                return date('d-M-Y', strtotime($row->created_at));
+                return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
             ->editColumn('updated_at', function ($row) {
                 return $row->updated_at->diffForHumans();
@@ -71,7 +71,7 @@ class RoleDataTable extends DataTable
         if ($user?->can('backend.role.destroy')) {
             if($roles->count() > 1) {
             $builder->setTableId('role-table')
-            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Select All" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
+            ->addColumn(['data' => 'checkbox', 'title' => '<div class="form-check"><input type="checkbox" class="form-check-input" title="Выбрать все" id="select-all-rows" /> </div>', 'class' => 'title', 'orderable' => false, 'searchable' => false]);
             }
         }
 

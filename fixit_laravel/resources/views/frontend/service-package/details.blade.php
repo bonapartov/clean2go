@@ -205,7 +205,7 @@
                         @endif
                         <div class="danger-light-badge badge">
                             <img src="{{ asset('frontend/images/svg/medal.svg') }}" alt="medal" class="badge-img">
-                            <span>{{ $package?->user?->experience_duration }} {{ $package?->user?->experience_interval }} {{__('frontend::static.servicePackages.of_experience')}}</span>
+                            <span>{{ $package?->user?->experience_duration }} {{ $package?->user?->experience_interval ? __('frontend::static.' . $package->user->experience_interval) : '' }} {{__('frontend::static.servicePackages.of_experience')}}</span>
                         </div>
                         <p>
                             {{__('frontend::static.servicePackages.provider_note')}}
