@@ -1616,6 +1616,10 @@ class Helpers
 
     public static function getServiceByProviderId($providerId)
     {
+        if (empty($providerId)) {
+            return collect();
+        }
+
         $zoneIds = session('zoneIds', []);
 
         $query = Service::query()->where('user_id', $providerId)?->where('status', true);
