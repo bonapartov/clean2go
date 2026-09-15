@@ -35,10 +35,10 @@
           {{__('frontend::static.bookings.address')}}
           </label>
           <p>{{ $serviceAddress['address'] }}
-            ,{{ $serviceAddress['state']['name'] ?? $serviceAddress?->state?->name }}
+            ,{{ $serviceAddress['state']['name'] ?? '' }}
             -
-            {{ $serviceAddress['postal_code'] ?? $serviceAddress?->postal_code }},
-            {{ $serviceAddress['country']['name'] ?? $serviceAddress?->country?->name }}
+            {{ $serviceAddress['postal_code'] ?? '' }},
+            {{ $serviceAddress['country']['name'] ?? '' }}
           </p>
         </div> 
         <div class="address-bottom-box">
