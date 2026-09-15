@@ -382,8 +382,8 @@ class BookingRepository extends BaseRepository
 
         $booking_status_id = Helpers::getbookingStatusIdBySlug(BookingEnumSlug::PENDING);
         $logData = [
-            'title' => 'Pending booking request',
-            'description' => 'New booking is added.',
+            'title' => __('frontend::static.bookings.log_new_request_title'),
+            'description' => __('frontend::static.bookings.log_new_request_desc'),
             'booking_id' => $booking->id,
             'booking_status_id' => $booking_status_id,
         ];
@@ -571,57 +571,57 @@ class BookingRepository extends BaseRepository
                 switch ($booking_status?->slug) {
                     case BookingEnumSlug::PENDING:
                         $logData = [
-                            'title' => 'Booking is Pending',
-                            'description' => 'The booking is in a pending state.',
+                            'title' => __('frontend::static.bookings.log_pending_title'),
+                            'description' => __('frontend::static.bookings.log_pending_desc'),
                         ];
                         break;
 
                     case BookingEnumSlug::ASSIGNED:
                         $logData = [
-                            'title' => 'Booking is Assigned',
-                            'description' => 'The booking has been assigned.',
+                            'title' => __('frontend::static.bookings.log_assigned_title'),
+                            'description' => __('frontend::static.bookings.log_assigned_desc'),
                         ];
                         break;
 
                     case BookingEnumSlug::ON_THE_WAY:
                         $logData = [
-                            'title' => 'Booking is On the Way',
-                            'description' => 'The service provider is on the way to the location.',
+                            'title' => __('frontend::static.bookings.log_on_the_way_title'),
+                            'description' => __('frontend::static.bookings.log_on_the_way_desc'),
                         ];
                         break;
 
                     case BookingEnumSlug::CANCEL:
                         $logData = [
-                            'title' => 'Booking Canceled',
-                            'description' => 'The booking has been canceled.',
+                            'title' => __('frontend::static.bookings.log_cancel_title'),
+                            'description' => __('frontend::static.bookings.log_cancel_desc'),
                         ];
                         break;
 
                     case BookingEnumSlug::ON_HOLD:
                         $logData = [
-                            'title' => 'Booking On Hold',
-                            'description' => 'The booking is on hold.',
+                            'title' => __('frontend::static.bookings.log_on_hold_title'),
+                            'description' => __('frontend::static.bookings.log_on_hold_desc'),
                         ];
                         break;
 
                     case BookingEnumSlug::START_AGAIN:
                         $logData = [
-                            'title' => 'Booking Restarted',
-                            'description' => 'The booking has been restarted.',
+                            'title' => __('frontend::static.bookings.log_start_again_title'),
+                            'description' => __('frontend::static.bookings.log_start_again_desc'),
                         ];
                         break;
 
                     case BookingEnumSlug::ON_GOING:
                         $logData = [
-                            'title' => 'Booking On Going',
-                            'description' => 'The booking has been on going.',
+                            'title' => __('frontend::static.bookings.log_on_going_title'),
+                            'description' => __('frontend::static.bookings.log_on_going_desc'),
                         ];
                         break;
 
                     case BookingEnumSlug::COMPLETED:
                         $logData = [
-                            'title' => 'Booking Completed',
-                            'description' => 'The booking has been completed.',
+                            'title' => __('frontend::static.bookings.log_completed_title'),
+                            'description' => __('frontend::static.bookings.log_completed_desc'),
                         ];
                         break;
 
@@ -629,13 +629,13 @@ class BookingRepository extends BaseRepository
                         $roleName = Helpers::getCurrentRoleName();
                         if ($roleName == RoleEnum::PROVIDER) {
                             $logData = [
-                                'title' => 'Booking Accepted',
-                                'description' => 'The booking has been accepted by the provider.',
+                                'title' => __('frontend::static.bookings.log_accepted_title'),
+                                'description' => __('frontend::static.bookings.log_accepted_provider_desc'),
                             ];
                         } else {
                             $logData = [
-                                'title' => 'Booking Accepted',
-                                'description' => 'The booking has been accepted by the serviceman.',
+                                'title' => __('frontend::static.bookings.log_accepted_title'),
+                                'description' => __('frontend::static.bookings.log_accepted_serviceman_desc'),
                             ];
                         }
                         break;
@@ -1201,9 +1201,9 @@ class BookingRepository extends BaseRepository
                         'booking_status_id' => $booking_status_id,
                     ]);
                     $logData = [
-                        'title' => 'Booking is Assigned',
+                        'title' => __('frontend::static.bookings.log_assigned_title'),
                         'booking_id' => $booking->id,
-                        'description' => 'The booking has been assigned.',
+                        'description' => __('frontend::static.bookings.log_assigned_desc'),
                         'booking_status_id' => $booking_status_id,
                     ];
                     $this->bookingStatusLog->create($logData);
@@ -1280,7 +1280,7 @@ class BookingRepository extends BaseRepository
 
             $logData = [
                 'booking_id' => $booking->id,
-                'title' => 'Extra Charge Added',
+                'title' => __('frontend::static.bookings.log_extra_charge_title'),
                 'description' => $request->title,
                 'booking_status_id' => $booking->booking_status_id,
             ];

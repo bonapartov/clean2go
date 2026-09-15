@@ -222,8 +222,8 @@ trait BookingTrait
         }
 
         $logData = [
-            'title' => 'Pending booking request',
-            'description' => 'New booking is added.',
+            'title' => __('frontend::static.bookings.log_new_request_title'),
+            'description' => __('frontend::static.bookings.log_new_request_desc'),
             'booking_id' => $booking->id,
             'booking_status_id' => $bookingStatusId,
         ];
@@ -492,8 +492,8 @@ trait BookingTrait
         
         // Create status log for parent booking
         $logData = [
-            'title' => 'Pending scheduled booking request',
-            'description' => 'New scheduled booking is added with ' . $scheduledCount . ' service instances.',
+            'title' => __('frontend::static.bookings.log_new_scheduled_request_title'),
+            'description' => __('frontend::static.bookings.log_new_scheduled_request_desc', ['count' => $scheduledCount]),
             'booking_id' => $parentBooking->id,
             'booking_status_id' => $bookingStatusId,
         ];
@@ -620,8 +620,8 @@ trait BookingTrait
         
         // Create status log for child booking
         $logData = [
-            'title' => 'Pending scheduled service instance',
-            'description' => 'Scheduled service instance for ' . ($dateTime ? Carbon::parse($dateTime)->format('Y-m-d H:i') : 'date/time'),
+            'title' => __('frontend::static.bookings.log_scheduled_instance_title'),
+            'description' => __('frontend::static.bookings.log_scheduled_instance_desc', ['datetime' => $dateTime ? Carbon::parse($dateTime)->format('Y-m-d H:i') : __('frontend::static.bookings.date_and_time')]),
             'booking_id' => $childBooking->id,
             'booking_status_id' => $bookingStatusId,
         ];
@@ -648,57 +648,57 @@ trait BookingTrait
                 switch ($booking_status?->name) {
                     case BookingEnum::PENDING:
                         $logData = [
-                            'title' => 'Booking is Pending',
-                            'description' => 'The booking is in a pending state.',
+                            'title' => __('frontend::static.bookings.log_pending_title'),
+                            'description' => __('frontend::static.bookings.log_pending_desc'),
                         ];
                         break;
 
                     case BookingEnum::ASSIGNED:
                         $logData = [
-                            'title' => 'Booking is Assigned',
-                            'description' => 'The booking has been assigned.',
+                            'title' => __('frontend::static.bookings.log_assigned_title'),
+                            'description' => __('frontend::static.bookings.log_assigned_desc'),
                         ];
                         break;
 
                     case BookingEnum::ON_THE_WAY:
                         $logData = [
-                            'title' => 'Booking is On the Way',
-                            'description' => 'The service provider is on the way to the location.',
+                            'title' => __('frontend::static.bookings.log_on_the_way_title'),
+                            'description' => __('frontend::static.bookings.log_on_the_way_desc'),
                         ];
                         break;
 
                     case BookingEnum::CANCEL:
                         $logData = [
-                            'title' => 'Booking Canceled',
-                            'description' => 'The booking has been canceled.',
+                            'title' => __('frontend::static.bookings.log_cancel_title'),
+                            'description' => __('frontend::static.bookings.log_cancel_desc'),
                         ];
                         break;
 
                     case BookingEnum::ON_HOLD:
                         $logData = [
-                            'title' => 'Booking On Hold',
-                            'description' => 'The booking is on hold.',
+                            'title' => __('frontend::static.bookings.log_on_hold_title'),
+                            'description' => __('frontend::static.bookings.log_on_hold_desc'),
                         ];
                         break;
 
                     case BookingEnum::START_AGAIN:
                         $logData = [
-                            'title' => 'Booking Restarted',
-                            'description' => 'The booking has been restarted.',
+                            'title' => __('frontend::static.bookings.log_start_again_title'),
+                            'description' => __('frontend::static.bookings.log_start_again_desc'),
                         ];
                         break;
 
                     case BookingEnum::ON_GOING:
                         $logData = [
-                            'title' => 'Booking On Going',
-                            'description' => 'The booking has been on going.',
+                            'title' => __('frontend::static.bookings.log_on_going_title'),
+                            'description' => __('frontend::static.bookings.log_on_going_desc'),
                         ];
                         break;
 
                     case BookingEnum::COMPLETED:
                         $logData = [
-                            'title' => 'Booking Completed',
-                            'description' => 'The booking has been completed.',
+                            'title' => __('frontend::static.bookings.log_completed_title'),
+                            'description' => __('frontend::static.bookings.log_completed_desc'),
                         ];
                         break;
 
@@ -706,13 +706,13 @@ trait BookingTrait
                         $roleName = Helpers::getCurrentRoleName();
                         if ($roleName == RoleEnum::PROVIDER) {
                             $logData = [
-                                'title' => 'Booking Accepted',
-                                'description' => 'The booking has been accepted by the provider.',
+                                'title' => __('frontend::static.bookings.log_accepted_title'),
+                                'description' => __('frontend::static.bookings.log_accepted_provider_desc'),
                             ];
                         } else {
                             $logData = [
-                                'title' => 'Booking Accepted',
-                                'description' => 'The booking has been accepted by the serviceman.',
+                                'title' => __('frontend::static.bookings.log_accepted_title'),
+                                'description' => __('frontend::static.bookings.log_accepted_serviceman_desc'),
                             ];
                         }
                         break;
