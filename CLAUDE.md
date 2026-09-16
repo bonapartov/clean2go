@@ -141,3 +141,40 @@ Key routing rules:
 - Save progress → invoke /context-save
 - Resume context → invoke /context-restore
 - Author a backlog-ready spec/issue → invoke /spec
+
+## Git Workflow
+
+`main` is the trunk and must always reflect current, working state — it is not
+a branch that sits untouched while real development happens elsewhere for
+weeks. As of 2026-09-16, `main` had drifted to the very first commit
+("Initial commit: Fixit → Clean2Go") while 96 real commits accumulated on a
+single long-running branch across many sessions; that branch was fast-forward
+merged into `main` to fix this. Don't let it happen again:
+
+- **One branch per task.** Start a new branch for each distinct piece of work
+  (a feature, a bug fix, a batch of related fixes done in one sitting). Do
+  not keep adding unrelated work to a branch that already merged-worthy —
+  cut a new branch instead, even mid-session if the topic changes.
+- **Merge promptly.** Once a branch's work is verified (tested, reviewed),
+  merge it into `main` and move on. Don't let finished work sit unmerged
+  "just in case" — that's how `main` goes stale.
+- **Merge mechanics:**
+  - If the branch has any real divergence from `main` (i.e.
+    `git merge-base --is-ancestor main <branch>` is false), merge via PR —
+    `gh pr create`, review the diff, `gh pr merge`. Never force-push over
+    divergent history on `main`.
+  - If the branch is a pure fast-forward (branched from `main`'s current tip,
+    zero commits unique to `main`), a direct
+    `git push origin <branch>:main` is fine — it's mechanically identical to
+    a fast-forward PR merge, just without the GitHub UI wrapper. This is the
+    common case for Claude Code's own auto-created `claude/*` session
+    branches.
+  - `gh` CLI is **not installed** in this dev environment as of 2026-09-16.
+    Install it (`sudo apt install gh && gh auth login`) before relying on the
+    PR-based path above for a branch with real divergence; until then, use
+    the GitHub web UI for anything that isn't a clean fast-forward.
+- **Clean up after merging.** Delete a branch once it's merged into `main` —
+  except never delete the branch a running session currently has checked out.
+- Claude Code's auto-generated branch names (`claude/<slug>-<id>`) are fine to
+  keep using — the naming isn't the problem, letting one branch live for many
+  unrelated sessions is.
