@@ -57,7 +57,7 @@ class ProviderReportRepository extends BaseRepository
 
         if($request->start_end_date)
         {
-            [$start_date, $end_date] = explode(' to ', $request->start_end_date);
+            [$start_date, $end_date] = explode(' — ', $request->start_end_date);
             $providers =  $providers->whereBetween('created_at', [$start_date, $end_date]);
         }
         $providers = $providers->paginate(7);

@@ -195,7 +195,7 @@
                 if (urlParams.toString()) {
 
                     if (urlParams.has('start_date') && urlParams.has('end_date')) {
-                        $('#dateRange').val(urlParams.get('start_date') + " to " + urlParams.get('end_date'));
+                        $('#dateRange').val(urlParams.get('start_date') + " — " + urlParams.get('end_date'));
                     }
 
                     if (urlParams.has('providers')) {
@@ -226,7 +226,7 @@
                         onChange: function(selectedDates, dateStr) {
                             if (!dateStr) {
                                 $('#dateRangeError').hide();
-                            } else if (dateStr.split(' to ').length < 2) {
+                            } else if (dateStr.split(' — ').length < 2) {
                                 $('#dateRangeError').text(
                                     'Both start date and end date are required').show();
                             } else {
@@ -258,7 +258,7 @@
                     let advertisementScreen = $('#advertisementScreen').val();
 
                     if (dateRange) {
-                        const dates = dateRange.split(' to ');
+                        const dates = dateRange.split(' — ');
                         params.start_date = dates[0];
                         params.end_date = dates[1];
                     }
@@ -302,7 +302,7 @@
             $(this).find('input[name], select[name]').not('#exportFormat').remove();
 
             if (dateRange) {
-                const dates = dateRange.split(' to ');
+                const dates = dateRange.split(' — ');
                 $(this).append(`<input type="hidden" name="start_date" value="${dates[0]}">`);
                 $(this).append(`<input type="hidden" name="end_date" value="${dates[1]}">`);
             }

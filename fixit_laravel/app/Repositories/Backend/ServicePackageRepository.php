@@ -112,7 +112,7 @@ class ServicePackageRepository extends BaseRepository
 
             if ($this->isProviderCanCreate()) {
                 $locale = $request->locale ?? app()->getLocale();
-                [$start_date, $end_date] = explode(' to ', $request->start_end_date);
+                [$start_date, $end_date] = explode(' — ', $request->start_end_date);
                 $start_date = DateTime::createFromFormat('d-m-Y', $start_date)->format('Y-m-d');
                 $end_date = DateTime::createFromFormat('d-m-Y', $end_date)->format('Y-m-d');
                 $service_package = $this->model->create([
@@ -187,7 +187,7 @@ class ServicePackageRepository extends BaseRepository
         try {
             $locale = $request->locale ?? app()->getLocale();
             if (!is_null($request->start_end_date)) {
-                [$start_date, $end_date] = explode(' to ', $request->start_end_date);
+                [$start_date, $end_date] = explode(' — ', $request->start_end_date);
                 $start_date = \Carbon\Carbon::createFromFormat('d-m-Y', $start_date)->format('Y-m-d');
                 $end_date = \Carbon\Carbon::createFromFormat('d-m-Y', $end_date)->format('Y-m-d');
                 $request->merge(['started_at' => $start_date, 'ended_at' => $end_date]);

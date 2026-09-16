@@ -49,7 +49,7 @@
                         <label for="start_end_date">{{ __('static.report.select_date') }}</label>
                         <input type="text" class="form-control filter-dropdown" id="start_end_date" name="start_end_date"
                             placeholder="{{ __('static.service_package.select_date') }}"
-                            value="{{ request('sort') == 'custom' && $start_date && $end_date ? $start_date->format('d-m-Y') . ' to ' . $end_date->format('d-m-Y') : '' }}">
+                            value="{{ request('sort') == 'custom' && $start_date && $end_date ? $start_date->format('d-m-Y') . ' — ' . $end_date->format('d-m-Y') : '' }}">
                     </div>
                 </form>
             </div>
@@ -1139,7 +1139,7 @@
                 const selectedDateRange = $(this).val();
 
                 if (selectedDateRange) {
-                    const dateRange = selectedDateRange.split(' to ');
+                    const dateRange = selectedDateRange.split(' — ');
 
                     if (dateRange.length === 2) {
                         const startDate = formatDate(dateRange[0]);

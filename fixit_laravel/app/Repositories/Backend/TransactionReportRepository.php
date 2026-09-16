@@ -52,7 +52,7 @@ class TransactionReportRepository extends BaseRepository
 
         if($request->start_end_date)
         {
-            [$start_date, $end_date] = explode(' to ', $request->start_end_date);
+            [$start_date, $end_date] = explode(' — ', $request->start_end_date);
             $transactions =  $transactions->whereBetween('created_at', [$start_date, $end_date]);
         }
 

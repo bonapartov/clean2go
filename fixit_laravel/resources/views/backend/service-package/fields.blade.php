@@ -216,7 +216,7 @@
     <div class="col-md-10">
         @if (isset($service_package))
             <input class="form-control" id="date-range"
-                value="{{ \Carbon\Carbon::parse(@$service_package->started_at)->format('d-m-Y') }} to {{ \Carbon\Carbon::parse(@$service_package->ended_at)->format('d-m-Y') }}"
+                value="{{ \Carbon\Carbon::parse(@$service_package->started_at)->format('d-m-Y') }} — {{ \Carbon\Carbon::parse(@$service_package->ended_at)->format('d-m-Y') }}"
                 name="start_end_date" placeholder="{{ __('static.service_package.select_date') }}">
         @else
             <input class="form-control" id="date-range" name="start_end_date"

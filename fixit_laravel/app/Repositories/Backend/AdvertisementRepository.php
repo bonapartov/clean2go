@@ -60,7 +60,7 @@ class AdvertisementRepository extends BaseRepository
             $locale = $request->locale ?? app()->getLocale();
 
             if($request->has('start_end_date')){
-                [$start_date, $end_date] = explode(' to ', $request->start_end_date);
+                [$start_date, $end_date] = explode(' — ', $request->start_end_date);
                 $start_date = DateTime::createFromFormat('d-m-Y', $start_date)->format('Y-m-d');
                 $end_date = DateTime::createFromFormat('d-m-Y', $end_date)->format('Y-m-d');
             }
@@ -255,7 +255,7 @@ class AdvertisementRepository extends BaseRepository
             }
 
             if($request->has('start_end_date')){
-                [$start_date, $end_date] = explode(' to ', $request->start_end_date);
+                [$start_date, $end_date] = explode(' — ', $request->start_end_date);
                 $start_date = DateTime::createFromFormat('d-m-Y', $start_date)->format('Y-m-d');
                 $end_date = DateTime::createFromFormat('d-m-Y', $end_date)->format('Y-m-d');
             }

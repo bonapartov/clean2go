@@ -35,7 +35,7 @@ class CouponRepository extends BaseRepository
             $start_date = null;
             $end_date = null;
             if ($request->is_expired == 1) {
-                [$start_date, $end_date] = explode(' to ', $request->start_end_date);
+                [$start_date, $end_date] = explode(' — ', $request->start_end_date);
                 $start_date = DateTime::createFromFormat('d-m-Y', $start_date)->format('Y-m-d');
                 $end_date = DateTime::createFromFormat('d-m-Y', $end_date)->format('Y-m-d');
             }
@@ -92,7 +92,7 @@ class CouponRepository extends BaseRepository
         try {
 
             if ($request->is_expired == 1) {
-                [$date, $till_date] = explode(' to ', $request->start_end_date);
+                [$date, $till_date] = explode(' — ', $request->start_end_date);
             }
             $coupon = $this->model->findOrFail($id);
             if ($request->is_expired == false) {

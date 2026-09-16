@@ -380,7 +380,7 @@ $(function() {
             return;
         }
 
-        const [startDate, endDate] = $('#range-date').val().split(' to ');
+        const [startDate, endDate] = $('#range-date').val().split(' — ');
         const url = `{{ route('frontend.account.wallet') }}?start_date=${startDate}&end_date=${endDate}`;
                     $('#wallet-data').DataTable().ajax.url(url).load();
                     $('#range-date').val(dateRange);

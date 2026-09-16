@@ -260,7 +260,7 @@
                             <label class="col-md-2" for="start_end_date">{{ __('static.advertisement.select_date') }} <span class="required-span">*</span></label>
                             <div class="col-md-10">
                                 @if (isset($advertisement))
-                                    <input class="form-control" id="date-range" value="{{ \Carbon\Carbon::parse($advertisement->start_date)->format('d-m-Y') }} to {{ \Carbon\Carbon::parse($advertisement->end_date)->format('d-m-Y') }}" name="start_end_date" placeholder="{{ __('static.common.select_date_placeholder') }}">
+                                    <input class="form-control" id="date-range" value="{{ \Carbon\Carbon::parse($advertisement->start_date)->format('d-m-Y') }} — {{ \Carbon\Carbon::parse($advertisement->end_date)->format('d-m-Y') }}" name="start_end_date" placeholder="{{ __('static.common.select_date_placeholder') }}">
                                 @else
                                     <input class="form-control" id="date-range" name="start_end_date" data-min-date="today" placeholder="{{ __('static.common.select_date_placeholder') }}">
                                 @endif
@@ -408,7 +408,7 @@
                     let totalPrice = 0;
 
 
-                    let dateRange = $('#date-range').val().split(" to ");
+                    let dateRange = $('#date-range').val().split(" — ");
                     if (dateRange.length === 2) {
                         let startParts = dateRange[0].split("-");
                         let endParts = dateRange[1].split("-");
