@@ -31,4 +31,6 @@ class Session {
   String managementURL = 'managementURL';
   bool isPlanActiveBool = false;
   String isPlanActive = "isPlanActive";
+  String freelancerEmployeeNoticeDismissedCount =
+      'freelancerEmployeeNoticeDismissedCount';
 }

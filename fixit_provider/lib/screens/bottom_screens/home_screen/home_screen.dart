@@ -84,6 +84,12 @@ class _HomeScreenState extends State<HomeScreen>
                             ])
                                 .padding(horizontal: Sizes.s20)
                                 .width(MediaQuery.sizeOf(context).width),
+                          if (!isServiceman &&
+                              isFreelancer &&
+                              (dashBoardModel?.totalServicemen ?? 0) >= 2)
+                            FreelancerEmployeeNotice(
+                                servicemanCount:
+                                    dashBoardModel!.totalServicemen!),
                           if (isServiceman) const ProviderInfo(),
                           WalletBalanceLayout(
                               onTap: () => value.onWithdraw(context)),

@@ -8,6 +8,7 @@ class UserModel {
   int? phone;
   String? code;
   int? providerId;
+  int? shadowServicemanId;
   int? status;
   int? isFeatured;
   int? isVerified;
@@ -44,6 +45,7 @@ class UserModel {
       this.phone,
       this.code,
       this.providerId,
+      this.shadowServicemanId,
       this.status,
       this.isFeatured,
       this.isVerified,
@@ -79,6 +81,7 @@ class UserModel {
     phone = json['phone'];
     code = json['code'].toString();
     providerId = json['provider_id'];
+    shadowServicemanId = json['shadow_serviceman_id'];
     referralCode = json['referral_code'];
     status = json['status'];
     isFeatured = json['is_featured'];
@@ -150,6 +153,7 @@ class UserModel {
     data['phone'] = phone;
     data['code'] = code;
     data['provider_id'] = providerId;
+    data['shadow_serviceman_id'] = shadowServicemanId;
     data['status'] = status;
     data['is_featured'] = isFeatured;
     data['is_verified'] = isVerified;

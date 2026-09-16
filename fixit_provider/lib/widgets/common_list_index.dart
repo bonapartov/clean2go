@@ -55,6 +55,7 @@ export '../widgets/app_bar_common.dart';
 export '../widgets/dotted_line.dart';
 export '../widgets/custom_painters.dart';
 export '../widgets/service_available_layout.dart';
+export '../widgets/freelancer_employee_notice.dart';
 export '../widgets/drop_down_common.dart';
 export '../widgets/divider_common.dart';
 export '../widgets/bottom_sheet_buttons_common.dart';

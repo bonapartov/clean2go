@@ -39,6 +39,11 @@ class CommonApiProvider extends ChangeNotifier {
           userModel = UserModel.fromJson(value.data);
           FirebaseMessaging messaging = FirebaseMessaging.instance;
           messaging.subscribeToTopic("user_${userModel?.id}");
+          if (userModel?.shadowServicemanId != null &&
+              userModel!.shadowServicemanId != 0) {
+            messaging
+                .subscribeToTopic("user_${userModel!.shadowServicemanId}");
+          }
           messaging.subscribeToTopic("providers");
           messaging.subscribeToTopic("createProvider_${userModel?.id}");
           log("ajksfhajksfhasfjkahsfas fa      ----   user_${userModel?.id}");
