@@ -147,7 +147,7 @@
                                 @endphp
                                 @if ($imageUrl)
                                     <img src="{{ $imageUrl }}" class="img-fluid service-image"
-                                        alt="{{ $childBooking?->consumer?->name ?? 'User Image' }}">
+                                        alt="{{ $childBooking?->consumer?->name ?? __('static.common.user_image') }}">
                                 @else
                                     <div class="initial-letter">
                                         <span>{{ mb_strtoupper(mb_substr($childBooking?->consumer?->name ?? '', 0, 1)) }}</span>
@@ -190,7 +190,7 @@
                                 @endphp
                                 @if ($imageUrl)
                                     <img src="{{ $imageUrl }}" class="img-fluid"
-                                        alt="{{ $childBooking?->provider?->name ?? 'User Image' }}">
+                                        alt="{{ $childBooking?->provider?->name ?? __('static.common.user_image') }}">
                                 @else
                                     <div class="initial-letter">
                                         <span>{{ mb_strtoupper(mb_substr($childBooking?->provider?->name ?? '', 0, 1)) }}</span>
