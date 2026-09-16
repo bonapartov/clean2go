@@ -945,6 +945,8 @@ return [
         'isMultipleServiceman' => 'Несколько мастеров',
         'duration_unit' => 'Единица времени',
         'select_duration_unit' => 'Выберите единицу времени',
+        'duration_unit_hours' => 'Часы',
+        'duration_unit_minutes' => 'Минуты',
         'required_servicemen' => 'Требуется мастеров',
         'enter_required_servicemen' => 'Введите кол-во мастеров',
         'faqs' => "Частые вопросы (FAQ)",
@@ -1789,7 +1791,7 @@ return [
         'map_instruction_heading' => 'Инструкции',
     ],
 
-    'data_not_found' => 'Data Not Found!',
+    'data_not_found' => 'Данные не найдены!',
     'social_links' => [
         'create' => 'Создать социальную ссылку',
         'add' => 'Добавить социальную ссылку',
