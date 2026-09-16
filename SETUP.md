@@ -15,8 +15,9 @@
 ```bash
 git clone https://github.com/bonapartov/clean2go.git
 cd clean2go/fixit_laravel
-git checkout claude/continue-russia-roadmap-Hl8t3
 ```
+
+`main` — актуальная ветка, отдельно переключаться не нужно.
 
 ### 2. Установить зависимости
 
@@ -73,14 +74,8 @@ php artisan serve
 
 ---
 
-## Текущая ветка разработки
+## Ветки
 
-`claude/continue-russia-roadmap-Hl8t3`
-
-Последние изменения (Sprint 6):
-- Карта зон на странице /backend/zone
-- Дублирование зон
-- Автозаполнение зон и комиссии при создании услуги
-- Единое поле загрузки изображения для услуги
-- Русские переводы DataTables
-- Исправлен ERR_TOO_MANY_REDIRECTS
+`main` — актуальный код, всегда в рабочем состоянии. Новая задача = новая
+короткоживущая ветка от `main`, мержится и удаляется после проверки —
+не копится месяцами. Подробные правила: `CLAUDE.md` → раздел "Git Workflow".
