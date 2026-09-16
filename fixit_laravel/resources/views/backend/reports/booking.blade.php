@@ -19,156 +19,160 @@
             enctype="multipart/form-data">
             @method('POST')
             @csrf
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="p-sticky">
-                        <div class="contentbox">
-                            <div class="inside">
-                                <div class="contentbox-title">
-                                    <h3>{{ __('static.report.filter') }}</h3>
-                                    <button type="button" class="btn clear-btn" style="display: none;">{{ __('static.common.clear_all') }}</button>
-                                </div>
-                                <div class="rider-height custom-scrollbar">
-                                    <div class="form-group">
-                                        <label for="provider">{{ __('static.report.provider') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="provider"
-                                            name="provider[]" multiple
-                                            data-placeholder="{{ __('static.report.select_provider') }}">
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($providers as $provider)
-                                                @php
-                                                    $media = $provider->getFirstMedia('image');
-                                                    $imageUrl = $media
-                                                        ? $media->getUrl()
-                                                        : mb_strtoupper(mb_substr($provider?->name, 0, 1));
-                                                @endphp
-                                                <option value="{{ $provider->id }}" sub-title="{{ $provider->email }}"
-                                                    image="{{ $imageUrl }}">
-                                                    {{ $provider->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+            <div class="contentbox mb-4">
+                <div class="inside">
+                    <div class="contentbox-title">
+                        <h3>{{ __('static.report.filter') }}</h3>
+                        <button type="button" class="btn clear-btn" style="display: none;">{{ __('static.common.clear_all') }}</button>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="provider">{{ __('static.report.provider') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="provider"
+                                    name="provider[]" multiple
+                                    data-placeholder="{{ __('static.report.select_provider') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($providers as $provider)
+                                        @php
+                                            $media = $provider->getFirstMedia('image');
+                                            $imageUrl = $media
+                                                ? $media->getUrl()
+                                                : mb_strtoupper(mb_substr($provider?->name, 0, 1));
+                                        @endphp
+                                        <option value="{{ $provider->id }}" sub-title="{{ $provider->email }}"
+                                            image="{{ $imageUrl }}">
+                                            {{ $provider->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="user">{{ __('static.report.user') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="user"
-                                            name="user[]" multiple
-                                            data-placeholder="{{ __('static.report.select_user') }}">
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($users as $user)
-                                                @php
-                                                    $media = $user->getFirstMedia('image');
-                                                    $imageUrl = $media
-                                                        ? $media->getUrl()
-                                                        : mb_strtoupper(mb_substr($user?->name, 0, 1));
-                                                @endphp
-                                                <option value="{{ $user->id }}" sub-title="{{ $user->email }}"
-                                                    image="{{ $imageUrl }}">
-                                                    {{ $user->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="user">{{ __('static.report.user') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="user"
+                                    name="user[]" multiple
+                                    data-placeholder="{{ __('static.report.select_user') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($users as $user)
+                                        @php
+                                            $media = $user->getFirstMedia('image');
+                                            $imageUrl = $media
+                                                ? $media->getUrl()
+                                                : mb_strtoupper(mb_substr($user?->name, 0, 1));
+                                        @endphp
+                                        <option value="{{ $user->id }}" sub-title="{{ $user->email }}"
+                                            image="{{ $imageUrl }}">
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="ride_status">{{ __('static.report.booking_status') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all"
-                                            id="booking_status" name="booking_status[]" multiple
-                                            data-placeholder="{{ __('static.report.select_booking_status') }}">
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($bookingStatus as $status)
-                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="ride_status">{{ __('static.report.booking_status') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all"
+                                    id="booking_status" name="booking_status[]" multiple
+                                    data-placeholder="{{ __('static.report.select_booking_status') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($bookingStatus as $status)
+                                        <option value="{{ $status->id }}">{{ Helpers::formatBookingStatusName($status) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="payment_status">{{ __('static.report.payment_status') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all"
-                                            id="payment_status" name="payment_status[]" multiple
-                                            data-placeholder="{{ __('static.report.select_payment_status') }}">
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($paymentStatus as $status)
-                                                <option value="{{ $status }}">{{ $status }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="payment_status">{{ __('static.report.payment_status') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all"
+                                    id="payment_status" name="payment_status[]" multiple
+                                    data-placeholder="{{ __('static.report.select_payment_status') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($paymentStatus as $status)
+                                        <option value="{{ $status }}">{{ Helpers::formatPaymentStatus($status) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="start_end_date">{{ __('static.report.select_date') }}</label>
-                                        <input type="text" class="form-control filter-dropdown" id="date-range"
-                                            name="start_end_date"
-                                            placeholder="{{ __('static.service_package.select_date') }}">
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="start_end_date">{{ __('static.report.select_date') }}</label>
+                                <input type="text" class="form-control filter-dropdown" id="date-range"
+                                    name="start_end_date"
+                                    placeholder="{{ __('static.service_package.select_date') }}">
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="service">{{ __('static.report.service') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="service"
-                                            name="service[]" multiple
-                                            data-placeholder="{{ __('static.report.select_service') }}">
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($services as $service)
-                                                @php
-                                                    $locale = app()->getLocale();
-                                                    $existingImages = $service
-                                                        ->getMedia('thumbnail')
-                                                        ->filter(function ($media) use ($locale) {
-                                                            return $media->getCustomProperty('language') === $locale;
-                                                        })
-                                                        ->first();
-                                                @endphp
-                                                <option value="{{ $service->id }}"
-                                                    image="{{ $existingImages ? $existingImages->getUrl() : '' }}">
-                                                    {{ $service->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="service">{{ __('static.report.service') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="service"
+                                    name="service[]" multiple
+                                    data-placeholder="{{ __('static.report.select_service') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($services as $service)
+                                        @php
+                                            $locale = app()->getLocale();
+                                            $existingImages = $service
+                                                ->getMedia('thumbnail')
+                                                ->filter(function ($media) use ($locale) {
+                                                    return $media->getCustomProperty('language') === $locale;
+                                                })
+                                                ->first();
+                                        @endphp
+                                        <option value="{{ $service->id }}"
+                                            image="{{ $existingImages ? $existingImages->getUrl() : '' }}">
+                                            {{ $service->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-9">
-                    <div class="contentbox">
-                        <div class="inside">
-                            <div class="contentbox-title">
-                                <h3>{{ __('static.report.booking_reports') }}</h3>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                                    data-bs-target="#reportExportModal">
-                                    {{ __('static.report.export') }}
-                                    <i class="ri-upload-line"></i>
-                                </button>
-                            </div>
-                            <div class="col">
-                                <div class="booking-report-table table-main template-table m-0 loader-table">
-                                    <div class="table-responsive custom-scrollbar m-0">
-                                        <table class="table" id="bookingTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>{{ __('static.report.booking_number') }}</th>
-                                                    <th>{{ __('static.report.provider') }}</th>
-                                                    <th>{{ __('static.report.user') }}</th>
-                                                    <th>{{ __('static.report.booking_status') }}</th>
-                                                    <th>{{ __('static.report.payment_method') }}</th>
-                                                    <th>{{ __('static.report.payment_status') }}</th>
-                                                    <th>{{ __('static.report.service') }}</th>
-                                                    <th>{{ __('static.report.amount') }}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <div class="report-loader-wrapper" style="display:none;">
-                                                    <div class="loader"></div>
-                                                </div>
-                                            </tbody>
-                                        </table>
-                                        <nav>
-                                            <ul class="pagination justify-content-center mt-0 mb-3" id="report-pagination">
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
+            </div>
+            <div class="contentbox">
+                <div class="inside">
+                    <div class="contentbox-title">
+                        <h3>{{ __('static.report.booking_reports') }}</h3>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#reportExportModal">
+                            {{ __('static.report.export') }}
+                            <i class="ri-upload-line"></i>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <div class="booking-report-table table-main template-table m-0 loader-table">
+                            <div class="table-responsive custom-scrollbar m-0">
+                                <table class="table" id="bookingTable">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ __('static.report.booking_number') }}</th>
+                                            <th>{{ __('static.report.provider') }}</th>
+                                            <th>{{ __('static.report.user') }}</th>
+                                            <th>{{ __('static.report.booking_status') }}</th>
+                                            <th>{{ __('static.report.payment_method') }}</th>
+                                            <th>{{ __('static.report.payment_status') }}</th>
+                                            <th>{{ __('static.report.service') }}</th>
+                                            <th>{{ __('static.report.amount') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <div class="report-loader-wrapper" style="display:none;">
+                                            <div class="loader"></div>
+                                        </div>
+                                    </tbody>
+                                </table>
+                                <nav>
+                                    <ul class="pagination justify-content-center mt-0 mb-3" id="report-pagination">
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>

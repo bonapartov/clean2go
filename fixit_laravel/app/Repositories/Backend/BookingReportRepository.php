@@ -58,7 +58,7 @@ class BookingReportRepository extends BaseRepository
             $bookings =  $bookings->whereBetween('created_at', [$start_date, $end_date]);
         }
 
-        $bookings = $bookings->paginate(5);
+        $bookings = $bookings->paginate(10);
         $bookingReportTable = $this->getbookingReportTable($bookings);
 
         return response()->json([
@@ -82,12 +82,12 @@ class BookingReportRepository extends BaseRepository
                         <td>" . $booking?->consumer?->name . "</td>
                         <td>
                             <div class='badge badge-" . $booking?->booking_status?->name . "'>
-                                " . ucfirst($booking?->booking_status?->name) . "</div>
+                                " . Helpers::formatBookingStatusName($booking?->booking_status) . "</div>
                         </td>
-                        <td>" . ucfirst($booking?->payment_method) . "</td>
+                        <td>" . Helpers::formatPaymentMethod($booking?->payment_method) . "</td>
                         <td>
                             <div class='badge badge-" . $booking?->payment_status . "'>
-                                " . ucfirst($booking?->payment_status) . "</div>
+                                " . Helpers::formatPaymentStatus($booking?->payment_status) . "</div>
                         </td>
                         <td>" . $booking?->service?->title . "</td>
                         <td>" . Helpers::getDefaultCurrency()->symbol . " " . $booking?->total . "</td>

@@ -16,104 +16,106 @@
             enctype="multipart/form-data">
             @method('POST')
             @csrf
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="p-sticky">
-                        <div class="contentbox">
-                            <div class="inside">
-                                <div class="contentbox-title">
-                                    <h3>{{ __('static.report.filter') }}</h3>
-                                    <button type="button" class="btn clear-btn" style="display: none;">{{ __('static.common.clear_all') }}</button>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="provider">{{ __('static.report.provider') }}</label>
-                                    <select class="select-2 form-control filter-dropdown disable-all" id="provider" name="provider[]" multiple data-placeholder="{{ __('static.report.select_provider') }}">
-                                        <option value="all">{{ __('static.report.all') }}</option>
-                                        @foreach ($providers as $provider)
-                                            <option value="{{ $provider->id }}" sub-title="{{ $provider->email }}"
-                                                image="{{ $provider?->profile_image?->original_url }}">
-                                                {{ $provider->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+            <div class="contentbox mb-4">
+                <div class="inside">
+                    <div class="contentbox-title">
+                        <h3>{{ __('static.report.filter') }}</h3>
+                        <button type="button" class="btn clear-btn" style="display: none;">{{ __('static.common.clear_all') }}</button>
+                    </div>
 
-                                <div class="form-group">
-                                    <label for="zone">{{ __('static.report.zone') }}</label>
-                                    <select class="select-2 form-control filter-dropdown disable-all" id="zone" name="zone[]" multiple data-placeholder="{{ __('static.report.select_zone') }}">
-                                        <option value="all">{{ __('static.report.all') }}</option>
-                                        @foreach ($zones as $key => $zone)
-                                            <option value="{{ $zone->id }}">
-                                                {{ $zone->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                    <div class="row g-3">
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="provider">{{ __('static.report.provider') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="provider" name="provider[]" multiple data-placeholder="{{ __('static.report.select_provider') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($providers as $provider)
+                                        <option value="{{ $provider->id }}" sub-title="{{ $provider->email }}"
+                                            image="{{ $provider?->profile_image?->original_url }}">
+                                            {{ $provider->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="vehicle_type">{{ __('static.report.type') }}</label>
-                                    <select class="select-2 form-control filter-dropdown disable-all" id="type[]" name="type[]" multiple data-placeholder="{{ __('static.report.select_type') }}">
-                                        <option value="all">{{ __('static.report.all') }}</option>
-                                        @forelse ($types as $type)
-                                            <option value="{{ $type }}">{{ strtoupper($type) }}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
-                                </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="zone">{{ __('static.report.zone') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="zone" name="zone[]" multiple data-placeholder="{{ __('static.report.select_zone') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($zones as $key => $zone)
+                                        <option value="{{ $zone->id }}">
+                                            {{ $zone->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="start_end_date">{{ __('static.report.select_date') }}</label>
-                                    <input type="text" class="form-control filter-dropdown" id="date-range" name="start_end_date" placeholder="{{ __('static.service_package.select_date') }}">
-                                </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="vehicle_type">{{ __('static.report.type') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="type[]" name="type[]" multiple data-placeholder="{{ __('static.report.select_type') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @forelse ($types as $type)
+                                        <option value="{{ $type }}">{{ __('static.' . $type) }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="start_end_date">{{ __('static.report.select_date') }}</label>
+                                <input type="text" class="form-control filter-dropdown" id="date-range" name="start_end_date" placeholder="{{ __('static.service_package.select_date') }}">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-9">
-                    <div class="contentbox">
-                        <div class="inside">
-                            <div class="contentbox-title">
-                                <h3>{{ __('static.report.provider_reports') }}</h3>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#reportExportModal"> {{ __('static.report.export') }}
-                                    <i class="ri-upload-line"></i>
-                                </button>
-                            </div>
+            </div>
+            <div class="contentbox">
+                <div class="inside">
+                    <div class="contentbox-title">
+                        <h3>{{ __('static.report.provider_reports') }}</h3>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#reportExportModal"> {{ __('static.report.export') }}
+                            <i class="ri-upload-line"></i>
+                        </button>
+                    </div>
 
-                            <div class="tag-table">
-                                <div class="col">
-                                    <div
-                                        class="table-main booking-report-table template-table provider-report-table loader-table m-0">
-                                        <div class="table-responsive  custom-scrollbar m-0">
-                                            <table class="table" id="providerTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{ __('static.report.provider') }}</th>
-                                                        <th>{{ __('static.report.email') }}</th>
-                                                        <th>{{ __('static.report.type') }}</th>
-                                                        <th>{{ __('static.report.ratings') }}</th>
-                                                        <th>{{ __('static.report.earnings') }}</th>
-                                                        <th>{{ __('static.report.pending_bookings') }}</th>
-                                                        <th>{{ __('static.report.completed_bookings') }}</th>
-                                                        <th>{{ __('static.report.cancelled_bookings') }}</th>
-                                                        <th>{{ __('static.report.total_bookings') }}</th>
-                                                        <th>{{ __('static.report.total_servicemen') }}</th>
-                                                        <th>{{ __('static.report.total_services') }}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <div class="report-loader-wrapper" style="display:none;">
-                                                        <div class="loader"></div>
-                                                    </div>
-                                                </tbody>
-                                            </table>
+                    <div class="tag-table">
+                        <div class="col">
+                            <div
+                                class="table-main booking-report-table template-table provider-report-table loader-table m-0">
+                                <div class="table-responsive  custom-scrollbar m-0">
+                                    <table class="table" id="providerTable">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ __('static.report.provider') }}</th>
+                                                <th>{{ __('static.report.email') }}</th>
+                                                <th>{{ __('static.report.type') }}</th>
+                                                <th>{{ __('static.report.ratings') }}</th>
+                                                <th>{{ __('static.report.earnings') }}</th>
+                                                <th>{{ __('static.report.pending_bookings') }}</th>
+                                                <th>{{ __('static.report.completed_bookings') }}</th>
+                                                <th>{{ __('static.report.cancelled_bookings') }}</th>
+                                                <th>{{ __('static.report.total_bookings') }}</th>
+                                                <th>{{ __('static.report.total_servicemen') }}</th>
+                                                <th>{{ __('static.report.total_services') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div class="report-loader-wrapper" style="display:none;">
+                                                <div class="loader"></div>
+                                            </div>
+                                        </tbody>
+                                    </table>
 
-                                            <nav>
-                                                <ul class="pagination justify-content-center mt-3" id="report-pagination">
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>
+                                    <nav>
+                                        <ul class="pagination justify-content-center mt-3" id="report-pagination">
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>

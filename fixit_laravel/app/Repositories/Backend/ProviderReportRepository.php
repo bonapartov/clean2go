@@ -77,7 +77,7 @@ class ProviderReportRepository extends BaseRepository
                 <tr>
                     <td>" . $provider->name . "</td>
                     <td>" . $provider->email . "</td>
-                    <td>" . strtoupper($provider->type) . "</td>
+                    <td>" . (\Illuminate\Support\Facades\Lang::has('static.' . $provider->type) ? __('static.' . $provider->type) : strtoupper($provider->type)) . "</td>
                     <td> <i class='ri-star-fill'></i>(".$provider->getReviewRatingsAttribute().")</td>
                     <td>".Helpers::getDefaultCurrency()?->symbol . $provider?->total_provider_commission."</td>
                     <td>".Helpers::getTotalProviderBookingsByStatus(BookingStatusReq::PENDING,$provider->id)."</td>

@@ -2297,7 +2297,7 @@ class Helpers
             return '';
         }
 
-        $key = 'static.payment_status.' . strtolower($status);
+        $key = 'static.payment_status.' . str_replace(' ', '_', strtolower($status));
 
         return \Illuminate\Support\Facades\Lang::has($key) ? __($key) : $status;
     }

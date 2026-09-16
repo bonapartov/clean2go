@@ -75,14 +75,14 @@ class TransactionReportRepository extends BaseRepository
                 $transactionReportTable .= "
                     <tr>
                          <td>{$transaction->transaction_id}</td>
-                        <td>{$transaction->payment_method}</td>
+                        <td>" . Helpers::formatPaymentMethod($transaction->payment_method) . "</td>
                         <td>
                         <label class='badge badge-" . $transaction->payment_status . "'>
-                                " . ucfirst($transaction->payment_status) . "</label>
+                                " . Helpers::formatPaymentStatus($transaction->payment_status) . "</label>
                                 </td>
 
                                 <td>" . Helpers::getDefaultCurrency()?->symbol . $transaction->amount . "</td>
-                                <td>{$transaction->type}</td>
+                                <td>" . (\Illuminate\Support\Facades\Lang::has('static.report.' . $transaction->type) ? __('static.report.' . $transaction->type) : $transaction->type) . "</td>
 
                     </tr>";
             }

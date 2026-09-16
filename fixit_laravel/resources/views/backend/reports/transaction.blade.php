@@ -16,111 +16,115 @@
         <form id="filterForm" method="POST" action="{{ route('backend.transaction-report.export') }}" enctype="multipart/form-data">
             @method('POST')
             @csrf
-            <div class="row g-sm-4 g-3">
-                <div class="col-xl-3">
-                    <div class="p-sticky">
-                        <div class="contentbox">
-                            <div class="inside">
-                                <div class="contentbox-title">
-                                    <h3>{{ __('static.report.filter') }}</h3>
-                                    <button type="button" class="btn clear-btn" style="display: none;">{{ __('static.common.clear_all') }}</button>
-                                </div>
-                                <div class="rider-height custom-scrollbar">
-                                    <div class="form-group">
-                                        <label for="transaction_type">{{ __('static.report.transaction_type') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="transaction_type" name="transaction_type[]" data-placeholder="{{ __('static.report.select_transaction_type') }}" multiple>
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            <option value="booking">{{ __('static.report.booking') }}</option>
-                                            <option value="wallet">{{ __('static.report.wallet') }}</option>
-                                            <option value="subscription">{{ __('static.report.subscription') }}</option>
-                                        </select>
-                                    </div>
+            <div class="contentbox mb-4">
+                <div class="inside">
+                    <div class="contentbox-title">
+                        <h3>{{ __('static.report.filter') }}</h3>
+                        <button type="button" class="btn clear-btn" style="display: none;">{{ __('static.common.clear_all') }}</button>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="transaction_type">{{ __('static.report.transaction_type') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="transaction_type" name="transaction_type[]" data-placeholder="{{ __('static.report.select_transaction_type') }}" multiple>
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    <option value="booking">{{ __('static.report.booking') }}</option>
+                                    <option value="wallet">{{ __('static.report.wallet') }}</option>
+                                    <option value="subscription">{{ __('static.report.subscription') }}</option>
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="payment_status">{{ __('static.report.payment_status') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="payment_status" name="payment_status[]" data-placeholder="{{ __('static.report.select_payment_status') }}" multiple>
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($paymentStatus as $status)
-                                                <option value="{{ $status }}">{{ $status }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="payment_status">{{ __('static.report.payment_status') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="payment_status" name="payment_status[]" data-placeholder="{{ __('static.report.select_payment_status') }}" multiple>
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($paymentStatus as $status)
+                                        <option value="{{ $status }}">{{ Helpers::formatPaymentStatus($status) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="payment_method">{{ __('static.report.payment_method') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="payment_method" name="payment_method[]" data-placeholder="{{ __('static.report.select_payment_method') }}" multiple>
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($PaymentMethodList as $list)
-                                                <option value="{{ $list['slug'] }}">{{ $list['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="payment_method">{{ __('static.report.payment_method') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="payment_method" name="payment_method[]" data-placeholder="{{ __('static.report.select_payment_method') }}" multiple>
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($PaymentMethodList as $list)
+                                        <option value="{{ $list['slug'] }}">{{ $list['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="provider">{{ __('static.report.provider') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="provider" name="provider[]" multiple data-placeholder="{{ __('static.report.select_provider') }}">
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($providers as $provider)
-                                                <option value="{{ $provider->id }}">
-                                                    {{ $provider->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="provider">{{ __('static.report.provider') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="provider" name="provider[]" multiple data-placeholder="{{ __('static.report.select_provider') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($providers as $provider)
+                                        <option value="{{ $provider->id }}">
+                                            {{ $provider->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="zone">{{ __('static.report.zone') }}</label>
-                                        <select class="select-2 form-control filter-dropdown disable-all" id="zone" name="zone[]" multiple data-placeholder="{{ __('static.report.select_zone') }}">
-                                            <option value="all">{{ __('static.report.all') }}</option>
-                                            @foreach ($zones as $key => $zone)
-                                                <option value="{{ $zone->id }}">
-                                                    {{ $zone->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="zone">{{ __('static.report.zone') }}</label>
+                                <select class="select-2 form-control filter-dropdown disable-all" id="zone" name="zone[]" multiple data-placeholder="{{ __('static.report.select_zone') }}">
+                                    <option value="all">{{ __('static.report.all') }}</option>
+                                    @foreach ($zones as $key => $zone)
+                                        <option value="{{ $zone->id }}">
+                                            {{ $zone->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-                                    <div class="form-group">
-                                        <label for="start_end_date">{{ __('static.report.select_date') }}</label>
-                                        <input type="text" class="form-control filter-dropdown" id="date-range" name="start_end_date" placeholder="{{ __('static.service_package.select_date') }}">
-                                    </div>
-                                </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="form-group mb-0">
+                                <label for="start_end_date">{{ __('static.report.select_date') }}</label>
+                                <input type="text" class="form-control filter-dropdown" id="date-range" name="start_end_date" placeholder="{{ __('static.service_package.select_date') }}">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-9">
-                    <div class="contentbox">
-                        <div class="inside">
-                            <div class="contentbox-title">
-                                <h3>{{ __('static.report.transaction_reports') }}</h3>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#reportExportModal">{{ __('static.report.export') }} <i class="ri-upload-line"></i></button>
-                            </div>
-                            <div class="ride-report-table">
-                                <div class="col">
-                                    <div class="table-main loader-table template-table m-0 booking-report-table">
-                                        <div class="table-responsive custom-scrollbar m-0">
-                                            <table class="table mt-0" id="TransactionTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>{{ __('static.report.tansaction_id') }}</th>
-                                                        <th>{{ __('static.report.payment_method') }}</th>
-                                                        <th>{{ __('static.report.payment_status') }}</th>
-                                                        <th>{{ __('static.report.amount') }}</th>
-                                                        <th>{{ __('static.report.type') }}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <div class="report-loader-wrapper" style="display:none;">
-                                                        <div class="loader"></div>
-                                                    </div>
-                                                </tbody>
-                                            </table>
-                                            <nav>
-                                                <ul class="pagination justify-content-center mt-0 mb-3" id="report-pagination"></ul>
-                                            </nav>
-                                        </div>
-                                    </div>
+            </div>
+            <div class="contentbox">
+                <div class="inside">
+                    <div class="contentbox-title">
+                        <h3>{{ __('static.report.transaction_reports') }}</h3>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#reportExportModal">{{ __('static.report.export') }} <i class="ri-upload-line"></i></button>
+                    </div>
+                    <div class="ride-report-table">
+                        <div class="col">
+                            <div class="table-main loader-table template-table m-0 booking-report-table">
+                                <div class="table-responsive custom-scrollbar m-0">
+                                    <table class="table mt-0" id="TransactionTable">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ __('static.report.tansaction_id') }}</th>
+                                                <th>{{ __('static.report.payment_method') }}</th>
+                                                <th>{{ __('static.report.payment_status') }}</th>
+                                                <th>{{ __('static.report.amount') }}</th>
+                                                <th>{{ __('static.report.type') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div class="report-loader-wrapper" style="display:none;">
+                                                <div class="loader"></div>
+                                            </div>
+                                        </tbody>
+                                    </table>
+                                    <nav>
+                                        <ul class="pagination justify-content-center mt-0 mb-3" id="report-pagination"></ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
