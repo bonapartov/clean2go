@@ -117,6 +117,8 @@
  @push('js')
 <script src="{{ asset('admin/js/select2-custom.js') }}"></script>
  <script src="{{ asset('frontend/js/flat-pickr/flatpickr.js') }}"></script>
+ <script src="{{ asset('frontend/js/flat-pickr/l10n/ru.js') }}"></script>
+ <script>flatpickr.localize(flatpickr.l10ns.ru);</script>
 {!! $dataTable->scripts() !!}
 <script>
     (function($) {

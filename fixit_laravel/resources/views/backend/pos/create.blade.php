@@ -595,6 +595,8 @@
 @push('js')
     <script src="{{ asset('admin/js/swiper-slider.js') }}"></script>
     <script src="{{ asset('admin/js/flatpickr.js') }}"></script>
+    <script src="{{ asset('frontend/js/flat-pickr/l10n/ru.js') }}"></script>
+    <script>flatpickr.localize(flatpickr.l10ns.ru);</script>
     <script src="{{ asset('admin/js/custom-flatpickr.js') }}"></script>
     <script src="https://api-maps.yandex.ru/2.1/?apikey={{ config('app.yandex_map_api_key') }}&lang=ru_RU" type="text/javascript"></script>
 

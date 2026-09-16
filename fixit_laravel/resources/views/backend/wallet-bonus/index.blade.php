@@ -127,6 +127,8 @@
         <!-- Swiper js -->
         <script src="{{ asset('frontend/js/swiper.js') }}"></script>
         <script src="{{ asset('frontend/js/flat-pickr/flatpickr.js') }}"></script>
+        <script src="{{ asset('frontend/js/flat-pickr/l10n/ru.js') }}"></script>
+        <script>flatpickr.localize(flatpickr.l10ns.ru);</script>
 
         <!-- Range slider js -->
         <script src="{{ asset('frontend/js/range-slider/ion.rangeSlider.min.js') }}"></script>

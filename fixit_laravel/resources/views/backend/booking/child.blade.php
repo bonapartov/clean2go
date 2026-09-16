@@ -618,6 +618,8 @@
 
 @push('js')
     <script src="{{ asset('admin/js/flatpickr.js') }}"></script>
+    <script src="{{ asset('frontend/js/flat-pickr/l10n/ru.js') }}"></script>
+    <script>flatpickr.localize(flatpickr.l10ns.ru);</script>
     <script>
         (function($) {
             "use strict";
