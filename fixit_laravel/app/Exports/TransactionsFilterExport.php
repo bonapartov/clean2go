@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Helpers\Helpers;
 use App\Models\PaymentTransactions;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -63,8 +64,8 @@ class TransactionsFilterExport implements FromCollection,WithMapping,WithHeading
     {
         return [
             $transaction->item_id,
-            $transaction->payment_method,
-            $transaction->payment_status,
+            Helpers::formatPaymentMethod($transaction->payment_method),
+            Helpers::formatPaymentStatus($transaction->payment_status),
             $transaction->type,
             $transaction->amount,
             $transaction->transaction_id,

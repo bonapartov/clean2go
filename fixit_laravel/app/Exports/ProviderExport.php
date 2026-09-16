@@ -127,7 +127,7 @@ class ProviderExport implements FromCollection,WithMapping,WithHeadings
 
         if(isset($request['start_end_date']))
         {
-            [$start_date, $end_date] = explode(' to ', $request['start_end_date']);
+            [$start_date, $end_date] = explode(' — ', $request['start_end_date']);
             $providers =  $providers->whereBetween('created_at', [$start_date, $end_date]);
         }
 

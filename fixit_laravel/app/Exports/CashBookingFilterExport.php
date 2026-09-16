@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Enums\PaymentMethod;
+use App\Helpers\Helpers;
 use App\Models\Booking;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -126,9 +127,9 @@ class CashBookingFilterExport implements FromCollection,WithMapping,WithHeadings
             $booking->subtotal ?? 'Н/Д',
             $booking->total ?? 'Н/Д',
             $booking->date_time ?? 'Н/Д',
-            $booking->booking_status->name ? ($booking->booking_status->name ?? 'Н/Д') : 'Н/Д',
-            $booking->payment_method ?? 'Н/Д',
-            $booking->payment_status ?? 'Н/Д',
+            Helpers::formatBookingStatusName($booking->booking_status) ?: 'Н/Д',
+            Helpers::formatPaymentMethod($booking->payment_method) ?: 'Н/Д',
+            Helpers::formatPaymentStatus($booking->payment_status) ?: 'Н/Д',
             $booking->description ?? 'Н/Д',
             $booking->created_by->name ?? 'Н/Д',
         ];

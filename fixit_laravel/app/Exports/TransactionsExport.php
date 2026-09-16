@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Helpers\Helpers;
 use App\Models\PaymentTransactions;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -39,8 +40,8 @@ class TransactionsExport implements FromCollection,WithMapping,WithHeadings
     {
         return [
             $transaction->item_id,
-            $transaction->payment_method,
-            $transaction->payment_status,
+            Helpers::formatPaymentMethod($transaction->payment_method),
+            Helpers::formatPaymentStatus($transaction->payment_status),
             $transaction->type,
             $transaction->amount,
             $transaction->transaction_id,
@@ -79,7 +80,7 @@ class TransactionsExport implements FromCollection,WithMapping,WithHeadings
         }
 
         if (isset($request['start_end_date']) && !empty($request['start_end_date'])) {
-            [$start_date, $end_date] = explode(' to ', $request['start_end_date']);
+            [$start_date, $end_date] = explode(' — ', $request['start_end_date']);
             $transactions = $transactions->whereBetween('created_at', [$start_date, $end_date]);
         }
 
