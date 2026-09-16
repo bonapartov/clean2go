@@ -6,6 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Enums\RoleEnum;
+use App\Enums\UserTypeEnum;
 use App\Helpers\Helpers;
 use App\Mail\ForgotPassword;
 use Illuminate\Http\Request;
@@ -130,6 +131,14 @@ class AuthController extends Controller
 
             if($request->role == RoleEnum::PROVIDER){
                 $provider->assignRole(RoleEnum::PROVIDER);
+
+                // A freelancer ("самозанятый") legally cannot have employees,
+                // so it has no path to a real serviceman for booking
+                // assignment. Create a shadow serviceman representing the
+                // freelancer themself so bookings can still be assigned.
+                if ($request->type === UserTypeEnum::FREELANCER) {
+                    Helpers::createShadowServiceman($provider);
+                }
             } else {
                 $provider->assignRole(RoleEnum::SERVICEMAN);
             }

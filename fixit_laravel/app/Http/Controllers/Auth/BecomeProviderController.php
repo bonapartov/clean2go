@@ -91,6 +91,15 @@ class BecomeProviderController extends Controller
             if($data['role'] === RoleEnum::PROVIDER){
                 $role = Role::where('name', RoleEnum::PROVIDER)->first();
                 $provider->assignRole($role);
+
+                // A freelancer ("самозанятый") legally cannot have
+                // employees, so it has no path to a real serviceman for
+                // booking assignment. Create a shadow serviceman
+                // representing the freelancer themself so bookings can
+                // still be assigned.
+                if ($data['type'] === UserTypeEnum::FREELANCER) {
+                    Helpers::createShadowServiceman($provider);
+                }
             } else {
                 $role = Role::where('name', RoleEnum::SERVICEMAN)->first();
                 $provider->assignRole($role);

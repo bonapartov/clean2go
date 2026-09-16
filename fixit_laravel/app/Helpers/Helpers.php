@@ -49,6 +49,8 @@ use Modules\Coupon\Entities\Coupon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
 use App\Enums\AdvertisementStatusEnum;
 use Illuminate\Support\Facades\Storage;
@@ -2387,5 +2389,42 @@ class Helpers
         } while (User::where('referral_code', $code)->exists());
 
         return $code;
+    }
+
+    /**
+     * Create a "shadow" serviceman record for a freelancer provider.
+     *
+     * A freelancer (self-employed "самозанятый") provider legally cannot have
+     * employees, so it can never have a real serviceman to assign bookings
+     * to. This creates a second User row representing the same person as a
+     * serviceman (role = serviceman, provider_id = the provider's own id,
+     * is_shadow = true) so a booking placed with that provider always has
+     * someone assignable.
+     *
+     * This is the single source of truth for what a shadow serviceman looks
+     * like — call it from provider registration and from the backfill
+     * command rather than duplicating the field list elsewhere.
+     *
+     * Callers are responsible for checking whether a shadow serviceman
+     * already exists for the provider (is_shadow = true, provider_id =
+     * $provider->id) before calling this, to keep the operation idempotent.
+     */
+    public static function createShadowServiceman(User $provider): User
+    {
+        $shadow = User::create([
+            'name' => $provider->name,
+            'email' => "shadow+{$provider->id}@internal.clean2go.local",
+            'phone' => $provider->phone,
+            'code' => $provider->code,
+            'password' => Hash::make(Str::random(40)),
+            'provider_id' => $provider->id,
+            'status' => true,
+            'is_shadow' => true,
+            'type' => null,
+        ]);
+
+        $shadow->assignRole(RoleEnum::SERVICEMAN);
+
+        return $shadow;
     }
 }

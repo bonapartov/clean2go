@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Enums\RoleEnum;
+use App\Enums\UserTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserSelfResource extends JsonResource
@@ -51,6 +52,9 @@ class UserSelfResource extends JsonResource
                 'provider_id' => $this->provider_id,                
                 'subscription_reminder_note' => $this?->subscription_reminder_note ?? null,
                 'referral_code' => $this->referral_code,
+                'shadow_serviceman_id' => $this?->type === UserTypeEnum::FREELANCER
+                    ? $this?->servicemans()->where('is_shadow', true)->value('id')
+                    : null,
                 'subscription' => $this?->activeSubscription ? [
                     'product_id' => $this?->activeSubscription?->product_id,
                     'plan_id' => $this?->activeSubscription?->user_plan_id,

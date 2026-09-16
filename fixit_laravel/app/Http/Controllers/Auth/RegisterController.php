@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\RoleEnum;
 use App\Enums\UserTypeEnum;
 use App\Events\CreateProviderEvent;
+use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Company;
@@ -128,6 +129,18 @@ class RegisterController extends Controller
             }
 
             $provider->assignRole($role);
+
+            // A freelancer ("самозанятый") legally cannot have employees, so
+            // it has no path to a real serviceman for booking assignment.
+            // Create a shadow serviceman representing the freelancer
+            // themself so bookings can still be assigned. Note: this
+            // controller/route is not currently wired up (see routes/web.php
+            // — the live `register` route uses Frontend\RegisterController
+            // instead), but this is kept in sync for safety in case it is
+            // ever reconnected.
+            if ($role->name === RoleEnum::PROVIDER && $data['type'] === UserTypeEnum::FREELANCER) {
+                Helpers::createShadowServiceman($provider);
+            }
 
             // Handle known languages
             if (isset($data['known_languages'])) {
