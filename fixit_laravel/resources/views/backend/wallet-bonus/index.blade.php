@@ -60,7 +60,7 @@
                                 <label class="col-md-2" for="type">{{ __('static.coupon.type') }}</label>
                                 <select class="select-2 form-control" id="filterType" name="type" data-placeholder="{{ __('static.coupon.select_type') }}">
                                     <option class="select-placeholder" value=""></option>
-                                    @foreach (['fixed' => 'Fixed', 'percentage' => 'Percentage'] as $key => $option)
+                                    @foreach (['fixed' => __('static.common.fixed'), 'percentage' => __('static.coupon.percentage')] as $key => $option)
                                         <option class="option" value="{{ $key }}">{{ $option }}</option>
                                     @endforeach
                                 </select>
@@ -148,7 +148,7 @@
                     if (urlParams.toString()) {
                     
                         if (urlParams.has('start_date') && urlParams.has('end_date')) {
-                            $('#dateRange').val(urlParams.get('start_date') + " to " + urlParams.get('end_date'));
+                            $('#dateRange').val(urlParams.get('start_date') + " — " + urlParams.get('end_date'));
                         }
 
                         if (urlParams.has('type')) {
@@ -179,7 +179,7 @@
                                 if(!dateStr){
                                     $('#dateRangeError').hide();
                                 }
-                                else if(dateStr.split(' to ').length < 2) {
+                                else if(dateStr.split(' — ').length < 2) {
                                     $('#dateRangeError').text('Both start date and end date are required').show();
                                 } else {
                                     $('#dateRangeError').hide();
@@ -208,7 +208,7 @@
                         let price = $('#price-range').val(); 
 
                         if (dateRange) {
-                            const dates = dateRange.split(' to ');
+                            const dates = dateRange.split(' — ');
                             params.start_date = dates[0];
                             params.end_date = dates[1];
                         }
@@ -248,7 +248,7 @@
                 $(this).find('input[name], select[name]').not('#exportFormat').remove();
 
                 if(dateRange){
-                    const dates = dateRange.split(' to ');
+                    const dates = dateRange.split(' — ');
                     $(this).append(`<input type="hidden" name="start_date" value="${dates[0]}">`);
                     $(this).append(`<input type="hidden" name="end_date" value="${dates[1]}">`);
                 }

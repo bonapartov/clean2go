@@ -57,7 +57,7 @@
                 <select class="select-2 form-control" id="type" name="type"
                     data-placeholder="{{ __('static.coupon.select_type') }}">
                     <option class="select-placeholder" value=""></option>
-                    @foreach (['fixed' => 'Fixed', 'percentage' => 'Percentage'] as $key => $option)
+                    @foreach (['fixed' => __('static.common.fixed'), 'percentage' => __('static.coupon.percentage')] as $key => $option)
                         <option class="option" value="{{ $key }}"
                             @if (old('type', $coupon->type ?? '') == $key) selected @endif>{{ $option }}</option>
                     @endforeach
@@ -134,7 +134,7 @@
             <div class="col-md-10">
                 @if (isset($coupon))
                     <input class="form-control" id="date-range"
-                        value="{{ \Carbon\Carbon::parse(@$coupon->start_date)->format('d/m/Y') }} to {{ \Carbon\Carbon::parse(@$coupon->end_date)->format('d/m/Y') }}"
+                        value="{{ \Carbon\Carbon::parse(@$coupon->start_date)->format('d/m/Y') }} — {{ \Carbon\Carbon::parse(@$coupon->end_date)->format('d/m/Y') }}"
                         name="start_end_date" placeholder="Select Date..">
                 @else
                     <input class="form-control" id="date-range" name="start_end_date" placeholder="Select Date..">
@@ -373,6 +373,8 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     {{-- <script src="{{ asset('admin/js/flatpickr.js') }}"></script> --}}
+    <script src="{{ asset('frontend/js/flat-pickr/l10n/ru.js') }}"></script>
+    <script>flatpickr.localize(flatpickr.l10ns.ru);</script>
     <script src="{{ asset('admin/js/custom-flatpickr.js') }}"></script>
     <script src="{{ asset('admin/js/custom-ai/ai-content-generation.js') }}"></script>
     <script>

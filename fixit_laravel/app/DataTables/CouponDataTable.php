@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Enums\RoleEnum;
+use App\Enums\SymbolPositionEnum;
+use App\Helpers\Helpers;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Modules\Coupon\Entities\Coupon;
 use Yajra\DataTables\EloquentDataTable;
@@ -18,21 +20,33 @@ class CouponDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        $currencySetting = Helpers::getSettings()['general']['default_currency'];
+        $currencySymbol = $currencySetting->symbol;
+        $symbolPosition = $currencySetting->symbol_position;
+
         return (new EloquentDataTable($query))
             ->setRowId('id')
             ->editColumn('created_at', function ($row) {
                 return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');
             })
-            ->editColumn('type', function ($row) {
-                return $row->type . ' : ' . ($row->type == 'fixed'
-                    ? '$' . $row->amount
-                    : $row->amount . '%');
+            ->editColumn('type', function ($row) use ($currencySymbol, $symbolPosition) {
+                $typeLabel = $row->type == 'fixed' ? __('static.common.fixed') : __('static.coupon.percentage');
+
+                if ($row->type == 'fixed') {
+                    $amount = ($symbolPosition === SymbolPositionEnum::LEFT)
+                        ? $currencySymbol . $row->amount
+                        : $row->amount . ' ' . $currencySymbol;
+                } else {
+                    $amount = $row->amount . '%';
+                }
+
+                return $typeLabel . ' : ' . $amount;
             })
             ->editColumn('start_date', function ($row) {
                 if (empty($row->start_date) && empty($row->end_date)) {
-                    return 'Unlimited';
+                    return __('static.coupon.is_unlimited');
                 }
-                return $row->start_date . ' to ' . $row->end_date ;
+                return $row->start_date . ' — ' . $row->end_date;
             })
             ->editColumn('coupon.zones', function ($row) {
 

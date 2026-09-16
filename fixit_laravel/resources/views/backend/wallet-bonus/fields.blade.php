@@ -66,7 +66,7 @@
     <div class="col-md-10 error-div">
         <select class="select-2 form-control" id="type" name="type" data-placeholder="{{ __('static.coupon.select_type') }}">
             <option class="select-placeholder" value=""></option>
-            @foreach (['fixed' => 'Fixed', 'percentage' => 'Percentage'] as $key => $option)
+            @foreach (['fixed' => __('static.common.fixed'), 'percentage' => __('static.coupon.percentage')] as $key => $option)
                 <option class="option" value="{{ $key }}" @if (old('type', $walletBonus->type ?? '') == $key) selected @endif>{{ $option }}</option>
             @endforeach
         </select>

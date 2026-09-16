@@ -1399,6 +1399,8 @@ return [
         'platform_fees_status' => 'Platform Fees Status',
         'platform_fees_status_span' => '*Enable the Platform Fees.',
         'platform_fees_type' => 'Platform Fees Type',
+        'platform_fees_type_fixed' => 'Fixed',
+        'platform_fees_type_per_service' => 'Per Service',
         'select_platform_fees_type' => 'Select Platform Fees Type',
         'enter_platform_fees' => 'Enter Platform Fees',
         'updated_successfully' => 'Settings Updated Successfully',

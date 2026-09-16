@@ -53,10 +53,18 @@ class WalletBonusDatatable extends DataTable
                     ? $currencySymbol . '' . $formattedAmount 
                     : $formattedAmount . ' ' . $currencySymbol;
             })
-            ->editColumn('type', function ($row) {
-                return $row->type . ' : ' . ($row->type == 'fixed'
-                    ? '$' . $row->bonus
-                    : $row->bonus . '%');
+            ->editColumn('type', function ($row) use ($currencySymbol, $symbolPosition) {
+                $typeLabel = $row->type == 'fixed' ? __('static.common.fixed') : __('static.coupon.percentage');
+
+                if ($row->type == 'fixed') {
+                    $amount = ($symbolPosition === SymbolPositionEnum::LEFT)
+                        ? $currencySymbol . $row->bonus
+                        : $row->bonus . ' ' . $currencySymbol;
+                } else {
+                    $amount = $row->bonus . '%';
+                }
+
+                return $typeLabel . ' : ' . $amount;
             })
             ->editColumn('created_at', function ($row) {
                 return \Carbon\Carbon::parse($row->created_at)->translatedFormat('d-M-Y');

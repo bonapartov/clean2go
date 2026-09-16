@@ -388,7 +388,7 @@
                                                 name="general[platform_fees_type]"
                                                 data-placeholder="{{ __('static.settings.select_platform_fees_type') }}">
                                                 <option class="select-placeholder" value=""></option>
-                                                @forelse (['fixed' => 'Fixed', 'per_service' => 'Per Service'] as $key => $option)
+                                                @forelse (['fixed' => __('static.settings.platform_fees_type_fixed'), 'per_service' => __('static.settings.platform_fees_type_per_service')] as $key => $option)
                                                     <option class="option" value={{ $key }}
                                                         @if ($settings['general']['platform_fees_type'] ?? old('platform_fees_type')) @if ($key == $settings['general']['platform_fees_type']) selected @endif
                                                         @endif>{{ $option }}</option>

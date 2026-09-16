@@ -1394,6 +1394,8 @@ return [
         'platform_fees_status' => 'Статус сервисного сбора',
         'platform_fees_status_span' => '*Включить сервисный сбор с заказов.',
         'platform_fees_type' => 'Тип сервисного сбора',
+        'platform_fees_type_fixed' => 'Фиксированная сумма',
+        'platform_fees_type_per_service' => 'За каждую услугу',
         'select_platform_fees_type' => 'Выберите тип сбора',
         'enter_platform_fees' => 'Введите размер сбора',
         'updated_successfully' => 'Настройки успешно обновлены',
