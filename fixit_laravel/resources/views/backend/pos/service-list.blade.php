@@ -23,7 +23,7 @@
           <ul class="service-list">
           <li class="time">
             <i data-feather="clock"></i>
-            <span>{{ $service?->duration }} {{ $service?->duration_unit }}</span>
+            <span>{{ $service?->duration }} {{ \App\Helpers\Helpers::formatDurationUnit($service?->duration_unit) }}</span>
           </li>
           <li>
             <i data-feather="user"></i>

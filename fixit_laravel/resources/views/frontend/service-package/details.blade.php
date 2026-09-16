@@ -148,7 +148,7 @@
                                             <ul class="pb-2 b-bottom-dashed">
                                                 <li class="time">
                                                     <i class="iconsax" icon-name="clock"></i>
-                                                    <span>{{ $service?->duration }} {{ $service?->duration_unit }}</span>
+                                                    <span>{{ $service?->duration }} {{ \App\Helpers\Helpers::formatDurationUnit($service?->duration_unit) }}</span>
                                                 </li>
                                                 <li class="service">{{__('frontend::static.servicePackages.min')}} {{ $service?->required_servicemen }} {{__('frontend::static.servicePackages.servicemen_reqiured')}}</li>
                                             </ul>

@@ -1109,7 +1109,7 @@
                                                 <input type="number" class="form-control form-control-white" name="duration" id="duration" placeholder="{{ __('frontend::static.home_page.enter_duration') }}" time-input>
                                             </div>
                                             <select class="form-select form-select-sm w-auto" name="duration_unit">
-                                                @foreach (['hours' => 'Hours', 'minutes' => 'Minutes'] as $key => $option)
+                                                @foreach (['hours' => __('frontend::static.home_page.hours'), 'minutes' => __('frontend::static.home_page.minutes')] as $key => $option)
                                                     <option class="option" value="{{ $key }}"
                                                         @if (old('duration_unit', $Request->duration_unit ?? '') === $key) selected @endif>
                                                         {{ $option }}</option>

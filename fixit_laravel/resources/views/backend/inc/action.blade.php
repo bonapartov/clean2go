@@ -49,7 +49,7 @@
                             </div>
                             <div class="detail-row">
                                 <span class="detail-label">{{ __('static.service.duration') }}</span>
-                                <span class="detail-value">{{ $serviceRequest->duration ?? '—' }}{{ $serviceRequest->duration_unit ? ' ' . ucfirst($serviceRequest->duration_unit) : '' }}</span>
+                                <span class="detail-value">{{ $serviceRequest->duration ?? '—' }}{{ $serviceRequest->duration_unit ? ' ' . \App\Helpers\Helpers::formatDurationUnit($serviceRequest->duration_unit) : '' }}</span>
                             </div>
                             <div class="detail-row">
                                 <span class="detail-label">{{ __('static.service.required_servicemen') }}</span>

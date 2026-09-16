@@ -2313,6 +2313,19 @@ class Helpers
         return \Illuminate\Support\Facades\Lang::has($key) ? __($key) : ucfirst($method);
     }
 
+    public static function formatDurationUnit($unit)
+    {
+        if (!$unit) {
+            return '';
+        }
+
+        return match ($unit) {
+            'hours' => __('static.service.duration_unit_hours'),
+            'minutes' => __('static.service.duration_unit_minutes'),
+            default => $unit,
+        };
+    }
+
     public static function formatServiceType($type)
     {
         $mapping = [

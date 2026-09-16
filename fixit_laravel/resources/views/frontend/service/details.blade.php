@@ -104,7 +104,7 @@
                                 @if($service?->duration)
                                 <li>
                                     <i class="iconsax" icon-name="clock"></i>
-                                    {{ __('frontend::static.services.around')}} {{ $service?->duration }} {{ $service?->duration_unit }}
+                                    {{ __('frontend::static.services.around')}} {{ $service?->duration }} {{ \App\Helpers\Helpers::formatDurationUnit($service?->duration_unit) }}
                                 </li>
                                 @endif
                                 <li>

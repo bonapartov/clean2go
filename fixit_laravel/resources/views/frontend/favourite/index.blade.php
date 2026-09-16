@@ -151,7 +151,7 @@ $activeType = request()->type ?? 'provider';
                                             <li class="time">
                                                 <i class="iconsax" icon-name="clock"></i>
                                                 <span>{{ $service->service?->duration }}
-                                                    {{ $service->service?->duration_unit }}</span>
+                                                    {{ \App\Helpers\Helpers::formatDurationUnit($service->service?->duration_unit) }}</span>
                                             </li>
                                             <li class="service">{{__('frontend::static.wishlist.min')}}
                                                 {{ $service->service?->required_servicemen }}

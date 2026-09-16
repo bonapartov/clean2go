@@ -43,7 +43,7 @@ $services = $package->services;
                                     <div class="time">
                                         <i class="iconsax" icon-name="clock"></i>
                                         <span class="text-success">{{ $service->duration }}
-                                            {{ $service->duration_unit }}</span>
+                                            {{ \App\Helpers\Helpers::formatDurationUnit($service->duration_unit) }}</span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 mt-1">
@@ -73,7 +73,7 @@ $services = $package->services;
                                         <ul class="amount-listing">
                                             <li>
                                                 <i class="iconsax" icon-name="clock"></i>
-                                                {{ __('frontend::static.services.around')}} {{ $service?->duration }} {{ $service?->duration_unit }}
+                                                {{ __('frontend::static.services.around')}} {{ $service?->duration }} {{ \App\Helpers\Helpers::formatDurationUnit($service?->duration_unit) }}
                                             </li>
                                             <li>
                                                 <i class="iconsax" icon-name="user-1-tag"></i>

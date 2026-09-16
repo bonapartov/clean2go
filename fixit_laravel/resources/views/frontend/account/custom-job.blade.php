@@ -132,7 +132,7 @@
                                         <i class="iconsax icon" icon-name="clock"> </i>
                                         <div>
                                             <h6 class="title-color listing-title">{{ __('frontend::static.bookings.time') }}</h6>
-                                            <h5>{{ $serviceRequest?->duration }} {{ $serviceRequest?->duration_unit }}</h5>
+                                            <h5>{{ $serviceRequest?->duration }} {{ \App\Helpers\Helpers::formatDurationUnit($serviceRequest?->duration_unit) }}</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -276,7 +276,7 @@
                                         </div>
                                         <select class="form-select form-select-sm w-auto" name="duration_unit"
                                             id="duration_unit">
-                                            @foreach (['hours' => 'Hours', 'minutes' => 'Minutes'] as $key => $option)
+                                            @foreach (['hours' => __('frontend::static.home_page.hours'), 'minutes' => __('frontend::static.home_page.minutes')] as $key => $option)
                                                 <option class="option" value="{{ $key }}"
                                                     @if (old('duration_unit', $Request->duration_unit ?? '') === $key) selected @endif>
                                                     {{ $option }}</option>

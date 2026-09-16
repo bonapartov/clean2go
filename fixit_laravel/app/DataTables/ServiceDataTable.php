@@ -59,7 +59,7 @@ class ServiceDataTable extends DataTable
                         : $formattedPrice . ' ' . $currencySymbol
                 ) : '';
 
-                $duration = $row->duration ? $row->duration . ' ' . ($row->duration_unit ?? '') : '';
+                $duration = $row->duration ? $row->duration . ' ' . Helpers::formatDurationUnit($row->duration_unit) : '';
                 $serviceman = $row->required_servicemen ?? '';
 
                 return '

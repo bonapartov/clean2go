@@ -18,7 +18,7 @@
                           <ul class="service-list">
                               <li class="time">
                                   <i data-feather="clock"></i>
-                                  <span>{{ $cartItem?->service?->duration }} {{ $cartItem?->service?->duration_unit }}</span>
+                                  <span>{{ $cartItem?->service?->duration }} {{ \App\Helpers\Helpers::formatDurationUnit($cartItem?->service?->duration_unit) }}</span>
                               </li>
                               <li>
                                   <i data-feather="user"></i>

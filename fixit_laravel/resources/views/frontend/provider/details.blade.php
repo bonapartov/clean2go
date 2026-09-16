@@ -254,7 +254,7 @@
                                                 <li class="time">
                                                     <i class="iconsax" icon-name="clock"></i>
                                                     <span>{{ $service?->duration }}
-                                                        {{ $service?->duration_unit }}</span>
+                                                        {{ \App\Helpers\Helpers::formatDurationUnit($service?->duration_unit) }}</span>
                                                 </li>
                                                 <li class="w-auto service-person">
                                                     <img src="{{ asset('frontend/images/svg/services-person.svg') }}"

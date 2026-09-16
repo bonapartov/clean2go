@@ -86,7 +86,7 @@
         <select class="select-2 form-control" id="duration_unit" name="duration_unit"
             data-placeholder="{{ __('static.service.select_duration_unit') }}">
             <option class="select-placeholder" value=""></option>
-            @foreach (['hours' => 'Hours', 'minutes' => 'Minutes'] as $key => $option)
+            @foreach (['hours' => __('static.service.duration_unit_hours'), 'minutes' => __('static.service.duration_unit_minutes')] as $key => $option)
                 <option class="option" value="{{ $key }}" @if (old('duration_unit', $Request->duration_unit ?? '') === $key) selected @endif>
                     {{ $option }}</option>
             @endforeach
