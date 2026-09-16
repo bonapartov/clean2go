@@ -37,6 +37,7 @@ use App\Models\BookingStatus;
 use App\Enums\BannerTypeEnum;
 use App\Models\ProviderWallet;
 use App\Enums\ServiceTypeEnum;
+use App\Enums\SymbolPositionEnum;
 use App\Enums\BookingEnumSlug;
 use App\Models\ServicePackage;
 use App\Enums\BookingStatusReq;
@@ -312,6 +313,16 @@ class Helpers
     public static function getCurrencyByCode($code)
     {
         return Currency::where('code', $code)?->whereNull('deleted_at')?->first();
+    }
+
+    public static function formatCurrencyAmount($amount)
+    {
+        $currency = self::getDefaultCurrency();
+        $symbol = $currency?->symbol ?? '';
+
+        return $currency?->symbol_position === SymbolPositionEnum::LEFT
+            ? $symbol . $amount
+            : $amount . ' ' . $symbol;
     }
 
     public static function getDefaultCurrencySymbol()

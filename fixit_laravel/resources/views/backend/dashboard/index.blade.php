@@ -373,7 +373,7 @@
                         <use xlink:href="{{ asset('admin/images/svg/total-service.svg#online-payment') }}">
                         </use>
                     </svg>
-                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Online Payment {{ Helpers::getDefaultCurrencySymbol() }}{{ Helpers::getTotalPayment($start_date, $end_date) }}" >
+                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Online Payment {{ Helpers::formatCurrencyAmount(Helpers::getTotalPayment($start_date, $end_date)) }}" >
                         @if (Helpers::getDefaultCurrency()->symbol_position === SymbolPositionEnum::LEFT)
                             <h4>{{ Helpers::getDefaultCurrencySymbol() }}{{ Helpers::getTotalPayment($start_date, $end_date) }}</h4>
                         @else
@@ -412,7 +412,7 @@
                         <use xlink:href="{{ asset('admin/images/svg/total-service.svg#offline-payment') }}">
                         </use>
                     </svg>
-                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Offline Payment {{ Helpers::getDefaultCurrencySymbol() }}{{ Helpers::getTotalPayment($start_date, $end_date, 'cash') }}">
+                    <div data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Offline Payment {{ Helpers::formatCurrencyAmount(Helpers::getTotalPayment($start_date, $end_date, 'cash')) }}">
                         @if (Helpers::getDefaultCurrency()->symbol_position === SymbolPositionEnum::LEFT)
                             <h4>{{ Helpers::getDefaultCurrencySymbol() }}{{ Helpers::getTotalPayment($start_date, $end_date, 'cash') }}</h4>
                         @else

@@ -9,7 +9,8 @@
         var min = $('#price-range').data("min");
         var max = $('#price-range').data("max");
         var symbol = $('#price-range').data("symbol");
-        $("#price-range").ionRangeSlider({
+        var position = $('#price-range').data("position");
+        $("#price-range").ionRangeSlider($.extend({
           type: "double",
           skin: "round",
           min: min,
@@ -17,9 +18,8 @@
           from: min,
           to: max,
           hide_min_max: true, // show/hide MIN and MAX labels
-          prefix: symbol,
           decorate_both: true,
-        });
+        }, position === "right" ? { postfix: " " + symbol } : { prefix: symbol }));
     },
   };
 

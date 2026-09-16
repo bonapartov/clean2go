@@ -1,6 +1,5 @@
 @use('App\Helpers\Helpers')
 @php
-    $currency = Helpers::getDefaultCurrency()?->symbol;
     $addons = $booking?->additional_services ?? collect();
     $addonsChargeAmount = $addons->sum(fn($a) => $a->pivot?->total_price ?? (($a->pivot?->price ?? 0) * ($a->pivot?->qty ?? 1)));
 @endphp
@@ -119,7 +118,7 @@
                             $price = $addon->pivot?->price ?? 0;
                             $total = $addon->pivot?->total_price ?? ($qty * $price);
                         @endphp
-                        <p>{{ $index + 1 }}. {{ $addon->title ?? '-' }} — {{ $qty }} × {{ $currency }}{{ number_format($price, 2) }} = {{ $currency }}{{ number_format($total, 2) }}</p>
+                        <p>{{ $index + 1 }}. {{ $addon->title ?? '-' }} — {{ $qty }} × {{ Helpers::formatCurrencyAmount(number_format($price, 2)) }} = {{ Helpers::formatCurrencyAmount(number_format($total, 2)) }}</p>
                     @endforeach
                 </td>
             </tr>
@@ -137,12 +136,12 @@
                         <p>{{ __('static.booking.invoice_total_payable') }}</p>
                     </div>
                     <div class="total-right w-15 float-left text-bold" align="right">
-                        <p>{{ $currency }}{{$booking?->subtotal}}</p>
-                        <p>{{ $currency }}{{$booking?->tax}}</p>
-                        <p>{{ $currency }}{{$booking?->platform_fees}}</p>
-                        <p>{{ $currency }}{{ $booking?->extra_charges?->sum('total') ?? 0 }}</p>
-                        <p>{{ $currency }}{{ number_format($addonsChargeAmount, 2) }}</p>
-                        <p>{{ $currency }}{{ number_format($booking?->total + ($booking?->extra_charges?->sum('total') ?? 0) + $addonsChargeAmount, 2) }}</p>
+                        <p>{{ Helpers::formatCurrencyAmount($booking?->subtotal) }}</p>
+                        <p>{{ Helpers::formatCurrencyAmount($booking?->tax) }}</p>
+                        <p>{{ Helpers::formatCurrencyAmount($booking?->platform_fees) }}</p>
+                        <p>{{ Helpers::formatCurrencyAmount($booking?->extra_charges?->sum('total') ?? 0) }}</p>
+                        <p>{{ Helpers::formatCurrencyAmount(number_format($addonsChargeAmount, 2)) }}</p>
+                        <p>{{ Helpers::formatCurrencyAmount(number_format($booking?->total + ($booking?->extra_charges?->sum('total') ?? 0) + $addonsChargeAmount, 2)) }}</p>
                     </div>
                     <div style="clear: both;"></div>
                 </div>

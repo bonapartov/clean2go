@@ -230,12 +230,9 @@
                                     </h2>
                                     <div id="collapserange" class="accordion-collapse collapse show" data-bs-parent="#range">
                                         <div class="accordion-body price-range-box">
-                                            <input id="price-range" name="price" type="text" class="range-slider" data-min="{{ $services->min('service_rate') }}" data-max="{{ $services->max('service_rate') }}" 
-                                            @if (Helpers::getDefaultCurrency()->symbol_position === SymbolPositionEnum::LEFT)
+                                            <input id="price-range" name="price" type="text" class="range-slider" data-min="{{ $services->min('service_rate') }}" data-max="{{ $services->max('service_rate') }}"
                                                 data-symbol="{{ Helpers::getDefaultCurrencySymbol() }}"
-                                            @else
-                                                data-symbol="{{ Helpers::getDefaultCurrencySymbol() }} "
-                                            @endif>
+                                                data-position="{{ Helpers::getDefaultCurrency()->symbol_position->value }}">
                                         </div>
                                     </div>
                                 </div>

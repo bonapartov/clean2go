@@ -24,15 +24,15 @@
     @endforelse
 
     <li>Subtotal
-        <span id="subtotal-value">{{ Helpers::getDefaultCurrency()->symbol }}{{ Helpers::covertDefaultExchangeRate($subTotal) }}</span>
+        <span id="subtotal-value">{{ Helpers::formatCurrencyAmount(Helpers::covertDefaultExchangeRate($subTotal)) }}</span>
     </li>
     <li>Discount
         <span id="discount-value">0</span>
     </li>
     <li>Total Tax
-        <span id="tax-value">{{ Helpers::getDefaultCurrency()->symbol }}{{ Helpers::covertDefaultExchangeRate($totalTax) }}</span>
+        <span id="tax-value">{{ Helpers::formatCurrencyAmount(Helpers::covertDefaultExchangeRate($totalTax)) }}</span>
     </li>
     <li>Total
-        <span id="total-value">{{ Helpers::getDefaultCurrency()->symbol }}{{ Helpers::covertDefaultExchangeRate($total) }}</span>
+        <span id="total-value">{{ Helpers::formatCurrencyAmount(Helpers::covertDefaultExchangeRate($total)) }}</span>
     </li>
 </ul>

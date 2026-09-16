@@ -90,7 +90,7 @@ class BookingReportRepository extends BaseRepository
                                 " . Helpers::formatPaymentStatus($booking?->payment_status) . "</div>
                         </td>
                         <td>" . $booking?->service?->title . "</td>
-                        <td>" . Helpers::getDefaultCurrency()->symbol . " " . $booking?->total . "</td>
+                        <td>" . Helpers::formatCurrencyAmount($booking?->total) . "</td>
                     </tr>";
             }
         }

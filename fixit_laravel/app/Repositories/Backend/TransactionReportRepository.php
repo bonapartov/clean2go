@@ -81,7 +81,7 @@ class TransactionReportRepository extends BaseRepository
                                 " . Helpers::formatPaymentStatus($transaction->payment_status) . "</label>
                                 </td>
 
-                                <td>" . Helpers::getDefaultCurrency()?->symbol . $transaction->amount . "</td>
+                                <td>" . Helpers::formatCurrencyAmount($transaction->amount) . "</td>
                                 <td>" . (\Illuminate\Support\Facades\Lang::has('static.report.' . $transaction->type) ? __('static.report.' . $transaction->type) : $transaction->type) . "</td>
 
                     </tr>";

@@ -25,7 +25,7 @@
                                   <span>{{ $cartItem?->service?->required_servicemen }} Servicemen</span>
                               </li>
                           </ul>
-                          <h3>{{ Helpers::getDefaultCurrency()?->symbol }} {{ $cartItem?->service?->service_rate }} <del>{{ Helpers::getDefaultCurrency()?->symbol }} {{ $cartItem?->service?->price }}</del></h3>
+                          <h3>{{ Helpers::formatCurrencyAmount($cartItem?->service?->service_rate) }} <del>{{ Helpers::formatCurrencyAmount($cartItem?->service?->price) }}</del></h3>
                       </div>
                   </div>
               </div>

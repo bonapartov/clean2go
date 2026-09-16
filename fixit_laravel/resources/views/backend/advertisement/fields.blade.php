@@ -1,6 +1,7 @@
 @use('App\Models\Zone')
 @use('app\Helpers\Helpers')
 @use('App\Enums\RoleEnum')
+@use('App\Enums\SymbolPositionEnum')
 
 @php
     $zones = Zone::where('status', true)->pluck('name', 'id');
@@ -309,16 +310,16 @@
                         <div class="advertisement-list-box">
                             <div class="total-box">
                                 <h4>{{ __('static.advertisement.total_amount') }}  :</h4>
-                                <h6>{{ Helpers::getDefaultCurrency()->symbol }}<span id="total-price">0</span></h6>
+                                <h6>@if (Helpers::getDefaultCurrency()->symbol_position === SymbolPositionEnum::LEFT){{ Helpers::getDefaultCurrency()->symbol }}@endif<span id="total-price">0</span>@if (Helpers::getDefaultCurrency()->symbol_position !== SymbolPositionEnum::LEFT) {{ Helpers::getDefaultCurrency()->symbol }}@endif</h6>
                             </div>
                             <input type="hidden" value="" id="total-val" name="price">
                             <ul class="advertisement-list">
-                                <li id="home-screen-price">{{ __('static.advertisement.home_screen_price') }}  : <span>{{ Helpers::getDefaultCurrency()->symbol }}{{ isset($settings['advertisement']['home_screen_price']) ? $settings['advertisement']['home_screen_price'] : ''  }}</span></li>
-                                <li id="home-screen-price">{{ __('static.advertisement.category_screen_price') }} : <span>{{ Helpers::getDefaultCurrency()->symbol }}{{ isset($settings['advertisement']['category_screen_price']) ? $settings['advertisement']['category_screen_price'] : ''  }}</span></li>
+                                <li id="home-screen-price">{{ __('static.advertisement.home_screen_price') }}  : <span>{{ Helpers::formatCurrencyAmount(isset($settings['advertisement']['home_screen_price']) ? $settings['advertisement']['home_screen_price'] : '') }}</span></li>
+                                <li id="home-screen-price">{{ __('static.advertisement.category_screen_price') }} : <span>{{ Helpers::formatCurrencyAmount(isset($settings['advertisement']['category_screen_price']) ? $settings['advertisement']['category_screen_price'] : '') }}</span></li>
                                 <li style="display :none" id="total-no-of-images-li">{{ __('static.advertisement.total_images_video') }} : <h6><span id="total-no-of-images" ></span></h6></li>
                                 <li style="display :none" id="total-no-of-services-li">{{ __('static.advertisement.total_services') }} : <h6><span id="total-no-of-services" ></span></h6></li>
                                 <li id="total-no-of-days-li">{{ __('static.advertisement.total_days') }} : <h6><span id="total-no-of-days"></span></h6></li>
-                                <li class="total">{{ __('static.advertisement.total') }} : <h6>{{ Helpers::getDefaultCurrency()->symbol }}<span id="total">0</span></h6></li>
+                                <li class="total">{{ __('static.advertisement.total') }} : <h6>@if (Helpers::getDefaultCurrency()->symbol_position === SymbolPositionEnum::LEFT){{ Helpers::getDefaultCurrency()->symbol }}@endif<span id="total">0</span>@if (Helpers::getDefaultCurrency()->symbol_position !== SymbolPositionEnum::LEFT) {{ Helpers::getDefaultCurrency()->symbol }}@endif</h6>
                             </ul>
                         </div>
                         <p class="wallet-deduction-message">{{ __('static.advertisement.note') }}</p>

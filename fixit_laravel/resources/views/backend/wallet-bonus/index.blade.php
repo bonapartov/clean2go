@@ -66,7 +66,7 @@
                                 </select>
 
                                 <label class="col-md-4 mt-3">{{ __('frontend::static.services.price_range')}}</label>
-                                <input id="price-range" name="price" type="text" class="range-slider" data-min="{{ $minBonus }}" data-max="{{ $maxBonus }}" data-symbol="{{ Helpers::getDefaultCurrencySymbol() }}">
+                                <input id="price-range" name="price" type="text" class="range-slider" data-min="{{ $minBonus }}" data-max="{{ $maxBonus }}" data-symbol="{{ Helpers::getDefaultCurrencySymbol() }}" data-position="{{ Helpers::getDefaultCurrency()->symbol_position->value }}">
 
                                 
                                 <label class="col-md-2" for="filterStatus">{{ __('static.status') }}</label>

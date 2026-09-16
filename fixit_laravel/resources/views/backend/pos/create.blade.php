@@ -691,6 +691,7 @@
             let discountAmount = parseFloat($('#discount-amount').val());
             let discountType = $('input[name="discount_type"]:checked').val();
             let currencySymbol = '{{ Helpers::getDefaultCurrency()->symbol }}';
+            let currencyPosition = '{{ Helpers::getDefaultCurrency()->symbol_position->value }}';
 
             let subtotal = parseFloat($('#subtotal-value').text().replace(currencySymbol, '').trim());
             let totalTax = parseFloat($('#tax-value').text().replace(currencySymbol, '').trim());
@@ -713,8 +714,8 @@
 
             let newTotal = originalTotal - discount;
 
-            $('#discount-value').text(currencySymbol + discount.toFixed(2));
-            $('#total-value').text(currencySymbol + newTotal.toFixed(2));
+            $('#discount-value').text(currencyPosition === 'left' ? currencySymbol + discount.toFixed(2) : discount.toFixed(2) + ' ' + currencySymbol);
+            $('#total-value').text(currencyPosition === 'left' ? currencySymbol + newTotal.toFixed(2) : newTotal.toFixed(2) + ' ' + currencySymbol);
         });
 
 
