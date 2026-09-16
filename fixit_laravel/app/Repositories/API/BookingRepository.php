@@ -568,6 +568,7 @@ class BookingRepository extends BaseRepository
             if (isset($request['booking_status'])) {
                 $booking_status = Helpers::getBookingIdBySlug($request['booking_status']);
                 $booking_status_id = $booking_status?->id;
+                $soleServicemanToAutoAssign = null;
                 switch ($booking_status?->slug) {
                     case BookingEnumSlug::PENDING:
                         $logData = [
@@ -632,6 +633,15 @@ class BookingRepository extends BaseRepository
                                 'title' => __('frontend::static.bookings.log_accepted_title'),
                                 'description' => __('frontend::static.bookings.log_accepted_provider_desc'),
                             ];
+
+                            // If the provider has exactly one active serviceman (their own
+                            // shadow account, or a single real employee), there is no manual
+                            // choice to make — skip the assign() dropdown flow and auto-assign
+                            // that serviceman once the Accepted transition below is persisted.
+                            $activeServicemen = $booking->provider->servicemans()->where('status', true)->whereNull('deleted_at')->get();
+                            if ($activeServicemen->count() === 1) {
+                                $soleServicemanToAutoAssign = $activeServicemen->first();
+                            }
                         } else {
                             $logData = [
                                 'title' => __('frontend::static.bookings.log_accepted_title'),
@@ -722,6 +732,10 @@ class BookingRepository extends BaseRepository
 
                 $booking = $booking->fresh();
                 event(new UpdateBookingStatusEvent($booking));
+
+                if (!empty($soleServicemanToAutoAssign)) {
+                    $booking = $this->autoAssignSoleServiceman($booking, $soleServicemanToAutoAssign);
+                }
             }
 
             DB::commit();
@@ -1195,18 +1209,7 @@ class BookingRepository extends BaseRepository
                             'success' => true,
                         ]);
                     }
-                    $booking->servicemen()->attach($request['servicemen_ids']);
-                    $booking_status_id = Helpers::getbookingStatusIdBySlug(BookingEnum::ASSIGNED);
-                    $booking->update([
-                        'booking_status_id' => $booking_status_id,
-                    ]);
-                    $logData = [
-                        'title' => __('frontend::static.bookings.log_assigned_title'),
-                        'booking_id' => $booking->id,
-                        'description' => __('frontend::static.bookings.log_assigned_desc'),
-                        'booking_status_id' => $booking_status_id,
-                    ];
-                    $this->bookingStatusLog->create($logData);
+                    $this->transitionToAssigned($booking, $request['servicemen_ids']);
                     DB::commit();
                     $booking->fresh();
 
@@ -1222,6 +1225,52 @@ class BookingRepository extends BaseRepository
         } catch (Exception $e) {
             throw new ExceptionHandler($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Attach the given serviceman ids to a booking and transition it to Assigned.
+     * This is the single implementation of "what happens when serviceman(s) get
+     * assigned" — shared by the manual assign() flow (dropdown, possibly multiple
+     * servicemen) and autoAssignSoleServiceman() below (automatic single-serviceman
+     * assignment on Accept). Does not touch the DB transaction or fire events —
+     * callers control that, since they run in different transaction/commit contexts.
+     */
+    private function transitionToAssigned(Booking $booking, array $servicemenIds)
+    {
+        $booking->servicemen()->attach($servicemenIds);
+        $booking_status_id = Helpers::getbookingStatusIdBySlug(BookingEnum::ASSIGNED);
+        $booking->update([
+            'booking_status_id' => $booking_status_id,
+        ]);
+        $logData = [
+            'title' => __('frontend::static.bookings.log_assigned_title'),
+            'booking_id' => $booking->id,
+            'description' => __('frontend::static.bookings.log_assigned_desc'),
+            'booking_status_id' => $booking_status_id,
+        ];
+        $this->bookingStatusLog->create($logData);
+    }
+
+    /**
+     * Auto-assign the sole active serviceman for a provider that has exactly one
+     * (their own shadow account, or a single real employee), skipping the manual
+     * assign() dropdown flow entirely. Called right after a provider accepts a
+     * booking, from within update()'s existing DB transaction. No-op if the
+     * booking somehow already has a serviceman attached (idempotency guard).
+     */
+    private function autoAssignSoleServiceman(Booking $booking, User $servicemanUser)
+    {
+        if ($booking->servicemen()->count()) {
+            return $booking;
+        }
+
+        $this->transitionToAssigned($booking, [$servicemanUser->id]);
+
+        $booking = $booking->fresh();
+        event(new AssignBookingEvent($booking));
+        event(new UpdateBookingStatusEvent($booking));
+
+        return $booking;
     }
 
     public function getInvoiceUrl($booking_number)
