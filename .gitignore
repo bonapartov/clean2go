@@ -17,6 +17,7 @@ fixit_laravel/public/hot
 fixit_laravel/public/storage
 fixit_laravel/public/admin/assets/
 fixit_laravel/.phpunit.result.cache
+fixit_laravel/.phpunit.cache/
 fixit_laravel/public/.migration
 fixit_laravel/public/*.tmp
 
