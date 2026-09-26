@@ -14,7 +14,9 @@ class SettingSeeder extends Seeder
         $current_year = date('Y');
         $currency_id = (Currency::where('code', 'RUB')->where('status', true)->first()
             ?? Currency::where('status', true)->first())->id;
-        $language_id = SystemLang::where('name', 'English')->first()?->id;
+        // Английская локаль удалена из проекта (Clean2Go — русский рынок);
+        // SystemLangSeeder сеет только 'Russian'.
+        $language_id = SystemLang::where('name', 'Russian')->first()?->id;
         $baseURL = env('APP_URL');
         $baseName = config('app.name');
         $values = [

@@ -1541,7 +1541,10 @@ class Helpers
     public static function getDefaultLanguageLocale()
     {
         $settings = self::getSettings();
-        return $settings['general']['default_language']?->locale;
+        // Настройки хранят только ID (default_language_id) — не объект
+        // default_language, который в них никогда не существовал.
+        $languageId = $settings['general']['default_language_id'] ?? null;
+        return $languageId ? SystemLang::find($languageId)?->locale : null;
     }
 
     public static function getPaymentStatusColorClasses()
