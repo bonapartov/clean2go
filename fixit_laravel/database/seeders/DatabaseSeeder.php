@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             HomePageSeeder::class,
             SpbZoneSeeder::class,
+            DemoCatalogSeeder::class,
             CustomSmsGatewaySettingSeeder::class,
             SeoSettingSeeder::class,
             IntegrationSettingsSeeder::class,
