@@ -2374,12 +2374,16 @@ class Helpers
 
     public static function getReferralCodeByName(string $name, int $maxLength = 6): string
     {
-        $name = strtoupper(preg_replace('/\s+/', '', $name));
+        // mb_-safe: byte-based substr()/strtoupper() split multi-byte
+        // Cyrillic characters in half, producing invalid UTF-8 that MySQL
+        // rejects on insert (breaking registration for Cyrillic names).
+        $name = mb_strtoupper(preg_replace('/\s+/u', '', $name), 'UTF-8');
         $totalLength   = max(6, $maxLength);
         $letterLength  = $totalLength - 3;
-        $letters = substr($name, 0, $letterLength);
-        if (strlen($letters) < $letterLength) {
-            $letters = str_pad($letters, $letterLength, 'X', STR_PAD_RIGHT);
+        $letters = mb_substr($name, 0, $letterLength, 'UTF-8');
+        $missing = $letterLength - mb_strlen($letters, 'UTF-8');
+        if ($missing > 0) {
+            $letters .= str_repeat('X', $missing);
         }
 
         do {
