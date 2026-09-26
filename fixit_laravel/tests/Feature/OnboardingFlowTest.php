@@ -25,6 +25,10 @@ class OnboardingFlowTest extends TestCase
     {
         parent::setUp();
         Storage::fake('local');
+        // Загрузка паспорта пишет на диск onboarding_private (см.
+        // OnboardingController::uploadPassport), не на 'local' — без этого
+        // тест реально пишет файлы в storage/app/onboarding на диске.
+        Storage::fake('onboarding_private');
         Queue::fake();
         config(['provider-onboarding.mock_mode' => true]);
 
@@ -60,6 +64,21 @@ class OnboardingFlowTest extends TestCase
     #[Test]
     public function step1_ip_inn_returns_individual_entrepreneur(): void
     {
+        // ЕГРИП не отличает обычного ИП от ИП, совмещающего НПД — контроллер
+        // всегда доперепроверяет статус НПД (см. OnboardingController::checkInn).
+        // Http::fake() из setUp() уже застолбил statusnpd.nalog.ru как ACTIVE
+        // для всех тестов (Http::fake() дополняет, а не заменяет предыдущие
+        // правила — первое совпадение в очереди побеждает), поэтому плоский
+        // ИП без НПД мокается подменой самого сервиса, а не HTTP-ответа.
+        $this->instance(
+            \Modules\ProviderOnboarding\Services\NpdVerificationService::class,
+            new class extends \Modules\ProviderOnboarding\Services\NpdVerificationService {
+                public function check(string $inn): array {
+                    return ['status' => 'inactive', 'raw' => ['status' => 'INACTIVE']];
+                }
+            }
+        );
+
         $user = $this->makeProvider();
 
         $response = $this->actingAs($user)->postJson('/api/onboarding/inn', ['inn' => '123456789011']);
@@ -158,6 +177,7 @@ class OnboardingFlowTest extends TestCase
         ProviderVerification::factory()->create([
             'user_id'              => $user->id,
             'taxpayer_type'        => 'self_employed',
+            'passport_status'      => 'verified',
             'contract_path'        => 'contracts/test.pdf',
             'contract_sms_code'    => bcrypt('123456'),
             'contract_sms_sent_at' => now(),
@@ -178,6 +198,7 @@ class OnboardingFlowTest extends TestCase
         ProviderVerification::factory()->create([
             'user_id'              => $user->id,
             'taxpayer_type'        => 'self_employed',
+            'passport_status'      => 'verified',
             'contract_path'        => 'contracts/test.pdf',
             'contract_sms_code'    => bcrypt('123456'),
             'contract_sms_sent_at' => now()->subMinutes(20),
