@@ -52,6 +52,7 @@ updated-files/
 
 # DB dump (may contain secrets)
 fixit_laravel/public/db.sql
+db_backups/
 
 # DS_Store
 .DS_Store
