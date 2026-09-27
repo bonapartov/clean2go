@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Helpers\Helpers;
 use App\Models\Currency;
+use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Database\Seeder;
 use MatanYadaev\EloquentSpatial\Objects\LineString;
@@ -25,6 +26,12 @@ class SpbZoneSeeder extends Seeder
 {
     public function run(): void
     {
+        // ZonePolicy::update()/delete() требуют user->id == created_by_id
+        // (без обхода для admin — тот же паттерн, что и в CategoryPolicy).
+        // Без этого поля зона создаётся "ничьей" и её не может отредактировать
+        // никто, включая админа, — 403 "This action is unauthorized".
+        $adminId = User::where('email', 'admin@example.com')->value('id');
+
         $currencyId = Currency::where('code', 'RUB')->where('status', true)->first()?->id
             ?? Currency::where('status', true)->first()?->id;
 
@@ -57,7 +64,11 @@ class SpbZoneSeeder extends Seeder
             ]);
 
             $zone->setTranslation('name', 'ru', $name);
-            $zone->save();
+            // Zone::boot() форсирует created_by_id = auth()->user()?->id на
+            // каждом save() — в сидере это null. saveQuietly() не поднимает
+            // событие saving, так что явно проставленное значение выживает.
+            $zone->created_by_id = $adminId;
+            $zone->saveQuietly();
         }
     }
 
