@@ -156,6 +156,9 @@ Route::group(['middleware' => ['localization']], function () {
         // Push from app to app (chat, bookings): the server holds the Firebase key
         Route::post('push/send', 'App\Http\Controllers\API\PushNotificationController@send')->middleware('throttle:60,1');
 
+        // Executor's receipts («Мой налог») and НПД income this year
+        Route::get('npd/my-receipts', 'App\Http\Controllers\API\NpdReceiptController@mine');
+
         // App-to-app calls over our LiveKit server (App\Support\Calls)
         Route::post('calls', 'App\Http\Controllers\API\CallController@store')->middleware('throttle:20,1');
         Route::get('calls/incoming', 'App\Http\Controllers\API\CallController@incoming');

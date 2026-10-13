@@ -194,4 +194,25 @@ class NpdReceiptsTest extends TestCase
         $this->assertSame('over', NpdReceipts::checkLimit($make(1500)));
         $this->assertNull(NpdReceipts::checkLimit($make(100)));
     }
+
+    #[Test]
+    public function executor_sees_own_receipts_and_year_income(): void
+    {
+        $this->withoutMiddleware(\Phpblaze\Bladelib\Middles\A3::class);
+        $executor = $this->executor('self_employed');
+        $other = $this->executor('self_employed', '773370857141');
+        $this->booking($executor, ['subtotal' => 3000])->update(['payment_status' => PaymentStatus::COMPLETED]);
+        $this->booking($other, ['subtotal' => 9000])->update(['payment_status' => PaymentStatus::COMPLETED]);
+
+        $this->actingAs($executor, 'sanctum')->getJson('/api/npd/my-receipts')
+            ->assertOk()
+            ->assertJsonPath('data.income', 3000)
+            ->assertJsonPath('data.limit', 2400000)
+            ->assertJsonCount(1, 'data.receipts')
+            ->assertJsonPath('data.receipts.0.status_label', 'Выдан')
+            ->assertJsonPath('data.receipts.0.is_test', true);
+
+        $this->app['auth']->forgetGuards();
+        $this->getJson('/api/npd/my-receipts')->assertUnauthorized();
+    }
 }

@@ -1,3 +1,4 @@
+import '../../npd/npd_receipts_screen.dart';
 import 'dart:developer';
 
 import 'package:fixit_provider/config.dart';
@@ -167,6 +168,9 @@ class ProfileProvider with ChangeNotifier {
         notifyListeners();
 
         route.pushNamed(context, routeName.idVerification);
+      } else if (data.title == NpdReceiptsScreen.menuTitle) {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const NpdReceiptsScreen()));
       } else if (data.title == translations!.advertisement) {
         route.pushNamed(context, routeName.advertisingScreens);
       } else if (data.title == translations!.timeSlots) {

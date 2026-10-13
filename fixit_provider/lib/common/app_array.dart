@@ -1,3 +1,4 @@
+import '../npd/npd_receipts_screen.dart';
 import 'package:fixit_provider/model/array_model.dart';
 import 'package:intl/intl.dart';
 
@@ -511,6 +512,12 @@ class AppArray {
               "title": translations!.bankDetails,
               "isArrow": true
             },
+            // Чеки самозанятого и доход НПД за год (lib/npd/, Sprint 8)
+            {
+              "icon": eSvgAssets.receipt,
+              "title": NpdReceiptsScreen.menuTitle,
+              "isArrow": true
+            },
             {
               "icon": eSvgAssets.identity,
               "title": translations!.idVerification,
@@ -602,6 +609,12 @@ class AppArray {
             {
               "icon": eSvgAssets.bank,
               "title": translations!.bankDetails,
+              "isArrow": true
+            },
+            // Чеки самозанятого и доход НПД за год (lib/npd/, Sprint 8)
+            {
+              "icon": eSvgAssets.receipt,
+              "title": NpdReceiptsScreen.menuTitle,
               "isArrow": true
             },
             {

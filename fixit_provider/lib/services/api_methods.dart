@@ -9,6 +9,8 @@ class ApiMethods {
   String pushSend = '$apiUrl/push/send';
   // App-to-app calls over our LiveKit server (lib/calls/)
   String calls = '$apiUrl/calls';
+  // Executor's receipts («Мой налог») and НПД income this year
+  String npdMyReceipts = '$apiUrl/npd/my-receipts';
   String forgotPassword = '$apiUrl/forgot-password';
   String verifyOtp = '$apiUrl/verifyOtp';
   String updatePassword = '$apiUrl/update-password';
