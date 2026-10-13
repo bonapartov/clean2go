@@ -15,7 +15,7 @@ class ServicemanExport implements FromCollection,WithMapping,WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $serviceman = User::role(RoleEnum::SERVICEMAN)->where('status', true)->whereNull('deleted_at');
         return $serviceman->get();
@@ -56,7 +56,7 @@ class ServicemanExport implements FromCollection,WithMapping,WithHeadings
             $serviceman->phone ?? 'Н/Д',
             $serviceman->code ?? 'Н/Д',
             $serviceman->description ?? 'Н/Д',
-            $serviceman->media->first()->original_url ,
+            $serviceman->media->first()?->original_url ,
             $serviceman->system_reserve ?? 'Н/Д',
             $serviceman->experience_interval ?? 'Н/Д',
             $serviceman->experience_duration ?? 'Н/Д',
