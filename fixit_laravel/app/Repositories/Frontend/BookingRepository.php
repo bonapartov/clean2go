@@ -65,6 +65,7 @@ class BookingRepository extends BaseRepository
         $request->session()->forget('service_bookings');
         $request->session()->forget('service_package_bookings');
         $request->session()->forget('coupon');
+        $request->session()->forget('insurance');
         if ($payment['is_redirect']) {
           return redirect()->away($payment['url']);
         }

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import '../../../widgets/insurance_option_layout.dart';
 
 import '../../../config.dart';
 
@@ -221,6 +222,11 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                                                     : "0");
                                           }),
                                           const VSpace(Sizes.s10),
+                                          // «Застраховать услугу» (Sprint 6)
+                                          if (value.checkoutModel != null)
+                                            const InsuranceOptionLayout(),
+                                          if (value.checkoutModel != null)
+                                            const VSpace(Sizes.s10),
                                           if (value.checkoutModel != null)
                                             const BillLayout(),
                                           const VSpace(Sizes.s10),

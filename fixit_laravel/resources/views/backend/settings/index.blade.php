@@ -406,6 +406,72 @@
                                         </div>
                                     </div>
 
+                                    {{-- «Застраховать услугу» (ROADMAP Sprint 6, агентская модель B2C).
+                                         Выключено, пока нет договора со страховой.
+                                         Логика — App\Support\ServiceInsurance. --}}
+                                    @php($insurance = $settings['insurance'] ?? [])
+                                    <h5 class="mb-3 mt-4">{{ __('static.settings.insurance_title') }}</h5>
+                                    <div class="form-group row">
+                                        <label class="col-md-2"
+                                            for="insurance[status]">{{ __('static.settings.insurance_status') }}</label>
+                                        <div class="col-md-10">
+                                            <div class="editor-space">
+                                                <label class="switch">
+                                                    <input class="form-control" type="hidden"
+                                                        name="insurance[status]" value="0">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="insurance[status]" value="1"
+                                                        {{ !empty($insurance['status']) ? 'checked' : '' }}>
+                                                    <span class="switch-state"></span>
+                                                </label>
+                                                <span class="help-text">{{ __('static.settings.insurance_status_help') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="insurance[price_type]"
+                                            class="col-md-2">{{ __('static.settings.insurance_price_type') }}</label>
+                                        <div class="col-md-10 error-div select-dropdown">
+                                            <select class="select-2 form-control" id="insurance[price_type]"
+                                                name="insurance[price_type]">
+                                                @foreach (['fixed' => __('static.settings.insurance_price_fixed'), 'percentage' => __('static.settings.insurance_price_percentage')] as $key => $option)
+                                                    <option value="{{ $key }}" @selected(($insurance['price_type'] ?? 'fixed') === $key)>{{ $option }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-2" for="insurance[price]">{{ __('static.settings.insurance_price') }}</label>
+                                        <div class="col-md-10 error-div">
+                                            <input class="form-control" type="number" step="0.01" min="0"
+                                                id="insurance[price]" name="insurance[price]"
+                                                value="{{ $insurance['price'] ?? 0 }}">
+                                            <span class="help-text">{{ __('static.settings.insurance_price_help') }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-2" for="insurance[insurer_name]">{{ __('static.settings.insurance_insurer_name') }}</label>
+                                        <div class="col-md-10 error-div">
+                                            <input class="form-control" type="text" maxlength="255"
+                                                id="insurance[insurer_name]" name="insurance[insurer_name]"
+                                                value="{{ $insurance['insurer_name'] ?? '' }}">
+                                            <span class="help-text">{{ __('static.settings.insurance_insurer_name_help') }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-2" for="insurance[terms_url]">{{ __('static.settings.insurance_terms_url') }}</label>
+                                        <div class="col-md-10 error-div">
+                                            <input class="form-control" type="url" maxlength="500"
+                                                id="insurance[terms_url]" name="insurance[terms_url]"
+                                                value="{{ $insurance['terms_url'] ?? '' }}">
+                                            <span class="help-text">{{ __('static.settings.insurance_terms_url_help') }}</span>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row">
                                         <label for="country" class="col-md-2">{{ __('static.settings.mode') }}
                                             <span>*</span>

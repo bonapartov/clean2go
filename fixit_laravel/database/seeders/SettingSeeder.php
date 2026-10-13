@@ -106,6 +106,16 @@ class SettingSeeder extends Seeder
                 'client_secret' => '',
                 'redirect_url' => '',
             ],
+            // «Застраховать услугу» (ROADMAP Sprint 6). Off until there is a
+            // contract with an insurer; the admin sets it in Settings →
+            // «Общие» → «Страхование услуги». See App\Support\ServiceInsurance.
+            'insurance' => [
+                'status' => false,
+                'price_type' => 'fixed',
+                'price' => 0,
+                'insurer_name' => '',
+                'terms_url' => '',
+            ],
             'service_request' => [
                 'status' => '1',
                 'default_tax_id' => '1',

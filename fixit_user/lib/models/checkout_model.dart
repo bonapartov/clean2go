@@ -389,6 +389,10 @@ class FinalTotal {
   double? total;
   bool? isAdvancePayment;
   String? advancePaymentPercentage;
+  // «Застраховать услугу» (ROADMAP Sprint 6)
+  bool isInsured = false;
+  double insuranceAmount = 0;
+  String? insuranceInsurer;
 
   FinalTotal(
       {this.requiredServicemen,
@@ -418,6 +422,10 @@ class FinalTotal {
     tax = double.parse(json['tax'].toString());
     platformFees = double.parse(json['platform_fees'].toString());
     platformFeesType = json['platform_fees_type'];
+    isInsured = json['is_insured'] == true;
+    insuranceAmount =
+        double.tryParse('${json['insurance_amount'] ?? 0}') ?? 0;
+    insuranceInsurer = json['insurance_insurer'];
     subtotal = double.parse(json['subtotal'].toString());
     total = double.parse(json['total'].toString());
   }
@@ -431,6 +439,9 @@ class FinalTotal {
     data['coupon_total_discount'] = couponTotalDiscount;
     data['tax'] = tax;
     data['platform_fees'] = platformFees;
+    data['is_insured'] = isInsured;
+    data['insurance_amount'] = insuranceAmount;
+    data['insurance_insurer'] = insuranceInsurer;
     data['platform_fees_type'] = platformFeesType;
     data['subtotal'] = subtotal;
     data['total'] = total;

@@ -53,6 +53,22 @@ class CartController extends Controller
         return $this->repository?->removeCoupon();
     }
 
+    /**
+     * «Застраховать услугу» checkbox in the cart (ROADMAP Sprint 6): kept in
+     * the session and added to the checkout payload, like the coupon. Ignored
+     * when the admin has the option off (App\Support\ServiceInsurance).
+     */
+    public function toggleInsurance(Request $request)
+    {
+        if ($request->boolean('insurance') && \App\Support\ServiceInsurance::isAvailable()) {
+            session()->put('insurance', true);
+        } else {
+            session()->forget('insurance');
+        }
+
+        return to_route('frontend.cart.index');
+    }
+
     public function handleCoupon(Request $request)
     {
         // if ($request->has('coupon') && !session()->has('coupon')) {

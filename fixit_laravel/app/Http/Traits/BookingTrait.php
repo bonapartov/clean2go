@@ -191,6 +191,11 @@ trait BookingTrait
             'platform_fees_type' => $service['total']['platform_fees_type'] ?? null,
             'subtotal' => $service['total']['subtotal'],
             'total' => $totalAmount,
+            // «Застраховать услугу» snapshot (Sprint 6); only the parent
+            // booking carries it, child bookings have no 'is_insured' total.
+            'is_insured' => $service['total']['is_insured'] ?? false,
+            'insurance_amount' => $service['total']['insurance_amount'] ?? 0,
+            'insurance_insurer' => $service['total']['insurance_insurer'] ?? null,
             'booking_status_id' => $bookingStatusId,
             'parent_id' => $request->parent_id,
             'date_time' => $this->dateTimeFormater($service['date_time'] ?? null),

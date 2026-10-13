@@ -106,6 +106,10 @@
                                 @if (isset($booking->platform_fees))
                                     <li>{{__('static.settings.platform_fees')}} : <span>{{Helpers::getSettings()['general']['default_currency']->symbol}} {{ $booking->platform_fees }}</span></li>
                                 @endif
+                                @if ($booking->is_insured)
+                                    {{-- «Застраховать услугу» (Sprint 6): снимок на момент заказа --}}
+                                    <li>{{ __('static.settings.insurance_title') }}{{ $booking->insurance_insurer ? ' ('.$booking->insurance_insurer.')' : '' }} :<span>{{Helpers::getSettings()['general']['default_currency']->symbol}} {{ $booking->insurance_amount }}</span></li>
+                                @endif
                                 <li>{{__('static.total')}} :<span>{{Helpers::getSettings()['general']['default_currency']->symbol}} {{ $booking->total }}</span></li>
                             </ul>
                         </div>

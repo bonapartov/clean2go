@@ -399,6 +399,7 @@ $isCouponEnabled = Helpers::couponIsEnable();
                             @endif
                             @endisset
                             @endif
+                            @includeWhen($checkout, 'frontend.inc.insurance-option')
                             <div class="bill-summary mt-4">
                                 @if($checkout)
                                 <ul class="charge">
@@ -487,6 +488,13 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                             <span>{{ Helpers::covertDefaultExchangeRate($checkout['total']['platform_fees']) }} {{ Helpers::getDefaultCurrencySymbol() }}</span>
                                         @endif
                                     </li>
+                                    @if (!empty($checkout['total']['is_insured']))
+                                    {{-- «Застраховать услугу» (Sprint 6) --}}
+                                    <li>
+                                        <p>{{ __('frontend::static.insurance.line') }}</p>
+                                        <span>{{ Helpers::getDefaultCurrencySymbol() }}{{ Helpers::covertDefaultExchangeRate($checkout['total']['insurance_amount']) }}</span>
+                                    </li>
+                                    @endif
                                     
                                 </ul>
                                 <ul class="total">

@@ -7,6 +7,7 @@ use App\Exceptions\ExceptionHandler;
 use App\Helpers\Helpers;
 use App\Models\Service;
 use App\Support\ExecutorDisclosure;
+use App\Support\ServiceInsurance;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -116,6 +117,15 @@ trait CheckoutTrait
                 }
             }
             
+            // «Застраховать услугу» (Sprint 6): added to the order total
+            // before the advance split, so the advance covers it too.
+            // Off unless the admin enabled it (ServiceInsurance).
+            $insurance = ServiceInsurance::forCheckout(
+                filter_var($request->insurance ?? false, FILTER_VALIDATE_BOOLEAN),
+                (float) $totalAmount
+            );
+            $totalAmount = round($totalAmount + $insurance['insurance_amount'], 3);
+
             // Calculate advance payment amounts
             $advancePaymentAmount = $totalAmount;
             $remainingPaymentAmount = 0;
@@ -150,6 +160,9 @@ trait CheckoutTrait
                 'remaining_payment_amount' => $remainingPaymentAmount,
                 'is_advance_payment_enabled' => $isAdvanceEnabled,
                 'advance_payment_percentage' => $advancePercentage,
+                'is_insured' => $insurance['is_insured'],
+                'insurance_amount' => $insurance['insurance_amount'],
+                'insurance_insurer' => $insurance['insurance_insurer'],
             ];
 
             $items['total'] = $itemTotal;
@@ -600,6 +613,12 @@ trait CheckoutTrait
 
         if (session('coupon')) {
             $payload['coupon'] = session('coupon');
+        }
+
+        // «Застраховать услугу» on the website: the cart checkbox keeps the
+        // choice in the session, like the coupon (CartController::toggleInsurance).
+        if (session('insurance')) {
+            $payload['insurance'] = true;
         }
 
         $payload = $request->merge($payload);

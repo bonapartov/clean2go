@@ -257,6 +257,15 @@ class BillLayout extends StatelessWidget {
                                   ? "-${getSymbol(context)}${(currency(context).currencyVal * value.checkoutModel!.total!.couponTotalDiscount!).toStringAsFixed(2)}"
                                   : "-${(currency(context).currencyVal * value.checkoutModel!.total!.couponTotalDiscount!).toStringAsFixed(2)}${getSymbol(context)}")
                           .paddingOnly(bottom: Insets.i10),
+                    // «Застраховать услугу» (Sprint 6)
+                    if (value.checkoutModel!.total!.isInsured)
+                      BillRowCommon(
+                              title: 'Страхование услуги',
+                              color: appColor(context).online,
+                              price: symbolPosition
+                                  ? "+${getSymbol(context)}${(currency(context).currencyVal * value.checkoutModel!.total!.insuranceAmount).toStringAsFixed(2)}"
+                                  : "+${(currency(context).currencyVal * value.checkoutModel!.total!.insuranceAmount).toStringAsFixed(2)}${getSymbol(context)}")
+                          .paddingOnly(bottom: Insets.i10),
                     // BillRowCommon(
                     //         title: translations!.subtotal,
                     //         price:

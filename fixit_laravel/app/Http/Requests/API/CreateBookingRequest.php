@@ -34,6 +34,8 @@ class CreateBookingRequest extends FormRequest
             'consumer_id' => 'exists:users,id,deleted_at,NULL',
             'services.*.service_id' => ['exists:services,id,deleted_at,NULL'],
             'coupon' => ['nullable', 'exists:coupons,code,deleted_at,NULL'],
+            // «Застраховать услугу» (Sprint 6), see App\Support\ServiceInsurance
+            'insurance' => ['nullable', 'boolean'],
             'services.*.select_serviceman' => 'in:as_per_my_choice,app_choose',
             'payment_method' => ['string'],
         ];

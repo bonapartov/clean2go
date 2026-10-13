@@ -32,6 +32,8 @@ class CalculateCheckoutRequest extends FormRequest
             'services' => ['array'],
             'services.*.service_id' => ['required', 'exists:services,id'],
             'coupon' => ['nullable', 'exists:coupons,code'],
+            // «Застраховать услугу» (Sprint 6), see App\Support\ServiceInsurance
+            'insurance' => ['nullable', 'boolean'],
             'payment_method' => ['required'],
             'services.*.additional_services' => [
                 'nullable',

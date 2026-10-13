@@ -16,4 +16,6 @@ enum FrontSettingsEnum: string
     case APPEARANCE = 'appearance';
     case APP_SETTINGS = 'app_settings';
     case ON_BOARDING_SCREENS = 'onboarding';
+    // «Застраховать услугу»: apps need it to show the checkbox and price
+    case INSURANCE = 'insurance';
 }

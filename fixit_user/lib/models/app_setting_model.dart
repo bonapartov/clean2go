@@ -1,4 +1,5 @@
 import 'package:fixit_user/config.dart';
+import 'package:fixit_user/models/insurance_setting_model.dart';
 
 class AppSettingModel {
   Agora? agora;
@@ -12,6 +13,8 @@ class AppSettingModel {
   FirebaseCred? firebase;
   ServiceRequest? serviceRequest;
   List<OnboardingModel>? onboarding;
+  // «Застраховать услугу» (ROADMAP Sprint 6)
+  InsuranceSettingModel? insurance;
 
   AppSettingModel(
       {this.agora,
@@ -51,6 +54,10 @@ class AppSettingModel {
     firebase = json['firebase'] != null
         ? FirebaseCred.fromJson(json['firebase'])
         : null;
+    insurance = json['insurance'] is Map
+        ? InsuranceSettingModel.fromJson(
+            Map<String, dynamic>.from(json['insurance']))
+        : null;
     serviceRequest = json['service_request'] != null
         ? ServiceRequest.fromJson(json['service_request'])
         : null;
@@ -88,6 +95,9 @@ class AppSettingModel {
     }
     if (firebase != null) {
       data['firebase'] = firebase!.toJson();
+    }
+    if (insurance != null) {
+      data['insurance'] = insurance!.toJson();
     }
     if (onboarding != null) {
       data['onboarding'] = onboarding!.map((v) => v.toJson()).toList();

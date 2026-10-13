@@ -149,6 +149,8 @@ Route::group(['middleware' => [ 'route.access', 'localization', 'maintenance'], 
     Route::post('remove-cart', 'CartController@remove')->name('cart.remove');
     Route::post('apply-coupon', 'CartController@applyCoupon')->name('apply.coupon');
     Route::post('remove-coupon', 'CartController@removeCoupon')->name('remove.coupon');
+    // «Застраховать услугу» checkbox (ROADMAP Sprint 6)
+    Route::post('cart/insurance', 'CartController@toggleInsurance')->name('cart.insurance');
     Route::post('coupon-handle',  'CartController@handleCoupon')->name('coupon.handle');
 
     // Addresses
