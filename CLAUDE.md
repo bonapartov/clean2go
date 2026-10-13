@@ -169,10 +169,10 @@ merged into `main` to fix this. Don't let it happen again:
     a fast-forward PR merge, just without the GitHub UI wrapper. This is the
     common case for Claude Code's own auto-created `claude/*` session
     branches.
-  - `gh` CLI is **not installed** in this dev environment as of 2026-09-16.
-    Install it (`sudo apt install gh && gh auth login`) before relying on the
-    PR-based path above for a branch with real divergence; until then, use
-    the GitHub web UI for anything that isn't a clean fast-forward.
+  - `gh` CLI is installed (`~/.local/bin/gh`) but **not authenticated** as
+    of 2026-10-13. Run `gh auth login` before relying on the PR-based path
+    above for a branch with real divergence; until then, use the GitHub web
+    UI for anything that isn't a clean fast-forward.
 - **Clean up after merging.** Delete a branch once it's merged into `main` —
   except never delete the branch a running session currently has checked out.
 - Claude Code's auto-generated branch names (`claude/<slug>-<id>`) are fine to
