@@ -36,6 +36,8 @@ class NpdReceiptController extends Controller
             'statusLabels' => self::STATUS_LABELS,
             'enabled' => NpdReceipts::enabled(),
             'channel' => NpdReceipts::CHANNELS[NpdReceipts::channelKey()],
+            'nearLimit' => NpdReceipts::nearLimit(),
+            'limits' => NpdReceipts::limits(),
         ]);
     }
 

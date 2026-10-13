@@ -32,5 +32,10 @@ abstract class TestCase extends BaseTestCase
         if (! str_ends_with((string) $database, '_testing')) {
             throw new RuntimeException("Tests must run on a *_testing database, got \"$database\".");
         }
+
+        // Never send real push from tests: without the Firebase key
+        // Helpers::pushNotification() is a no-op (topics like user_2 may be
+        // real people's phones).
+        $this->app['config']->set('services.firebase.service_account_path', sys_get_temp_dir().'/clean2go-tests-no-firebase-key.json');
     }
 }

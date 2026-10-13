@@ -100,6 +100,10 @@ class NpdReceipts
                     'channel' => self::channelKey(),
                 ]
             );
+            if ($receipt->wasRecentlyCreated) {
+                // НПД income limit: warn the executor when it gets close
+                self::checkLimit($receipt);
+            }
             if (in_array($receipt->status, ['pending', 'failed'], true)) {
                 self::send($receipt);
             }
@@ -170,6 +174,99 @@ class NpdReceipts
         }
 
         return $done;
+    }
+
+    /**
+     * Executor's income on НПД through the platform in a calendar year:
+     * every receipt that is not annulled (registered, being sent, failed).
+     */
+    public static function yearIncome(int $executorId, ?int $year = null): float
+    {
+        $year ??= (int) now()->year;
+
+        return round((float) NpdReceipt::where('executor_id', $executorId)
+            ->where('status', '!=', 'cancelled')
+            ->whereYear('operation_time', $year)
+            ->sum('amount'), 2);
+    }
+
+    /** @return array{limit:float, warn_at:float} */
+    public static function limits(): array
+    {
+        $limit = (float) IntegrationSetting::get('npd_limit_amount', '2400000');
+        $percent = (float) IntegrationSetting::get('npd_limit_warn_percent', '80');
+
+        return ['limit' => $limit, 'warn_at' => round($limit * $percent / 100, 2)];
+    }
+
+    /**
+     * After a new receipt: tell the executor when they cross the warning
+     * threshold or the limit (422-ФЗ: 2.4 mln ₽ a year; over it they must
+     * switch to another tax regime). Income here counts only what went
+     * through Clean2Go — other income is unknown to us, the message says so.
+     */
+    public static function checkLimit(NpdReceipt $receipt): ?string
+    {
+        ['limit' => $limit, 'warn_at' => $warnAt] = self::limits();
+        if ($limit <= 0) {
+            return null;
+        }
+        $after = self::yearIncome($receipt->executor_id, (int) $receipt->operation_time->year);
+        $before = $after - $receipt->amount;
+
+        $level = match (true) {
+            $before < $limit && $after >= $limit => 'over',
+            $before < $warnAt && $after >= $warnAt => 'warn',
+            default => null,
+        };
+        if (! $level) {
+            return null;
+        }
+
+        $sum = number_format($after, 0, ',', ' ').' ₽ из '.number_format($limit, 0, ',', ' ').' ₽';
+        \App\Helpers\Helpers::pushNotification(['message' => [
+            'topic' => 'user_'.$receipt->executor_id,
+            'notification' => [
+                'title' => $level === 'over' ? 'Превышен лимит дохода самозанятого' : 'Доход приближается к лимиту НПД',
+                'body' => $level === 'over'
+                    ? "Через Clean2Go в этом году: $sum. Для дальнейшей работы нужно сменить налоговый режим (ИП)."
+                    : "Через Clean2Go в этом году: $sum. Учитывайте доход и вне платформы.",
+            ],
+            'data' => ['type' => 'npd_limit', 'level' => $level],
+        ]]);
+
+        return $level;
+    }
+
+    /**
+     * Executors whose income through the platform this year reached the
+     * warning threshold — for the admin page.
+     *
+     * @return list<array{executor_id:int, name:?string, inn:string, income:float, percent:float}>
+     */
+    public static function nearLimit(): array
+    {
+        ['limit' => $limit, 'warn_at' => $warnAt] = self::limits();
+        if ($limit <= 0) {
+            return [];
+        }
+
+        return NpdReceipt::query()
+            ->selectRaw('executor_id, MAX(executor_inn) as inn, SUM(amount) as income')
+            ->where('status', '!=', 'cancelled')
+            ->whereYear('operation_time', now()->year)
+            ->groupBy('executor_id')
+            ->havingRaw('SUM(amount) >= ?', [$warnAt])
+            ->orderByDesc('income')
+            ->with('executor:id,name')
+            ->get()
+            ->map(fn ($r) => [
+                'executor_id' => (int) $r->executor_id,
+                'name' => $r->executor?->name,
+                'inn' => (string) $r->inn,
+                'income' => round((float) $r->income, 2),
+                'percent' => round((float) $r->income / $limit * 100, 1),
+            ])->all();
     }
 
     public const CLIENT_STATUS = [

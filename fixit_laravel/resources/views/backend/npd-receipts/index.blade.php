@@ -25,6 +25,19 @@
             Настройки — <a href="{{ route('backend.onboarding.settings') }}">Интеграции РФ</a>, раздел «Чеки самозанятых».
         </div>
 
+        {{-- Лимит дохода НПД (422-ФЗ, 2,4 млн ₽ в год) — только доход через Clean2Go --}}
+        @if (count($nearLimit))
+            <div class="alert alert-warning">
+                <strong>Исполнители у лимита НПД</strong>
+                (лимит {{ number_format($limits['limit'], 0, ',', ' ') }} ₽, предупреждение с {{ number_format($limits['warn_at'], 0, ',', ' ') }} ₽; учтён только доход через платформу):
+                <ul class="mb-0">
+                    @foreach ($nearLimit as $row)
+                        <li>{{ $row['name'] }} · ИНН {{ $row['inn'] }} — {{ number_format($row['income'], 0, ',', ' ') }} ₽ ({{ $row['percent'] }}%)</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form method="GET" class="row g-2 mb-4">
             <div class="col-auto">
                 <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">

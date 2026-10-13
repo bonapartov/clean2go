@@ -151,4 +151,47 @@ class NpdReceiptsTest extends TestCase
         $this->assertArrayHasKey('executor', $api);
         $this->assertArrayHasKey('is_insured', $api);
     }
+
+    #[Test]
+    public function income_limit_warns_once_per_threshold(): void
+    {
+        IntegrationSetting::set('npd_limit_amount', '10000');
+        IntegrationSetting::set('npd_limit_warn_percent', '80');
+        $executor = $this->executor('self_employed');
+
+        foreach ([5000, 2000, 1000, 2500, 500] as $amount) {
+            NpdReceipts::issueFor($this->booking($executor, ['subtotal' => $amount]));
+        }
+
+        $this->assertSame(11000.0, NpdReceipts::yearIncome($executor->id));
+        $near = NpdReceipts::nearLimit();
+        $this->assertCount(1, $near);
+        $this->assertSame(110.0, $near[0]['percent']);
+
+        // Пороги: 5000 → 7000 → 8000 (80%, предупреждение) → 10500 (лимит) → 11000 (ничего)
+        $r = $this->booking($executor, ['subtotal' => 1]);
+        $receipt = NpdReceipt::create(['booking_id' => $r->id, 'executor_id' => $executor->id, 'executor_inn' => '500100732259',
+            'service_name' => 'x', 'amount' => 1, 'operation_time' => now(), 'status' => 'registered', 'channel' => 'mock']);
+        $this->assertNull(NpdReceipts::checkLimit($receipt), 'уже за лимитом — повторно не предупреждаем');
+    }
+
+    #[Test]
+    public function limit_levels(): void
+    {
+        IntegrationSetting::set('npd_limit_amount', '10000');
+        IntegrationSetting::set('npd_limit_warn_percent', '80');
+        $executor = $this->executor('self_employed');
+        $make = function (float $amount) use ($executor) {
+            $b = $this->booking($executor, ['subtotal' => $amount]);
+
+            return NpdReceipt::create(['booking_id' => $b->id, 'executor_id' => $executor->id, 'executor_inn' => '1',
+                'service_name' => 'x', 'amount' => $amount, 'operation_time' => now(), 'status' => 'registered', 'channel' => 'mock']);
+        };
+
+        $this->assertNull(NpdReceipts::checkLimit($make(7000)));
+        $this->assertSame('warn', NpdReceipts::checkLimit($make(1500)));
+        $this->assertNull(NpdReceipts::checkLimit($make(500)));
+        $this->assertSame('over', NpdReceipts::checkLimit($make(1500)));
+        $this->assertNull(NpdReceipts::checkLimit($make(100)));
+    }
 }
