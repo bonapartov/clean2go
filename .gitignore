@@ -62,3 +62,6 @@ db_backups/
 .idea/
 .vscode/
 *.iml
+
+# Firebase service account (private key) — Helpers::getFirebaseServiceAccount()
+fixit_laravel/storage/app/private/
