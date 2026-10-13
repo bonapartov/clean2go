@@ -1,3 +1,4 @@
+import 'package:fixit_user/models/npd_receipt_model.dart';
 import '../config.dart';
 
 class BookingModel {
@@ -33,6 +34,8 @@ class BookingModel {
   String? paymentStatus;
   String? description;
   String? invoiceUrl;
+  // Receipts of self-employed executors («Мой налог», Sprint 8)
+  List<NpdReceiptModel> npdReceipts = [];
   int? createdById;
   String? createdAt;
   String? updatedAt;
@@ -189,6 +192,11 @@ class BookingModel {
     requiredServicemen = json['required_servicemen'];
     description = json['description'];
     invoiceUrl = json['invoice_url'];
+    npdReceipts = json['npd_receipts'] is List
+        ? (json['npd_receipts'] as List)
+            .map((v) => NpdReceiptModel.fromJson(Map<String, dynamic>.from(v)))
+            .toList()
+        : [];
     createdById = json['created_by_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

@@ -1,3 +1,4 @@
+import 'package:fixit_user/widgets/npd_receipts_layout.dart';
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member, deprecated_member_use, use_build_context_synchronously
 
 import 'dart:developer';
@@ -185,6 +186,11 @@ class CompletedServiceScreen extends StatelessWidget {
                                                       CompletedBookingPaymentSummaryLayout(
                                                           bookingModel:
                                                               value.booking),
+                                                      // Чеки исполнителей (Sprint 8)
+                                                      NpdReceiptsLayout(
+                                                          receipts: value
+                                                              .booking!
+                                                              .npdReceipts),
                                                       if (value.booking!
                                                                   .service !=
                                                               null &&

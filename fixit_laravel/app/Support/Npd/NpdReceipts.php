@@ -137,6 +137,7 @@ class NpdReceipts
                 'attempts' => $receipt->attempts + 1,
                 'last_error' => null,
             ]);
+            self::notifyClient($receipt);
         } catch (Throwable $e) {
             $receipt->update(['status' => 'failed', 'attempts' => $receipt->attempts + 1, 'last_error' => mb_substr($e->getMessage(), 0, 1000)]);
         }
@@ -169,6 +170,70 @@ class NpdReceipts
         }
 
         return $done;
+    }
+
+    public const CLIENT_STATUS = [
+        'pending' => 'Формируется',
+        'failed' => 'Формируется',
+        'registered' => 'Выдан',
+        'cancel_pending' => 'Аннулируется',
+        'cancelled' => 'Аннулирован',
+    ];
+
+    /**
+     * Receipts the client sees for a booking (its sub-bookings included):
+     * by law the self-employed must hand the receipt to the buyer.
+     * Test receipts (mock channel) are marked is_test.
+     *
+     * @return list<array>
+     */
+    public static function forClient(Booking $booking): array
+    {
+        $ids = array_map(fn ($b) => $b->id, self::billable($booking));
+        if ($booking->parent_id) {
+            $ids[] = $booking->id;
+        }
+
+        return NpdReceipt::with('executor:id,name')->whereIn('booking_id', array_unique($ids))->orderBy('id')->get()
+            ->map(fn (NpdReceipt $r) => [
+                'id' => $r->id,
+                'executor_name' => $r->executor?->name,
+                'executor_inn' => $r->executor_inn,
+                'service_name' => $r->service_name,
+                'amount' => $r->amount,
+                'status' => $r->status,
+                'status_label' => self::CLIENT_STATUS[$r->status] ?? $r->status,
+                'number' => $r->status === 'registered' || $r->status === 'cancelled' ? $r->external_id : null,
+                'url' => $r->receipt_url,
+                'registered_at' => $r->registered_at?->toIso8601String(),
+                'is_test' => $r->channel === 'mock',
+            ])->all();
+    }
+
+    /** Push to the client once a real (non-test) receipt is registered. */
+    private static function notifyClient(NpdReceipt $receipt): void
+    {
+        if ($receipt->channel === 'mock') {
+            return;
+        }
+        $booking = $receipt->booking;
+        $consumerId = $booking?->parent?->consumer_id ?? $booking?->consumer_id;
+        if (! $consumerId) {
+            return;
+        }
+
+        \App\Helpers\Helpers::pushNotification(['message' => [
+            'topic' => 'user_'.$consumerId,
+            'notification' => [
+                'title' => 'Чек от исполнителя',
+                'body' => 'Заказ №'.$booking->booking_number.': '.number_format($receipt->amount, 2, ',', ' ').' ₽',
+            ],
+            'data' => [
+                'type' => 'booking',
+                'booking_id' => (string) ($booking->parent_id ?: $booking->id),
+                'npd_receipt_id' => (string) $receipt->id,
+            ],
+        ]]);
     }
 
     /** @return list<Booking> */

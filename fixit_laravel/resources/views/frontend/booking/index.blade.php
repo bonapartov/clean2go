@@ -830,6 +830,9 @@
                                         </div>
                                     </div>
 
+                                    {{-- Чеки исполнителей-самозанятых (Sprint 8) --}}
+                                    @include('frontend.inc.npd-receipts', ['booking' => $booking])
+
                                     @if (count($booking?->extra_charges ?? []))
                                         @php
                                             $extraCharges = $booking?->extra_charges ?? [];

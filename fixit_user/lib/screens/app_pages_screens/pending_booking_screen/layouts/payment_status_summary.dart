@@ -1,4 +1,5 @@
 import 'package:fixit_user/config.dart';
+import 'package:fixit_user/widgets/npd_receipts_layout.dart';
 
 class PaymentSummaryWidget extends StatelessWidget {
   final BookingModel booking;
@@ -74,6 +75,8 @@ class PaymentSummaryWidget extends StatelessWidget {
             ],
           ).paddingSymmetric(vertical: Insets.i20),
         ),
+        // Чеки исполнителей-самозанятых (Sprint 8)
+        NpdReceiptsLayout(receipts: booking.npdReceipts),
       ],
     );
   }

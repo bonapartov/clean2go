@@ -40,6 +40,13 @@ class BookingDetailResource extends JsonResource
             'remaining_payment_amount' => $this->remaining_payment_amount !== null ? (float) $this->remaining_payment_amount : null,
             'remaining_payment_status' => $this->remaining_payment_status,
             'invoice_url' => $this->invoice_url,
+            // Agency model B2C (ROADMAP Sprint 6/8): who the client contracted
+            // with, insurance and receipts of self-employed executors
+            'executor' => $this->executor_snapshot,
+            'is_insured' => (bool) $this->is_insured,
+            'insurance_amount' => (float) $this->insurance_amount,
+            'insurance_insurer' => $this->insurance_insurer,
+            'npd_receipts' => \App\Support\Npd\NpdReceipts::forClient($this->resource),
             'taxes' => $this?->taxes ? $this->taxes->map(function($tax){
                 return [
                     'id' => $tax?->id,

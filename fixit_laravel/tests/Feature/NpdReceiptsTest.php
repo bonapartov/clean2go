@@ -129,4 +129,26 @@ class NpdReceiptsTest extends TestCase
         $this->assertDatabaseHas('integration_settings', ['key' => 'npd_receipts_channel', 'group' => 'npd', 'type' => 'select']);
         $this->assertDatabaseHas('integration_settings', ['key' => 'npd_receipts_enabled', 'group' => 'npd', 'type' => 'toggle']);
     }
+
+    #[Test]
+    public function client_sees_receipts_of_the_order(): void
+    {
+        $a = $this->executor('self_employed', '500100732259');
+        $parent = $this->booking($a, ['provider_id' => null]);
+        $this->booking($a, ['parent_id' => $parent->id, 'subtotal' => 1000]);
+        $parent->update(['payment_status' => PaymentStatus::COMPLETED]);
+
+        $receipts = NpdReceipts::forClient($parent->fresh());
+
+        $this->assertCount(1, $receipts);
+        $this->assertSame('500100732259', $receipts[0]['executor_inn']);
+        $this->assertSame('Выдан', $receipts[0]['status_label']);
+        $this->assertStringStartsWith('TEST-', $receipts[0]['number']);
+        $this->assertTrue($receipts[0]['is_test'], 'тестовый канал помечен для клиента');
+
+        $api = (new \App\Http\Resources\BookingDetailResource($parent->fresh()))->toArray(request());
+        $this->assertSame($receipts, $api['npd_receipts']);
+        $this->assertArrayHasKey('executor', $api);
+        $this->assertArrayHasKey('is_insured', $api);
+    }
 }
