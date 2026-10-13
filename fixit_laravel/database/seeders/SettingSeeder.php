@@ -111,6 +111,8 @@ class SettingSeeder extends Seeder
             // «Общие» → «Страхование услуги». See App\Support\ServiceInsurance.
             'insurance' => [
                 'status' => false,
+                // Галочка у клиента отмечена заранее (решение 13.10.2026; проверить у юриста — ЗоЗПП ст. 16)
+                'default_on' => true,
                 'price_type' => 'fixed',
                 'price' => 0,
                 'insurer_name' => '',

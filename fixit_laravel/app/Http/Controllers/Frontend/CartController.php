@@ -60,11 +60,9 @@ class CartController extends Controller
      */
     public function toggleInsurance(Request $request)
     {
-        if ($request->boolean('insurance') && \App\Support\ServiceInsurance::isAvailable()) {
-            session()->put('insurance', true);
-        } else {
-            session()->forget('insurance');
-        }
+        // Store the explicit choice either way: "unticked" must survive,
+        // otherwise the pre-ticked default would come back on reload.
+        session()->put('insurance', $request->boolean('insurance') && \App\Support\ServiceInsurance::isAvailable());
 
         return to_route('frontend.cart.index');
     }

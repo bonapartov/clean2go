@@ -29,19 +29,29 @@ class ServiceInsurance
 
     public const PRICE_PERCENTAGE = 'percentage';
 
-    /** @return array{status:bool, price_type:string, price:float, insurer_name:string, terms_url:string} */
+    /** @return array{status:bool, default_on:bool, price_type:string, price:float, insurer_name:string, terms_url:string} */
     public static function settings(): array
     {
         $insurance = Helpers::getSettings()['insurance'] ?? [];
 
         return [
             'status' => (bool) ($insurance['status'] ?? false),
+            // Checkbox pre-ticked for the client (decided 2026-10-13). Legal
+            // check pending: ЗоЗПП ст. 16 on pre-ticked paid extras — the
+            // admin can switch this off without a release.
+            'default_on' => (bool) ($insurance['default_on'] ?? true),
             'price_type' => ($insurance['price_type'] ?? self::PRICE_FIXED) === self::PRICE_PERCENTAGE
                 ? self::PRICE_PERCENTAGE : self::PRICE_FIXED,
             'price' => max(0, (float) ($insurance['price'] ?? 0)),
             'insurer_name' => (string) ($insurance['insurer_name'] ?? ''),
             'terms_url' => (string) ($insurance['terms_url'] ?? ''),
         ];
+    }
+
+    /** Is the checkbox pre-ticked for a client who has not touched it. */
+    public static function isDefaultOn(): bool
+    {
+        return self::isAvailable() && self::settings()['default_on'];
     }
 
     /** The admin switched it on and set a price. */

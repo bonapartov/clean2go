@@ -430,6 +430,24 @@
                                     </div>
 
                                     <div class="form-group row">
+                                        <label class="col-md-2"
+                                            for="insurance[default_on]">{{ __('static.settings.insurance_default_on') }}</label>
+                                        <div class="col-md-10">
+                                            <div class="editor-space">
+                                                <label class="switch">
+                                                    <input class="form-control" type="hidden"
+                                                        name="insurance[default_on]" value="0">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="insurance[default_on]" value="1"
+                                                        {{ ($insurance['default_on'] ?? true) ? 'checked' : '' }}>
+                                                    <span class="switch-state"></span>
+                                                </label>
+                                                <span class="help-text">{{ __('static.settings.insurance_default_on_help') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <label for="insurance[price_type]"
                                             class="col-md-2">{{ __('static.settings.insurance_price_type') }}</label>
                                         <div class="col-md-10 error-div select-dropdown">
@@ -546,6 +564,30 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="Third_Party">
+                                    {{-- Agora (звонки). Сертификат — секрет: токен подписывает сервер
+                                         (POST /api/agora/token), в /api/settings он не уходит. --}}
+                                    <div class="form-group row">
+                                        <label class="col-md-12 fw-bold">{{ __('static.settings.agora') }}</label>
+                                        <div class="col-md-12">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2" for="agora[app_id]">{{ __('static.settings.agora_app_id') }}</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="text" name="agora[app_id]" id="agora[app_id]"
+                                                value="{{ $settings['agora']['app_id'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2" for="agora[certificate]">{{ __('static.settings.agora_certificate') }}</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="password" name="agora[certificate]" id="agora[certificate]"
+                                                value="{{ !empty($settings['agora']['certificate']) ? Helpers::encryptKey($settings['agora']['certificate']) : '' }}">
+                                            <span class="help-text">{{ __('static.settings.agora_certificate_help') }}</span>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row">
                                         <label class="col-md-12 fw-bold">{{ __('static.settings.openAI') }}</label>
                                         <div class="col-md-12">

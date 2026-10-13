@@ -156,6 +156,9 @@ Route::group(['middleware' => ['localization']], function () {
         // Push from app to app (chat, bookings): the server holds the Firebase key
         Route::post('push/send', 'App\Http\Controllers\API\PushNotificationController@send')->middleware('throttle:60,1');
 
+        // Agora call token signed on the server (certificate never leaves it)
+        Route::post('agora/token', 'App\Http\Controllers\API\AgoraTokenController@store')->middleware('throttle:30,1');
+
         Route::get('dashboard/provider', 'App\Http\Controllers\API\ProviderController@getDashboardData');
         Route::post('addserviceProofs', 'App\Http\Controllers\API\BookingController@addserviceProofs');
         Route::post('updateserviceProofs', 'App\Http\Controllers\API\BookingController@updateserviceProofs');

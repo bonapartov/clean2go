@@ -19,7 +19,11 @@ class CartProvider with ChangeNotifier {
   dynamic checkoutBody;
   // «Застраховать услугу» (ROADMAP Sprint 6): sent as `insurance` in the
   // checkout body, which the payment screen reuses as the booking body.
-  bool isInsured = false;
+  // null = the client has not touched the checkbox yet → admin default
+  // (pre-ticked unless switched off in Settings → «Страхование услуги»).
+  bool? insuranceChoice;
+  bool get isInsured =>
+      insuranceChoice ?? (appSettingModel?.insurance?.defaultOn ?? false);
   AnimationController? animationController;
   TextEditingController couponCtrl = TextEditingController();
   FocusNode focus = FocusNode();
@@ -123,7 +127,7 @@ class CartProvider with ChangeNotifier {
 
   // «Застраховать услугу» checkbox: recalculate with or without insurance.
   onInsuranceChange(context, bool value) {
-    isInsured = value;
+    insuranceChoice = value;
     notifyListeners();
     checkout(context);
   }

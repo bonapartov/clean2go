@@ -85,6 +85,17 @@ trait BookingTrait
             $items = $this->calculate($request);
             $this->assertBookingItemsWithinProviderZones($items);
 
+            // «Застраховать услугу» for scheduled bookings: their parent is
+            // built in createScheduledParentBooking() from per-service base
+            // totals, which never include insurance. Hand it the computed
+            // insurance here — always set by the server, overriding anything
+            // a client might send under this key.
+            $request->merge(['insurance_snapshot' => [
+                'is_insured' => (bool) ($items['total']['is_insured'] ?? false),
+                'insurance_amount' => (float) ($items['total']['insurance_amount'] ?? 0),
+                'insurance_insurer' => $items['total']['insurance_insurer'] ?? null,
+            ]]);
+
             // Check if any service is a scheduled booking
             $hasScheduledBooking = false;
             if (isset($items['services']) && is_array($items['services'])) {
@@ -379,6 +390,10 @@ trait BookingTrait
         // Calculate grand total (base total * scheduled services count)
         $scheduledCount = $service['scheduled_services_count'] ?? 1;
         $grandTotal = $baseTotal * $scheduledCount;
+        // Insurance covers the whole series; computed once in placeBooking().
+        $insurance = $request->insurance_snapshot ?? [];
+        $insuranceAmount = max(0, (float) ($insurance['insurance_amount'] ?? 0));
+        $grandTotal += $insuranceAmount;
         $grandSubtotal = $baseSubtotal * $scheduledCount;
         $grandTax = $baseTax * $scheduledCount;
         $grandPlatformFees = $basePlatformFees * $scheduledCount;
@@ -444,6 +459,9 @@ trait BookingTrait
             'platform_fees_type' => $service['total']['platform_fees_type'] ?? null,
             'subtotal' => $grandSubtotal,
             'total' => $grandTotal, // Grand total for all scheduled services
+            'is_insured' => $insuranceAmount > 0 && ! empty($insurance['is_insured']),
+            'insurance_amount' => $insuranceAmount,
+            'insurance_insurer' => $insurance['insurance_insurer'] ?? null,
             'booking_status_id' => $bookingStatusId,
             'parent_id' => null, // Parent booking has no parent
             'date_time' => null, // Parent booking doesn't have a specific date/time

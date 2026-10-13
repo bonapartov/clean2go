@@ -68,6 +68,9 @@ class RecurringBookingRepository extends BaseRepository
                 'type' => $request->type ?? 'fixed',
                 // Preserve time component for future bookings
                 'time' => $firstBookingDateTime->format('H:i:s'),
+                // «Застраховать услугу»: an insured first order means every
+                // repeat is insured too (decided 2026-10-13).
+                'insurance' => (bool) ($calculatedCosts['total']['is_insured'] ?? false),
             ];
 
             // Create recurring booking record

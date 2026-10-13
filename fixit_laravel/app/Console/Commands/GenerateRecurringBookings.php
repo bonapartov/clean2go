@@ -105,6 +105,11 @@ class GenerateRecurringBookings extends Command
                     'payment_method' => 'cash',
                     'required_servicemen' => $bookingData['required_servicemen'] ?? 1,
                     'description' => $bookingData['description'] ?? "Recurring service booking #{$recurringBooking->id}",
+                    // Insured first order → insured repeat (decided 2026-10-13).
+                    // Older templates have no flag: fall back to the original booking.
+                    'insurance' => (bool) ($bookingData['insurance']
+                        ?? Booking::whereKey($recurringBooking->booking_id)->value('is_insured')
+                        ?? false),
                 ]);
 
                 // Use booking repository to create booking properly

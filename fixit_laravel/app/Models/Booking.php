@@ -44,6 +44,7 @@ class Booking extends Model
         'is_insured',
         'insurance_amount',
         'insurance_insurer',
+        'executor_snapshot',
         'date_time',
         'parent_id',
         'recurring_booking_id',
@@ -77,6 +78,7 @@ class Booking extends Model
         'amount' => 'float',
         'tax_total' => 'float',
         'total' => 'float',
+        'executor_snapshot' => 'array',
         'is_insured' => 'boolean',
         'insurance_amount' => 'float',
         'consumer_id' => 'integer',
@@ -124,6 +126,18 @@ class Booking extends Model
         parent::boot();
         static::creating(function ($model) {
             $model->created_by_id = auth()->user()?->id ?? Helpers::getCurrentUserId();
+        });
+
+        // Freeze who the client contracted with (name, status, ИНН) once the
+        // booking has its provider — agency model B2C, ROADMAP Sprint 6.
+        static::saving(function ($model) {
+            if ($model->provider_id && ($model->isDirty('provider_id') || empty($model->executor_snapshot))) {
+                $provider = User::find($model->provider_id);
+                if ($provider) {
+                    $model->executor_snapshot = \App\Support\ExecutorDisclosure::forProvider($provider)
+                        + ['captured_at' => now()->toIso8601String()];
+                }
+            }
         });
     }
 

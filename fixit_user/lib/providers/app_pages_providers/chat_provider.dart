@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -1030,36 +1029,24 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
+  // Agora call token is signed by our backend (POST /api/agora/token): the
+  // certificate stays on the server. Replaces the generateToken Cloud
+  // Function, which took the certificate from the app (2026-10-13).
   getAgoraTokenAndChannelName() async {
     try {
-      HttpsCallable httpsCallable =
-          FirebaseFunctions.instance.httpsCallable("generateToken");
-      if (appSettingModel!.agora != null) {
-        dynamic result = await httpsCallable.call(
-          // The Agora certificate is a secret: /api/settings no longer
-          // returns it (2026-10-13). The token must be signed where the
-          // certificate lives — the generateToken Cloud Function's own
-          // config or our backend. See ROADMAP, Sprint 6.
-          {
-            "appId": appSettingModel!.agora!.appId,
-          },
-        );
-
-        if (result.data != null) {
-          Map<String, dynamic> response = {
-            "agoraToken": result.data['data']["token"],
-            "channelName": result.data['data']["channelName"],
-          };
-
-          return response;
-        } else {
-          return null;
-        }
-      } else {
-        return null;
+      final result =
+          await apiServices.postApi(api.agoraToken, {}, isToken: true);
+      if (result.isSuccess == true && result.data is Map) {
+        return {
+          "agoraToken": result.data["token"],
+          "channelName": result.data["channelName"],
+        };
       }
+      log("AGORA TOKEN: ${result.message}");
+      return null;
     } catch (e) {
       log("ERROR WHILE FETCH CREDENTIALS : $e");
+      return null;
     }
   }
 

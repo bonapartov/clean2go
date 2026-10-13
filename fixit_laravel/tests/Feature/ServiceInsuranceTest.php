@@ -102,14 +102,35 @@ class ServiceInsuranceTest extends TestCase
     public function website_checkbox_is_kept_only_when_available(): void
     {
         $this->post('/cart/insurance', ['insurance' => 1])->assertRedirect();
-        $this->assertFalse(session()->has('insurance'), 'выключено в админке — выбор игнорируется');
+        $this->assertFalse(session('insurance'), 'выключено в админке — выбор игнорируется');
 
         $this->configure(['status' => true, 'price' => 199]);
         $this->post('/cart/insurance', ['insurance' => 1])->assertRedirect();
         $this->assertTrue(session('insurance'));
 
+        // Снятая галочка запоминается явно, иначе вернётся значение по умолчанию
         $this->post('/cart/insurance', ['insurance' => 0])->assertRedirect();
-        $this->assertFalse(session()->has('insurance'));
+        $this->assertTrue(session()->has('insurance'));
+        $this->assertFalse(session('insurance'));
+    }
+
+    #[Test]
+    public function checkbox_is_pre_ticked_by_default(): void
+    {
+        $this->configure(['status' => true, 'price' => 199]);
+        $this->assertTrue(ServiceInsurance::isDefaultOn(), 'решение 13.10.2026: галочка отмечена заранее');
+
+        $this->configure(['default_on' => false]);
+        $this->assertFalse(ServiceInsurance::isDefaultOn(), 'админ может выключить');
+    }
+
+    #[Test]
+    public function recurring_repeat_keeps_insurance_of_first_order(): void
+    {
+        $source = file_get_contents(app_path('Console/Commands/GenerateRecurringBookings.php'));
+        $this->assertStringContainsString("'insurance' =>", $source);
+        $template = file_get_contents(app_path('Repositories/API/RecurringBookingRepository.php'));
+        $this->assertStringContainsString("'insurance' => (bool) (\$calculatedCosts['total']['is_insured']", $template);
     }
 
     #[Test]
@@ -119,5 +140,51 @@ class ServiceInsuranceTest extends TestCase
         $this->assertContains('is_insured', (new \App\Models\Booking)->getFillable());
         $this->assertContains('insurance_amount', (new \App\Models\Booking)->getFillable());
         $this->assertContains('insurance_insurer', (new \App\Models\Booking)->getFillable());
+    }
+
+    #[Test]
+    public function booking_freezes_executor_data(): void
+    {
+        $consumer = \App\Models\User::factory()->create();
+        $provider = \App\Models\User::factory()->create(['name' => 'Иван Петров']);
+        \Modules\ProviderOnboarding\Models\ProviderVerification::create([
+            'user_id' => $provider->id, 'inn' => '500100732259', 'inn_status' => 'active', 'taxpayer_type' => 'self_employed',
+        ]);
+
+        $booking = \App\Models\Booking::create(['consumer_id' => $consumer->id, 'provider_id' => $provider->id, 'booking_number' => 900001]);
+
+        $this->assertSame('500100732259', $booking->fresh()->executor_snapshot['inn']);
+        $this->assertSame('Самозанятый (НПД)', $booking->fresh()->executor_snapshot['status_label']);
+
+        // Профиль меняется позже — снимок в заказе остаётся прежним
+        $provider->update(['name' => 'Новое имя']);
+        $booking->fresh()->update(['description' => 'x']);
+        $this->assertSame('Иван Петров', $booking->fresh()->executor_snapshot['name']);
+    }
+
+    #[Test]
+    public function demo_inns_are_valid_and_fictional(): void
+    {
+        $inn12 = \Database\Seeders\DemoVerificationSeeder::personInn(3);
+        $inn10 = \Database\Seeders\DemoVerificationSeeder::companyInn(11);
+
+        $this->assertSame('00', substr($inn12, 0, 2), 'регион 00 не существует');
+        $this->assertSame('00', substr($inn10, 0, 2));
+        $this->assertTrue(self::validInn($inn12));
+        $this->assertTrue(self::validInn($inn10));
+        $this->assertSame(13, strlen(\Database\Seeders\DemoVerificationSeeder::ogrn(1)));
+        $this->assertSame(15, strlen(\Database\Seeders\DemoVerificationSeeder::ogrnip(1)));
+    }
+
+    /** Независимая проверка контрольных цифр ИНН (по алгоритму ФНС). */
+    private static function validInn(string $inn): bool
+    {
+        $d = array_map('intval', str_split($inn));
+        $c = fn (array $w) => array_sum(array_map(fn ($wi, $i) => $wi * $d[$i], $w, array_keys($w))) % 11 % 10;
+        if (strlen($inn) === 10) {
+            return $c([2, 4, 10, 3, 5, 9, 4, 6, 8]) === $d[9];
+        }
+
+        return $c([7, 2, 4, 10, 3, 5, 9, 4, 6, 8]) === $d[10] && $c([3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8]) === $d[11];
     }
 }

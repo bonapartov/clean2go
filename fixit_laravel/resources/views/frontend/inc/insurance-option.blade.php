@@ -11,7 +11,7 @@
     <input type="hidden" name="insurance" value="0">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" name="insurance" value="1" id="cart-insurance"
-        onchange="this.form.submit()" @checked(session('insurance'))>
+        onchange="this.form.submit()" @checked(session()->has('insurance') ? session('insurance') : \App\Support\ServiceInsurance::isDefaultOn())>
       <label class="form-check-label" for="cart-insurance">
         {{ __('frontend::static.insurance.checkbox') }}
         ({{ $insurance['price_type'] === \App\Support\ServiceInsurance::PRICE_PERCENTAGE

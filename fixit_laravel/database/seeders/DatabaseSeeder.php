@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             HomePageSeeder::class,
             SpbZoneSeeder::class,
             DemoCatalogSeeder::class,
+            // Демо-верификации (ИНН региона 00) — блок «Исполнитель услуги»
+            DemoVerificationSeeder::class,
             CustomSmsGatewaySettingSeeder::class,
             SeoSettingSeeder::class,
             IntegrationSettingsSeeder::class,

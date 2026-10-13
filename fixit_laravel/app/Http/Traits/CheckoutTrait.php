@@ -616,10 +616,11 @@ trait CheckoutTrait
         }
 
         // «Застраховать услугу» on the website: the cart checkbox keeps the
-        // choice in the session, like the coupon (CartController::toggleInsurance).
-        if (session('insurance')) {
-            $payload['insurance'] = true;
-        }
+        // client's explicit choice in the session, like the coupon
+        // (CartController::toggleInsurance); untouched → the admin default.
+        $payload['insurance'] = session()->has('insurance')
+            ? (bool) session('insurance')
+            : ServiceInsurance::isDefaultOn();
 
         $payload = $request->merge($payload);
 
