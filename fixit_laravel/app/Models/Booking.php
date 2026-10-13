@@ -128,6 +128,18 @@ class Booking extends Model
             $model->created_by_id = auth()->user()?->id ?? Helpers::getCurrentUserId();
         });
 
+        // Receipts of self-employed executors («Мой налог», Sprint 8): issued
+        // when the booking is paid, annulled on refund. Never breaks payment.
+        static::saved(function ($model) {
+            if ($model->wasChanged('payment_status') || ($model->wasRecentlyCreated && $model->payment_status)) {
+                try {
+                    \App\Support\Npd\NpdReceipts::onPaymentStatusChanged($model);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::error('NPD receipts: '.$e->getMessage(), ['booking' => $model->id]);
+                }
+            }
+        });
+
         // Freeze who the client contracted with (name, status, ИНН) once the
         // booking has its provider — agency model B2C, ROADMAP Sprint 6.
         static::saving(function ($model) {

@@ -22,6 +22,8 @@ class OnboardingSettingsController extends Controller
             'manual' => 'Ручная проверка',
             'kontur' => 'Контур.Фокус (автоматически)',
         ],
+        // Чеки самозанятых («Мой налог»)
+        'npd_receipts_channel' => \App\Support\Npd\NpdReceipts::CHANNELS,
     ];
 
     public function index(): View

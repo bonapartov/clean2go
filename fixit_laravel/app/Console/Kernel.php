@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
         $schedule->call('App\Http\Controllers\BookingController@reminder')->daily();
         $schedule->command('booking:cancel-expired')->dailyAt('01:00');
         $schedule->command('bookings:generate-recurring')->daily(); // Generate recurring bookings daily
+        // Чеки самозанятых: повтор неотправленных и аннулирований (App\Support\Npd)
+        $schedule->command('npd:receipts-retry')->everyFifteenMinutes()->withoutOverlapping();
     }
 
     /**

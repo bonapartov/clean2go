@@ -203,6 +203,9 @@ Route::group(['middleware' => ['auth', 'route.access'], 'namespace' => 'Backend'
     Route::post('wallet/creditOrdebit', 'WalletController@creditOrdebit')->name('wallet.creditOrdebit')->middleware('canAny:backend.wallet.credit,backend.wallet.debit');
     Route::get('get-user-transactions/{user_id?}', 'WalletController@walletTransations')->name('get-user-transactions')->middleware('can:backend.wallet.index');
     Route::get('transactions', 'TransactionController@index')->name('transaction.index')->middleware('can:backend.payment_transaction.index')->middleware('can:backend.wallet.index');
+    // Чеки самозанятых («Мой налог», App\Support\Npd) — доступ как к транзакциям
+    Route::get('npd-receipts', 'NpdReceiptController@index')->name('npd-receipts.index')->middleware('can:backend.payment_transaction.index');
+    Route::post('npd-receipts/retry', 'NpdReceiptController@retry')->name('npd-receipts.retry')->middleware('can:backend.payment_transaction.index');
     Route::get('cash-bookings', 'TransactionController@cashBookings')->name('transaction.cash-bookings')->middleware('can:backend.payment_transaction.index')->middleware('can:backend.wallet.index');
     Route::get('cash-bookings/export', 'TransactionController@cashBookingsExport')->name('cash-bookings.export')->middleware('can:backend.payment_transaction.index');
     Route::get('transaction/export', 'TransactionController@export')->name('transaction.export')->middleware('can:backend.payment_transaction.index');

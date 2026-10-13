@@ -907,6 +907,9 @@
                     <ul class="sidebar-submenu">
                         <li><a href="{{ route('backend.onboarding.settings') }}" class="{{ Request::is('backend/onboarding*') ? 'active' : '' }}">Интеграции РФ</a></li>
                         <li><a href="{{ route('backend.verifications.index') }}" class="{{ Request::is('backend/verifications*') ? 'active' : '' }}">Заявки исполнителей</a></li>
+                        @can('backend.payment_transaction.index')
+                            <li><a href="{{ route('backend.npd-receipts.index') }}" class="{{ Request::is('backend/npd-receipts*') ? 'active' : '' }}">Чеки самозанятых</a></li>
+                        @endcan
                         <li><a href="/horizon/dashboard" target="_blank">Очереди (Horizon) ↗</a></li>
                     </ul>
                 </li>
