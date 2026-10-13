@@ -17,8 +17,9 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'Backend', 'as' => 'backe
 
     // Coupon
     Route::resource('backend/coupon', 'CouponController', ['except' => ['show']]);
-    Route::post('backend/coupon-status', 'CouponController@toggleStatus')->name('coupon-status');
-    Route::put('coupon/status/{id}', 'CouponController@status')->name('coupon.status');
-    Route::delete('delete-coupons', 'CouponController@deleteRows')->name('delete.coupons');
+    // These three were not covered by authorizeResource() — any signed-in user could change coupons
+    Route::post('backend/coupon-status', 'CouponController@toggleStatus')->name('coupon-status')->middleware('can:backend.coupon.edit');
+    Route::put('coupon/status/{id}', 'CouponController@status')->name('coupon.status')->middleware('can:backend.coupon.edit');
+    Route::delete('delete-coupons', 'CouponController@deleteRows')->name('delete.coupons')->middleware('can:backend.coupon.destroy');
 
 });

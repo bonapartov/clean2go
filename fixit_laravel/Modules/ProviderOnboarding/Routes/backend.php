@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Admin only. Before 2026-10-13 this was ['web', 'auth']: any signed-in
+// user — provider, serviceman, even a client — could open executors'
+// passport data, approve their own application and change integration keys.
 Route::prefix('backend')
-    ->middleware(['web', 'auth'])
+    ->middleware(['web', 'auth', 'route.access', 'role:admin'])
     ->group(function () {
         Route::get('onboarding/settings', 'Backend\OnboardingSettingsController@index')
             ->name('backend.onboarding.settings');

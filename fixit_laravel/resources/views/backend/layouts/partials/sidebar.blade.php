@@ -897,6 +897,7 @@
                         </ul>
                     </li>
                 @endcan
+                @role('admin')
                 <li>
                     <i class="ri-pushpin-2-line"></i>
                     <a href="{{ route('backend.onboarding.settings') }}" class="sidebar-header {{ Request::is('backend/onboarding*') || Request::is('backend/verifications*') ? 'active' : '' }}">
@@ -913,6 +914,7 @@
                         <li><a href="/horizon/dashboard" target="_blank">Очереди (Horizon) ↗</a></li>
                     </ul>
                 </li>
+                @endrole
                 @can('backend.payment_method.index')
                     <li>
                         <i class="ri-pushpin-2-line"></i>

@@ -72,5 +72,7 @@ class Kernel extends HttpKernel
         'canAny' => AuthorizeCanAny::class,
         'route.access' => \App\Http\Middleware\CheckRouteAccess::class,
         'zone.permission' => \App\Http\Middleware\CheckZonePermission::class,
+        // spatie/laravel-permission: role:admin — e.g. onboarding admin pages
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
     ];
 }
