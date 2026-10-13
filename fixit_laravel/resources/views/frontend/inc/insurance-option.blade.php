@@ -4,7 +4,7 @@
   Настройки → «Общие» → «Страхование услуги»). Выбор хранится в сессии
   (CartController::toggleInsurance) и попадает в расчёт как `insurance`.
 --}}
-@php($insurance = \App\Support\ServiceInsurance::settings())
+@php $insurance = \App\Support\ServiceInsurance::settings(); @endphp
 @if (\App\Support\ServiceInsurance::isAvailable())
   <form action="{{ route('frontend.cart.insurance') }}" method="POST" class="insurance-option mt-4">
     @csrf

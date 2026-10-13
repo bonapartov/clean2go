@@ -7,7 +7,7 @@
   @param array $executors  список из ExecutorDisclosure::forProviderIds()
   @param bool  $compact    одна строка под именем исполнителя (корзина)
 --}}
-@php($compact = $compact ?? false)
+@php $compact = $compact ?? false; @endphp
 @foreach ($executors ?? [] as $executor)
   @if ($compact)
     <small class="d-block text-muted executor-disclosure-line">

@@ -409,7 +409,7 @@
                                     {{-- «Застраховать услугу» (ROADMAP Sprint 6, агентская модель B2C).
                                          Выключено, пока нет договора со страховой.
                                          Логика — App\Support\ServiceInsurance. --}}
-                                    @php($insurance = $settings['insurance'] ?? [])
+                                    @php $insurance = $settings['insurance'] ?? []; @endphp
                                     <h5 class="mb-3 mt-4">{{ __('static.settings.insurance_title') }}</h5>
                                     <div class="form-group row">
                                         <label class="col-md-2"
@@ -567,7 +567,7 @@
                                     {{-- Звонки клиент ↔ исполнитель через свой сервер LiveKit
                                          (infra/livekit). Ключ и секрет — те же, что LIVEKIT_KEYS
                                          сервера; в приложения уходит только «включено». --}}
-                                    @php($calls = $settings['calls'] ?? [])
+                                    @php $calls = $settings['calls'] ?? []; @endphp
                                     <div class="form-group row">
                                         <label class="col-md-12 fw-bold">{{ __('static.settings.calls') }}</label>
                                         <div class="col-md-12">
