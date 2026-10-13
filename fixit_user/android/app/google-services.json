@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "1082499254838",
+    "project_id": "clean2go-7c2c9",
+    "storage_bucket": "clean2go-7c2c9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082499254838:android:8c8d25c652aa3c3202e697",
+        "android_client_info": {
+          "package_name": "com.clean2go.ru.serviceman"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4RfOdVmMBxDiXgy1kYrsmowDfgbDKm50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082499254838:android:b60ee07c15380de902e697",
+        "android_client_info": {
+          "package_name": "com.cleantogo.ru.provider_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4RfOdVmMBxDiXgy1kYrsmowDfgbDKm50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082499254838:android:3697488ede8c1a6302e697",
+        "android_client_info": {
+          "package_name": "com.cleatogo.Clean2Go.ru"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4RfOdVmMBxDiXgy1kYrsmowDfgbDKm50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

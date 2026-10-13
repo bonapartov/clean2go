@@ -41,24 +41,9 @@ void main() async {
   await initializeAppSettings();
   // await _configureSDK();
   try {
-    if (Platform.isAndroid) {
-      await Firebase.initializeApp(
-          name: 'Fixit',
-          options: const FirebaseOptions(
-              apiKey: "ENTER YOUR API KEY",
-              projectId: "ENTER YOUR PROJECT ID",
-              messagingSenderId: "ENTER YOUR MESSAGE SENDER ID",
-              appId: "ENTER YOUR APP ID"));
-    } else {
-      await Firebase.initializeApp(
-          name: 'Fixit',
-          options: const FirebaseOptions(
-              storageBucket: "fixit-db226.appspot.com",
-              apiKey: "ENTER YOUR API KEY",
-              projectId: "ENTER YOUR PROJECT ID",
-              messagingSenderId: "ENTER YOUR MESSAGE SENDER ID",
-              appId: "ENTER YOUR APP ID"));
-    }
+    // Firebase config comes from google-services.json /
+    // GoogleService-Info.plist, never from hardcoded keys.
+    await Firebase.initializeApp();
   } catch (e) {
     debugPrint("Firebase initialization failed: $e");
   }
@@ -542,12 +527,7 @@ class ExamplePaymentQueueDelegate implements SKPaymentQueueDelegateWrapper {
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "ENTER YOUR API KEY",
-          projectId: "ENTER YOUR PROJECT ID",
-          messagingSenderId: "ENTER YOUR MESSAGE SENDER ID",
-          appId: "ENTER YOUR APP ID"));
+  await Firebase.initializeApp();
   AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel', 'High Importance Notifications',
       description: 'This channel is used for important notifications.',

@@ -26,25 +26,9 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  if (Platform.isAndroid) {
-    log("app android ");
-    await Firebase.initializeApp(
-        name: "Fixit",
-        options: const FirebaseOptions(
-            apiKey: "ENTER YOUR API KEY,
-              projectId: "ENTER YOUR PROJECT ID",
-              messagingSenderId: "ENTER YOUR MESSAGE SENDER ID",
-              appId: "ENTER YOUR APP ID"));
-  } else {
-    log("app IOS");
-    await Firebase.initializeApp(
-        name: "Fixit",
-        options: const FirebaseOptions(
-           apiKey: "ENTER YOUR API KEY,
-              projectId: "ENTER YOUR PROJECT ID",
-              messagingSenderId: "ENTER YOUR MESSAGE SENDER ID",
-              appId: "ENTER YOUR APP ID"));
-  }
+  // Firebase config comes from google-services.json /
+  // GoogleService-Info.plist, never from hardcoded keys.
+  await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await initializeAppSettings();
 
@@ -284,12 +268,7 @@ class _RouteToPageState extends State<RouteToPage> {
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-     apiKey: "ENTER YOUR API KEY,
-              projectId: "ENTER YOUR PROJECT ID",
-              messagingSenderId: "ENTER YOUR MESSAGE SENDER ID",
-              appId: "ENTER YOUR APP ID"));
+  await Firebase.initializeApp();
 
   final title = message.data['title'] ?? '';
   final AndroidNotificationChannel channel = AndroidNotificationChannel(

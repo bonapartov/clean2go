@@ -29,7 +29,7 @@
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <application
-        android:label="Fixit User"
+        android:label="Clean2Go"
         android:name="${applicationName}"
         android:requestLegacyExternalStorage="true"
 

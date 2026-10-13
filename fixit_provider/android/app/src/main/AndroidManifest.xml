@@ -38,7 +38,7 @@
         </intent>
     </queries>
     <application
-        android:label="Fixit Provider"
+        android:label="Clean2Go Партнёр"
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
         android:requestLegacyExternalStorage="true"

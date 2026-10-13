@@ -2,8 +2,12 @@ import 'dart:developer';
 
 import '../config.dart';
 
-String apiUrl = "Enter your Url";
-String paymentUrl = "Enter your payment url"; //
+// Backend address is supplied at build time, never hardcoded here:
+//   flutter build apk --dart-define=BACKEND_URL=http://192.168.1.127:8001
+// Everything else the app needs comes from the backend settings API.
+const String backendUrl = String.fromEnvironment('BACKEND_URL');
+String apiUrl = "$backendUrl/api";
+String paymentUrl = "$backendUrl/";
 
 String playstoreUrl =
     "Enter your playstore app url";

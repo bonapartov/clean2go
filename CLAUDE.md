@@ -83,7 +83,8 @@ Vite compiles three entry points:
 ```bash
 flutter pub get
 flutter run
-flutter build apk --release
+flutter build apk --release --target-platform android-arm64 \
+  --dart-define=BACKEND_URL=http://192.168.1.127:8001   # backend URL is build-time only
 flutter build ios --release
 flutter test
 flutter test test/widget_test.dart   # single test file
@@ -99,6 +100,12 @@ Both apps have identical `lib/` structure:
 - `widgets/` — shared UI components
 
 ### Configuration
+
+Build one app at a time and run `./gradlew --stop` in `android/` afterwards: this
+machine has 7.7 GB RAM and a release build plus a leftover Gradle daemon gets
+killed for low memory. Kotlin compiles in-process (`gradle.properties`) for the
+same reason. Firebase config is read from `google-services.json` via
+`Firebase.initializeApp()` with no options.
 
 API base URL and app-wide constants are in `lib/config.dart`. Firebase config is per-platform (`google-services.json` / `GoogleService-Info.plist`).
 
