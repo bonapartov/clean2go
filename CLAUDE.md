@@ -108,13 +108,36 @@ The user app supports multiple home layout themes (Berlin, Dubai, Tokyo, Toronto
 
 Uses `provider` package with `ChangeNotifier`. Providers are registered in `lib/providers/index.dart` and consumed via `context.watch<T>()` / `context.read<T>()`.
 
+## Sensitive Settings: Admin Panel, Never Hardcoded
+
+All sensitive or environment-specific settings (API keys, secrets, logins,
+sender names, shop IDs, webhook secrets, service URLs, mock/live switches)
+must be editable from the admin panel. Never hardcode them in PHP, Blade,
+Dart, JS or seeders, and never commit real values.
+
+- Store them where the admin can change them: `integration_settings` (via
+  `IntegrationSetting::get()/set()`, encrypted) or the existing admin
+  settings/payment-method/SMS-method config screens. `.env` is only a
+  fallback/default, not the place the operator is expected to edit.
+- Code reads the setting through that layer, not `env()` directly
+  (`env()` returns null once config is cached).
+- When adding an integration, add its fields to the admin UI in the same
+  change. A feature that requires editing code or `.env` to configure is
+  not finished.
+- Placeholders are fine; fabricated values are not. If a real key is missing,
+  leave the field empty and say so — don't invent one.
+- Flutter apps can't read the admin panel before they know where the backend
+  is, so the backend URL is the one exception: pass it at build time
+  (`--dart-define=API_URL=...`), never hardcode an IP/host in `lib/`.
+  Everything else the apps need comes from the backend settings API.
+
 ## Adding a New Payment Module
 
 1. Copy an existing Russian module (e.g. `Modules/YooKassa/`) as a template
 2. Implement `Payment/<Name>.php` with static `getIntent()` and `webhook()` methods
 3. Register in `Providers/<Name>ServiceProvider.php`
 4. Add module to `modules_statuses.json` with `true`
-5. Add env keys to `.env.example`
+5. Expose its keys in the admin panel (see "Sensitive Settings"); `.env.example` gets empty defaults only
 6. Wire webhook route in `Routes/api.php`
 
 ## Adding a New SMS Module
