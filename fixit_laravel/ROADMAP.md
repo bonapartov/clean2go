@@ -245,6 +245,10 @@
 | Ключи ЮКассы, CloudPayments, SMS.ru, SMSC — из админки («Платёжные методы», «SMS-шлюзы»), а не `env()` | ✅ | `App\Support\GatewayCredentials`: зашифровано в `integration_settings` (`gateway.<ключ>`), `.env` — запасной вариант; админка больше не пишет ключи в `.env` и в `Modules/*/Config/payment.php`. Тест `GatewayCredentialsTest` |
 | Удалить 17 выключенных модулей Fixit (Stripe, PayPal, RazorPay, Twilio и др., ≈9,8 тыс. строк) | ✅ | Удалены вместе с публичными файлами и 4 composer-пакетами (2026-10-13) |
 | Логотипы ЮКассы, CloudPayments, SMS.ru, SMSC в админке не грузятся | ❌ | Нет `public/modules/<имя>/images/logo.svg` — добавить файлы |
+| Обновить PHP-зависимости и перейти на PHP 8.5 (13.10.2026) | ✅ | `composer audit`: было 60 уязвимостей в 21 пакете (2 критические), стало 0. Laravel 12.58 → 12.70, `maatwebsite/excel` 3.1 → 4.x и `phpspreadsheet` 1.30 → 5.x (35 классов выгрузки/загрузки — типы в сигнатурах), `dompdf`, `guzzle`, `commonmark`, `medialibrary`, symfony; все 26 выгрузок проверены на рабочей БД. Попутно: выгрузка мастеров падала без фото — исправлено |
+| На машине разработки обновить PHP 8.5.4 → 8.5.11 | ❌ | Нужны права администратора (`sudo apt install --only-upgrade php8.5*`) |
+| Сервер: PHP 8.5 + расширение `ext-grpc` (Firestore для чата) + файлы активации Fixit в `public/` | ❌ | Пункт подготовки к выходу в интернет |
+| Убрать лицензионную проверку CodeCanyon (`phpblaze/bladelib`) | ❌ | Обфусцированный код Fixit, блокирует API без файлов активации; мешает реестру ПО — убрать при переписывании ядра |
 
 ### Sprint 7 — договор и акты от исполнителя
 

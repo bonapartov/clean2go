@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 class ProviderDocumentsFilterExport implements FromCollection,WithMapping,WithHeadings
 {
 
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $provider_documents = UserDocument::query();
         

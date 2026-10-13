@@ -12,7 +12,7 @@ class AddOnServiceFilterExport implements FromCollection,WithMapping,WithHeading
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $startDate = request()->start_date;
         $endDate   = request()->end_date;

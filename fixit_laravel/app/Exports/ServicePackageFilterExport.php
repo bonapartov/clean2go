@@ -11,7 +11,7 @@ class ServicePackageFilterExport implements FromCollection,WithMapping,WithHeadi
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $servicesPackages = ServicePackage::query();
 

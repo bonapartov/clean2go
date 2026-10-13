@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.5",
         "barryvdh/laravel-dompdf": "^3.1",
         "bensontrent/firestore-php": "^3.1",
         "chartloop/metautils": "^1.0.0",
@@ -27,7 +27,7 @@
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9.0",
         "laravel/ui": "^4.5.0",
-        "maatwebsite/excel": "^3.1",
+        "maatwebsite/excel": "^4.0",
         "matanyadaev/laravel-eloquent-spatial": "^4.5",
         "nwidart/laravel-modules": "^10.0",
         "openai-php/laravel": "^0.18.0",

@@ -14,7 +14,7 @@ class ProviderFilterExport implements FromCollection,WithMapping,WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $query = User::query()->role(RoleEnum::PROVIDER)->whereNull('deleted_at');
 

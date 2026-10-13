@@ -16,7 +16,7 @@ class CommissionHistoriesExport implements FromCollection,WithMapping,WithHeadin
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $Commissions = CommissionHistory::get();
         return $Commissions;

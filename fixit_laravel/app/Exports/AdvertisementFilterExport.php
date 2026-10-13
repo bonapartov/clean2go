@@ -12,7 +12,7 @@ class AdvertisementFilterExport implements FromCollection,WithMapping,WithHeadin
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $advertisements = Advertisement::query();
         $startDate = request()->start_date;

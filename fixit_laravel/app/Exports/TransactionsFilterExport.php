@@ -13,7 +13,7 @@ class TransactionsFilterExport implements FromCollection,WithMapping,WithHeading
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $query = PaymentTransactions::query()->latest('created_at');
 

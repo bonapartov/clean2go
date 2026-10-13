@@ -47,7 +47,7 @@ class CategoryImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     /**
      * @param \Throwable $e
      */
-    public function onError(\Throwable $e)
+    public function onError(\Throwable $e): void
     {
         throw new ExceptionHandler($e->getMessage(), 422);
     }
@@ -62,7 +62,7 @@ class CategoryImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|array|null
     {
 
         $category = new Category([

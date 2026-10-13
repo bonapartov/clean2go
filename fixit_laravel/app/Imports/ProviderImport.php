@@ -48,7 +48,7 @@ class ProviderImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     /**
      * @param \Throwable $e
      */
-    public function onError(\Throwable $e)
+    public function onError(\Throwable $e): void
     {
         throw new ExceptionHandler($e->getMessage(), 422);
     }
@@ -64,7 +64,7 @@ class ProviderImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|array|null
     {
         if ($row['type'] === UserTypeEnum::COMPANY) {
 

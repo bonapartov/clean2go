@@ -12,7 +12,7 @@ class WalletBonusFilterExport implements FromCollection,WithMapping,WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $query = WalletBonus::query();
 

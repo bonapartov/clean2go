@@ -12,6 +12,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Backend (fixit_laravel)
 
+### Runtime
+
+Target **PHP 8.5** (dev and server alike; `composer.json` requires `^8.5`).
+`ext-grpc` is required by `google/cloud-firestore` (admin/web chat) — install
+it on the server; locally it is missing, so composer runs need
+`--ignore-platform-req=ext-grpc` (and nothing else). Run `composer audit`
+before releases. Fixit's licence check (`phpblaze/bladelib`) blocks `/api/*`
+unless the activation files in `public/` (`installation.json`, `.migration`,
+`cj7kl89.tmp`, `_log.dic.xml`; gitignored) are present — copy them to any new
+checkout or server.
+
 ### Commands
 
 ```bash

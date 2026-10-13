@@ -13,7 +13,7 @@ class BookingExport implements FromCollection,WithMapping,WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $bookings = Booking::whereNotNull('parent_id');
         return $this->filter($bookings, request()->all());

@@ -15,7 +15,7 @@ class ProvidersExport implements FromCollection,WithMapping,WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $providers = User::role(RoleEnum::PROVIDER)->where('status', true)->whereNull('deleted_at');
         return $this->filter($providers, request()->all());

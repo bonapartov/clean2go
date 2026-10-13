@@ -11,7 +11,7 @@ class ServiceFilterExport implements FromCollection,WithMapping,WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $services = Service::query();
         $startDate = request()->start_date;

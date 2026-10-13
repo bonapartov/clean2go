@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 class CategoryExport implements FromCollection,WithMapping,WithHeadings
 {
 
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $categories = Category::get();
         return $categories;

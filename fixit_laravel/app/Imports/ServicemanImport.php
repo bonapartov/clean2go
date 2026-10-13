@@ -48,7 +48,7 @@ class ServicemanImport implements ToModel, WithHeadingRow, WithValidation, Skips
     /**
      * @param \Throwable $e
      */
-    public function onError(\Throwable $e)
+    public function onError(\Throwable $e): void
     {
         throw new ExceptionHandler($e->getMessage(), 422);
     }
@@ -64,7 +64,7 @@ class ServicemanImport implements ToModel, WithHeadingRow, WithValidation, Skips
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function model(array $row)
+    public function model(array $row): \Illuminate\Database\Eloquent\Model|array|null
     {
 
         $user = new User([

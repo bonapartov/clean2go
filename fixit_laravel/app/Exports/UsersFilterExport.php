@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class UsersFilterExport implements FromCollection, WithMapping, WithHeadings
 {
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $users = User::role(RoleEnum::CONSUMER)->where('system_reserve', 0);
         $startDate = request()->start_date;
