@@ -53,7 +53,7 @@ The backend uses [nwidart/laravel-modules](https://nwidart.com/laravel-modules/)
 
 **Payment flow**: All payment modules implement `getIntent($obj, $request)` and `webhook($request)`. The `PaymentTrait` (`app/Http/Traits/PaymentTrait.php`) dispatches to the correct module via `Module::find($request->payment_method)`. Payment status transitions use `PaymentStatus` enum (`PENDING → COMPLETED/FAILED`).
 
-**SMS flow**: `App\SMS\SMS` dispatches through `MessageTrait`. SMS module `getIntent($sendTo, $message)` must accept both string and array message. Environment keys: `SMSRU_API_KEY`, `SMSRU_SENDER`, `SMSC_LOGIN`, `SMSC_PASSWORD`.
+**SMS flow**: `App\SMS\SMS` dispatches through `MessageTrait`. SMS module `getIntent($sendTo, $message)` must accept both string and array message. Keys (`smsru_api_key`, `smsru_sender`, `smsc_login`, `smsc_password`, `smsc_sender`) are entered in admin «SMS-шлюзы» and read with `App\Support\GatewayCredentials::get()`; `.env` (`SMSRU_API_KEY`, …) is only a fallback.
 
 **Repository pattern**: Controllers → Repositories (`app/Repositories/`) → Models. The `prettus/l5-repository` package is used.
 
@@ -149,7 +149,7 @@ Dart, JS or seeders, and never commit real values.
 2. Implement `Payment/<Name>.php` with static `getIntent()` and `webhook()` methods
 3. Register in `Providers/<Name>ServiceProvider.php`
 4. Add module to `modules_statuses.json` with `true`
-5. Expose its keys in the admin panel (see "Sensitive Settings"); `.env.example` gets empty defaults only
+5. List its keys in `Config/payment.php` `'configs'` with blank values and in `'fields'` — they appear in admin «Платёжные методы» automatically; read them with `GatewayCredentials::get('<field key>')`, never `env()` (see "Sensitive Settings")
 6. Wire webhook route in `Routes/api.php`
 
 ## Adding a New SMS Module
@@ -157,6 +157,7 @@ Dart, JS or seeders, and never commit real values.
 1. Copy `Modules/Smsru/` as template
 2. Implement `SMS/<Name>.php` with static `getIntent($sendTo, $message)` — handle both string and array `$message`
 3. Register provider and enable in `modules_statuses.json`
+4. Keys: blank `'configs'` + `'fields'` in `Config/sms.php`, read with `GatewayCredentials::get()` (admin «SMS-шлюзы»)
 
 ## Skill routing
 

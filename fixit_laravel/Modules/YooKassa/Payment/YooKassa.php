@@ -15,7 +15,7 @@ class YooKassa
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_USERPWD, env('YOOKASSA_SHOP_ID') . ':' . env('YOOKASSA_SECRET_KEY'));
+        curl_setopt($ch, CURLOPT_USERPWD, \App\Support\GatewayCredentials::get('yookassa_shop_id') . ':' . \App\Support\GatewayCredentials::get('yookassa_secret_key'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Idempotence-Key: ' . ($idempotenceKey ?: uniqid('yk_', true))]);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         $response = curl_exec($ch); $err = curl_error($ch); $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); curl_close($ch);
@@ -55,7 +55,7 @@ class YooKassa
             if (!$paymentTransaction) throw new Exception('YooKassa: transaction not found', 404);
             $ch = curl_init('https://api.yookassa.ru/v3/payments/' . $paymentTransaction->transaction_id);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_USERPWD, env('YOOKASSA_SHOP_ID') . ':' . env('YOOKASSA_SECRET_KEY'));
+            curl_setopt($ch, CURLOPT_USERPWD, \App\Support\GatewayCredentials::get('yookassa_shop_id') . ':' . \App\Support\GatewayCredentials::get('yookassa_secret_key'));
             curl_setopt($ch, CURLOPT_TIMEOUT, 15);
             $payment = json_decode(curl_exec($ch), true); curl_close($ch);
             $status = match ($payment['status'] ?? '') { 'succeeded' => PaymentStatus::COMPLETED, 'canceled' => PaymentStatus::FAILED, default => PaymentStatus::PENDING };

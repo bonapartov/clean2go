@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Exception;
 use App\Helpers\Helpers;
 use App\Models\Zone;
+use App\Support\GatewayCredentials;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Nwidart\Modules\Facades\Module;
@@ -36,6 +37,10 @@ class PaymentMethodController extends Controller
                 $paymentConfig['title'] = $title;
                 $paymentConfig['subscription'] = $Subscription;
                 $paymentConfig['processing_fee'] = $paymentGatewayCharge;
+                // `include` evaluated any env() in 'configs' into real values;
+                // write keys only, so no secret ends up in this tracked file.
+                // Values live in GatewayCredentials (integration_settings).
+                $paymentConfig['configs'] = array_fill_keys(array_keys($paymentConfig['configs'] ?? []), '');
                 $content = "<?php\n\nreturn ".var_export($paymentConfig, true).";\n";
                 File::put($paymentFile, $content);
                 Artisan::call('cache:clear');
@@ -48,11 +53,11 @@ class PaymentMethodController extends Controller
             }
 
             if ($configs) {
+                // Saved encrypted in integration_settings, not .env
+                // (CLAUDE.md, «Sensitive Settings»).
                 foreach ($configs['fields'] as $fieldKey => $fieldAttributes) {
-                    $envKey = strtoupper($fieldKey);
                     $newValue = Helpers::decryptKey($request->$fieldKey);
-                    DotenvEditor::setKey($envKey, $newValue);
-                    DotenvEditor::save();
+                    GatewayCredentials::set($fieldKey, $newValue, 'payment_gateways', $configs['name'].': '.($fieldAttributes['label'] ?? $fieldKey));
                 }
 
                 return to_route('backend.paymentmethods.index');

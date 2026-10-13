@@ -8,6 +8,7 @@ use Google_Client;
 use Carbon\Carbon;
 use App\Models\Blog;
 use App\Models\User;
+use App\Support\GatewayCredentials;
 use App\Models\Zone;
 use App\Models\State;
 use App\Models\Review;
@@ -1473,7 +1474,8 @@ class Helpers
             if (file_exists($paymentFile)) {
                 $payment = include $paymentFile;
 
-                $configs = @$payment['configs'] ?? [];
+                // Real values come from the admin (GatewayCredentials), not env().
+                $configs = GatewayCredentials::resolve(@$payment['configs'] ?? []);
 
                 $allConfigsFilled = collect($configs)->every(function ($value) {
                     return !is_null($value) && $value !== '';
@@ -1534,7 +1536,7 @@ class Helpers
                     'title' => $payment['title'],
                     'processing_fee' => @$payment['processing_fee'],
                     'status' => $module?->isEnabled(),
-                    'configs' => $payment['configs'],
+                    'configs' => GatewayCredentials::resolve($payment['configs'] ?? []),
                     'fields' => $payment['fields'],
                     'subscription' => @$payment['subscription']
                 ];
@@ -1581,7 +1583,7 @@ class Helpers
                     'notes' => @$sms['notes'],
                     'image' => url($sms['image']),
                     'status' => $module?->isEnabled(),
-                    'configs' => $sms['configs'],
+                    'configs' => GatewayCredentials::resolve($sms['configs'] ?? []),
                     'fields' => $sms['fields'],
                 ];
             }

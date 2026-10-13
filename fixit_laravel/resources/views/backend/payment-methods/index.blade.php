@@ -40,7 +40,7 @@
                                 <ul class="payment-keys">
                                     @foreach ($paymentMethod['fields'] as $fieldKey => $field)
                                         @php
-                                            $fieldValue = env(strtoupper($fieldKey));
+                                            $fieldValue = \App\Support\GatewayCredentials::get($fieldKey); // admin-stored, .env fallback
                                         @endphp
                                         @if ($field['type'] === 'password')
                                             <li>
@@ -114,7 +114,7 @@
                     <div class="modal-body">
                             @foreach ($paymentMethod['fields'] as $fieldKey => $field)
                                 @php
-                                    $fieldValue = env(strtoupper($fieldKey));
+                                    $fieldValue = \App\Support\GatewayCredentials::get($fieldKey); // admin-stored, .env fallback
                                 @endphp
                                 <div class="form-group row">
                                     <label class="col-xxl-4" for="{{ $fieldKey }}">{{ $field['label'] }}</label>

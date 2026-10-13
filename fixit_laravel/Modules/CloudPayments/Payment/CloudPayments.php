@@ -15,7 +15,7 @@ class CloudPayments
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_USERPWD, env('CLOUDPAYMENTS_PUBLIC_ID') . ':' . env('CLOUDPAYMENTS_API_SECRET'));
+        curl_setopt($ch, CURLOPT_USERPWD, \App\Support\GatewayCredentials::get('cloudpayments_public_id') . ':' . \App\Support\GatewayCredentials::get('cloudpayments_api_secret'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         $response = curl_exec($ch); $err = curl_error($ch); curl_close($ch);
@@ -57,7 +57,7 @@ class CloudPayments
         try {
             $paymentTransaction = PaymentTransactions::where(['item_id' => $request->item_id ?? $request->InvoiceId, 'type' => $request->type ?? 'booking'])->first();
             if (!$paymentTransaction) throw new Exception('CloudPayments: transaction not found', 404);
-            $hmac = base64_encode(hash_hmac('sha256', $request->getContent(), env('CLOUDPAYMENTS_API_SECRET'), true));
+            $hmac = base64_encode(hash_hmac('sha256', $request->getContent(), \App\Support\GatewayCredentials::get('cloudpayments_api_secret'), true));
             $received = $request->header('Content-HMAC') ?? $request->header('X-Content-HMAC') ?? '';
             if ($received && !hash_equals($hmac, $received)) throw new Exception('CloudPayments: HMAC mismatch', 403);
             $cpStatus = $request->Status ?? $request->get('status', '');

@@ -235,6 +235,8 @@
 | Push из приложений через бэкенд `POST /api/push/send` вместо подписи FCM ключом на телефоне | ✅ | `PushNotificationController`; приложения — `FirebaseApi.sendNotification` (нужна пересборка APK) |
 | Токен Agora подписывать на сервере: сертификат больше не уходит в приложение | ❌ | Звонки не работают, пока Cloud Function `generateToken` (или бэкенд) не берёт сертификат из своей конфигурации |
 | Перевыпустить сервисный ключ Firebase перед выходом в интернет | ❌ | Старый ключ лежал в `public/` и был доступен в локальной сети |
+| Ключи ЮКассы, CloudPayments, SMS.ru, SMSC — из админки («Платёжные методы», «SMS-шлюзы»), а не `env()` | ✅ | `App\Support\GatewayCredentials`: зашифровано в `integration_settings` (`gateway.<ключ>`), `.env` — запасной вариант; админка больше не пишет ключи в `.env` и в `Modules/*/Config/payment.php`. Тест `GatewayCredentialsTest` |
+| Выключенные модули Fixit (Stripe, PayPal и др.) всё ещё читают `env()` | — | Не переводим: кандидаты на удаление (`docs/code-inventory.md`) |
 
 ### Sprint 7 — договор и акты от исполнителя
 

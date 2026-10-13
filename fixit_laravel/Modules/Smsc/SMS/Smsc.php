@@ -6,8 +6,8 @@ class Smsc
     public static function getIntent($sendTo, $message)
     {
         $text = is_array($message) ? ($message['message'] ?? implode(' ', $message)) : $message;
-        $params = ['login' => env('SMSC_LOGIN'), 'psw' => md5(env('SMSC_PASSWORD')), 'phones' => $sendTo, 'mes' => $text, 'fmt' => 3, 'charset' => 'utf-8'];
-        if ($sender = env('SMSC_SENDER', '')) $params['sender'] = $sender;
+        $params = ['login' => \App\Support\GatewayCredentials::get('smsc_login'), 'psw' => md5(\App\Support\GatewayCredentials::get('smsc_password')), 'phones' => $sendTo, 'mes' => $text, 'fmt' => 3, 'charset' => 'utf-8'];
+        if ($sender = \App\Support\GatewayCredentials::get('smsc_sender')) $params['sender'] = $sender;
         $ch = curl_init('https://smsc.ru/sys/send.php?' . http_build_query($params));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); curl_setopt($ch, CURLOPT_TIMEOUT, 15);
         $response = curl_exec($ch); $err = curl_error($ch); curl_close($ch);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Exception;
 use App\Helpers\Helpers;
+use App\Support\GatewayCredentials;
 use Illuminate\Http\Request;
 use Nwidart\Modules\Facades\Module;
 use App\Http\Controllers\Controller;
@@ -30,12 +31,11 @@ class SMSGatewayController extends Controller
             }
 
             if ($configs) {
-                DotenvEditor::addEmpty();
+                // Saved encrypted in integration_settings, not .env
+                // (CLAUDE.md, «Sensitive Settings»).
                 foreach ($configs['fields'] as $fieldKey => $fieldAttributes) {
-                    $envKey = strtoupper($fieldKey);
                     $newValue = $request->$fieldKey;
-                    DotenvEditor::setKey($envKey, $newValue);
-                    DotenvEditor::save();
+                    GatewayCredentials::set($fieldKey, $newValue, 'sms_gateways', $configs['name'].': '.($fieldAttributes['label'] ?? $fieldKey));
                 }
 
                 return to_route('backend.smsgateways.index');

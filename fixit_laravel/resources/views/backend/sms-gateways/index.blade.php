@@ -35,7 +35,7 @@
                             @method('POST')
                             @foreach ($smsGateway['fields'] as $fieldKey => $field)
                                 @php
-                                    $fieldValue = env(strtoupper($fieldKey));
+                                    $fieldValue = \App\Support\GatewayCredentials::get($fieldKey); // admin-stored, .env fallback
                                 @endphp
                                 <div class="form-group row">
                                     <label class="col-xxl-4" for="{{ $fieldKey }}">{{ $field['label'] }}</label>

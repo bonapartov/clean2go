@@ -6,9 +6,11 @@ return [
     'title'          => 'CloudPayments',
     'processing_fee' => 1.0,
     'subscription'   => 0,
+    // Keys only: values are entered in the admin («Платёжные методы» /
+    // «SMS-шлюзы») and read via App\Support\GatewayCredentials, never env().
     'configs' => [
-        'cloudpayments_public_id'  => env('CLOUDPAYMENTS_PUBLIC_ID', ''),
-        'cloudpayments_api_secret' => env('CLOUDPAYMENTS_API_SECRET', ''),
+        'cloudpayments_public_id'  => '',
+        'cloudpayments_api_secret' => '',
     ],
     'fields' => [
         'cloudpayments_public_id'  => ['type' => 'text',     'label' => 'Public ID'],
