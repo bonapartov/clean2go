@@ -26,7 +26,10 @@ class OnboardingSettingsController extends Controller
 
     public function index(): View
     {
-        $settings = IntegrationSetting::orderBy('group')->orderBy('key')->get()
+        // Payment/SMS gateway keys share this table (App\Support\GatewayCredentials)
+        // but are edited on their own admin screens — not here.
+        $settings = IntegrationSetting::whereNotIn('group', ['payment_gateways', 'sms_gateways'])
+            ->orderBy('group')->orderBy('key')->get()
             ->groupBy('group');
 
         return view('backend.onboarding.settings.index', [

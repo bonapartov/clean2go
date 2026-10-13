@@ -60,8 +60,8 @@
                                            name="{{ $setting->key }}"
                                            class="form-control"
                                            autocomplete="new-password"
-                                           value="{{ $setting->value }}"
-                                           placeholder="Оставьте пустым, чтобы не менять">
+                                           value=""
+                                           placeholder="{{ $setting->value ? 'Задан — оставьте пустым, чтобы не менять' : 'Не задан' }}">
 
                                 @elseif($setting->type === 'toggle')
                                     <label class="switch mt-1">
