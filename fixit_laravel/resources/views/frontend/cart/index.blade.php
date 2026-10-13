@@ -65,6 +65,10 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                 target="_blank">
                                                 <p class="mb-1">{{ $provider?->name }}</p>
                                             </a>
+                                            @if ($provider)
+                                                {{-- Статус и ИНН исполнителя (агентская модель B2C, Sprint 6) --}}
+                                                @include('frontend.inc.executor-disclosure', ['executors' => [\App\Support\ExecutorDisclosure::forProvider($provider)], 'compact' => true])
+                                            @endif
                                             <div class="rate">
                                                 <img src="{{ asset('frontend/images/svg/star.svg') }}" alt="star"
                                                     class="img-fluid star">
@@ -252,6 +256,10 @@ $isCouponEnabled = Helpers::couponIsEnable();
                                                 target="_blank">
                                                 <p class="mb-1">{{ $servicePackage?->user?->name }}</p>
                                             </a>
+                                            @if ($servicePackage?->user)
+                                                {{-- Статус и ИНН исполнителя (агентская модель B2C, Sprint 6) --}}
+                                                @include('frontend.inc.executor-disclosure', ['executors' => [\App\Support\ExecutorDisclosure::forProvider($servicePackage->user)], 'compact' => true])
+                                            @endif
                                             <div class="rate">
                                                 <img src="{{ asset('frontend/images/svg/star.svg') }}" alt="star"
                                                     class="img-fluid star">

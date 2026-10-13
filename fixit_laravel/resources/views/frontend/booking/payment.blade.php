@@ -141,6 +141,13 @@ $symbol = Helpers::getDefaultCurrencySymbol();
                 @endif
               </div>
             </div>
+            @if (!empty($checkout['executors']))
+              {{-- Исполнитель до оплаты (агентская модель B2C, Sprint 6) --}}
+              <div class="payment-body executor-disclosure-block ps-4 pe-4 pt-3">
+                <h5 class="mb-2 f-w-600">{{ trans_choice('frontend::static.executor.title', count($checkout['executors'])) }}</h5>
+                @include('frontend.inc.executor-disclosure', ['executors' => $checkout['executors']])
+              </div>
+            @endif
             <div class="payment-footer">
               <button type="submit" class="btn btn-solid payment-btn">
                 @if(isset($checkout['total']['is_advance_payment_enabled']) && $checkout['total']['is_advance_payment_enabled'])

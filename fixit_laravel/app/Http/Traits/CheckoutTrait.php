@@ -6,6 +6,7 @@ use App\Enums\AmountEnum;
 use App\Exceptions\ExceptionHandler;
 use App\Helpers\Helpers;
 use App\Models\Service;
+use App\Support\ExecutorDisclosure;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -152,6 +153,12 @@ trait CheckoutTrait
             ];
 
             $items['total'] = $itemTotal;
+
+            // Who the client contracts with, shown before payment (agency
+            // model B2C, ROADMAP Sprint 6). Same data for web and the app.
+            $items['executors'] = ExecutorDisclosure::forProviderIds(
+                ExecutorDisclosure::providerIdsFromCheckout($items)
+            );
 
             return $items;
 

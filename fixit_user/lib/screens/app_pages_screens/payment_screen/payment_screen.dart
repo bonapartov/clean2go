@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import '../../../config.dart';
+import '../../../widgets/executor_disclosure_layout.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({super.key});
@@ -42,7 +43,13 @@ class PaymentScreen extends StatelessWidget {
                                 data: e.value,
                                 selectIndex: value.selectIndex,
                                 onTap: () => value.onSelectPaymentMethod(
-                                    e.key, e.value.slug)))
+                                    e.key, e.value.slug))),
+                        // Who the client contracts with, before paying
+                        // (agency model B2C, ROADMAP Sprint 6)
+                        if (value.bookingId == 0)
+                          ExecutorDisclosureLayout(
+                              executors:
+                                  value.checkoutModel?.executors ?? const []),
                       ]),
                   const VSpace(Sizes.s100)
                 ]),

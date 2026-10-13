@@ -1,3 +1,4 @@
+import 'package:fixit_user/models/executor_model.dart';
 import 'package:fixit_user/models/service_details_model.dart';
 
 class CheckoutModel {
@@ -6,13 +7,16 @@ class CheckoutModel {
   FinalTotal? total;
   bool? isAdvancePayment;
   String? advancePaymentPercentage;
+  // Providers the client contracts with, shown before payment (Sprint 6)
+  List<ExecutorModel>? executors;
 
   CheckoutModel(
       {this.services,
       this.servicesPackage,
       this.total,
       this.isAdvancePayment,
-      this.advancePaymentPercentage});
+      this.advancePaymentPercentage,
+      this.executors});
 
   CheckoutModel.fromJson(Map<String, dynamic> json) {
     isAdvancePayment =
@@ -31,6 +35,11 @@ class CheckoutModel {
       });
     }
     total = json['total'] != null ? FinalTotal.fromJson(json['total']) : null;
+    if (json['executors'] is List) {
+      executors = (json['executors'] as List)
+          .map((v) => ExecutorModel.fromJson(Map<String, dynamic>.from(v)))
+          .toList();
+    }
     if (isAdvancePayment == null && total != null) {
       isAdvancePayment = total!.isAdvancePayment;
     }
@@ -52,6 +61,9 @@ class CheckoutModel {
     data['advance_payment_percentage'] = advancePaymentPercentage;
     if (total != null) {
       data['total'] = total!.toJson();
+    }
+    if (executors != null) {
+      data['executors'] = executors!.map((v) => v.toJson()).toList();
     }
     return data;
   }
