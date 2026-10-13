@@ -483,7 +483,8 @@ class Helpers
 
     public static function isCommandLineInstalled()
     {
-        if (env('DB_DATABASE') && env('DB_USERNAME')) {
+        // config(), not env(): env() is null under config:cache (production)
+        if (config('database.connections.'.config('database.default').'.database') && config('database.connections.'.config('database.default').'.username')) {
             DB::connection()->getPDO();
             if (DB::connection()->getDatabaseName()) {
                 if (Schema::hasTable('seeders')) {
@@ -2426,7 +2427,7 @@ class Helpers
     {
         try {
 
-            return env('ENABLE_DEMO_MODE');
+            return config('app.enable_demo_mode');
 
         } catch (Exception $e) {
 

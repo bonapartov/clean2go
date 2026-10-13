@@ -77,7 +77,7 @@ $locale = app()->getLocale();
 
 
 @section('content')
-<section class="auth-page" style="background-image: url('{{ env('APP_URL') }}/admin/images/login-bg.png')">
+<section class="auth-page" style="background-image: url('{{ config('app.url') }}/admin/images/login-bg.png')">
     <div class="container">
          <div class="auth-card">
             <div class="welcome mt-0">

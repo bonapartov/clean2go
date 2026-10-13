@@ -2,7 +2,7 @@
 <title>@yield('title', $themeOptions['general']['site_title'] ?? $themeOptions['seo']['meta_title']) - {{$themeOptions['general']['site_tagline'] ?? null}}</title>
 
 {{-- Meta Tags --}}
-<meta name="title" content="@yield('title', $themeOptions['seo']['meta_title'] ?? env('APP_NAME'))">
+<meta name="title" content="@yield('title', $themeOptions['seo']['meta_title'] ?? config('app.name'))">
 <meta name="description" content="@yield('meta_description', $themeOptions['seo']['meta_description'])">
 <meta name="keywords" content="@yield('keywords', $themeOptions['seo']['meta_tags'])">
 <meta name="robots" content="index, follow"> <!-- or change to noindex, nofollow as needed -->

@@ -31,7 +31,7 @@ class RateAppRepository extends BaseRepository
                 'consumer_id' => Auth::user()->id,
             ]);
 
-            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new MailContactUs($request));
+            Mail::to(config('mail.from.address'))->send(new MailContactUs($request));
 
             return response()->json([
                 'message' => __('static.rate_app.thankyou_contact_us'),

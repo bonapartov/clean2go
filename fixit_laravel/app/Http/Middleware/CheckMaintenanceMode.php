@@ -15,7 +15,7 @@ class CheckMaintenanceMode
      */
     public function handle($request, Closure $next)
     {
-        if (env('MAINTENANCE_MODE', false)) {
+        if (config('app.maintenance_mode')) {
             return response()->view('errors.503', [], 503);
         }
 

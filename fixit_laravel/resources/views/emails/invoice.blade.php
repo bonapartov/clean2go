@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ env('APP_NAME') }}</title>
+    <title>{{ config('app.name') }}</title>
 </head>
 <style type="text/css">
     body{

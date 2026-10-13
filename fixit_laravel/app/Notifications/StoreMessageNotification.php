@@ -49,7 +49,7 @@ class StoreMessageNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        $thumbnail = asset(env('APP_URL').'/admin/images/notification/'.'Icon.png');
+        $thumbnail = asset(config('app.url').'/admin/images/notification/'.'Icon.png');
 
         return [
             'title' => $this->request->title,

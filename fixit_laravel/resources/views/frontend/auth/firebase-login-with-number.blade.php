@@ -99,13 +99,13 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
     import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
-        var apiKey = "{{ env('FIREBASE_API_KEY') }}";
-        var authDomain = "{{ env('FIREBASE_AUTH_DOMAIN') }}";
-        var projectId = "{{ env('FIREBASE_PROJECT_ID') }}";
-        var storageBucket = "{{ env('FIREBASE_STORAGE_BUCKET') }}";
-        var messagingSenderId = "{{ env('FIREBASE_SENDER_ID') }}";
-        var appId = "{{ env('FIREBASE_APP_ID') }}";
-        var measurementId = "{{ env('FIREBASE_MEASUREMENT_ID') }}";
+        var apiKey = "{{ config('services.firebase_web.api_key') }}";
+        var authDomain = "{{ config('services.firebase_web.auth_domain') }}";
+        var projectId = "{{ config('services.firebase_web.project_id') }}";
+        var storageBucket = "{{ config('services.firebase_web.storage_bucket') }}";
+        var messagingSenderId = "{{ config('services.firebase_web.sender_id') }}";
+        var appId = "{{ config('services.firebase_web.app_id') }}";
+        var measurementId = "{{ config('services.firebase_web.measurement_id') }}";
 
         const firebaseConfig = {
             apiKey: apiKey,

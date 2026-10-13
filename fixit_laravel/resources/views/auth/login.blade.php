@@ -8,7 +8,7 @@
     $general         = $settings['general'] ?? [];
     $reCaptchaStatus = $settings['google_reCaptcha']['status'] ?? 0;
 @endphp
-<section class="auth-page" style="background-image: url('{{ env('APP_URL') }}/admin/images/login-bg.png')">
+<section class="auth-page" style="background-image: url('{{ config('app.url') }}/admin/images/login-bg.png')">
     <div class="container">
         <div class="row">
             <div class="col-xxl-5 col-xl-6 col-lg-8 ms-auto">

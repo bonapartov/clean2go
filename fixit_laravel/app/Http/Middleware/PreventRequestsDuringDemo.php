@@ -17,7 +17,7 @@ class PreventRequestsDuringDemo
 
         if ($request->isMethod('post') || $request->isMethod('put') || $request->isMethod('delete')) {
 
-            if (env('APP_DEMO')) {
+            if (config('app.demo')) {
 
                 return back()->with('error', 'Oops! This action disabled in demo mode.');
             }

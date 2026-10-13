@@ -32,6 +32,18 @@ return [
     // Firebase service account (private key). Uploaded by the admin in
     // Settings → Firebase; kept outside public/. Not an operator setting —
     // only overridden in tests. See Helpers::getFirebaseServiceAccount().
+    // Firebase web config for phone login on the website (public by design;
+    // read via config() so config:cache works).
+    'firebase_web' => [
+        'api_key' => env('FIREBASE_API_KEY'),
+        'auth_domain' => env('FIREBASE_AUTH_DOMAIN'),
+        'project_id' => env('FIREBASE_PROJECT_ID'),
+        'storage_bucket' => env('FIREBASE_STORAGE_BUCKET'),
+        'sender_id' => env('FIREBASE_SENDER_ID'),
+        'app_id' => env('FIREBASE_APP_ID'),
+        'measurement_id' => env('FIREBASE_MEASUREMENT_ID'),
+    ],
+
     'firebase' => [
         'service_account_path' => storage_path('app/private/firebase/service-account.json'),
     ],

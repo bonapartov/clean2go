@@ -83,7 +83,7 @@ class SettingsRepository extends BaseRepository
                 Config::set('mail.mailers.smtp.encryption', $request->email['mail_encryption'] ?? 'ssl');
                 Config::set('mail.mailers.smtp.username', $request->email['mail_username'] ?? '');
                 Config::set('mail.mailers.smtp.password', Helpers::decryptKey($request->email['mail_password']) ?? '');
-                Config::set('mail.from.name', $request->email['mail_from_name'] ?? env('APP_NAME'));
+                Config::set('mail.from.name', $request->email['mail_from_name'] ?? config('app.name'));
                 Config::set('mail.from.address', $request->email['mail_from_address'] ?? '');
             }
             Mail::to($request->mail)->send(new TestMail());

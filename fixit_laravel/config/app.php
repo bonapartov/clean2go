@@ -40,6 +40,12 @@ return [
     */
 
     'demo' => env('APP_DEMO', false),
+
+    // Read via config() in code: env() returns null once config is cached
+    // (production runs config:cache — deploy/).
+    'enable_demo_mode' => env('ENABLE_DEMO_MODE', false),
+    'version' => env('APP_VERSION'),
+    'maintenance_mode' => env('MAINTENANCE_MODE', false),
     'env' => env('APP_ENV', 'production'),
     'google_map_api_key' => env('GOOGLE_MAP_API_KEY', 'bvahlksadblviubdvlavbalsdvyu'),
     'yandex_map_api_key' => env('YANDEX_MAP_API_KEY'),

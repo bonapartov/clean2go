@@ -1,7 +1,7 @@
 @extends('auth.master')
 @section('title', __('auth.confirm_password'))
 @section('content')
-    <section class="auth-page" style="background-image: url('{{ env('APP_URL') }}/admin/images/login-bg.png')">
+    <section class="auth-page" style="background-image: url('{{ config('app.url') }}/admin/images/login-bg.png')">
         <div class="animation-circle-inverse"><i></i><i></i><i></i></div>
         <div class="animation-circle"><i></i><i></i><i></i></div>
         <div class="auth-card">

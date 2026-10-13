@@ -12,13 +12,13 @@
                     <p class="mb-0">{{ $settings['general']['copyright'] ?? '' }}</p>
                 </div>
             </div>
-            @if (env('APP_VERSION'))
+            @if (config('app.version'))
                 <div class="col-md-6">
                     <div class="app-version-box"
                         {{-- class="ms-auto me-md-0 me-auto mt-md-0 mt-3 gap-2 d-flex justify-content-sm-end justify-content-center" --}}
                         >
                         <span class="badge d-flex badge-version-primary">{{ __('static.version') }}:
-                            {{ env('APP_VERSION') }}</span>
+                            {{ config('app.version') }}</span>
                         <span class="badge d-flex badge-version-primary">{{ __('static.load_time') }}:
                             {{ round(microtime(true) - LARAVEL_START, 2) }}s.</span>
                     </div>
