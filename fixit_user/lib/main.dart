@@ -1,6 +1,6 @@
+import 'package:fixit_user/calls/call_manager.dart';
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fixit_user/helper/notification.dart';
 import 'package:fixit_user/providers/app_pages_providers/job_request_providers/add_job_request_provider.dart';
@@ -35,6 +35,8 @@ void main() async {
   sharedPreferences.getString("selectedLocale");
   log("=-=-=-=-=-=-=-=-=- ${sharedPreferences.getString("selectedLocale")}");
 
+  // Incoming calls (push / app resume) — own LiveKit calls, lib/calls/
+  CallManager.instance.init();
   runApp(const MyApp());
 }
 

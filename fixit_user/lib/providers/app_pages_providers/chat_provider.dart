@@ -13,7 +13,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../config.dart';
 import '../../firebase/firebase_api.dart';
-import '../../models/call_model.dart';
 import '../../models/chat_model.dart';
 import '../../models/message_model.dart';
 import '../../screens/app_pages_screens/profile_detail_screen/layouts/selection_option_layout.dart';
@@ -910,145 +909,8 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
-  onCallTap(context, index) async {
-    log("CODE :$index");
-    route.pop(context);
-    if (index == 0) {
-      getCameraMicrophonePermissions().then((value) {
-        if (value == true) {
-          audioVideoCallTap(context, false);
-        }
-      });
-    } else {
-      getCameraMicrophonePermissions().then((value) {
-        if (value == true) {
-          audioVideoCallTap(context, true);
-        }
-      });
-    }
-    notifyListeners();
-  }
-
-  //audio and video call tap
-  audioVideoCallTap(context, isVideoCall) async {
-    await audioAndVideoCallApi(context, isVideoCall);
-  }
-
-  audioAndVideoCallApi(context, isVideoCall) async {
-    Map<String, dynamic>? response = await getAgoraTokenAndChannelName();
-    int timestamp = DateTime.now().millisecondsSinceEpoch;
-    if (response != null) {
-      String channelId = response["channelName"];
-      String token = response["agoraToken"];
-      Call call = Call(
-          timestamp: timestamp,
-          callerId: userModel!.id.toString(),
-          callerName: userModel!.name,
-          callerPic: userModel!.media.isNotEmpty
-              ? userModel!.media[0].originalUrl ?? ""
-              : "",
-          receiverId: userId.toString(),
-          receiverName: name,
-          receiverPic: image,
-          channelId: channelId,
-          isVideoCall: isVideoCall,
-          agoraToken: token);
-
-      await FirebaseFirestore.instance
-          .collection(collectionName.calls)
-          .doc(call.callerId)
-          .collection(collectionName.calling)
-          .add({
-        "timestamp": timestamp,
-        "callerId": call.callerId,
-        "callerName": call.callerName,
-        "callerPic": call.callerPic,
-        "receiverId": call.receiverId,
-        "receiverName": call.receiverName,
-        "receiverPic": call.receiverPic,
-        "hasDialled": true,
-        "channelId": response['channelName'],
-        "isVideoCall": isVideoCall,
-        "agoraToken": token,
-      }).then((value) async {
-        await FirebaseFirestore.instance
-            .collection(collectionName.calls)
-            .doc(call.receiverId)
-            .collection(collectionName.calling)
-            .add({
-          "timestamp": timestamp,
-          "callerId": call.callerId,
-          "callerName": call.callerName,
-          "callerPic": call.callerPic,
-          "receiverId": call.receiverId,
-          "receiverName": call.receiverName,
-          "receiverPic": call.receiverPic,
-          "hasDialled": false,
-          "channelId": response['channelName'],
-          "isVideoCall": isVideoCall,
-          "agoraToken": token,
-        }).then((value) async {
-          call.hasDialled = true;
-          if (isVideoCall == false) {
-            FirebaseApi().sendNotification(
-                title: "Incoming Audio Call...",
-                msg: "${call.callerName} audio call",
-                token: token,
-                name: call.callerName,
-                image: image,
-                dataTitle: call.callerName);
-            var data = {
-              "channelName": call.channelId,
-              "call": call,
-              "token": response["agoraToken"]
-            };
-            log("Audio Call ::$data");
-            route.pushNamed(context, routeName.audioCall, arg: data);
-          } else {
-            FirebaseApi().sendNotification(
-                title: "Incoming Video Call...",
-                msg: "${call.callerName} video call",
-                token: token,
-                name: call.callerName,
-                image: image,
-                dataTitle: call.callerName);
-
-            var data = {
-              "channelName": call.channelId,
-              "call": call,
-              "token": response["agoraToken"]
-            };
-
-            route.pushNamed(context, routeName.videoCall, arg: data);
-          }
-        });
-      });
-    } else {
-      log("messagefhasuifhudfhsu");
-      Fluttertoast.showToast(msg: "Failed to call");
-    }
-  }
-
-  // Agora call token is signed by our backend (POST /api/agora/token): the
-  // certificate stays on the server. Replaces the generateToken Cloud
-  // Function, which took the certificate from the app (2026-10-13).
-  getAgoraTokenAndChannelName() async {
-    try {
-      final result =
-          await apiServices.postApi(api.agoraToken, {}, isToken: true);
-      if (result.isSuccess == true && result.data is Map) {
-        return {
-          "agoraToken": result.data["token"],
-          "channelName": result.data["channelName"],
-        };
-      }
-      log("AGORA TOKEN: ${result.message}");
-      return null;
-    } catch (e) {
-      log("ERROR WHILE FETCH CREDENTIALS : $e");
-      return null;
-    }
-  }
+  // Calls: lib/calls/ (own LiveKit server). The Fixit Agora/Firestore
+  // call flow that lived here was dead code and was removed 2026-10-13.
 
 // Call functionality methods would go here...
 // (keeping existing call methods for brevity)

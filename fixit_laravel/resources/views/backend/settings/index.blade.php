@@ -564,27 +564,51 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="Third_Party">
-                                    {{-- Agora (звонки). Сертификат — секрет: токен подписывает сервер
-                                         (POST /api/agora/token), в /api/settings он не уходит. --}}
+                                    {{-- Звонки клиент ↔ исполнитель через свой сервер LiveKit
+                                         (infra/livekit). Ключ и секрет — те же, что LIVEKIT_KEYS
+                                         сервера; в приложения уходит только «включено». --}}
+                                    @php($calls = $settings['calls'] ?? [])
                                     <div class="form-group row">
-                                        <label class="col-md-12 fw-bold">{{ __('static.settings.agora') }}</label>
+                                        <label class="col-md-12 fw-bold">{{ __('static.settings.calls') }}</label>
                                         <div class="col-md-12">
                                             <hr>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2" for="agora[app_id]">{{ __('static.settings.agora_app_id') }}</label>
+                                        <label class="col-md-2" for="calls[status]">{{ __('static.settings.calls_status') }}</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" type="text" name="agora[app_id]" id="agora[app_id]"
-                                                value="{{ $settings['agora']['app_id'] ?? '' }}">
+                                            <div class="editor-space">
+                                                <label class="switch">
+                                                    <input class="form-control" type="hidden" name="calls[status]" value="0">
+                                                    <input class="form-check-input" type="checkbox" name="calls[status]" value="1"
+                                                        {{ !empty($calls['status']) ? 'checked' : '' }}>
+                                                    <span class="switch-state"></span>
+                                                </label>
+                                                <span class="help-text">{{ __('static.settings.calls_status_help') }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2" for="agora[certificate]">{{ __('static.settings.agora_certificate') }}</label>
+                                        <label class="col-md-2" for="calls[livekit_url]">{{ __('static.settings.calls_livekit_url') }}</label>
                                         <div class="col-md-10">
-                                            <input class="form-control" type="password" name="agora[certificate]" id="agora[certificate]"
-                                                value="{{ !empty($settings['agora']['certificate']) ? Helpers::encryptKey($settings['agora']['certificate']) : '' }}">
-                                            <span class="help-text">{{ __('static.settings.agora_certificate_help') }}</span>
+                                            <input class="form-control" type="text" name="calls[livekit_url]" id="calls[livekit_url]"
+                                                placeholder="wss://calls.example.ru" value="{{ $calls['livekit_url'] ?? '' }}">
+                                            <span class="help-text">{{ __('static.settings.calls_livekit_url_help') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2" for="calls[api_key]">{{ __('static.settings.calls_api_key') }}</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="text" name="calls[api_key]" id="calls[api_key]"
+                                                value="{{ $calls['api_key'] ?? '' }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2" for="calls[api_secret]">{{ __('static.settings.calls_api_secret') }}</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="password" name="calls[api_secret]" id="calls[api_secret]"
+                                                value="{{ !empty($calls['api_secret']) ? Helpers::encryptKey($calls['api_secret']) : '' }}">
+                                            <span class="help-text">{{ __('static.settings.calls_api_secret_help') }}</span>
                                         </div>
                                     </div>
 

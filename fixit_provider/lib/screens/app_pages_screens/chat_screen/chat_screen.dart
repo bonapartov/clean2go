@@ -1,3 +1,4 @@
+import 'package:fixit_provider/calls/call_manager.dart';
 import 'dart:developer';
 import '../../../config.dart';
 
@@ -56,6 +57,23 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                           }
                         },
                       ),
+                      // ChatAppBarLayout is an empty Fixit stub: own header with
+                      // the chat partner and call buttons (lib/calls/, LiveKit).
+                      Row(children: [
+                        IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () => Navigator.of(context).maybePop()),
+                        Expanded(
+                            child: Text(value.name ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: appCss.dmDenseMedium16
+                                    .textColor(appColor(context).darkText))),
+                        CallButtons(
+                            calleeId: int.tryParse(value.userId ?? ''),
+                            peerName: value.name ?? '',
+                            bookingId: value.bookingId),
+                      ]).paddingSymmetric(horizontal: Insets.i8),
                       Expanded(
                         child: ListView(
                           reverse: true,

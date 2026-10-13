@@ -84,6 +84,8 @@ dependencies:
   flutter_html: any
   flutter_native_splash:
   permission_handler: ^12.0.1
+  # Звонки через свой сервер LiveKit (lib/calls/, infra/livekit)
+  livekit_client: 2.13.0
   in_app_review: ^2.0.11
   readmore: ^3.0.0
   dropdown_button2: ^2.3.9

@@ -18,4 +18,6 @@ enum FrontSettingsEnum: string
     case ON_BOARDING_SCREENS = 'onboarding';
     // «Застраховать услугу»: apps need it to show the checkbox and price
     case INSURANCE = 'insurance';
+    // Звонки через свой LiveKit: приложениям нужен только calls.status
+    case CALLS = 'calls';
 }

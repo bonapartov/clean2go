@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import '../../../../calls/call_manager.dart';
 import '../../../../config.dart';
 import '../../../../providers/app_pages_providers/offer_chat_provider.dart';
 
@@ -55,6 +56,12 @@ class ChatAppBarLayout extends StatelessWidget {
                             //         .textColor(appColor(context).online))
                           ])
                     ]),
+                    // Звонок участнику заказа через свой LiveKit (lib/calls/)
+                    if (!isOffer)
+                      CallButtons(
+                          calleeId: value.userId,
+                          peerName: value.name ?? '',
+                          bookingId: value.bookingId),
 
                     // isOffer
                     //     ? SizedBox()

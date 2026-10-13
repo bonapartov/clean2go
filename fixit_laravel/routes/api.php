@@ -156,8 +156,13 @@ Route::group(['middleware' => ['localization']], function () {
         // Push from app to app (chat, bookings): the server holds the Firebase key
         Route::post('push/send', 'App\Http\Controllers\API\PushNotificationController@send')->middleware('throttle:60,1');
 
-        // Agora call token signed on the server (certificate never leaves it)
-        Route::post('agora/token', 'App\Http\Controllers\API\AgoraTokenController@store')->middleware('throttle:30,1');
+        // App-to-app calls over our LiveKit server (App\Support\Calls)
+        Route::post('calls', 'App\Http\Controllers\API\CallController@store')->middleware('throttle:20,1');
+        Route::get('calls/incoming', 'App\Http\Controllers\API\CallController@incoming');
+        Route::get('calls/{call}', 'App\Http\Controllers\API\CallController@show');
+        Route::post('calls/{call}/accept', 'App\Http\Controllers\API\CallController@accept');
+        Route::post('calls/{call}/decline', 'App\Http\Controllers\API\CallController@decline');
+        Route::post('calls/{call}/end', 'App\Http\Controllers\API\CallController@end');
 
         Route::get('dashboard/provider', 'App\Http\Controllers\API\ProviderController@getDashboardData');
         Route::post('addserviceProofs', 'App\Http\Controllers\API\BookingController@addserviceProofs');

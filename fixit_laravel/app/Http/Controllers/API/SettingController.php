@@ -26,6 +26,10 @@ class SettingController extends Controller
         'agora.certificate',
         'general.firebase_server_key',
         'firebase.service_json',
+        // LiveKit call server access (App\Support\Calls): apps get only calls.status
+        'calls.livekit_url',
+        'calls.api_key',
+        'calls.api_secret',
     ];
 
     public function frontSettings()

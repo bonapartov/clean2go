@@ -1,7 +1,10 @@
+import 'package:fixit_user/calls/calls_setting_model.dart';
 import 'package:fixit_user/config.dart';
 import 'package:fixit_user/models/insurance_setting_model.dart';
 
 class AppSettingModel {
+  // Звонки через свой LiveKit (lib/calls/)
+  CallsSettingModel? calls;
   Agora? agora;
   General? general;
   Activation? activation;
@@ -30,6 +33,9 @@ class AppSettingModel {
       this.serviceRequest});
 
   AppSettingModel.fromJson(Map<String, dynamic> json) {
+    calls = json['calls'] is Map
+        ? CallsSettingModel.fromJson(Map<String, dynamic>.from(json['calls']))
+        : null;
     agora = json['agora'] != null ? Agora.fromJson(json['agora']) : null;
     general =
         json['general'] != null ? General.fromJson(json['general']) : null;

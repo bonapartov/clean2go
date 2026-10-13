@@ -42,6 +42,8 @@ dependencies:
   localization: ^2.1.1
   flutter_svg: ^2.2.3
   permission_handler: ^12.0.1
+  # Звонки через свой сервер LiveKit (lib/calls/, infra/livekit)
+  livekit_client: 2.13.0
   figma_squircle: ^0.6.3
   animated_bottom_navigation_bar: ^1.4.0
   carousel_slider: ^5.1.1

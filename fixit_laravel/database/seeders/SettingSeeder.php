@@ -93,9 +93,19 @@ class SettingSeeder extends Seeder
                 'free_trial_days' => 7,
                 'free_trial_enabled' => '1',
             ],
+            // Agora (Fixit) is not used: calls go through our LiveKit server.
+            // Kept empty so old app builds that read it don't break.
             'agora' => [
-                'app_id' => 'qwertyuiopasdfghjklzxcvbnm',
-                'certificate' => 'mnbvcxzlkjhgfdsapoiuytrewq',
+                'app_id' => '',
+                'certificate' => '',
+            ],
+            // Звонки через свой сервер LiveKit (infra/livekit, App\Support\Calls).
+            // Ключи — те же, что LIVEKIT_KEYS сервера; вводятся в админке.
+            'calls' => [
+                'status' => false,
+                'livekit_url' => '',
+                'api_key' => '',
+                'api_secret' => '',
             ],
             'firebase' => [
                 'service_json' => null,

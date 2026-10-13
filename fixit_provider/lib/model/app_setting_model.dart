@@ -1,6 +1,9 @@
+import 'package:fixit_provider/calls/calls_setting_model.dart';
 import '../config.dart';
 
 class AppSettingModel {
+  // Звонки через свой LiveKit (lib/calls/)
+  CallsSettingModel? calls;
   Agora? agora;
   General? general;
   Activation? activation;
@@ -23,6 +26,9 @@ class AppSettingModel {
       this.firebase});
 
   AppSettingModel.fromJson(Map<String, dynamic> json) {
+    calls = json['calls'] is Map
+        ? CallsSettingModel.fromJson(Map<String, dynamic>.from(json['calls']))
+        : null;
     agora = json['agora'] != null ? new Agora.fromJson(json['agora']) : null;
     general =
         json['general'] != null ? General.fromJson(json['general']) : null;

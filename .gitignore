@@ -65,3 +65,6 @@ db_backups/
 
 # Firebase service account (private key) — Helpers::getFirebaseServiceAccount()
 fixit_laravel/storage/app/private/
+
+# LiveKit keys (infra/livekit/.env.example is the template)
+infra/livekit/.env

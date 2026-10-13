@@ -1,3 +1,4 @@
+import 'package:fixit_provider/calls/call_manager.dart';
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
@@ -52,6 +53,8 @@ void main() async {
   cameras = await availableCameras();
 
   setupFCMToken();
+  // Incoming calls (push / app resume) — own LiveKit calls, lib/calls/
+  CallManager.instance.init();
   runApp(const MyApp());
 }
 

@@ -7,8 +7,8 @@ class ApiMethods {
   String self = '$apiUrl/self';
   // Push to another app user via the backend (it holds the Firebase key)
   String pushSend = '$apiUrl/push/send';
-  // Agora call token signed on the server
-  String agoraToken = '$apiUrl/agora/token';
+  // App-to-app calls over our LiveKit server (lib/calls/)
+  String calls = '$apiUrl/calls';
   String forgotPassword = '$apiUrl/forgot-password';
   String verifyOtp = '$apiUrl/verifyOtp';
   String updatePassword = '$apiUrl/update-password';

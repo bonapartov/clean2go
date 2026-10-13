@@ -107,9 +107,9 @@ class SettingsRepository extends BaseRepository
             $settings = $this->model->findOrFail($id);
           
             $requestData = $request->except(['_token', '_method']); 
-            // Agora certificate is sent encrypted like the mail password.
-            if (! empty($requestData['agora']['certificate'])) {
-                $requestData['agora']['certificate'] = Helpers::decryptKey($requestData['agora']['certificate']);
+            // LiveKit API secret is sent encrypted like the mail password.
+            if (! empty($requestData['calls']['api_secret'])) {
+                $requestData['calls']['api_secret'] = Helpers::decryptKey($requestData['calls']['api_secret']);
             }
             if (array_key_exists('mail_password', $requestData['email'])) {
                 $requestData['email']['mail_password'] = Helpers::decryptKey($requestData['email']['mail_password']);

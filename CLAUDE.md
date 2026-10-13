@@ -76,6 +76,14 @@ Vite compiles three entry points:
 - `resources/js/app.js` — shared JS
 - `public/frontend/scss/style.scss` — customer frontend
 
+## Calls (own LiveKit server)
+
+App-to-app calls (client ↔ executor) run on a self-hosted LiveKit server, not
+Agora: `infra/livekit/` (`docker compose up -d`, keys in gitignored `.env`).
+Backend: `App\Support\Calls`, `CallController` (`/api/calls/*`), table `calls`;
+only booking participants may call each other. The same key/secret pair goes
+into admin «Сторонние сервисы → Звонки». Apps: identical `lib/calls/` in both.
+
 ## Flutter Apps (fixit_user / fixit_provider)
 
 ### Commands
