@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:googleapis_auth/auth_io.dart';
 
 import '../config.dart';
 import '../models/message_model.dart';
@@ -487,18 +486,6 @@ class FirebaseApi {
     }).then((value) {});
   }
 
-  Future<String> getAccessToken() async {
-    String url = 'https://www.googleapis.com/auth/firebase.messaging';
-
-    final client = await clientViaServiceAccount(
-        ServiceAccountCredentials.fromJson(
-            appSettingModel!.firebase!.serviceJson!.toJson()),
-        [url]);
-    // log("client.credentials.accessToken.data:${client.credentials.accessToken.data}");
-    final accessToken = client.credentials.accessToken.data;
-
-    return accessToken;
-  }
 
   //seen all message
   seenMessage(context) async {
@@ -609,7 +596,6 @@ class FirebaseApi {
     log("pIdpId:$token");
 
     try {
-      final access = await getAccessToken();
       final data = {
         "message": {
           "token": "$token",
@@ -635,28 +621,13 @@ class FirebaseApi {
         }
       };
 
-      final headers = {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer $access'
-      };
-
+      // Push goes through our backend, which holds the Firebase key
+      // (POST /api/push/send). The app never sees the service account.
       log("BOD :$data");
-      // log("BOD :$headers");
-
-      BaseOptions options = BaseOptions(
-        connectTimeout: const Duration(seconds: 5),
-        receiveTimeout: const Duration(seconds: 3),
-        headers: headers,
-      );
-
-      FirebaseApp? app = Firebase.app();
-      String k98 = app.options.projectId;
-
-      final response = await Dio(options).post(
-          'https://fcm.googleapis.com/v1/projects/$k98/messages:send',
-          data: data);
-      debugPrint('NOTIFICATION RES $response');
-      if (response.statusCode == 200) {
+      final response =
+          await apiServices.postApi(api.pushSend, data, isToken: true);
+      debugPrint('NOTIFICATION RES ${response.message}');
+      if (response.isSuccess == true) {
         debugPrint('Alert push notification send');
       } else {
         debugPrint('notification sending failed');

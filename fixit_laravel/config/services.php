@@ -29,6 +29,13 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    // Firebase service account (private key). Uploaded by the admin in
+    // Settings → Firebase; kept outside public/. Not an operator setting —
+    // only overridden in tests. See Helpers::getFirebaseServiceAccount().
+    'firebase' => [
+        'service_account_path' => storage_path('app/private/firebase/service-account.json'),
+    ],
+
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),

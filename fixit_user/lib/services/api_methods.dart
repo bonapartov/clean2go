@@ -5,6 +5,8 @@ class ApiMethods {
   String register = '$apiUrl/register';
   String socialLogin = '$apiUrl/social/login';
   String self = '$apiUrl/self';
+  // Push to another app user via the backend (it holds the Firebase key)
+  String pushSend = '$apiUrl/push/send';
   String forgotPassword = '$apiUrl/forgot-password';
   String verifyOtp = '$apiUrl/verifyOtp';
   String updatePassword = '$apiUrl/update-password';

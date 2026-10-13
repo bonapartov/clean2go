@@ -2993,4 +2993,8 @@ return [
         'wallet_balance' => 'Баланс кошелька',
         'data_import_export' => 'Импорт и экспорт данных',
     ],
+    'push' => [
+        'not_configured' => 'Push-уведомления не настроены: загрузите сервисный ключ Firebase в Настройки → Firebase.',
+        'send_failed' => 'Не удалось отправить push-уведомление.',
+    ],
 ];

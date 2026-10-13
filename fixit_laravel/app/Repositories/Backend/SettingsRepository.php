@@ -214,18 +214,24 @@ class SettingsRepository extends BaseRepository
                     return back()->withErrors(['firebase.firebase_json' => 'The file must be a valid JSON.']);
                 }
 
-                $existingFilePath = public_path('admin/assets/firebase.json');
-                if (file_exists($existingFilePath)) {
-                    unlink($existingFilePath);
+                // The private key goes to storage/ (not web-served), never
+                // to public/ or the settings table: see
+                // Helpers::firebaseServiceAccountPath().
+                $path = Helpers::firebaseServiceAccountPath();
+                if (! is_dir(dirname($path))) {
+                    mkdir(dirname($path), 0700, true);
+                }
+                file_put_contents($path, $fileContents);
+                chmod($path, 0600);
+                $legacyPath = public_path('admin/assets/firebase.json');
+                if (file_exists($legacyPath)) {
+                    unlink($legacyPath);
                 }
 
-                $file->move(public_path('admin/assets'), 'firebase.json');
-                $requestData['firebase']['service_json'] = $json;
+                $requestData['firebase']['service_json'] = self::firebaseServiceAccountSummary($json);
 
             } else {
-                $filePath = public_path('admin/assets/firebase.json');
-                $fileContents = file_exists($filePath) ? file_get_contents($filePath) : null;
-                $requestData['firebase']['service_json'] = json_decode($fileContents, true);
+                $requestData['firebase']['service_json'] = self::firebaseServiceAccountSummary(Helpers::getFirebaseServiceAccount());
             }
 
             $settings->update([
@@ -323,5 +329,21 @@ class SettingsRepository extends BaseRepository
 
             return back()->with('error', $e->getMessage());
         }
+    }
+
+    /**
+     * What of the Firebase service account is kept in the settings table:
+     * enough for the admin page to show it's uploaded, never the private key.
+     */
+    private static function firebaseServiceAccountSummary(?array $json): ?array
+    {
+        if (! $json) {
+            return null;
+        }
+
+        return [
+            'project_id' => $json['project_id'] ?? null,
+            'client_email' => $json['client_email'] ?? null,
+        ];
     }
 }

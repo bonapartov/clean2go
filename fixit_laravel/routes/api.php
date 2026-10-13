@@ -153,6 +153,9 @@ Route::group(['middleware' => ['localization']], function () {
         //OpenAI 
         Route::post('openai/generate-text', 'App\Http\Controllers\API\OpenAIController@generateText');
 
+        // Push from app to app (chat, bookings): the server holds the Firebase key
+        Route::post('push/send', 'App\Http\Controllers\API\PushNotificationController@send')->middleware('throttle:60,1');
+
         Route::get('dashboard/provider', 'App\Http\Controllers\API\ProviderController@getDashboardData');
         Route::post('addserviceProofs', 'App\Http\Controllers\API\BookingController@addserviceProofs');
         Route::post('updateserviceProofs', 'App\Http\Controllers\API\BookingController@updateserviceProofs');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use Exception;
+use App\Helpers\Helpers;
 use App\Models\User;
 use App\Enums\RoleEnum;
 use App\Models\Setting;
@@ -21,7 +22,9 @@ class SocialLoginController extends Controller
     {
         $settings = Setting::first();
 
-        $firebaseCredentials = $settings->values['firebase']['service_json'] ?? null;
+        // The key is read from storage, not the settings table (which only
+        // keeps project_id/client_email): see Helpers::getFirebaseServiceAccount().
+        $firebaseCredentials = Helpers::getFirebaseServiceAccount();
         if (is_array($firebaseCredentials) && $this->isValidFirebaseCredentials($firebaseCredentials)) {
             try {
                 $firebase = (new Factory)

@@ -1036,9 +1036,12 @@ class ChatProvider with ChangeNotifier {
           FirebaseFunctions.instance.httpsCallable("generateToken");
       if (appSettingModel!.agora != null) {
         dynamic result = await httpsCallable.call(
+          // The Agora certificate is a secret: /api/settings no longer
+          // returns it (2026-10-13). The token must be signed where the
+          // certificate lives — the generateToken Cloud Function's own
+          // config or our backend. See ROADMAP, Sprint 6.
           {
             "appId": appSettingModel!.agora!.appId,
-            "appCertificate": appSettingModel!.agora!.certificate
           },
         );
 

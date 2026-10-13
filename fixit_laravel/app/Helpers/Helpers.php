@@ -508,10 +508,65 @@ class Helpers
         return false;
     }
 
+    /**
+     * Where the Firebase service account (private key) lives.
+     *
+     * Outside public/ on purpose: anything under public/ is served by the
+     * web server, so the old location public/admin/assets/firebase.json was
+     * downloadable by anyone. The admin uploads the file in
+     * Settings → Firebase; only metadata (project_id, client_email) is kept
+     * in the settings table so it never reaches /api/settings.
+     */
+    public static function firebaseServiceAccountPath(): string
+    {
+        return config('services.firebase.service_account_path')
+            ?: storage_path('app/private/firebase/service-account.json');
+    }
+
+    /**
+     * The service account as an array, or null when not uploaded yet.
+     * Moves a file left at the old public location on first access.
+     */
+    public static function getFirebaseServiceAccount(): ?array
+    {
+        $path = self::firebaseServiceAccountPath();
+        $legacy = public_path('admin/assets/firebase.json');
+
+        // Only migrate into the real location, never into a path a test
+        // pointed config at (that would move the live key into a temp dir).
+        $isDefaultPath = $path === storage_path('app/private/firebase/service-account.json');
+
+        if (! $isDefaultPath) {
+            // nothing to migrate
+        } elseif (! file_exists($path) && file_exists($legacy)) {
+            if (! is_dir(dirname($path))) {
+                mkdir(dirname($path), 0700, true);
+            }
+            rename($legacy, $path);
+            chmod($path, 0600);
+        } elseif (file_exists($legacy)) {
+            // A newer key is already in storage; the public copy is stale.
+            unlink($legacy);
+        }
+
+        if (! file_exists($path)) {
+            return null;
+        }
+
+        $json = json_decode(file_get_contents($path), true);
+
+        return is_array($json) && ! empty($json['private_key']) ? $json : null;
+    }
+
     public static function getFCMAccessToken()
     {
+        $serviceAccount = self::getFirebaseServiceAccount();
+        if (! $serviceAccount) {
+            return null;
+        }
+
         $client = new Google_Client();
-        $client->setAuthConfig(public_path('admin/assets/firebase.json'));
+        $client->setAuthConfig($serviceAccount);
         $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
 
         $client->refreshTokenWithAssertion();
@@ -522,10 +577,14 @@ class Helpers
 
     public static function getFirebaseJson()
     {
-        $firebaseJson = json_decode(file_get_contents(public_path('admin/assets/firebase.json')), true);
-        return $firebaseJson;
+        return self::getFirebaseServiceAccount();
     }
 
+    /**
+     * Sends one FCM HTTP v1 message ({"message": {...}}) with the server's
+     * service account. Returns true when FCM accepted it. Apps never hold
+     * the key: they call POST /api/push/send, which ends up here.
+     */
     public static function pushNotification($notification)
     {
         try {
@@ -542,11 +601,16 @@ class Helpers
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
                 $result = curl_exec($ch);
+                $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                 curl_close($ch);
+
+                return $status === 200;
             }
         } catch (Exception $e) {
 
         }
+
+        return false;
     }
 
     public static function installation()

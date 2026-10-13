@@ -133,6 +133,11 @@ Dart, JS or seeders, and never commit real values.
   not finished.
 - Placeholders are fine; fabricated values are not. If a real key is missing,
   leave the field empty and say so — don't invent one.
+- Public endpoints (`/api/settings` is unauthenticated) must not return
+  secrets: list them in `SettingController::SECRET_KEYS`. Never put key
+  files under `public/` — it is web-served. The Firebase service account
+  lives in `storage/app/private/firebase/` (`Helpers::getFirebaseServiceAccount()`);
+  apps send push via `POST /api/push/send`, never with a key of their own.
 - Flutter apps can't read the admin panel before they know where the backend
   is, so the backend URL is the one exception: pass it at build time
   (`--dart-define=API_URL=...`), never hardcode an IP/host in `lib/`.
