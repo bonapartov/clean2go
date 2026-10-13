@@ -60,7 +60,7 @@
 
 `Alphanet`, `BKash`, `Ccavenue`, `Flutterwave`, `Instamojo`, `Iyzico`, `Midtrans`, `Mollie`, `Msg91`, `Nexmo`, `PayPal`, `Paystack`, `PhonePe`, `RazorPay`, `Sslcommerz`, `Stripe`, `Twilio`.
 
-Удаление — отдельное решение пользователя (пока не сделано). Перед удалением проверить, что на них нет ссылок в сидерах, настройках и вьюхах.
+**Удалены 2026-10-13** вместе с `public/modules/<имя>`, записями в `modules_statuses.json` и composer-пакетами, которые использовали только они (`iyzico/iyzipay-php`, `mollie/laravel-mollie`, `razorpay/razorpay`, `stripe/stripe-php`). Значения `paypal`/`stripe` и т. п. в enum'ах и колонках БД (способы вывода средств, история) оставлены: это данные, не модули.
 
 Расхождение: `TwoFactor` выключен в `modules_statuses.json`, а в `CLAUDE.md` он указан как включённый. Нужно решить, нужен ли он, и поправить одно из двух.
 

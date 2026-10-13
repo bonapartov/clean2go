@@ -3,7 +3,6 @@
 namespace App\Http\Traits;
 
 use Exception;
-use App\Messages\Twilio;
 use App\Enums\SMSMethod;
 use App\Exceptions\ExceptionHandler;
 use App\Helpers\Helpers;

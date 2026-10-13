@@ -45,9 +45,9 @@ The backend uses [nwidart/laravel-modules](https://nwidart.com/laravel-modules/)
 - `YooKassa` — YooKassa gateway (primary Russian payment processor)
 - `Smsru` — SMS.ru provider
 - `Smsc` — SMSC.ru provider
-- `TwoFactor`, `Firebase`, `Coupon`, `Subscription` also enabled
+- `Firebase`, `Coupon`, `Subscription`, `ProviderOnboarding` also enabled; `TwoFactor` present but disabled
 
-**Disabled global modules**: Stripe, PayPal, RazorPay, Mollie, Twilio, Msg91, etc. Do not re-enable these for the Russian build.
+**Removed global modules** (2026-10-13): Stripe, PayPal, RazorPay, Mollie, Twilio, Msg91 and the other Fixit gateways are deleted from the repo. `TwoFactor` stays, disabled.
 
 ### Key patterns
 

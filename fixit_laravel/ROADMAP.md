@@ -243,7 +243,8 @@
 | Звонки: сервер LiveKit в проде — домен с TLS (`wss://`), открыть UDP 50000–50100, при строгих NAT — TURN | ❌ | Для теста работает в локальной сети `ws://192.168.1.127:7880` |
 | Перевыпустить сервисный ключ Firebase перед выходом в интернет | ❌ | Старый ключ лежал в `public/` и был доступен в локальной сети |
 | Ключи ЮКассы, CloudPayments, SMS.ru, SMSC — из админки («Платёжные методы», «SMS-шлюзы»), а не `env()` | ✅ | `App\Support\GatewayCredentials`: зашифровано в `integration_settings` (`gateway.<ключ>`), `.env` — запасной вариант; админка больше не пишет ключи в `.env` и в `Modules/*/Config/payment.php`. Тест `GatewayCredentialsTest` |
-| Выключенные модули Fixit (Stripe, PayPal и др.) всё ещё читают `env()` | — | Не переводим: кандидаты на удаление (`docs/code-inventory.md`) |
+| Удалить 17 выключенных модулей Fixit (Stripe, PayPal, RazorPay, Twilio и др., ≈9,8 тыс. строк) | ✅ | Удалены вместе с публичными файлами и 4 composer-пакетами (2026-10-13) |
+| Логотипы ЮКассы, CloudPayments, SMS.ru, SMSC в админке не грузятся | ❌ | Нет `public/modules/<имя>/images/logo.svg` — добавить файлы |
 
 ### Sprint 7 — договор и акты от исполнителя
 
